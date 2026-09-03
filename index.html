@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Engine — Hôtel &amp; Golf (wireframe v1)</title>
+<link rel="icon" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a; --g800:#333; --g700:#525252; --g600:#6b6b6b; --g500:#8a8a8a;
+  --g400:#a3a3a3; --g300:#d4d4d4; --g200:#e5e5e5; --g100:#f0f0f0; --g50:#f7f7f7;
+  --paper:#fff; --canvas:#e9e9e8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--canvas);
+  color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding-top:48px}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+svg{flex:none}
+ul{list-style:none}
+
+/* ══════════ Barre outils (hors maquette) ══════════ */
+.devbar{position:fixed;top:0;left:0;right:0;height:48px;background:var(--ink);color:#fff;z-index:100;
+  display:flex;align-items:center;gap:14px;padding:0 14px;font-size:12px}
+.devbar .db-t{font-weight:700;letter-spacing:-.2px;white-space:nowrap}
+.devbar .db-t span{font-weight:400;color:#8f8f8f;margin-left:8px}
+.devbar .sp{flex:1}
+.seg{display:flex;border:1px solid #3d3d3d;border-radius:6px;overflow:hidden}
+.seg button{padding:6px 11px;color:#b5b5b5;font-size:11.5px;font-weight:600}
+.seg button.on{background:#fff;color:var(--ink)}
+.dbtog{display:flex;align-items:center;gap:7px;color:#b5b5b5;font-size:11.5px;font-weight:600;cursor:pointer}
+.dbtog input{accent-color:#fff;width:14px;height:14px}
+.devbar select{background:#2b2b2b;border:1px solid #3d3d3d;border-radius:6px;color:#e5e5e5;
+  padding:6px 8px;font-size:11.5px;max-width:230px}
+.devbar .lnk{color:#b5b5b5;font-size:11.5px;font-weight:600;text-decoration:none}
+.devbar .lnk:hover{color:#fff}
+
+/* ══════════ Scène ══════════ */
+.stagewrap{display:flex;justify-content:center;padding:18px 14px 40px}
+.stage{width:100%;background:var(--paper);container-type:inline-size;position:relative}
+.stage[data-vp="desktop"]{max-width:1180px;border:1px solid var(--g300);min-height:calc(100vh - 110px)}
+.stage[data-vp="mobile"]{width:390px;max-width:100%;height:calc(100vh - 106px);overflow-y:auto;
+  border:1px solid var(--g300);border-radius:20px;box-shadow:0 8px 30px rgba(0,0,0,.10)}
+
+/* ══════════ Annotations matrice ══════════ */
+.node{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--g600);border:1px dashed var(--g400);background:var(--g50);
+  padding:5px 8px;border-radius:4px;white-space:nowrap}
+.node.wrap{white-space:normal;line-height:1.5}
+.note{border-left:2px dashed var(--g400);padding:2px 0 2px 9px;font-size:11.5px;line-height:1.5;color:var(--g600);margin:10px 0}
+body:not(.ann) .node,body:not(.ann) .note{display:none!important}
+
+/* ══════════ Primitives wireframe ══════════ */
+.ph{background:repeating-linear-gradient(45deg,#f4f4f4 0 7px,#ebebeb 7px 14px);border:1px dashed #cdcdcd;
+  display:grid;place-items:center;color:var(--g400);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.card{border:1px solid var(--g300);background:var(--paper);border-radius:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:#fff;
+  border-radius:6px;padding:13px 20px;font-size:14px;font-weight:600;line-height:1}
+.btn:hover{background:#000}
+.btn[disabled]{background:var(--g300);color:var(--g500);cursor:not-allowed}
+.btn.sec{background:var(--paper);color:var(--ink);border:1.5px solid var(--ink)}
+.btn.sec:hover{background:var(--g50)}
+.btn.ghost{background:var(--paper);color:var(--g700);border:1px solid var(--g300);font-weight:500}
+.btn.ghost:hover{border-color:var(--g500);color:var(--ink)}
+.btn.sm{padding:9px 13px;font-size:12.5px}
+.btn.full{width:100%}
+.lnk{text-decoration:underline;text-underline-offset:3px;color:var(--g700);font-size:13px}
+.lnk:hover{color:var(--ink)}
+.h1{font-size:23px;font-weight:700;letter-spacing:-.4px;line-height:1.25}
+.h2{font-size:17px;font-weight:700;letter-spacing:-.2px}
+.h3{font-size:14px;font-weight:600}
+.sub{font-size:13px;color:var(--g600);line-height:1.55}
+.mut{font-size:12px;color:var(--g500)}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  border:1px solid var(--g300);background:var(--g50);color:var(--g600);border-radius:3px;padding:3px 7px}
+.field{display:block;margin-bottom:14px}
+.field > span{display:block;font-size:12px;font-weight:600;color:var(--g700);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--g300);border-radius:6px;
+  padding:11px 12px;background:var(--paper);outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px var(--g100)}
+.hr{height:1px;background:var(--g200);margin:18px 0}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+
+/* ══════════ N0 · couche globale ══════════ */
+.appbar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--g200)}
+.stage[data-vp="desktop"] .appbar{top:0}
+.appbar-in{display:flex;align-items:center;gap:14px;padding:13px 18px}
+.wordmark{font-size:12.5px;font-weight:700;letter-spacing:.16em;line-height:1.2}
+.wordmark small{display:block;font-size:8.5px;font-weight:500;letter-spacing:.22em;color:var(--g500);margin-top:3px}
+.navlinks{display:none;gap:20px;font-size:13px;color:var(--g700);margin-left:14px}
+.navlinks span:hover{color:var(--ink);cursor:pointer}
+.appbar .ico{width:36px;height:36px;border:1px solid var(--g300);border-radius:6px;display:grid;place-items:center;color:var(--g700)}
+.appbar .ico:hover{border-color:var(--ink);color:var(--ink)}
+.sitechip{display:flex!important;align-items:center;width:auto!important;padding:0 12px;gap:7px;font-size:12.5px;font-weight:600;white-space:nowrap;max-width:190px;overflow:hidden}
+.sitechip span{overflow:hidden;text-overflow:ellipsis}
+.cartbtn{position:relative}
+.cartbtn b{position:absolute;top:-6px;right:-6px;min-width:17px;height:17px;border-radius:9px;background:var(--ink);
+  color:#fff;font-size:10px;font-weight:700;display:none;place-items:center;padding:0 4px}
+.cartbtn.has b{display:grid}
+.appfoot{border-top:1px solid var(--g200);background:var(--g50);padding:22px 18px 30px;margin-top:40px}
+.appfoot .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;font-size:12px;color:var(--g600)}
+.appfoot h4{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--g500);margin-bottom:8px}
+.appfoot li{padding:3px 0}
+.fabs{position:sticky;bottom:0;display:flex;justify-content:flex-end;padding:0 18px 14px;pointer-events:none}
+.fab{pointer-events:auto;width:46px;height:46px;border-radius:23px;border:1px solid var(--g300);background:var(--paper);
+  display:grid;place-items:center;color:var(--g700);box-shadow:0 3px 12px rgba(0,0,0,.10)}
+
+/* ══════════ Écrans ══════════ */
+.screen{display:none}
+.screen.on{display:block}
+.pad{padding:18px}
+.scr-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+.back{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--g600);margin-bottom:12px}
+.back:hover{color:var(--ink)}
+
+/* stepper N4 */
+.steps{display:flex;gap:4px;padding:12px 18px;border-bottom:1px solid var(--g200);background:var(--g50);overflow-x:auto}
+.steps .s{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--g400);white-space:nowrap}
+.steps .s i{width:18px;height:18px;border-radius:9px;border:1px solid var(--g300);display:grid;place-items:center;
+  font-style:normal;font-size:10px;background:var(--paper)}
+.steps .s.done{color:var(--g600)}
+.steps .s.done i{background:var(--g300);border-color:var(--g300);color:#fff}
+.steps .s.now{color:var(--ink)}
+.steps .s.now i{background:var(--ink);border-color:var(--ink);color:#fff}
+.steps .sep{width:14px;height:1px;background:var(--g300);align-self:center;flex:none}
+
+/* listes produits */
+.grid.slots{grid-template-columns:repeat(2,1fr)}
+/* barre de recherche golf */
+.searchbar{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;margin-bottom:12px;position:relative}
+.sb-f > span{display:block;font-size:12px;font-weight:600;color:var(--g700);margin-bottom:6px}
+.sb-f select,.datebtn{width:100%;height:42px;border:1px solid var(--g300);border-radius:6px;background:var(--paper);
+  padding:0 11px;font-size:14px;text-align:left;outline:none}
+.sb-f select:focus,.datebtn:focus{border-color:var(--ink);box-shadow:0 0 0 3px var(--g100)}
+.datebtn{font-weight:600}
+.navd{width:38px;height:42px;flex:none;border:1px solid var(--g300);border-radius:6px;font-size:17px;color:var(--g700);line-height:1}
+.navd:hover{border-color:var(--ink);color:var(--ink)}
+.navd[disabled]{color:var(--g300);border-color:var(--g200);cursor:not-allowed}
+.licrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 2px 4px}
+.daystrip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin-bottom:14px}
+.day{flex:none;min-width:92px;border:1px solid var(--g300);border-radius:8px;padding:9px 10px;text-align:center;background:var(--paper)}
+.day:hover{border-color:var(--g500)}
+.day.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.day.win{border-style:dashed;border-color:var(--g500)}
+.day .dd{font-size:12.5px;font-weight:700}
+.day .pp{font-size:12px;font-weight:600;margin-top:5px}
+.day.full{background:var(--g50)}
+.day.full .dd,.day.full .pp{color:var(--g400)}
+.chips{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.chip{border:1px solid var(--g300);border-radius:20px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--g700);background:var(--paper)}
+.chip:hover{border-color:var(--g500);color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.slot{padding:12px;text-align:left}
+.slot:not([disabled]):hover{border-color:var(--ink)}
+.grid{display:grid;gap:14px}
+.prod{overflow:hidden;display:flex;flex-direction:column}
+.prod .ph{height:150px}
+.prod .body{padding:14px;display:flex;flex-direction:column;gap:7px;flex:1;align-items:flex-start}
+.prod .body > *{width:100%}
+.prod .body .tag{width:auto}
+.prod .foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding-top:10px}
+.price{font-size:17px;font-weight:700;letter-spacing:-.3px}
+.price small{font-size:11px;font-weight:500;color:var(--g500);display:block;margin-top:2px}
+
+/* calendrier */
+.cals{display:grid;gap:20px}
+.cal h4{text-align:center;font-size:13px;font-weight:700;margin-bottom:10px}
+.cal .dow,.cal .days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal .dow span{text-align:center;font-size:10px;font-weight:600;color:var(--g400);padding-bottom:6px}
+.cal .d{aspect-ratio:1;display:grid;place-items:center;font-size:12.5px;border:1px solid transparent;border-radius:5px;color:var(--g800)}
+.cal .d.pick{cursor:pointer}
+.cal .d.pick:hover{border-color:var(--ink)}
+.cal .d.off{color:var(--g300);cursor:default}
+.cal .d.full{color:var(--g400);text-decoration:line-through;cursor:pointer;background:repeating-linear-gradient(45deg,#f6f6f6 0 4px,#ededed 4px 8px)}
+.cal .d.in,.cal .d.out{background:var(--ink);color:#fff;font-weight:600}
+.cal .d.mid{background:var(--g100)}
+.calleg{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--g500);margin-top:14px}
+.calleg i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+
+/* menus de la barre de recherche : hotel, dates, voyageurs */
+.popwrap{position:relative}
+.sbpop{position:absolute;top:calc(100% + 8px);left:0;z-index:40;width:min(380px,88cqw);background:var(--paper);
+  border:1px solid var(--g300);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.16);padding:16px}
+.sbpop.right{left:auto;right:0}
+.sbpop.wide{left:0;right:0;width:auto}
+.sbpop.wide .cals{max-width:700px}
+.sbpop h5{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--g500);margin:0 0 6px;font-weight:700}
+.sbpop .foot-a{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--g200)}
+.caret{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.caret svg{flex:none;opacity:.55}
+.caret[aria-expanded="true"]{border-color:var(--ink);box-shadow:0 0 0 3px var(--g100)}
+.cnt{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0}
+.cnt + .cnt{border-top:1px solid var(--g100)}
+.cnt .h3{font-size:13.5px}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;
+  padding:12px 0;border-top:1px solid var(--g100)}
+.sw i{width:38px;height:22px;border-radius:11px;background:var(--g200);border:1px solid var(--g300);flex:none;
+  position:relative;transition:background .15s}
+.sw i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:8px;
+  background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.sw.on i{background:var(--ink);border-color:var(--ink)}
+.sw.on i::after{transform:translateX(16px)}
+.grpcta{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 0 0;
+  border-top:1px solid var(--g100);font-size:12.5px;color:var(--g700)}
+.grpcta:hover{color:var(--ink)}
+.grpcta b{font-weight:700}
+.hrow{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px;border-radius:7px;
+  border:1px solid transparent}
+.hrow:hover{background:var(--g50)}
+.hrow.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.hrow .hb{flex:1;min-width:0}
+.hrow .hp{font-size:12.5px;font-weight:700;white-space:nowrap;text-align:right}
+.hrow .hp small{display:block;font-weight:500;color:var(--g500);font-size:10.5px;margin-top:2px}
+.hrow.off .hp{color:var(--g400)}
+.hint{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--g300);background:var(--g50);
+  border-radius:8px;padding:11px 13px;margin-bottom:14px;font-size:12.5px;color:var(--g700);line-height:1.5}
+.hint > div{flex:1;min-width:200px}
+.hint b{font-weight:700;color:var(--ink)}
+
+/* stepper quantité */
+.qty{display:flex;align-items:center;gap:12px}
+.qty button{width:32px;height:32px;border:1px solid var(--g300);border-radius:16px;font-size:16px;color:var(--g700);
+  display:grid;place-items:center;line-height:1}
+.qty button:hover{border-color:var(--ink);color:var(--ink)}
+.qty button[disabled]{color:var(--g300);border-color:var(--g200);cursor:not-allowed}
+.qty b{min-width:20px;text-align:center;font-size:15px}
+
+/* option sélectionnable */
+.opt{border:1px solid var(--g300);border-radius:8px;padding:14px;display:flex;gap:12px;align-items:flex-start;
+  cursor:pointer;background:var(--paper);width:100%;text-align:left}
+.opt:hover{border-color:var(--g500)}
+.opt.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt .mark{width:18px;height:18px;border:1px solid var(--g400);border-radius:9px;flex:none;margin-top:2px;display:grid;place-items:center}
+.opt.on .mark{border-color:var(--ink);background:var(--ink)}
+.opt.on .mark::after{content:"";width:7px;height:7px;border-radius:4px;background:#fff}
+.opt.sq .mark,.opt.sq.on .mark{border-radius:4px}
+.opt.sq.on .mark::after{width:5px;height:9px;border:2px solid #fff;border-top:0;border-left:0;transform:rotate(42deg) translate(-1px,-1px);border-radius:0;background:none}
+
+/* barre d'action collante */
+.actionbar{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--g200);padding:12px 18px;
+  display:flex;align-items:center;gap:12px;z-index:15}
+.actionbar .sum{flex:1;min-width:0}
+.actionbar .sum b{display:block;font-size:15px;font-weight:700}
+.actionbar .sum span{display:block;font-size:11.5px;color:var(--g500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* panier */
+.line{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--g200)}
+.line .ph{width:64px;height:64px;border-radius:6px;flex:none}
+.line .l-b{flex:1;min-width:0}
+.line .l-acts{display:flex;gap:14px;margin-top:9px}
+.line .l-acts button{font-size:11.5px;font-weight:600;color:var(--g600);text-decoration:underline;text-underline-offset:3px}
+.line .l-acts button:hover{color:var(--ink)}
+.hold{display:flex;align-items:center;gap:9px;border:1px dashed var(--g300);background:var(--g50);border-radius:6px;
+  padding:10px 12px;font-size:12px;color:var(--g600);margin-bottom:16px}
+.tot{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:var(--g700)}
+.tot.big{font-size:17px;font-weight:700;color:var(--ink);padding-top:12px;margin-top:6px;border-top:1px solid var(--g200)}
+
+/* modale */
+.ovl{position:fixed;inset:0;background:rgba(20,20,20,.42);z-index:80;display:none;align-items:flex-end;justify-content:center;padding:0}
+.ovl.on{display:flex}
+.sheet{background:var(--paper);width:100%;max-width:520px;max-height:88vh;overflow-y:auto;border-radius:14px 14px 0 0;padding:20px}
+@media(min-width:700px){.ovl{align-items:center;padding:20px}.sheet{border-radius:12px}}
+.sheet-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px}
+.x{width:30px;height:30px;border:1px solid var(--g300);border-radius:15px;display:grid;place-items:center;color:var(--g600);flex:none}
+
+/* N2 bis · liste + carte (fixe, facon Airbnb) */
+.mapsplit{display:grid;gap:18px;margin-top:16px}
+.map{position:relative;height:100%;min-height:260px;border:1px solid var(--g300);border-radius:10px;
+  background:var(--g50);overflow:hidden}
+.mapinner{position:absolute;inset:0;margin:auto;width:100%;aspect-ratio:.82;max-height:100%}
+.map svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.maplegend{position:absolute;left:10px;bottom:10px;z-index:6;background:rgba(255,255,255,.93);
+  border:1px solid var(--g300);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--g600);
+  max-width:calc(100% - 20px);line-height:1.45}
+.pin{position:absolute;transform:translate(-50%,-100%);padding-bottom:6px;z-index:2}
+.pin b{display:block;background:var(--paper);border:1px solid var(--g400);border-radius:14px;padding:5px 9px;
+  font-size:11.5px;font-weight:700;line-height:1.2;white-space:nowrap;box-shadow:0 2px 7px rgba(0,0,0,.13)}
+.pin i{position:absolute;left:50%;bottom:0;width:6px;height:6px;border-radius:3px;background:var(--g500);
+  transform:translateX(-50%)}
+.pin:hover,.pin.on{z-index:6}
+.pin:hover b,.pin.on b{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pin:hover i,.pin.on i{background:var(--ink)}
+.maplist .card.hl{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+/* filtres : un bouton par facette, le détail dans un menu à cocher */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.fwrap{position:relative}
+.fbtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--g300);border-radius:20px;
+  padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--g700);background:var(--paper)}
+.fbtn:hover{border-color:var(--g500);color:var(--ink)}
+.fbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fbtn svg{opacity:.65}
+.fmenu{position:absolute;top:calc(100% + 6px);left:0;z-index:30;min-width:246px;background:var(--paper);
+  border:1px solid var(--g300);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.14);padding:6px}
+.fopt{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:6px;font-size:13px;cursor:pointer}
+.fopt:hover{background:var(--g50)}
+.fopt > span{flex:1}
+.fopt b{font-size:11.5px;font-weight:600;color:var(--g500)}
+.fopt input{width:15px;height:15px;margin:0;flex:none;accent-color:var(--ink)}
+.fopt.off,.fopt.off:hover{color:var(--g400);cursor:default;background:none}
+.fopt.off b{color:var(--g300)}
+.fclear{display:block;width:100%;text-align:left;padding:9px;margin-top:3px;border-top:1px solid var(--g200);font-size:12px}
+
+/* aside desktop */
+.split{display:grid;gap:20px}
+.aside{align-self:start}
+.aside .card{padding:16px}
+
+/* ══════════ Container queries : bascule desktop ══════════ */
+@container (min-width:840px){
+  .pad{padding:28px 34px}
+  .navlinks{display:flex}
+  .appbar-in{padding:15px 34px}
+  .steps{padding:14px 34px}
+  .h1{font-size:30px}
+  .grid.g3{grid-template-columns:repeat(3,1fr)}
+  .grid.g2{grid-template-columns:repeat(2,1fr)}
+  .searchbar{grid-template-columns:1.15fr 1.35fr 1.15fr;align-items:end}
+  .cals{grid-template-columns:1fr 1fr;gap:34px}
+  .split{grid-template-columns:minmax(0,1fr) 340px;gap:34px;align-items:start}
+  .split.rev{grid-template-columns:340px minmax(0,1fr)}
+  .actionbar{display:none}
+  .actionbar.keep{display:flex;padding:14px 34px}
+  .appfoot{padding:30px 34px 40px}
+  .appfoot .cols{grid-template-columns:repeat(4,1fr)}
+  .hide-lg{display:none}
+  .prod.wide{flex-direction:row}
+  .prod.wide .ph{width:240px;height:auto;min-height:170px}
+  .prod.wide .body{padding:18px}
+  .mapsplit{grid-template-columns:minmax(0,1fr) 420px;gap:26px;align-items:start}
+  .mapcol{position:sticky;top:64px;height:calc(100vh - 104px);min-height:460px}
+  .maplist .prod.wide .ph{width:176px;min-height:148px}
+  .maplist .prod.wide .body{padding:15px}
+}
+@container (max-width:839px){ .show-lg{display:none} }
+@media(max-width:1080px){.devbar .db-t span{display:none}}
+@media(max-width:880px){.devbar .db-t{display:none}}
+</style>
+</head>
+<body class="ann">
+
+<!-- ══════════ Barre outils (hors périmètre maquette) ══════════ -->
+<div class="devbar">
+  <div class="db-t">Booking Engine — Hôtel &amp; Golf <span>wireframe v1 · d'après la matrice POEM</span></div>
+  <div class="sp"></div>
+  <select id="entrySel" title="Point d'entrée"></select>
+  <select id="jump" title="Aller à un écran"></select>
+  <label class="dbtog"><input type="checkbox" id="annTog" checked> Annotations</label>
+  <div class="seg" id="vpSeg">
+    <button data-vp="desktop" class="on">Desktop</button>
+    <button data-vp="mobile">Mobile</button>
+  </div>
+  <button class="lnk" id="reset">Réinitialiser</button>
+  <a class="lnk" href="../">← Protos</a>
+</div>
+
+<div class="stagewrap">
+<div class="stage" id="stage" data-vp="desktop">
+
+  <!-- ══════════ N0 · COUCHE GLOBALE ══════════ -->
+  <header class="appbar">
+    <div class="appbar-in">
+      <div class="wordmark" data-go="accueil" style="cursor:pointer">RESONANCE<small>GOLF COLLECTION</small></div>
+      <nav class="navlinks">
+        <span data-door="heb">Séjourner</span><span data-door="golf">Golf</span><span data-door="resto">Restaurants</span>
+        <span data-door="spa">Spa</span><span data-door="evt">Événements</span>
+      </nav>
+      <div class="sp" style="flex:1"></div>
+      <span class="node hide-lg">N0</span>
+      <button class="ico sitechip" id="siteBtn" title="Site de la Collection">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        <span id="siteBtnLbl">Toute la Collection</span></button>
+      <button class="ico" title="Recherche">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <button class="ico" title="Langue" style="font-size:11px;font-weight:700">FR</button>
+      <button class="ico" title="Compte" id="accBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg></button>
+      <button class="ico cartbtn" id="cartBtn" title="Panier" data-go="panier">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16l-1.4 12H5.4L4 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>
+        <b id="cartCount">0</b></button>
+    </div>
+  </header>
+
+  <!-- ══════════ N1 · ACCUEIL ══════════ -->
+  <section class="screen on" id="sc-accueil" data-title="N1 · Accueil">
+    <div class="ph" style="height:280px">Visuel resort · pleine largeur</div>
+    <div class="pad">
+      <div class="card" id="siteBanner" style="display:none;padding:12px 14px;border-style:dashed;margin-bottom:18px;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
+        <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">N0</span>
+          <span class="sub" id="siteBannerT">—</span></div>
+        <button class="btn sm ghost" id="siteBannerX">Voir toute la Collection</button>
+      </div>
+      <div class="scr-head">
+        <div>
+          <h1 class="h1" id="accH1">Douze golfs, six façons d'y venir.</h1>
+          <p class="sub" style="margin-top:8px;max-width:560px" id="accSub">Chambre, départ, table, soin : sur les douze golfs de la Collection, un seul panier et un seul paiement.</p>
+        </div>
+        <span class="node">N1 · Accueil</span>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:12px;margin-top:6px">
+        <button class="btn" data-go="hub">Réserver</button>
+        <button class="btn ghost" id="giftBtn">Offrir un bon cadeau</button>
+      </div>
+      <p class="note">CTA « Réserver » (N1) → hub de sélection produit (N2). Le CTA secondaire « Bon cadeau » pointe vers Secret Box, système externe (module G) : hors périmètre du moteur.</p>
+      <div class="hr"></div>
+      <h2 class="h2" style="margin-bottom:12px">Accès direct</h2>
+      <div class="grid g3">
+        <div class="card" style="padding:14px" data-door="heb"><div class="h3">Séjourner</div><div class="mut" style="margin-top:4px" id="accHeb">—</div></div>
+        <div class="card" style="padding:14px" data-door="gf"><div class="h3">Jouer</div><div class="mut" style="margin-top:4px" id="accGolf">—</div></div>
+        <div class="card" style="padding:14px" data-door="resto"><div class="h3">Dîner</div><div class="mut" style="margin-top:4px" id="accResto">—</div></div>
+      </div>
+      <p class="note">Matrice V5 : six portes d'entrée, dont Golf qui en regroupe trois (compétitions, green fee, carnets &amp; pass). Aucune n'exige d'en passer une autre avant. Dans cette v1, deux parcours sont maquettés de bout en bout — Hôtel et Green fee — et ils s'appellent l'un l'autre.</p>
+      <div class="hr"></div>
+      <h2 class="h2" style="margin-bottom:4px">Les golfs de la Collection</h2>
+      <p class="sub" style="margin-bottom:14px">Douze parcours en France et en Belgique, réunis en cinq destinations.</p>
+      <div class="grid g3" id="siteStrip"></div>
+      <p class="note">Deux entrées coexistent dans la vraie vie : le portail de la Collection, où le site reste à choisir, et la page d'un site, où il est déjà connu. Le moteur doit servir les deux sans dupliquer le parcours — c'est ce que règle l'écran N2 bis. Bascule d'entrée dans la barre noire ci-dessus.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N2 · HUB DE SÉLECTION PRODUIT ══════════ -->
+  <section class="screen" id="sc-hub" data-title="N2 · Hub de sélection produit">
+    <div class="pad">
+      <button class="back" data-go="accueil">← Retour</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="hubTitle">Que souhaitez-vous réserver&nbsp;?</h1>
+          <p class="sub" style="margin-top:8px" id="hubSub">—</p></div>
+        <span class="node">N2 · Sélection produit</span>
+      </div>
+      <div class="grid g3" style="margin-top:20px" id="hubGrid"></div>
+      <p class="note">Écran pivot du moteur. La « boucle de retour » depuis le panier (N6 → « Continuer la navigation ») revient exactement ici, itinéraire conservé.</p>
+      <p class="note">Quand un site est déjà choisi, les services qu'il ne propose pas restent visibles mais grisés, avec le nombre de sites qui les proposent : on ne cache jamais une prestation de la Collection, on indique où la trouver.</p>
+      <p class="note">Matrice V5 : Golf regroupe trois branches. La tuile reste de la même taille que les autres — aucune porte n'est prioritaire — et demande laquelle en ouvrant une feuille. C'est un geste de plus avant un green fee : à surveiller si le green fee devient l'entrée dominante.</p>
+      <p class="note">Deux hypothèses à confirmer sur cette rangée : les carnets &amp; pass sont proposés partout où il y a du golf, faute de règle de vente par site dans la matrice ; et « Expériences » remplace « Packages » sans catalogue défini — la porte existe, son contenu reste à écrire.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N2 bis · CHOIX DU SITE (couche Collection) ══════════ -->
+  <section class="screen" id="sc-site" data-title="N2 bis · Choix du site">
+    <div class="pad">
+      <button class="back" data-go="hub">← Que réserver</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="siteH1">Où souhaitez-vous réserver&nbsp;?</h1>
+          <p class="sub" style="margin-top:8px" id="siteSub">—</p></div>
+        <span class="node">N2 bis · Site</span>
+      </div>
+      <div class="mapsplit">
+        <div class="maplist">
+          <div class="row" style="gap:10px;flex-wrap:wrap">
+            <label class="field" style="flex:1;min-width:200px;margin-bottom:0"><input placeholder="Ville, région ou nom du golf"></label>
+            <button class="btn ghost">Autour de moi</button>
+          </div>
+          <div class="filters" id="siteFilters" style="margin:14px 0 14px"></div>
+          <div class="between" style="margin-bottom:12px">
+            <b class="h2" id="siteCount">—</b>
+            <span class="mut show-lg">Survolez une adresse pour la situer</span>
+          </div>
+          <div class="grid" id="siteList"></div>
+          <div id="siteEmpty"></div>
+          <div id="siteOff"></div>
+        </div>
+        <aside class="mapcol show-lg">
+          <div class="map" id="siteMap"><div class="maplegend" id="siteMapLeg">—</div></div>
+        </aside>
+      </div>
+      <p class="note">Écran de la couche Collection, intercalé entre « quoi » (N2) et « comment » (N4). Il n'apparaît que si le site n'est pas déjà connu : entrée par le portail Collection, ou changement de site en cours de parcours. Arrivée depuis la page d'un site, il est sauté.</p>
+      <p class="note">La liste ne s'arrête plus au golf : elle descend directement au produit — les six hôtels de la Collection, les dix-sept parcours — repérés par leur commune plutôt que par leur golf de rattachement, le golf restant en seconde ligne. Choisir une adresse fixe donc le site et le produit d'un seul geste : on entre ensuite dans le parcours à l'étape 2 (dates, chambres ou départs), l'écran « Nos hôtels / Nos parcours » n'ayant plus rien à demander.</p>
+      <p class="note">Deux facettes au-dessus de la liste : la destination, qui remplace les intertitres de zone perdus avec la carte, et — pour le green fee seulement — le format, 18 ou 9 trous. Menus repliés plutôt que rangées de chips : deux boutons au lieu de huit, et la première annonce remonte d'autant. Le bouton porte la sélection, le menu porte les comptes.</p>
+      <p class="note">Cases à cocher, donc sélection multiple : deux destinations se cumulent. Les deux facettes se comptent l'une dans la sélection de l'autre, et un compte à zéro grise la ligne au lieu de la retirer — le client voit ce qu'il vient d'exclure plutôt que de voir le menu se réécrire sous lui. Le 9 trous est aussi la porte des débutants : c'est là que se trouvent les trois parcours accessibles sans licence.</p>
+      <p class="note">Carte collée à droite, liste défilante à gauche : le repère géographique reste visible pendant tout le défilement. Les pastilles portent le prix d'appel du site, pas son nom — c'est le critère de comparaison entre deux adresses. Une pastille par golf : deux hôtels ou trois parcours d'un même site partagent le même point. En mobile, la carte disparaît au profit de la seule liste.</p>
+      <p class="note">Services sans catalogue produit (restaurant, spa, compétitions, événementiel) : même carte, même liste, mais les cartes restent au niveau du golf tant que le référentiel n'a pas de tables, de cabines ni d'épreuves à lister.</p>
+      <p class="note">Référentiel : golfs, destinations et hôtels reprennent ceux publiés sur resonance.golf. Positions cartographiques approchées, parcours, tarifs, distances et disponibilités fictifs — ils viendront du back-office.</p>
+      <p class="note">Le service est demandé avant le lieu, et non l'inverse : c'est lui qui filtre les sites. Choisir le site d'abord obligerait le client à deviner si l'adresse propose la prestation qu'il cherche.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N3/N4 · NOS HÔTELS ══════════ -->
+  <section class="screen" id="sc-heb-hotels" data-title="N4 · Hôtel — Nos hôtels" data-step="1">
+    <div class="pad">
+      <button class="back" data-go="hub">← Hub de sélection</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="hebH1">Nos hôtels</h1><p class="sub" style="margin-top:8px" id="hebSub">—</p></div>
+        <span class="node">N4 · Hôtel</span>
+      </div>
+      <div class="grid" style="margin-top:20px" id="hotelList"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · HÉBERGEMENT — RECHERCHE &amp; CHAMBRES ══════════ -->
+  <section class="screen" id="sc-heb-rooms" data-title="N4 · Hôtel — Recherche &amp; chambres" data-step="2">
+    <div class="pad">
+      <button class="back" data-go="heb-hotels">← Nos hôtels</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="roomsTitle">Chambres disponibles</h1>
+          <p class="sub" style="margin-top:8px" id="roomsCriteria">—</p></div>
+        <span class="node">N4 · Recherche &amp; chambres</span>
+      </div>
+
+      <div class="card searchbar">
+        <div class="sb-f popwrap"><span>Hôtel</span>
+          <button class="datebtn caret" id="hHotelBtn" data-pop="hotel" aria-expanded="false">
+            <span id="hHotelLbl">—</span><svg width="10" height="10" viewBox="0 0 10 10"><path d="M1 3.5 5 7.5 9 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="sbpop" id="hHotelPop" data-pop="hotel" hidden></div></div>
+        <div class="sb-f"><span>Dates du séjour</span>
+          <div class="row" style="gap:6px">
+            <button class="navd" id="hPrev" title="Décaler d'un jour">‹</button>
+            <button class="datebtn" id="hDateBtn" data-pop="date" aria-expanded="false">—</button>
+            <button class="navd" id="hNext" title="Décaler d'un jour">›</button></div></div>
+        <div class="sb-f popwrap"><span>Voyageurs &amp; chambres</span>
+          <button class="datebtn caret" id="hPaxBtn" data-pop="pax" aria-expanded="false">
+            <span id="hPaxLbl">—</span><svg width="10" height="10" viewBox="0 0 10 10"><path d="M1 3.5 5 7.5 9 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="sbpop right" id="hPaxPop" data-pop="pax" hidden></div></div>
+        <div class="sbpop wide" id="hDatePop" data-pop="date" hidden></div>
+      </div>
+      <p class="note">Les trois critères s'ouvrent sur place, sans quitter la page : un menu de compteurs pour les voyageurs, un calendrier de deux mois pour les dates, une liste d'établissements pour l'hôtel. Les résultats se rechargent à chaque changement ; les flèches décalent le séjour d'un jour sans en changer la durée.</p>
+
+      <div id="hHints"></div>
+
+      <div class="daystrip" id="hDays"></div>
+
+      <div class="chips" id="hChips">
+        <button class="chip on" data-hfilt="all">Toutes les chambres</button>
+        <button class="chip" data-hfilt="vue">Vue sur le parcours</button>
+        <button class="chip" data-hfilt="terr">Terrasse ou balcon</button>
+      </div>
+
+      <div id="hGroupWarn" style="display:none;margin-bottom:16px">
+        <div class="card" style="padding:16px;border-style:dashed">
+          <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">E3</span>
+            <div><div class="h3">À partir de 10 personnes, on passe en demande de groupe</div>
+              <p class="sub" style="margin-top:6px">Un conseiller construit le séjour avec vous et vous envoie un devis.</p>
+              <button class="btn sm" style="margin-top:12px" id="hebGroupBtn">Faire une demande de groupe</button></div></div>
+        </div>
+      </div>
+
+      <div class="grid" id="roomList"></div>
+
+      <div id="hEmpty" style="display:none">
+        <div class="card" style="padding:18px;border-style:dashed">
+          <div class="h3" id="hEmptyT">Rien de disponible sur ces dates</div>
+          <p class="sub" style="margin-top:6px" id="hEmptyD">—</p>
+          <div class="row" style="gap:10px;margin-top:14px;flex-wrap:wrap" id="hEmptyAlt"></div>
+          <div id="hEmptyHotels"></div>
+          <button class="lnk" style="margin-top:14px;display:block" id="hEmptyE1">Voir toutes les alternatives</button>
+        </div>
+      </div>
+
+      <p class="note">Losange de disponibilité de la matrice : quand une nuit est complète, trois issues sont proposées sans changer d'écran — d'autres dates (bande de dates et fenêtre de flexibilité), un autre établissement à proximité, ou le module E1. Les 12–14 octobre sont volontairement complets sur tous les hôtels.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · DÉTAIL CHAMBRE & TARIF (E4) ══════════ -->
+  <section class="screen" id="sc-heb-room" data-title="N4 · Hôtel — Détail chambre &amp; tarif (E4)" data-step="3">
+    <div class="ph" style="height:230px">Galerie chambre</div>
+    <div class="pad">
+      <button class="back" data-go="heb-rooms">← Recherche &amp; chambres</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="roomName">—</h1><p class="sub" style="margin-top:8px" id="roomDesc">—</p></div>
+        <span class="node">E4 · Tarifs &amp; conditions</span>
+      </div>
+      <div class="split" style="margin-top:8px">
+        <div>
+          <h2 class="h2" style="margin:14px 0 12px">Choisissez votre tarif</h2>
+          <div class="grid" id="rateList" style="gap:10px"></div>
+          <div class="row" style="gap:18px;margin-top:14px;flex-wrap:wrap">
+            <button class="lnk" data-e4="1">Conditions d'annulation</button>
+            <button class="lnk" data-e4="1">Taxes &amp; taxe de séjour</button>
+            <button class="lnk" data-e4="1">Comparer les tarifs</button>
+          </div>
+          <p class="note">Module E4 : le prix, les conditions et les taxes n'apparaissent qu'au moment du choix, pas avant. Le tarif Membre appelle le module A (compte) sans bloquer le parcours.</p>
+        </div>
+        <aside class="aside show-lg">
+          <div class="card">
+            <div class="mut" id="roomAsideCrit">—</div>
+            <div class="hr" style="margin:12px 0"></div>
+            <div class="tot"><span id="roomAsideRate">Tarif</span><span id="roomAsideBase">—</span></div>
+            <div class="tot"><span>Taxe de séjour</span><span id="roomAsideTax">—</span></div>
+            <div class="tot big"><span>Total</span><span id="roomAsideTot">—</span></div>
+            <button class="btn full" style="margin-top:14px" id="roomAddLg">Ajouter à mon itinéraire</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="actionbar">
+      <div class="sum"><b id="roomBarTot">—</b><span id="roomBarSub">—</span></div>
+      <button class="btn" id="roomAdd">Ajouter</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · EXTRAS ══════════ -->
+  <section class="screen" id="sc-heb-extras" data-title="N4 · Hôtel — Extras" data-step="4">
+    <div class="pad">
+      <button class="back" data-go="heb-room">← Détail de la chambre</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Ajouter des extras</h1><p class="sub" style="margin-top:8px">Facultatif. Tout reste modifiable depuis votre itinéraire.</p></div>
+        <span class="node">N4 · Extras</span>
+      </div>
+      <div class="grid" id="extraList" style="gap:10px;margin-top:18px"></div>
+      <p class="note">Dernier écran de la branche Hôtel. La suite (N5) est commune à tous les parcours.</p>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="extraTot">—</b><span id="extraSub">Extras facultatifs</span></div>
+      <button class="btn" id="extraNext">Continuer</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · GOLF — NOS PARCOURS ══════════ -->
+  <section class="screen" id="sc-golf-parcours" data-title="N4 · Golf — Nos parcours" data-step="1" data-flow="golf">
+    <div class="pad">
+      <button class="back" data-go="hub">← Hub de sélection</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="golfH1">Nos parcours</h1><p class="sub" style="margin-top:8px" id="golfSub">—</p></div>
+        <span class="node">N4 · Golf</span>
+      </div>
+      <div class="grid" style="margin-top:20px" id="courseList"></div>
+      <p class="note">Même rythme que la branche Hôtel : le produit d'abord, la date ensuite. Deux contraintes propres au golf apparaissent dès ici : l'index minimum du Parcours des Lacs (module E2) et l'accès sans licence du Compact.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · GOLF — RECHERCHE &amp; DÉPARTS ══════════ -->
+  <section class="screen" id="sc-golf-departs" data-title="N4 · Golf — Recherche &amp; départs" data-step="2" data-flow="golf">
+    <div class="pad">
+      <button class="back" data-go="golf-parcours">← Nos parcours</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="gslotTitle">Départs disponibles</h1>
+          <p class="sub" style="margin-top:8px" id="gslotCrit">—</p></div>
+        <span class="node">N4 · Recherche &amp; départs</span>
+      </div>
+
+      <div class="card searchbar">
+        <label class="sb-f"><span>Parcours</span><select id="gCourseSel"></select></label>
+        <div class="sb-f"><span>Joueurs</span>
+          <div class="qty" style="height:42px"><button id="gpaxMinus">−</button><b id="gpaxN">2</b><button id="gpaxPlus">＋</button>
+            <span class="mut" id="gflightNote" style="margin-left:2px">1 flight</span></div></div>
+        <div class="sb-f"><span>Date de jeu</span>
+          <div class="row" style="gap:6px">
+            <button class="navd" id="gPrev" title="Jour précédent">‹</button>
+            <button class="datebtn" id="gDateBtn">—</button>
+            <button class="navd" id="gNext" title="Jour suivant">›</button></div></div>
+      </div>
+
+      <div class="licrow" id="gLicRow">
+        <span class="node">E2</span>
+        <span class="sub" id="gLicTxt">—</span>
+        <button class="lnk" id="gLicBtn">Renseigner licence &amp; index</button>
+      </div>
+      <p class="note">Trois questions au même endroit — parcours, joueurs, date — et les résultats se rechargent à chaque changement. La licence n'est pas un préalable : elle débloque un tarif, elle ne bloque jamais la recherche (module E2).</p>
+
+      <div class="daystrip" id="gDays"></div>
+
+      <div class="chips" id="gChips">
+        <button class="chip on" data-filt="all">Tous les départs</button>
+        <button class="chip" data-filt="am">Matin</button>
+        <button class="chip" data-filt="pm">Après-midi</button>
+        <button class="chip" data-filt="disp">Uniquement disponibles</button>
+      </div>
+
+      <div id="gIdxWarn" style="display:none;margin-bottom:16px">
+        <div class="card" style="padding:16px;border-style:dashed">
+          <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">E2</span>
+            <div><div class="h3" id="gIdxWarnT">—</div>
+              <p class="sub" style="margin-top:6px" id="gIdxWarnD">—</p>
+              <div class="row" style="gap:10px;margin-top:12px;flex-wrap:wrap">
+                <button class="btn sm sec" data-go="golf-parcours">Choisir un autre parcours</button>
+                <button class="btn sm ghost" id="gIdxIgnore">Je joue avec un joueur classé</button></div></div></div>
+        </div>
+      </div>
+
+      <div id="gGroupWarn" style="display:none;margin-bottom:16px">
+        <div class="card" style="padding:16px;border-style:dashed">
+          <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">E3</span>
+            <div><div class="h3">À partir de 10 joueurs, on passe en demande de groupe</div>
+              <p class="sub" style="margin-top:6px">Trois flights et plus : le départ se cale avec le starter, souvent en shotgun. Un conseiller vous envoie un devis.</p>
+              <button class="btn sm" style="margin-top:12px" id="gGroupBtn">Faire une demande de groupe</button></div></div>
+        </div>
+      </div>
+
+      <div id="gslotWrap">
+        <div id="gslotMorning"></div>
+        <div id="gslotAfternoon" style="margin-top:22px"></div>
+      </div>
+
+      <div id="gEmpty" style="display:none">
+        <div class="card" style="padding:18px;border-style:dashed">
+          <div class="h3" id="gEmptyT">Aucun départ ce jour-là</div>
+          <p class="sub" style="margin-top:6px" id="gEmptyD">—</p>
+          <div class="row" style="gap:10px;margin-top:14px;flex-wrap:wrap" id="gEmptyAlt"></div>
+          <button class="lnk" style="margin-top:14px;display:block" id="gEmptyE1">Voir toutes les alternatives</button>
+        </div>
+      </div>
+
+      <p class="note">Le losange de disponibilité porte sur le créneau : cadence de 10 à 20 minutes, 4 joueurs par départ, deux départs consécutifs réservés ensemble au-delà de 4 joueurs. Quand un jour est vide, on ne renvoie pas vers un écran d'erreur — la bande de jours montre déjà où aller, et E1 reste accessible d'un clic.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · GOLF — DÉTAIL DU DÉPART &amp; TARIF (E4) ══════════ -->
+  <section class="screen" id="sc-golf-tarif" data-title="N4 · Golf — Détail du départ &amp; tarif (E4)" data-step="3" data-flow="golf">
+    <div class="ph" style="height:230px">Vue du parcours · trou n°1</div>
+    <div class="pad">
+      <button class="back" data-go="golf-departs">← Départs disponibles</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="gtarifTitle">—</h1><p class="sub" style="margin-top:8px" id="gtarifSub">—</p></div>
+        <span class="node">E4 · Tarifs &amp; conditions</span>
+      </div>
+      <div class="split" style="margin-top:8px">
+        <div>
+          <h2 class="h2" style="margin:14px 0 12px">Choisissez votre tarif</h2>
+          <div class="grid" id="grateList" style="gap:10px"></div>
+          <div class="row" style="gap:18px;margin-top:14px;flex-wrap:wrap">
+            <button class="lnk" data-e4="1">Conditions d'annulation</button>
+            <button class="lnk" data-e4="1">Politique météo &amp; carte de pluie</button>
+            <button class="lnk" data-e4="1">Comparer les tarifs</button>
+          </div>
+          <p class="note">Même module E4 que l'hébergement : prix, conditions et taxes n'apparaissent qu'au moment du choix. Deux tarifs appellent un module sans bloquer — licencié (E2) et résident du golf (panier commun).</p>
+        </div>
+        <aside class="aside show-lg">
+          <div class="card">
+            <div class="mut" id="gAsideCrit">—</div>
+            <div class="hr" style="margin:12px 0"></div>
+            <div class="tot"><span id="gAsideRate">Tarif</span><span id="gAsideBase">—</span></div>
+            <div class="tot"><span id="gAsidePaxLbl">Joueurs</span><span id="gAsidePax">—</span></div>
+            <div class="tot big"><span>Total</span><span id="gAsideTot">—</span></div>
+            <button class="btn full" style="margin-top:14px" id="gAddLg">Ajouter à mon itinéraire</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="actionbar">
+      <div class="sum"><b id="gBarTot">—</b><span id="gBarSub">—</span></div>
+      <button class="btn" id="gAdd">Ajouter</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · GOLF — EXTRAS ══════════ -->
+  <section class="screen" id="sc-golf-extras" data-title="N4 · Golf — Extras" data-step="4" data-flow="golf">
+    <div class="pad">
+      <button class="back" data-go="golf-tarif">← Détail du départ</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Avant le départ</h1><p class="sub" style="margin-top:8px">Facultatif. Tout reste modifiable depuis votre itinéraire.</p></div>
+        <span class="node">N4 · Extras</span>
+      </div>
+      <div class="grid" id="gextraList" style="gap:10px;margin-top:18px"></div>
+      <p class="note">Dernier écran de la branche Golf. La suite — cross-sell, panier commun, checkout — est strictement la même que pour l'hébergement.</p>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="gextraTot">—</b><span id="gextraSub">Extras facultatifs</span></div>
+      <button class="btn" id="gextraNext">Continuer</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N5 · CROSS-SELL ══════════ -->
+  <section class="screen" id="sc-cross" data-title="N5 · Cross-sell contextuel">
+    <div class="pad">
+      <div class="scr-head">
+        <div><h1 class="h1" id="crossTitle">Votre chambre est réservée.</h1><p class="sub" style="margin-top:8px" id="crossSub">Ce que réservent le plus souvent nos clients qui séjournent sur place.</p></div>
+        <span class="node">N5 · Cross-sell</span>
+      </div>
+      <div class="grid g3" style="margin-top:20px" id="crossList"></div>
+      <p class="note" id="crossNote">—</p>
+      <p class="note">Matrice V5 : la porte « Packages » est remplacée par « Expériences ». Son contenu n'est pas défini (« Catégorie / Détail des xp ») — les deux suggestions affichées restent les packages de la v1, en attente du catalogue.</p>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="crossTot">—</b><span>Itinéraire en cours</span></div>
+      <button class="btn sec" data-go="panier">Voir mon itinéraire</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N6 + M · PANIER COMMUN ══════════ -->
+  <section class="screen" id="sc-panier" data-title="N6 · Panier commun + M · Actions">
+    <div class="pad">
+      <div class="scr-head">
+        <div><h1 class="h1">Mon itinéraire</h1><p class="sub" style="margin-top:8px">Un seul panier pour tous les services, un seul paiement.</p></div>
+        <span class="node">N6 · Panier commun</span>
+      </div>
+      <div id="multiSite" style="display:none">
+        <div class="card" style="padding:14px;border-style:dashed;margin-bottom:14px">
+          <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">N6</span>
+            <div><div class="h3" id="msT">Itinéraire sur deux golfs</div>
+              <p class="sub" style="margin-top:6px">Les lignes gardent chacune leur site : conditions d'annulation, horaires et contacts restent ceux de l'établissement concerné. Le paiement, lui, reste unique.</p>
+              <button class="btn sm ghost" style="margin-top:10px" id="msConc">Demander un transfert entre sites</button></div></div>
+        </div>
+      </div>
+      <div class="hold"><span class="node" style="border-style:solid">M</span>
+        <span>Itinéraire réservé encore <b id="holdTimer">14:52</b> — sans blocage, il suffit de reprendre plus tard.</span></div>
+      <div class="split" style="margin-top:4px">
+        <div>
+          <div id="cartLines"></div>
+          <div id="cartEmpty" style="display:none;padding:32px 0;text-align:center" class="sub">
+            Votre itinéraire est vide.<br><button class="btn sm sec" style="margin-top:14px" data-go="hub">Choisir un service</button></div>
+          <button class="btn ghost" style="margin-top:16px" data-go="hub">＋ Continuer la navigation — ajouter un service</button>
+          <p class="note">Boucle de retour de la matrice : « ajouter un autre service ? » → oui, on repart du hub (N2) avec l'itinéraire intact ; → non, on descend au checkout (N7).</p>
+        </div>
+        <aside class="aside">
+          <div class="card">
+            <div class="between" style="margin-bottom:10px"><div class="h3">Récapitulatif</div><span class="node">E5</span></div>
+            <div id="cartTotals"></div>
+            <div class="hr" style="margin:14px 0"></div>
+            <div class="grid" style="gap:8px">
+              <button class="btn ghost sm" data-e5="promo">Appliquer un code promo</button>
+              <button class="btn ghost sm" data-e5="gift">Utiliser un bon cadeau</button>
+              <button class="btn ghost sm" data-e5="loyalty">Utiliser mes avantages fidélité</button>
+            </div>
+            <button class="btn full" style="margin-top:16px" id="toCheckout">Passer au paiement</button>
+            <p class="mut" style="margin-top:10px;text-align:center">Aucun compte requis pour continuer.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="actionbar">
+      <div class="sum"><b id="cartBarTot">—</b><span id="cartBarSub">—</span></div>
+      <button class="btn" id="toCheckoutSm">Payer</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N7 · INFORMATIONS CLIENT ══════════ -->
+  <section class="screen" id="sc-infos" data-title="N7 · Checkout — Informations client">
+    <div class="pad">
+      <button class="back" data-go="panier">← Mon itinéraire</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Vos informations</h1><p class="sub" style="margin-top:8px">Saisies une fois, réutilisées pour tous les services de l'itinéraire.</p></div>
+        <span class="node">N7 · Checkout</span>
+      </div>
+      <div class="card" style="padding:14px;border-style:dashed;margin-bottom:20px">
+        <div class="between" style="flex-wrap:wrap">
+          <div class="row"><span class="node" style="border-style:solid">A</span>
+            <span class="sub">Déjà client&nbsp;? Connectez-vous pour pré-remplir — <b>facultatif</b>, vous revenez ici, itinéraire intact.</span></div>
+          <button class="btn sm sec" id="loginInline">Se connecter</button>
+        </div>
+      </div>
+      <div class="split">
+        <div>
+          <div class="grid g2" style="gap:0 14px">
+            <label class="field"><span>Prénom</span><input id="f-fn" placeholder="Camille"></label>
+            <label class="field"><span>Nom</span><input id="f-ln" placeholder="Duchêne"></label>
+          </div>
+          <label class="field"><span>E-mail</span><input id="f-em" type="email" placeholder="camille@exemple.fr"></label>
+          <div class="grid g2" style="gap:0 14px">
+            <label class="field"><span>Téléphone</span><input placeholder="+33 6 …"></label>
+            <label class="field"><span>Pays</span><select><option>France</option><option>Belgique</option><option>Suisse</option><option>Royaume-Uni</option></select></label>
+          </div>
+          <label class="field"><span>Demandes particulières (facultatif)</span><textarea rows="3" placeholder="Arrivée tardive, étage élevé…"></textarea></label>
+          <p class="note">On ne redemande pas qui vous êtes : nom, coordonnées, licence et carte sont saisis une fois et repris sur chaque service de l'itinéraire.</p>
+        </div>
+        <aside class="aside show-lg"><div class="card"><div class="h3" style="margin-bottom:12px">Votre itinéraire</div><div id="infosRecap"></div></div></aside>
+      </div>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="infosTot">—</b><span id="infosSub">—</span></div>
+      <button class="btn" data-go="paiement">Continuer</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N7 · PAIEMENT ══════════ -->
+  <section class="screen" id="sc-paiement" data-title="N7 · Checkout — Paiement">
+    <div class="pad">
+      <button class="back" data-go="infos">← Vos informations</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Paiement</h1><p class="sub" style="margin-top:8px">Un seul règlement, quel que soit le nombre de services réservés.</p></div>
+        <span class="node">N7 · Paiement · S</span>
+      </div>
+      <div class="split">
+        <div>
+          <div class="grid" style="gap:10px">
+            <button class="opt on" data-pay id="payCard"><span class="mark"></span><span><b class="h3">Carte bancaire</b><span class="sub" style="display:block">Visa, Mastercard, Amex — via Stripe</span></span></button>
+            <button class="opt" data-pay><span class="mark"></span><span><b class="h3">Apple Pay / Google Pay</b><span class="sub" style="display:block">Paiement en un geste</span></span></button>
+            <button class="opt" data-pay id="pay3x" style="display:none"><span class="mark"></span><span><b class="h3">Payer en 3 fois</b><span class="sub" style="display:block" id="pay3xSub">—</span></span></button>
+          </div>
+          <div class="card" id="cardFields" style="padding:16px;margin-top:16px">
+            <div class="grid g2" style="gap:0 14px"><label class="field"><span>Numéro de carte</span><input placeholder="•••• •••• •••• ••••"></label>
+            <label class="field"><span>Expiration / CVC</span><input placeholder="MM/AA   •••"></label></div>
+            <div class="ph" style="height:34px;border-radius:5px">Champ sécurisé Stripe — système externe (S)</div>
+          </div>
+          <label class="opt sq" id="cgvOpt" style="margin-top:16px"><span class="mark"></span>
+            <span class="sub">J'accepte les conditions de vente et les conditions d'annulation propres à chaque service de l'itinéraire.</span></label>
+          <p class="note">Les crédits appliqués (E5) sont revérifiés ici avant encaissement. Question ouverte côté client : tout est-il prépayé, ou certaines lignes sont-elles « à régler sur place » ?</p>
+          <p class="note">Matrice V5 : paiement en 3 fois via Klarna ou Alma, proposé au-delà d'un seuil fixé ici à 200 € — valeur à confirmer. Amex passe par Stripe comme les autres cartes : la commission de 2,5 % est un coût d'encaissement, elle n'est pas répercutée au client dans cette maquette.</p>
+        </div>
+        <aside class="aside"><div class="card"><div class="h3" style="margin-bottom:12px">Récapitulatif</div><div id="payRecap"></div>
+          <div id="payTotals" style="margin-top:8px"></div>
+          <button class="btn full" style="margin-top:16px" id="payBtn">Payer</button></div></aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ N7 · CONFIRMATION ══════════ -->
+  <section class="screen" id="sc-confirm" data-title="N7 · Confirmation de réservation">
+    <div class="pad" style="max-width:640px;margin:0 auto">
+      <div class="scr-head" style="margin-top:16px">
+        <div><h1 class="h1">C'est réservé.</h1>
+          <p class="sub" style="margin-top:8px">Une seule confirmation pour l'ensemble de votre séjour, envoyée à <b id="confMail">votre adresse</b>.</p></div>
+        <span class="node">N7 · Confirmation</span>
+      </div>
+      <div class="card" style="padding:18px;margin-top:16px">
+        <div class="between"><span class="mut">Référence d'itinéraire</span><b id="confRef">RGC-2026-00418</b></div>
+        <div class="hr" style="margin:14px 0"></div>
+        <div id="confRecap"></div>
+      </div>
+      <div class="grid g2" style="margin-top:16px;gap:10px">
+        <button class="btn sec">Ajouter au calendrier (.ics)</button>
+        <button class="btn ghost" id="confAcc">Créer mon compte en 1 clic</button>
+      </div>
+      <p class="note">La création de compte est proposée <b>après</b> la réservation, jamais avant. La gestion de réservation (N8) reste hors périmètre de cette v1. La question « PMS ou booking engine ? » qui la marquait en V1 a disparu de la matrice V5, sans arbitrage écrit.</p>
+      <button class="btn ghost full" style="margin-top:18px" id="restart">↺ Recommencer le parcours</button>
+    </div>
+  </section>
+
+  <!-- ══════════ E1 · AUCUNE DISPONIBILITÉ (module partagé) ══════════ -->
+  <section class="screen" id="sc-e1" data-title="E1 · Aucune disponibilité">
+    <div class="pad">
+      <button class="back" id="e1Back" data-go="heb-rooms">← Modifier ma recherche</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="e1Title">Rien de disponible sur ces dates</h1>
+          <p class="sub" style="margin-top:8px" id="e1Crit">—</p></div>
+        <span class="node">E1 · Module partagé</span>
+      </div>
+      <div class="grid g2" style="margin-top:18px;gap:12px" id="e1Opts"></div>
+      <p class="note" id="e1Note">—</p>
+    </div>
+  </section>
+
+  <!-- ══════════ E3 · GROUPES ══════════ -->
+  <section class="screen" id="sc-e3" data-title="E3 · Demande groupe (10+)">
+    <div class="pad">
+      <button class="back" id="e3Back" data-go="heb-rooms">← Retour au parcours</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Demande de groupe</h1><p class="sub" style="margin-top:8px">À partir de 10 personnes, un conseiller construit le séjour et vous envoie un devis.</p></div>
+        <span class="node">E3 · Sortie du moteur</span>
+      </div>
+      <div class="split" style="margin-top:16px">
+        <div>
+          <div class="grid g2" style="gap:0 14px">
+            <label class="field"><span>Nom du groupe / société</span><input placeholder="Association, entreprise…"></label>
+            <label class="field"><span>Nombre de personnes</span><input id="e3Pax" value="10"></label>
+          </div>
+          <div class="grid g2" style="gap:0 14px">
+            <label class="field"><span>Dates souhaitées</span><input placeholder="12 → 14 octobre 2026"></label>
+            <label class="field"><span>Services souhaités</span><select id="e3Serv"><option>Hôtel seul</option><option>Golf seul — plusieurs flights</option><option>Hôtel + golf</option><option>Séminaire complet</option></select></label>
+          </div>
+          <label class="field"><span>Golf ou destination souhaitée</span><select id="e3Site"></select></label>
+          <label class="field"><span>Précisions</span><textarea rows="3" placeholder="Compétition interne, dîner de gala…"></textarea></label>
+          <div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn">Envoyer ma demande</button><button class="btn ghost">Échanger sur WhatsApp</button></div>
+        </div>
+        <aside class="aside show-lg"><div class="card" style="border-style:dashed">
+          <div class="h3">Seule branche qui ne converge pas</div>
+          <p class="sub" style="margin-top:8px">La demande de groupe sort du booking engine et bascule vers BackYou. C'est un lead, pas une réservation : elle n'alimente pas le panier commun.</p>
+          <p class="sub" style="margin-top:10px">C'est aussi la seule branche où le multi-golfs se vend vraiment : un groupe peut demander trois parcours sur trois destinations dans une même demande.</p>
+        </div></aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ N0 · FOOTER + FAB ══════════ -->
+  <div class="fabs"><button class="fab" title="Chatbot / FAQ">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.2-6.4"/><path d="M8 19.5 4.5 21l1-3.5"/><path d="M9 10h6M9 14h4"/></svg></button></div>
+  <footer class="appfoot">
+    <div class="cols">
+      <div><h4>La Collection</h4><ul><li>Nos douze golfs</li><li>Hôtels</li><li>Parcours</li><li>Spa</li></ul></div>
+      <div><h4>Réserver</h4><ul><li>Séjour</li><li>Green fee</li><li>Table</li><li>Bon cadeau</li></ul></div>
+      <div><h4>Aide</h4><ul><li>FAQ</li><li>Conciergerie</li><li>Conditions d'annulation</li></ul></div>
+      <div><h4>Langue</h4><ul><li>Français</li><li>English</li></ul></div>
+    </div>
+    <div class="row" style="margin-top:18px"><span class="node wrap">N0 · Couche globale — sites de la Collection, header, recherche, langues, footer, chatbot, FAQ</span></div>
+  </footer>
+
+</div>
+</div>
+
+<!-- ══════════ Modales ══════════ -->
+<div class="ovl" id="ovl"><div class="sheet" id="sheet"></div></div>
+
+<script>
+/* ═════════ Données ═════════ */
+const HOTELS=[
+ {site:'touquet',id:'manoir-hotel',n:'Le Manoir Hôtel',t:'Hôtel 4★ · 41 chambres',d:'Face aux parcours, bar et restaurant récemment rénovés.',from:190},
+ {site:'hardelot',id:'najeti',n:'Najeti Hôtel du Parc',t:'Hôtel · Hardelot',d:'Dans le parc du golf, à quelques minutes des deux parcours.',from:140},
+ {site:'hardelot',id:'regina',n:'Hôtel Regina',t:'Hôtel · Hardelot-Plage',d:'Au cœur d\'Hardelot-Plage, à cinq minutes du golf.',from:120},
+ {site:'yvelines',id:'novotel-sqy',n:'Novotel Saint-Quentin-en-Yvelines',t:'Hôtel · 131 chambres',d:'Base francilienne à une vingtaine de minutes du parcours.',from:110},
+ {site:'seignosse',id:'70ha',n:'Hôtel 70 hectares… & l\'Océan',t:'Hôtel · 32 chambres',d:'Entre le golf et l\'océan, restaurant sur place.',from:160},
+ {site:'opio',id:'begude',n:'Château de la Bégude',t:'Hôtel 4★ · 41 chambres',d:'Bastide du XVII<sup>e</sup> au bord du parcours, spa de 336 m².',from:210}];
+const ROOMS=[
+ {id:'fairway',n:'Chambre Fairway',d:'26 m² · lit king · vue jardin',cap:2,p:320},
+ {id:'deluxe',n:'Chambre Deluxe Terrasse',d:'34 m² · terrasse privative · vue parcours',cap:3,p:410,vue:true,terr:true,pet:true},
+ {id:'junior',n:'Junior Suite Green',d:'48 m² · salon séparé · vue sur le 18',cap:3,p:560,vue:true,pet:true},
+ {id:'signature',n:'Suite Signature',d:'72 m² · deux chambres · terrasse et service majordome',cap:4,p:890,vue:true,terr:true,pet:true}];
+const RATES=[
+ {id:'flex',n:'Tarif flexible',d:'Annulation gratuite jusqu\'à 24 h avant l\'arrivée',k:1},
+ {id:'nanr',n:'Tarif non remboursable',d:'−15 % · non modifiable, non annulable',k:.85},
+ {id:'membre',n:'Tarif membre',d:'−20 % · réservé aux membres et licenciés de la Collection',k:.8,acc:true}];
+const EXTRAS=[
+ {id:'pdj',n:'Petit-déjeuner à l\'hôtel',d:'Servi de 7 h à 11 h',p:32,per:'pers/nuit'},
+ {id:'transfert',n:'Transfert aéroport',d:'Berline privée, aller simple',p:120,per:'trajet'},
+ {id:'late',n:'Départ tardif 16 h',d:'Sous réserve de disponibilité',p:90,per:'séjour'},
+ {id:'practice',n:'Practice illimité',d:'Balles à volonté pendant le séjour',p:45,per:'pers'}];
+/* Matrice V5 : six portes d'entrée, dont Golf qui en regroupe trois.
+   `serv` = clé de disponibilité dans SITES.serv quand elle diffère de l'id. */
+const DOORS=[
+ {id:'heb',n:'Hôtel',d:'Chambres, suites et villas',go:'heb-hotels'},
+ {id:'golf',n:'Golf',d:'Compétitions, green fees, carnets &amp; pass',sub:[
+   {id:'comp',n:'Compétitions',serv:'comp',d:'Calendrier, séries et inscriptions',acc:true},
+   {id:'gf',n:'Green fee',serv:'golf',d:'Départs sur les parcours de la Collection',go:'golf-parcours'},
+   {id:'carnets',n:'Carnets & pass',serv:'golf',d:'Licence, passeports, golf pass, carnets de cours et de voiturettes'}]},
+ {id:'resto',n:'Restaurant',d:'Tables et club houses'},
+ {id:'spa',n:'Spa',d:'Soins, praticiens et rituels'},
+ {id:'xp',n:'Expériences',d:'Catégorie, détail et participants',def:true},
+ {id:'evt',n:'Événementiel',d:'Billetterie des événements'}];
+const ALLDOORS=DOORS.reduce((a,d)=>a.concat([d],d.sub||[]),[]);
+const doorOf=id=>ALLDOORS.find(x=>x.id===id);
+const servOf=d=>(typeof d==='string'?(doorOf(d)||{id:d}):d).serv||(typeof d==='string'?d:d.id);
+const FULL=['2026-10-12','2026-10-13','2026-10-14'];
+const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const DOW=['L','M','M','J','V','S','D'];
+
+/* ═════════ État ═════════ */
+let S;
+function fresh(){return{hotel:null,din:null,dout:null,dchosen:false,flex:0,lastNts:2,rooms:[{a:2,e:0}],pets:false,
+  hnote:null,room:null,rate:'flex',extras:[],
+  g:{course:null,date:null,pax:2,lic:'',idx:'24,5',idxOk:false,slot:null,rate:'public',extras:[]},
+  site:null,pending:null,src:'heb',cart:[],credits:[],logged:false,email:''}}
+S=fresh();
+
+/* ═════════ Utilitaires ═════════ */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const eur=n=>n===0?'Inclus':new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const iso=d=>d.toISOString().slice(0,10);
+const fdate=s=>{const d=new Date(s+'T12:00:00');return d.getDate()+' '+MONTHS[d.getMonth()].toLowerCase();};
+const fshort=s=>{const d=new Date(s+'T12:00:00');return d.getDate()+' '+MONTHS[d.getMonth()].slice(0,3).toLowerCase()+'.';};
+const nights=()=>S.din&&S.dout?Math.round((new Date(S.dout)-new Date(S.din))/864e5):0;
+const pax=()=>S.rooms.reduce((t,r)=>t+r.a+r.e,0);
+const stage=$('#stage');
+
+/* ═════════ Navigation ═════════ */
+function go(id){
+  shutPops();
+  $$('.screen').forEach(s=>s.classList.toggle('on',s.id==='sc-'+id));
+  const sc=$('#sc-'+id); if(!sc)return;
+  renderSteps(sc); $('#jump').value=id;
+  if(stage.dataset.vp==='mobile')stage.scrollTop=0; else window.scrollTo({top:0,behavior:'instant'});
+  if(id==='panier')renderCart(); if(id==='infos')renderRecap('#infosRecap');
+  if(id==='golf-tarif'&&S.g.slot)renderGTarif(); if(id==='heb-room'&&S.room)renderRoom();
+  if(id==='golf-departs'&&S.g.course)renderGSearch();
+  if(id==='heb-rooms'&&S.hotel)renderHebSearch();
+  if(id==='site')renderSiteScreen();
+  if(id==='golf-extras')renderGExtras(); if(id==='heb-extras')renderExtras();
+  if(id==='cross')renderCross(S.src);
+  if(id==='paiement'){renderRecap('#payRecap',false);renderTotals('#payTotals');renderPay3x();$('#payBtn').textContent='Payer '+eur(total());}
+  if(id==='cross')$('#crossTot').textContent=eur(total())+' — '+S.cart.length+' service'+(S.cart.length>1?'s':'');
+}
+const STEPS={heb:['Hôtel','Chambres','Tarif','Extras'],golf:['Parcours','Départ','Tarif','Extras']};
+function renderSteps(sc){
+  $$('.steps').forEach(e=>e.remove());
+  const st=sc.dataset.step; if(!st)return;
+  const labels=STEPS[sc.dataset.flow||'heb'];
+  const el=document.createElement('div'); el.className='steps';
+  el.innerHTML=labels.map((l,i)=>{const n=i+1,cls=n<st?'done':n==st?'now':'';
+    return (i?'<span class="sep"></span>':'')+`<span class="s ${cls}"><i>${n}</i>${l}</span>`}).join('');
+  sc.insertBefore(el,sc.firstChild);
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'); if(g){go(g.dataset.go);return}
+  const d=e.target.closest('[data-door]'); if(d){openService(d.dataset.door);return}
+  const b=e.target.closest('[data-branch]'); if(b){branchModal(b.dataset.branch);return}
+  const e4=e.target.closest('[data-e4]'); if(e4){e4Modal();return}
+  const e5=e.target.closest('[data-e5]'); if(e5){e5Modal(e5.dataset.e5);return}
+});
+
+/* ═════════ Modales ═════════ */
+function sheet(html){$('#sheet').innerHTML=html;$('#ovl').classList.add('on')}
+function closeSheet(){$('#ovl').classList.remove('on')}
+$('#ovl').addEventListener('click',e=>{if(e.target.id==='ovl'||e.target.closest('.x'))closeSheet()});
+const head=(t,n)=>`<div class="sheet-h"><div><h3 class="h2">${t}</h3>${n?`<span class="node" style="margin-top:8px">${n}</span>`:''}</div><button class="x">✕</button></div>`;
+
+function branchModal(name){
+  sheet(head('Branche « '+name+' » — non maquettée dans cette v1','N3 · Points d\'entrée')+
+  `<p class="sub" style="margin-top:12px">La matrice V5 décrit six portes d'entrée, dont Golf qui en regroupe trois. Ce prototype détaille <b>Hôtel</b> et <b>Green fee</b> de bout en bout ; les autres suivent exactement le même rythme (choix du produit → date → paramètres → losange de disponibilité → détail &amp; tarif → extras) et convergent vers le même panier.</p>
+  <p class="note" style="display:block">Ce que la branche ${name} ajouterait de spécifique : ${
+    name==='Restaurant'?'nombre de couverts, service midi/soir, réservation sans prépaiement.':
+    name==='Spa'?'soin d\'abord, praticien optionnel, créneaux par cabine.':
+    name==='Compétitions'?'contrôle de licence, index et places (E2). La V1 réservait cette branche aux clients connectés ; la V5 a retiré la contrainte, sans dire si c\'est un arbitrage ou un oubli.':
+    name==='Carnets & pass'?'choix de la catégorie parmi les six de la matrice, contenu et durée de validité, nombre de bénéficiaires. Aucune règle de vente par site : la maquette les propose partout où il y a du golf, hypothèse à confirmer.':
+    name==='Expériences'?'catégorie, détail, participants. La V5 remplace « Packages » par « Expériences » sans en définir le catalogue.':'billets, catégories et quantités.'}</p>
+  <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Compris</button>`);
+}
+function e4Modal(){
+  if($('.screen.on')&&$('.screen.on').dataset.flow==='golf'){e4GolfModal();return}
+  const n=nights()||2,r=RATES.find(x=>x.id===S.rate),base=(S.room?Math.round(stayPrice(S.room,S.din,n)/n):320);
+  sheet(head('Tarifs, conditions et taxes','E4 · Module partagé')+
+  `<div class="grid" style="gap:10px;margin-top:14px">
+  ${RATES.map(x=>`<div class="card" style="padding:12px"><div class="between"><b class="h3">${x.n}</b><b>${eur(Math.round(base*x.k))}<span class="mut"> /nuit</span></b></div><div class="sub" style="margin-top:4px">${x.d}</div></div>`).join('')}
+  <div class="card" style="padding:12px"><b class="h3">Tarif corporate / négocié</b><div class="sub" style="margin-top:4px">Sur code société, appliqué au moment du choix.</div></div></div>
+  <div class="hr"></div>
+  <div class="tot"><span>${n} nuit${n>1?'s':''} × ${eur(Math.round(base*(r?r.k:1)))}</span><span>${eur(Math.round(base*(r?r.k:1))*n)}</span></div>
+  <div class="tot"><span>Taxe de séjour · ${pax()} pers × ${n} nuit${n>1?'s':''}</span><span>${eur(pax()*n*3)}</span></div>
+  <div class="tot"><span>TVA</span><span>Incluse</span></div>
+  <p class="sub" style="margin-top:14px"><b>Annulation.</b> Tarif flexible : gratuit jusqu'à 24 h avant l'arrivée. Tarif non remboursable : aucun remboursement. Chaque service de l'itinéraire conserve ses propres conditions.</p>
+  <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Fermer</button>`);
+}
+function e4GolfModal(){
+  const s=S.g.slot||{p:(S.g.course?S.g.course.from:145),t:'—'},p=S.g.pax,r=grate();
+  sheet(head('Tarifs, conditions et météo','E4 · Module partagé — branche Golf')+
+  `<div class="grid" style="gap:10px;margin-top:14px">
+  ${GRATES.map(x=>`<div class="card" style="padding:12px"><div class="between"><b class="h3">${x.n}</b><b>${eur(Math.round(s.p*x.k))}<span class="mut"> /joueur</span></b></div><div class="sub" style="margin-top:4px">${x.d}</div></div>`).join('')}
+  <div class="card" style="padding:12px"><b class="h3">Tarif société / séminaire</b><div class="sub" style="margin-top:4px">Sur code société, appliqué au moment du choix.</div></div></div>
+  <div class="hr"></div>
+  <div class="tot"><span>${p} joueur${p>1?'s':''} × ${eur(Math.round(s.p*r.k))}</span><span>${eur(Math.round(s.p*r.k)*p)}</span></div>
+  <div class="tot"><span>Départ ${s.t}${s.tag?' · '+s.tag:''}</span><span>${s.k&&s.k!==1?(s.k<1?'−'+Math.round((1-s.k)*100)+' %':''):'Plein tarif'}</span></div>
+  <div class="tot"><span>TVA</span><span>Incluse</span></div>
+  <p class="sub" style="margin-top:14px"><b>Annulation.</b> Green fee public : gratuit jusqu'à 48 h avant le départ. Départ non modifiable : aucun remboursement.<br>
+  <b>Météo.</b> Parcours fermé par la direction : remboursement intégral. Interruption avant le trou n°9 : carte de pluie valable un an sur le même parcours.</p>
+  <p class="sub" style="margin-top:10px"><b>Retard.</b> Passé 10 minutes après l'heure de départ, le starter réattribue le créneau — la règle du parcours, pas celle du moteur.</p>
+  <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Fermer</button>`);
+}
+function e5Modal(kind){
+  if(kind==='promo'){
+    sheet(head('Appliquer un code promo','E5 · Cagnotte, crédits & fidélité')+
+    `<label class="field" style="margin-top:14px"><span>Code</span><input id="promoIn" placeholder="Ex. ROSIE10"></label>
+     <div id="promoMsg" class="sub"></div>
+     <button class="btn full" style="margin-top:8px" id="promoOk">Appliquer</button>
+     <p class="note" style="display:block">Codes de test : <b>ROSIE10</b> (−10 %) · tout autre code renvoie l'erreur « code invalide ou expiré » prévue par la matrice.</p>`);
+    $('#promoOk').onclick=()=>{
+      const v=$('#promoIn').value.trim().toUpperCase();
+      if(v==='ROSIE10'){addCredit({id:'promo',n:'Code promo ROSIE10',pct:.1});closeSheet();renderCart()}
+      else $('#promoMsg').innerHTML='<b style="color:#a11">Code invalide ou expiré.</b> Vérifiez la saisie ou contactez la conciergerie.';
+    };
+  }
+  if(kind==='gift'){
+    sheet(head('Utiliser un bon cadeau','E5 + G · Secret Box')+
+    `<p class="sub" style="margin-top:12px">Le bon Secret Box est émis par une plateforme externe. Le crédit est appliqué à l'itinéraire, puis revérifié au paiement.</p>
+     <label class="field" style="margin-top:14px"><span>Numéro du bon</span><input value="SB-4471-9082"></label>
+     <button class="btn full" id="giftOk">Appliquer le crédit de 150 €</button>`);
+    $('#giftOk').onclick=()=>{addCredit({id:'gift',n:'Bon cadeau Secret Box',amt:150});closeSheet();renderCart()};
+  }
+  if(kind==='loyalty'){
+    sheet(head('Mes avantages fidélité','E5 · Fidélité')+
+    `<div class="card" style="padding:14px;margin-top:14px"><div class="between"><span class="sub">Solde de points</span><b>1 240 pts</b></div>
+     <div class="between" style="margin-top:6px"><span class="sub">Conversion</span><b>1 240 pts = 40 €</b></div></div>
+     <button class="btn full" style="margin-top:14px" id="loyOk">Utiliser 1 240 points</button>
+     <p class="note" style="display:block">Nécessite un compte connecté (module A) — proposé sans jamais bloquer le parcours.</p>`);
+    $('#loyOk').onclick=()=>{addCredit({id:'loy',n:'Avantages fidélité (1 240 pts)',amt:40});S.logged=true;closeSheet();renderCart()};
+  }
+}
+function addCredit(c){if(!S.credits.find(x=>x.id===c.id))S.credits.push(c)}
+function accountModal(){
+  sheet(head('Votre compte','A · Module partagé, jamais bloquant')+
+  `<p class="sub" style="margin-top:12px">La connexion se pose par-dessus le parcours : après connexion, vous revenez exactement à l'écran quitté, itinéraire intact.</p>
+   <div class="grid" style="gap:10px;margin-top:16px">
+     <button class="opt" id="accGuest"><span class="mark"></span><span><b class="h3">Continuer en invité</b><span class="sub" style="display:block">Aucune création de compte requise</span></span></button>
+     <button class="opt" id="accLogin"><span class="mark"></span><span><b class="h3">Se connecter</b><span class="sub" style="display:block">Retrouver ses infos, sa fidélité et ses tarifs membres</span></span></button>
+     <button class="opt" id="accNew"><span class="mark"></span><span><b class="h3">Créer un compte</b><span class="sub" style="display:block">Nom, e-mail, téléphone, date de naissance, licence</span></span></button>
+   </div>
+   <div class="card" style="padding:12px;margin-top:14px;border-style:dashed"><div class="sub"><b>Couche golf.</b> Rattacher sa licence FFGolf débloque index, compétitions et tarifs licenciés — hors périmètre de cette v1.</div></div>`);
+  $('#accGuest').onclick=closeSheet;
+  $('#accLogin').onclick=()=>{S.logged=true;$('#f-fn')&&($('#f-fn').value='Camille');$('#f-ln')&&($('#f-ln').value='Duchêne');
+    $('#f-em')&&($('#f-em').value='camille.duchene@exemple.fr');closeSheet();renderCart()};
+  $('#accNew').onclick=()=>{S.logged=true;closeSheet()};
+}
+$('#accBtn').onclick=accountModal;
+$('#loginInline').onclick=accountModal;
+$('#giftBtn').onclick=()=>sheet(head('Offrir un bon cadeau','G · Système externe')+
+  `<p class="sub" style="margin-top:12px">L'achat de bon cadeau se fait sur la plateforme Secret Box. Le parcours d'achat est hors périmètre de cette architecture ; seuls les points d'intégration sont décrits.</p>
+   <div class="ph" style="height:80px;margin-top:14px;border-radius:6px">Redirection vers le site Secret Box</div>
+   <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Fermer</button>`);
+
+/* ═════════ N0 · COUCHE COLLECTION — sites ═════════ */
+const ZONES=[
+ {id:'opale',n:'Côte d\'Opale'},{id:'paris',n:'Paris — Île-de-France'},{id:'landes',n:'Côte Landaise'},
+ {id:'paca',n:'Provence — Côte d\'Azur'},{id:'be',n:'Belgique'}];
+const SITES=[
+ {id:'touquet',lat:50.52,lon:1.59,z:'opale',n:'Le Touquet Golf Resort',r:'Le Touquet-Paris-Plage (62)',km:'2 h 30 de Paris',
+  d:'Trois parcours dont La Mer, élu meilleur links de France, et un practice TrackMan Range.',
+  serv:['heb','golf','resto','xp','comp','evt']},
+ {id:'hardelot',lat:50.63,lon:1.63,z:'opale',n:'Golf d\'Hardelot',r:'Neufchâtel-Hardelot (62)',km:'25 min du Touquet',
+  d:'Deux 18 trous — Les Pins, signé Tom Simpson, et Les Dunes — dans la forêt d\'Hardelot.',
+  serv:['heb','golf','resto','xp','comp','evt']},
+ {id:'yvelines',lat:48.81,lon:1.77,z:'paris',n:'Golf des Yvelines',r:'La Queue-lez-Yvelines (78)',km:'45 min de Paris',
+  d:'Un 18 trous et un 9 trous dans le parc du château de la Couharde.',
+  serv:['heb','golf','resto','xp','comp','evt']},
+ {id:'seignosse',lat:43.69,lon:-1.38,z:'landes',n:'Golf de Seignosse',r:'Seignosse (40)',km:'35 min de Bayonne',
+  d:'Dix-huit trous en forêt de pins, régulièrement classé parmi les meilleurs parcours de France.',
+  serv:['heb','golf','resto','xp','comp']},
+ {id:'moliets',lat:43.85,lon:-1.38,z:'landes',n:'Golf de Moliets',r:'Moliets-et-Maa (40)',km:'25 min de Seignosse',
+  d:'Dix-huit trous signés Robert Trent Jones Sr., entre océan et forêt landaise.',
+  serv:['golf','resto','comp']},
+ {id:'servanes',lat:43.69,lon:4.87,z:'paca',n:'Golf de Servanes',r:'Mouriès (13)',km:'30 min d\'Arles',
+  d:'Dix-huit trous au pied des Alpilles, autour d\'un domaine du XVIII<sup>e</sup>.',
+  serv:['golf','resto','comp','evt']},
+ {id:'saintebaume',lat:43.37,lon:5.79,z:'paca',n:'Golf Sainte Baume',r:'Nans-les-Pins (83)',km:'40 min de Marseille',
+  d:'Dix-huit trous au pied du massif de la Sainte-Baume.',
+  serv:['golf','resto','comp','evt']},
+ {id:'salette',lat:43.28,lon:5.44,z:'paca',n:'Golf Bastide de la Salette',r:'Marseille (13)',km:'dans Marseille',
+  d:'Dix-huit trous aux portes de la ville, ouverts toute l\'année.',
+  serv:['golf','resto','comp']},
+ {id:'grandebastide',lat:43.66,lon:6.97,z:'paca',n:'Golf de la Grande Bastide',r:'Châteauneuf-Grasse (06)',km:'25 min de Cannes',
+  d:'Dix-huit trous vallonnés entre Grasse et Cannes.',
+  serv:['golf','resto','comp']},
+ {id:'opio',lat:43.71,lon:7.01,z:'paca',n:'Opio-Valbonne Golf Resort',r:'Opio (06)',km:'20 min de Cannes',
+  d:'Dix-huit trous, hôtel 4★ Château de la Bégude et spa de 336 m².',
+  serv:['heb','golf','resto','spa','xp','comp','evt']},
+ {id:'roquebrune',lat:43.44,lon:6.63,z:'paca',n:'Golf de Roquebrune',r:'Roquebrune-sur-Argens (83)',km:'25 min de Saint-Raphaël',
+  d:'Dix-huit trous vallonnés face au Rocher de Roquebrune.',
+  serv:['golf','resto','comp','evt']},
+ {id:'cleydael',lat:51.13,lon:4.38,z:'be',n:'Cleydael Golf & Country Club',r:'Aartselaar · Anvers',km:'20 min d\'Anvers',
+  d:'Dix-huit trous sur 65 hectares autour d\'un château, aux portes d\'Anvers.',
+  serv:['golf','resto','comp','evt']}];
+const VERBS={heb:'séjourner',golf:'jouer',gf:'jouer',resto:'dîner',spa:'prendre soin de vous',
+  carnets:'acheter votre carnet',xp:'vivre l\'expérience',comp:'jouer la compétition',evt:'organiser votre événement'};
+const site=()=>S.site;
+const siteName=()=>S.site?S.site.n:'la Collection';
+const hasServ=id=>!S.site||S.site.serv.includes(id);
+function siteInfo(st,serv){
+  serv=servOf(serv);
+  if(serv==='heb'){const h=HOTELS.filter(x=>x.site===st.id);
+    return h.length+' hôtel'+(h.length>1?'s':'')+' · à partir de '+eur(Math.min(...h.map(x=>x.from)))+' / nuit'}
+  if(serv==='golf'){const c=COURSES.filter(x=>x.site===st.id);
+    return c.length+' parcours · green fee dès '+eur(Math.min(...c.map(x=>x.from)))}
+  return st.serv.length+' services sur ce site';
+}
+function syncSite(keep){
+  $('#siteBtnLbl').textContent=S.site?S.site.n:'Toute la Collection';
+  $('#accH1').textContent=S.site?S.site.n+', six façons d\'y venir.':SITES.length+' golfs, six façons d\'y venir.';
+  $('#accSub').textContent=S.site
+    ?'Chambre, départ, table, soin : tout se réserve au même endroit, dans un seul panier, avec un seul paiement.'
+    :'Chambre, départ, table, soin : sur les '+SITES.length+' golfs de la Collection, un seul panier et un seul paiement.';
+  $('#siteBanner').style.display=S.site?'flex':'none';
+  const hb=HOTELS.filter(h=>!S.site||h.site===S.site.id), cs=COURSES.filter(c=>!S.site||c.site===S.site.id);
+  $('#accHeb').textContent=S.site
+    ?(hb.length?hb.length+' hôtel'+(hb.length>1?'s':'')+' sur place':'Pas d\'hébergement sur ce golf')
+    :hb.length+' hôtels sur '+SITES.filter(x=>x.serv.includes('heb')).length+' golfs';
+  $('#accGolf').textContent=S.site
+    ?cs.length+' parcours sur place'
+    :cs.length+' parcours sur '+SITES.length+' golfs';
+  $('#accResto').textContent=S.site?'Club house et table sur place':'Club house et table sur chaque golf';
+  if(S.site)$('#siteBannerT').textContent='Vous êtes entré par le site « '+S.site.n+' » : le choix du site est déjà fait, l\'écran N2 bis est sauté.';
+  if(!keep){S.hotel=null;S.g.course=null}
+  renderHub();renderHotels();renderCourses();
+}
+$('#siteStrip').innerHTML=ZONES.map(z=>{
+ const l=SITES.filter(x=>x.z===z.id);if(!l.length)return '';
+ return `<div style="grid-column:1/-1;margin:12px 0 -2px"><b class="h3">${z.n}</b><span class="mut"> · ${l.length} golf${l.length>1?'s':''}</span></div>`
+ +l.map(s=>`<button class="card" data-sitego="${s.id}" style="padding:13px;text-align:left">
+   <div class="h3">${s.n}</div><div class="mut" style="margin-top:4px">${s.r}</div>
+   <div class="mut" style="margin-top:6px">${s.serv.length} services · ${s.km}</div></button>`).join('');
+}).join('');
+$$('[data-sitego]').forEach(b=>b.onclick=()=>{S.site=SITES.find(s=>s.id===b.dataset.sitego);syncSite();go('hub')});
+$('#siteBtn').onclick=()=>siteModal();
+$('#siteBannerX').onclick=()=>{S.site=null;syncSite()};
+function siteModal(){
+  sheet(head('Les sites de la Collection','N0 · Couche Collection')+
+  `<p class="sub" style="margin-top:12px">Douze golfs en France et en Belgique, réunis en cinq destinations. Le golf choisi conditionne les services proposés, les tarifs et les disponibilités — mais il est porté par chaque ligne de l'itinéraire, pas par la session : un même panier peut mêler deux sites.</p>
+   <div class="grid" style="gap:8px;margin-top:16px">
+     <button class="opt ${S.site?'':'on'}" data-sw=""><span class="mark"></span><span><b class="h3">Toute la Collection</b><span class="sub" style="display:block">Le site sera demandé au moment de choisir un service</span></span></button>
+     ${SITES.map(s=>`<button class="opt ${S.site&&S.site.id===s.id?'on':''}" data-sw="${s.id}"><span class="mark"></span>
+       <span style="flex:1"><span class="between"><b class="h3">${s.n}</b><span class="mut">${s.km}</span></span>
+       <span class="sub" style="display:block;margin-top:3px">${s.r} · ${s.serv.length} services</span></span></button>`).join('')}
+   </div>`);
+  $$('[data-sw]').forEach(b=>b.onclick=()=>{
+    S.site=b.dataset.sw?SITES.find(s=>s.id===b.dataset.sw):null;syncSite();closeSheet();
+  });
+}
+
+/* ═════════ N2 · hub de sélection produit ═════════ */
+function renderHub(){
+  const st=S.site;
+  $('#hubTitle').innerHTML=st?'Que souhaitez-vous réserver au '+st.n+'&nbsp;?':'Que souhaitez-vous réserver&nbsp;?';
+  $('#hubSub').textContent=st
+    ?'Vous pourrez ajouter d\'autres services ensuite, ici ou sur un autre site, sans repartir de zéro.'
+    :'Le lieu vous sera demandé juste après : c\'est le service choisi qui détermine les sites possibles.';
+  const nSites=d=>SITES.filter(x=>x.serv.includes(servOf(d))).length;
+  const isOff=d=>!!st&&!st.serv.includes(servOf(d));
+  const status=d=>isOff(d)
+    ?'Pas proposé ici — '+nSites(d)+' autres sites le proposent'
+    :(st?'Disponible sur ce site':nSites(d)+' site'+(nSites(d)>1?'s':'')+' sur '+SITES.length);
+  const badge=d=>d.go?'<span class="tag">v1</span>':d.def?'<span class="tag">à définir</span>'
+    :d.sub?'<span class="tag">'+d.sub.length+' branches</span>':'';
+  const acc=d=>d.acc?'<div class="mut" style="margin-top:4px">Compte requis (licence, index)</div>':'';
+  const tile=d=>`<button class="card" data-door="${d.id}" style="padding:0;overflow:hidden;text-align:left;display:flex;flex-direction:column;${isOff(d)?'opacity:.6':''}">
+     <div class="ph" style="height:96px;flex:none">${d.n}</div>
+     <div style="padding:13px">
+       <div class="between"><b class="h3">${d.n}</b>${badge(d)}</div>
+       <div class="sub" style="margin-top:4px">${d.d}</div>
+       <div class="mut" style="margin-top:7px">${status(d)}</div>
+       ${acc(d)}
+     </div></button>`;
+  $('#hubGrid').innerHTML=DOORS.map(tile).join('');
+}
+/* La porte Golf n'est pas une destination : elle demande laquelle de ses trois
+   branches avant de partir. Feuille plutôt qu'écran, pour ne pas rompre le fil. */
+function golfModal(d){
+  sheet(head(d.n,'N3 · '+d.sub.length+' branches')
+  +`<p class="sub" style="margin-top:12px">Trois façons de réserver du golf, un même panier. Qu'est-ce qui vous intéresse&nbsp;?</p>
+    <div class="grid" style="gap:10px;margin-top:16px">${d.sub.map(s=>`
+      <button class="opt" data-golfsub="${s.id}"><span class="mark"></span>
+        <span><b class="h3">${s.n}</b>${s.go?' <span class="tag">v1</span>':''}
+          <span class="sub" style="display:block">${s.d}</span>
+          ${s.acc?'<span class="mut" style="display:block;margin-top:4px">Compte requis (licence, index)</span>':''}
+        </span></button>`).join('')}</div>
+    <p class="note" style="display:block">Matrice V5 : Golf regroupe trois branches. Elles partagent le panier, le paiement et le profil ; seul le début du parcours diffère. « Compte requis » sur Compétitions est la règle de la V1, que la V5 a retirée sans dire si c'est un arbitrage ou un oubli.</p>`);
+  $$('[data-golfsub]').forEach(b=>b.onclick=()=>{closeSheet();openService(b.dataset.golfsub)});
+}
+function openService(id){
+  const d=doorOf(id); if(!d)return;
+  if(d.sub){golfModal(d);return}                    /* porte parente : on demande la branche */
+  if(!S.site||!S.site.serv.includes(servOf(d))){openSite(id);return}
+  enterBranch(d);
+}
+function enterBranch(d){
+  if(!d)return;
+  if(d.sub){golfModal(d);return}
+  if(d.go){d.go==='heb-hotels'?renderHotels():renderCourses();go(d.go);return}
+  branchModal(d.n);
+}
+/* ═════════ N2 bis · carte de la Collection ═════════ */
+/* Projection linéaire lon/lat → boîte 0-100, appliquée au fond de carte comme
+   aux pastilles : le SVG est étiré (preserveAspectRatio="none") mais les points
+   restent alignés sur le trait de côte. */
+const GEO={lon0:-5.6,lon1:9.9,lat0:41.2,lat1:51.9};
+const mx=lon=>(lon-GEO.lon0)/(GEO.lon1-GEO.lon0)*100;
+const my=lat=>(GEO.lat1-lat)/(GEO.lat1-GEO.lat0)*100;
+const FR=[[2.55,51.05],[1.58,50.92],[1.55,50.20],[0.20,49.72],[-0.30,49.35],[-1.25,49.35],[-1.60,49.68],
+ [-1.85,49.60],[-1.60,48.95],[-1.55,48.65],[-2.70,48.55],[-3.55,48.85],[-4.75,48.55],[-4.35,48.30],
+ [-4.55,48.05],[-3.20,47.75],[-2.25,47.30],[-1.80,46.95],[-1.15,46.30],[-1.05,45.70],[-1.25,44.65],
+ [-1.35,43.65],[-1.75,43.35],[-0.75,42.95],[0.65,42.70],[1.75,42.50],[3.05,42.45],[3.05,43.05],
+ [4.20,43.45],[4.85,43.35],[5.35,43.20],[6.15,43.05],[6.70,43.15],[7.55,43.75],[7.05,44.25],[6.85,45.10],
+ [7.05,45.90],[6.10,46.15],[6.15,46.60],[7.05,47.50],[7.60,48.30],[8.20,48.95],[7.55,49.10],[6.35,49.45],
+ [5.85,49.50],[4.85,49.80],[4.15,49.95],[4.20,50.30],[3.65,50.35],[3.15,50.52]];
+const BE=[[2.55,51.10],[3.35,51.38],[4.25,51.35],[5.05,51.50],[5.85,51.15],[6.05,50.75],[5.80,50.10],
+ [5.10,49.80],[4.85,49.80],[4.15,49.95],[4.20,50.30],[3.65,50.35],[3.15,50.52]];
+const poly=pts=>pts.map(([a,b],i)=>(i?'L':'M')+mx(a).toFixed(2)+' '+my(b).toFixed(2)).join(' ')+' Z';
+const MAPBG=`<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+   <path d="${poly(FR)}" fill="#f1f1f1" stroke="#c9c9c9" stroke-width="1" vector-effect="non-scaling-stroke"/>
+   <path d="${poly(BE)}" fill="#f6f6f6" stroke="#c9c9c9" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>
+ </svg>`;
+/* Deux golfs à 25 min l'un de l'autre donnent deux pastilles superposées :
+   on décale la seconde vers le bas plutôt que de la masquer. */
+function pinLayout(groups){
+  const pts=groups.map(g=>({g,x:mx(g.site.lon),y:my(g.site.lat)})).sort((a,b)=>a.y-b.y);
+  const done=[], hit=p=>done.some(q=>Math.abs(q.x-p.x)<12&&Math.abs(q.y-p.y)<5);
+  pts.forEach(p=>{let n=0;
+    while(hit(p)&&n++<4)p.y+=5;
+    done.push(p)});
+  return pts;
+}
+
+/* ═════════ N2 bis · choix du site ═════════ */
+/* La liste descend au produit quand le référentiel en a un — hôtels, parcours —
+   et reste au golf sinon. Dans les deux cas c'est la commune qui titre la carte. */
+const PLUR={heb:['hôtel','hôtels'],golf:['parcours','parcours']};
+function siteItems(sv){
+  const st=id=>SITES.find(x=>x.id===id);
+  if(sv==='heb')return HOTELS.map(h=>({k:h.id,site:st(h.site),n:h.n,t:h.t,d:h.d,p:h.from,
+    per:'par nuit, à partir de',cta:'Voir les disponibilités',hotel:h}));
+  if(sv==='golf')return COURSES.map(c=>({k:c.id,site:st(c.site),n:c.n,t:c.t,d:c.d,p:c.from,
+    per:'par joueur, à partir de',cta:'Voir les départs',course:c,h:/^9 trous/.test(c.t)?'9':'18'}));
+  return SITES.filter(s=>s.serv.includes(sv))
+    .map(s=>({k:s.id,site:s,n:s.n,t:s.r,d:s.d,cta:'Choisir'}));
+}
+const zoneName=id=>(ZONES.find(z=>z.id===id)||{}).n||'';
+const zSel=new Set(), hSel=new Set();     /* facettes destination / format */
+let fOpen=null;                            /* menu déroulant ouvert */
+const clearFilters=()=>{zSel.clear();hSel.clear();fOpen=null};
+/* Un menu se referme au clic ailleurs ou à Échap — écouteurs posés une fois. */
+function shutMenus(){fOpen=null;$$('.fmenu').forEach(m=>m.hidden=true);
+  $$('.fbtn').forEach(b=>b.setAttribute('aria-expanded','false'))}
+document.addEventListener('click',e=>{
+  if(fOpen&&!e.target.closest('.fwrap[data-f="'+fOpen+'"]'))shutMenus()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&fOpen)shutMenus()});
+function openMenu(k){
+  const w=$('.fwrap[data-f="'+k+'"]'); if(!w)return;
+  fOpen=k; $('.fmenu',w).hidden=false; $('.fbtn',w).setAttribute('aria-expanded','true');
+}
+/* Bouton + menu d'une facette. Le libellé porte la sélection, le menu les comptes. */
+function facet(k,opts,sel,one,many){
+  const n=sel.size, lbl=n===0?'Tou'+(one==='destination'?'tes les destinations':'s les formats')
+    :n===1?(opts.find(o=>sel.has(o.v))||{}).n:n+' '+many;
+  return `<div class="fwrap" data-f="${k}">
+    <button class="fbtn ${n?'on':''}" data-fbtn="${k}" aria-expanded="false"><span>${lbl}</span>
+      <svg width="10" height="10" viewBox="0 0 10 10"><path d="M1 3.5 5 7.5 9 3.5" fill="none"
+        stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="fmenu" hidden>
+      ${opts.map(o=>`<label class="fopt ${o.c?'':'off'}"><input type="checkbox" data-fk="${k}" value="${o.v}"
+        ${sel.has(o.v)?'checked':''} ${o.c?'':'disabled'}><span>${o.n}</span><b>${o.c}</b></label>`).join('')}
+      ${n?`<button class="lnk fclear" data-fclear="${k}">Tout afficher</button>`:''}
+    </div></div>`;
+}
+function openSite(serv){S.pending=serv;clearFilters();renderSiteScreen();go('site')}
+function renderSiteScreen(){
+  const serv=S.pending||'heb', sv=servOf(serv), d=doorOf(serv);
+  const all=siteItems(sv).sort((a,b)=>ZONES.findIndex(z=>z.id===a.site.z)-ZONES.findIndex(z=>z.id===b.site.z));
+  /* Deux facettes qui se combinent : chaque rangée compte dans la sélection de l'autre. */
+  const byZone=i=>!zSel.size||zSel.has(i.site.z), byHoles=i=>!hSel.size||hSel.has(i.h);
+  const items=all.filter(i=>byZone(i)&&byHoles(i));
+  const ok=SITES.filter(s=>s.serv.includes(sv)), off=SITES.filter(s=>!s.serv.includes(sv));
+  const [sg,pl]=PLUR[sv]||['golf','golfs'];
+
+  $('#siteH1').innerHTML='Où souhaitez-vous '+(VERBS[serv]||'réserver')+'&nbsp;?';
+  $('#siteSub').textContent=(S.site&&!S.site.serv.includes(sv)?S.site.n+' ne propose pas ce service. ':'')
+    +all.length+' '+(all.length>1?pl:sg)+' dans '+ok.length+' golf'+(ok.length>1?'s':'')
+    +' de la Collection, sur '+new Set(ok.map(x=>x.z)).size+' destinations.';
+
+  /* Deux menus repliés plutôt que deux rangées de chips : la liste remonte d'autant.
+     Chaque facette se compte dans la sélection de l'autre. */
+  const zPool=all.filter(byHoles), hPool=all.filter(byZone);
+  const zOpts=ZONES.filter(z=>all.some(i=>i.site.z===z.id))
+    .map(z=>({v:z.id,n:z.n,c:zPool.filter(i=>i.site.z===z.id).length}));
+  const hOpts=[['18','18 trous'],['9','9 trous']]
+    .map(([v,n])=>({v,n,c:hPool.filter(i=>i.h===v).length}));
+  $('#siteFilters').innerHTML=facet('zone',zOpts,zSel,'destination','destinations')
+    +(all.some(i=>i.h)?facet('holes',hOpts,hSel,'format','formats'):'');
+  if(fOpen)openMenu(fOpen);
+
+  const fSuf=(hSel.size===1?' de '+[...hSel][0]+' trous':'')
+    +(zSel.size?' — '+[...zSel].map(zoneName).join(', '):'');
+  $('#siteCount').textContent=items.length+' '+(items.length>1?pl:sg)+fSuf
+    +(zSel.size?'':' dans toute la Collection');
+
+  const golfLine=it=>it.site.n===it.n?it.site.km+' · '+it.site.serv.length+' services'
+    :'Golf : '+it.site.n+' · '+it.site.km;
+  const cardOf=it=>`
+   <div class="card prod wide" data-isite="${it.site.id}">
+     <div class="ph">Photo ${it.n}</div>
+     <div class="body">
+       <span class="tag">${it.site.r}</span>
+       <b class="h2">${it.n}</b>
+       <span class="sub">${it.d}</span>
+       <span class="mut">${golfLine(it)}</span>
+       ${it.course&&it.course.idxMax?`<span class="mut">Index maximum ${it.course.idxMax} — contrôlé à l'étape suivante (E2)</span>`:''}
+       ${it.course&&it.course.noLic?'<span class="mut">Accessible sans licence ni carte verte</span>':''}
+       <div class="foot">
+         ${it.p?`<div class="price">${eur(it.p)}<small>${it.per}</small></div>`
+               :`<div class="mut">${siteInfo(it.site,serv)}</div>`}
+         <button class="btn sm" data-pick="${it.k}">${it.cta}</button></div>
+     </div></div>`;
+  $('#siteList').innerHTML=items.map(cardOf).join('');
+  $('#siteEmpty').innerHTML=items.length?'':`<div class="card" style="padding:18px;border-style:dashed">
+    <div class="h3">Rien sur cette destination</div>
+    <p class="sub" style="margin-top:6px">Aucune adresse ne répond à ces filtres. Élargissez la destination ou le format pour retrouver les ${all.length} ${all.length>1?pl:sg} de la Collection.</p></div>`;
+
+  /* carte : une pastille par golf, portant le prix d'appel du site */
+  const groups=[];
+  items.forEach(it=>{let g=groups.find(x=>x.site.id===it.site.id);
+    if(!g)groups.push(g={site:it.site,items:[]}); g.items.push(it)});
+  groups.forEach(g=>{
+    const ps=g.items.filter(i=>i.p).map(i=>i.p);
+    g.label=ps.length?eur(Math.min(...ps)):g.site.n.replace(/^Golf (de |d'|des |)/,'');
+    g.title=g.items.length+' '+(g.items.length>1?pl:sg)+' · '+g.site.n
+      +(ps.length?' · à partir de '+eur(Math.min(...ps)):'');
+  });
+  $('#siteMap').innerHTML=`<div class="mapinner">${MAPBG}`
+   +pinLayout(groups).map(p=>`<button class="pin" data-pin="${p.g.site.id}" title="${p.g.title}"
+      style="left:${p.x.toFixed(2)}%;top:${p.y.toFixed(2)}%"><b>${p.g.label}</b><i></i></button>`).join('')
+   +`</div><div class="maplegend">${groups.length} golf${groups.length>1?'s':''} · ${items.length} ${items.length>1?pl:sg}
+      <br>Pastille : prix d'appel du golf${fSuf.replace(' — ',' · ')}</div>`;
+
+  $('#siteOff').innerHTML=off.length?`<div class="card" style="padding:14px;border-style:dashed;margin-top:14px">
+    <div class="h3">${off.length} golf${off.length>1?'s':''} de la Collection ne proposent pas ce service</div>
+    <div class="sub" style="margin-top:6px">${off.map(s=>s.n).join(' · ')} — ils restent ouverts pour le green fee, la table et les compétitions.</div></div>`:'';
+
+  /* liste ↔ carte : survol d'une carte allume sa pastille, clic sur une pastille
+     ramène la liste sur le golf correspondant */
+  const mark=(id,on)=>{
+    $$('[data-pin]').forEach(p=>p.classList.toggle('on',on&&p.dataset.pin===id));
+    $$('#siteList .card').forEach(c=>c.classList.toggle('hl',on&&c.dataset.isite===id));
+  };
+  $$('#siteList .card').forEach(c=>{
+    c.onmouseenter=()=>mark(c.dataset.isite,true); c.onmouseleave=()=>mark(null,false)});
+  $$('[data-pin]').forEach(p=>p.onclick=()=>{
+    mark(p.dataset.pin,true);
+    const t=$('#siteList .card[data-isite="'+p.dataset.pin+'"]');
+    if(t)t.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  $$('[data-fbtn]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.fbtn; if(fOpen===k){shutMenus();return} shutMenus(); openMenu(k)});
+  $$('[data-fk]').forEach(c=>c.onchange=()=>{
+    const set=c.dataset.fk==='zone'?zSel:hSel;
+    c.checked?set.add(c.value):set.delete(c.value);
+    renderSiteScreen();                       /* le menu reste ouvert : fOpen est conservé */
+  });
+  $$('[data-fclear]').forEach(b=>b.onclick=()=>{
+    (b.dataset.fclear==='zone'?zSel:hSel).clear();renderSiteScreen()});
+
+  /* Le choix fixe le site ET le produit : on entre directement à l'étape 2. */
+  $$('[data-pick]').forEach(b=>b.onclick=()=>{
+    const it=items.find(x=>x.k===b.dataset.pick); if(!it)return;
+    S.site=it.site; syncSite();                       /* remet hôtel et parcours à zéro */
+    if(it.hotel){S.hotel=it.hotel;ensureStay();renderHebSearch();go('heb-rooms');return}
+    if(it.course){S.g.course=it.course;S.g.idxOk=false;renderGSearch();go('golf-departs');return}
+    const dd=doorOf(S.pending);
+    if(dd&&dd.go)enterBranch(dd); else {go('hub');branchModal(dd?dd.n:'ce service')}
+  });
+}
+
+/* ═════════ N4 · hôtels ═════════ */
+function renderHotels(){
+  const list=HOTELS.filter(h=>!S.site||h.site===S.site.id);
+  $('#hebH1').textContent=S.site?'Nos hôtels — '+S.site.n:'Nos hôtels';
+  $('#hebSub').textContent=list.length
+    ?list.length+' adresse'+(list.length>1?'s':'')+' sur le site, à moins de dix minutes des parcours.'
+    :'Ce site ne propose pas d\'hébergement.';
+  $('#hotelList').innerHTML=list.map(h=>`
+   <div class="card prod wide">
+     <div class="ph">Photo ${h.n}</div>
+     <div class="body">
+       <span class="tag">${h.t}</span>
+       <b class="h2">${h.n}</b>
+       <span class="sub">${h.d}</span>
+       <div class="foot"><div class="price">${eur(h.from)}<small>par nuit, à partir de</small></div>
+         <button class="btn sm" data-hotel="${h.id}">Voir les disponibilités</button></div>
+     </div></div>`).join('');
+  $$('[data-hotel]').forEach(b=>b.onclick=()=>{
+    S.hotel=HOTELS.find(h=>h.id===b.dataset.hotel);S.hnote=null;
+    ensureStay();renderHebSearch();go('heb-rooms');
+  });
+}
+
+/* ═════════ N4 · HÉBERGEMENT — recherche (hôtel × dates × voyageurs) ═════════ */
+const isWEnight=k=>[5,6].includes(new Date(k+'T12:00:00').getDay());
+const hFull=(h,k)=>FULL.includes(k)||dhash(k,h.id)%11===0;
+const stayBlocked=(h,din,nts)=>{for(let i=0;i<nts;i++)if(hFull(h,dshift(din,i)))return true;return false};
+const nightPrice=(r,k,h)=>Math.round(rprice(r,h)*(isWEnight(k)?1.12:1)/5)*5;
+const stayPrice=(r,din,nts,h)=>{let t=0;for(let i=0;i<nts;i++)t+=nightPrice(r,dshift(din,i),h);return t};
+const perRoom=()=>Math.ceil(pax()/S.rooms.length);
+/* `h` permet d'évaluer un autre établissement que celui en cours — c'est ce qui alimente
+   le menu « hôtels à proximité » et les alternatives quand les dates sont complètes. */
+function roomsAvail(din,nts,h){
+  h=h||S.hotel;
+  if(!h||!din||!nts||stayBlocked(h,din,nts))return [];
+  return ROOMS.filter(r=>r.cap>=perRoom()&&(!S.pets||r.pet))
+    .map(r=>({...r,left:1+dhash(din+r.id,h.id)%6,tot:stayPrice(r,din,nts,h)*S.rooms.length}));
+}
+const stayBest=(din,nts,h)=>{const a=roomsAvail(din,nts,h);return a.length?Math.min(...a.map(r=>r.tot)):null};
+/* à l'entrée dans la branche, on ne pose jamais le client sur un écran vide :
+   tant qu'il n'a pas choisi ses dates lui-même, on cale le séjour sur la première nuit ouverte */
+function ensureStay(){
+  if(!S.din||!S.dout){S.din='2026-10-15';S.dout=dshift('2026-10-15',2)}
+  const nts=nights()||2;
+  if(S.dchosen||stayBest(S.din,nts))return;
+  for(let i=1;i<=25;i++){const k=dshift(S.din,i);
+    if(dshift(k,nts)<=DMAX&&stayBest(k,nts)){S.din=k;S.dout=dshift(k,nts);return}}
+}
+
+/* ── menus de la barre de recherche ──
+   Trois panneaux ancrés sous leur champ : rien ne part en modale, la liste des chambres
+   reste visible et se recharge derrière le menu à chaque changement. */
+const POPS={hotel:['#hHotelBtn','#hHotelPop'],date:['#hDateBtn','#hDatePop'],pax:['#hPaxBtn','#hPaxPop']};
+let sbOpen=null;
+function shutPops(){
+  /* refermé avec une arrivée mais pas de départ : on complète sur la durée précédente */
+  if(sbOpen==='date'&&S.din&&!S.dout){S.dout=dshift(S.din,S.lastNts||2);S.dchosen=true;sbOpen=null;renderHebSearch()}
+  sbOpen=null;
+  Object.values(POPS).forEach(([b,p])=>{const el=$(p);if(el)el.hidden=true;const t=$(b);if(t)t.setAttribute('aria-expanded','false')});
+}
+function togglePop(k){
+  const open=sbOpen===k; shutPops(); if(open)return;
+  ({hotel:renderHotelPop,date:renderDatePop,pax:renderPaxPop})[k]();
+  $(POPS[k][1]).hidden=false; $(POPS[k][0]).setAttribute('aria-expanded','true'); sbOpen=k;
+}
+document.addEventListener('click',e=>{
+  if(!sbOpen)return;
+  if(!document.contains(e.target))return;                       /* cible remplacée par le re-rendu du menu */
+  if(e.target.closest('[data-pop="'+sbOpen+'"]'))return;
+  shutPops();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sbOpen)shutPops()});
+
+/* ── menu « voyageurs & chambres » ──
+   Compteurs plutôt que modale. `S.rooms` reste le modèle du reste du parcours :
+   les trois compteurs le reconstruisent en répartissant les personnes chambre par chambre. */
+const adults=()=>S.rooms.reduce((t,r)=>t+r.a,0);
+const kids=()=>S.rooms.reduce((t,r)=>t+r.e,0);
+function setPax(a,e,n){
+  a=Math.max(1,Math.min(a,24)); e=Math.max(0,Math.min(e,16)); n=Math.max(1,Math.min(n,a,8));
+  const rooms=Array.from({length:n},()=>({a:0,e:0}));
+  for(let i=0;i<a;i++)rooms[i%n].a++;
+  for(let i=0;i<e;i++)rooms[i%n].e++;
+  S.rooms=rooms;
+}
+function renderPaxPop(){
+  const a=adults(),e=kids(),n=S.rooms.length,p=a+e;
+  const cnt=(k,t,d,v,minus)=>`<div class="cnt"><div><div class="h3">${t}</div><div class="mut">${d}</div></div>
+    <div class="qty"><button data-px="${k}" data-v="-1" ${minus?'':'disabled'}>−</button><b>${v}</b>
+      <button data-px="${k}" data-v="1">＋</button></div></div>`;
+  $('#hPaxPop').innerHTML=
+    cnt('a','Adultes','13 ans et plus',a,a>Math.max(1,n))
+   +cnt('e','Enfants','0 à 12 ans',e,e>0)
+   +cnt('n','Chambres',n>1?'environ '+Math.ceil(p/n)+' personnes par chambre':'une seule chambre',n,n>1)
+   +`<button class="sw ${S.pets?'on':''}" id="paxPets" aria-pressed="${S.pets}">
+       <span><span class="h3">J'emmène un animal</span>
+         <span class="mut" style="display:block">Seules les chambres qui les acceptent seront affichées</span></span><i></i></button>
+     <button class="grpcta" id="paxGroup"><span><b>À partir de 10 personnes</b>, on passe en demande de groupe — un conseiller construit le séjour et envoie un devis.</span><span>→</span></button>
+     <div class="foot-a"><span class="mut">${p} voyageur${p>1?'s':''} · ${n} chambre${n>1?'s':''}${S.pets?' · animal':''}</span>
+       <button class="btn sm" id="paxOk">Voir les chambres</button></div>`;
+  $$('#hPaxPop [data-px]').forEach(b=>b.onclick=()=>{
+    const v=+b.dataset.v,k=b.dataset.px; let na=a,ne=e,nn=n;
+    if(k==='a'){na=a+v; if(nn>na)nn=na}
+    if(k==='e'){ne=e+v}
+    if(k==='n'){nn=n+v; if(na<nn)na=nn}
+    setPax(na,ne,nn); renderPaxPop(); renderHebSearch();
+  });
+  $('#paxPets').onclick=()=>{S.pets=!S.pets;renderPaxPop();renderHebSearch()};
+  $('#paxOk').onclick=()=>shutPops();
+  $('#paxGroup').onclick=()=>{shutPops();openE3('heb-rooms','Hôtel seul',Math.max(10,pax()))};
+}
+
+/* ── menu « dates » ──
+   Calendrier horizontal : les deux mois côte à côte, arrivée puis départ, et des chips
+   de flexibilité qui élargissent la recherche autour des dates choisies. */
+const FLEX=[{v:0,n:'Dates exactes'},{v:1,n:'± 1 jour'},{v:2,n:'± 2 jours'},{v:3,n:'± 3 jours'}];
+function renderDatePop(){
+  const cells=(y,m)=>{
+    const first=new Date(y,m,1),last=new Date(y,m+1,0);let out='';
+    for(let i=0;i<(first.getDay()+6)%7;i++)out+='<div class="d off"></div>';
+    for(let d=1;d<=last.getDate();d++){
+      const key=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const full=S.hotel&&hFull(S.hotel,key);
+      const cls=key===S.din?'in':key===S.dout?'out':(S.din&&S.dout&&key>S.din&&key<S.dout?'mid':'');
+      out+=`<div class="d pick ${full?'full':''} ${cls}" data-hd="${key}">${d}</div>`;
+    }
+    return out;
+  };
+  const nav=`<button class="navd" disabled title="Le référentiel de démonstration couvre octobre et novembre 2026">`;
+  $('#hDatePop').innerHTML=
+   `<div class="between" style="margin-bottom:12px">
+      ${nav}‹</button>
+      <b class="h3">${S.din&&!S.dout?'Choisissez la date de départ':'Arrivée puis départ'}</b>
+      ${nav}›</button></div>
+    <div class="cals">${[[2026,9],[2026,10]].map(([y,m])=>
+      `<div class="cal"><h4>${MONTHS[m]} ${y}</h4><div class="dow">${DOW.map(x=>`<span>${x}</span>`).join('')}</div>
+       <div class="days">${cells(y,m)}</div></div>`).join('')}</div>
+    <div class="chips" style="margin:16px 0 0">${FLEX.map(f=>
+      `<button class="chip ${S.flex===f.v?'on':''}" data-flex="${f.v}">${f.n}</button>`).join('')}</div>
+    <p class="note" style="display:block;margin-top:8px">Les nuits barrées le sont pour <b>cet hôtel</b> : un autre établissement peut être ouvert aux mêmes dates. Les chips élargissent la recherche autour du séjour — la bande de dates montre alors la fenêtre, et le meilleur prix qui s'y trouve est proposé au-dessus des chambres.</p>
+    <div class="calleg"><span><i style="background:var(--ink)"></i>Séjour</span>
+      <span><i style="background:repeating-linear-gradient(45deg,#f6f6f6 0 4px,#ededed 4px 8px);border:1px solid var(--g300)"></i>Nuit complète</span>
+      <span><i style="border:1px dashed var(--g500)"></i>Fenêtre de flexibilité</span></div>
+    <div class="foot-a"><span class="mut">${S.din&&S.dout
+        ?fdate(S.din)+' → '+fdate(S.dout)+' · '+nights()+' nuit'+(nights()>1?'s':'')+(S.flex?' · ± '+S.flex+' jour'+(S.flex>1?'s':''):'')
+        :'Sélectionnez la date de départ'}</span>
+      <div class="row" style="gap:12px"><button class="lnk" id="calReset">Recommencer</button>
+        <button class="btn sm" id="calOk">Voir les chambres</button></div></div>`;
+  $$('#hDatePop .d.pick').forEach(el=>el.onclick=()=>{
+    const k=el.dataset.hd, keep=nights()||S.lastNts||2;
+    if(!S.din||S.dout||k<=S.din){S.lastNts=keep;S.din=k;S.dout=null;$('#hDateBtn').textContent=fshort(k)+' → départ ?'}
+    else {S.dout=k;S.dchosen=true}
+    renderDatePop(); if(S.dout)renderHebSearch();
+  });
+  $$('#hDatePop [data-flex]').forEach(b=>b.onclick=()=>{S.flex=+b.dataset.flex;renderDatePop();renderHebSearch()});
+  $('#calReset').onclick=()=>{S.lastNts=nights()||S.lastNts||2;S.din=null;S.dout=null;renderDatePop()};
+  $('#calOk').onclick=()=>shutPops();
+}
+
+/* ── menu « hôtel » ──
+   Le choix ne se limite plus aux adresses du golf : les établissements voisins sont
+   proposés avec leur distance et leur meilleur prix aux mêmes dates. */
+const siteOf=id=>SITES.find(s=>s.id===id);
+const kmBetween=(a,b)=>{const R=6371,rad=x=>x*Math.PI/180;
+  const dLa=rad(b.lat-a.lat),dLo=rad(b.lon-a.lon);
+  const x=Math.sin(dLa/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLo/2)**2;
+  return Math.round(2*R*Math.asin(Math.sqrt(x)))};
+function hotelsAround(){
+  const cur=S.hotel, cs=siteOf(cur.site);
+  return HOTELS.filter(h=>h.id!==cur.id)
+    .map(h=>({h,km:h.site===cur.site?0:kmBetween(cs,siteOf(h.site))}))
+    .sort((a,b)=>a.km-b.km);
+}
+function switchHotel(h){
+  if(!h||h.id===S.hotel.id)return;
+  const from=S.hotel, cross=h.site!==from.site;
+  S.hnote=cross?{id:h.id,from:siteOf(from.site).n,km:kmBetween(siteOf(from.site),siteOf(h.site))}:null;
+  S.hotel=h;
+  if(cross&&S.site){S.site=siteOf(h.site);syncSite(true)}   /* le contexte de site suit l'hôtel, l'itinéraire est conservé */
+  ensureStay(); renderHebSearch();
+}
+function renderHotelPop(){
+  const nts=nights(),cur=S.hotel,around=hotelsAround();
+  const row=(h,km)=>{
+    const best=stayBest(S.din,nts,h), st=siteOf(h.site);
+    return `<button class="hrow ${h.id===cur.id?'on':''} ${best?'':'off'}" data-hsw="${h.id}">
+      <div class="hb"><b class="h3">${h.n}</b><div class="mut">${h.t}</div>
+        <div class="mut">${km?st.n+' · à '+km+' km':'Sur le site du golf'}</div></div>
+      <div class="hp">${best?'dès '+eur(best):'complet'}<small>${best?nts+' nuit'+(nts>1?'s':''):'sur ces dates'}</small></div></button>`;
+  };
+  const same=around.filter(x=>x.km===0), near=around.filter(x=>x.km>0&&x.km<=60), far=around.filter(x=>x.km>60);
+  $('#hHotelPop').innerHTML=
+    `<h5>Votre choix</h5>${row(cur,0)}`
+   +(same.length?`<h5 style="margin-top:14px">Sur le même golf</h5>${same.map(x=>row(x.h,0)).join('')}`:'')
+   +(near.length?`<h5 style="margin-top:14px">À proximité</h5>${near.map(x=>row(x.h,x.km)).join('')}`:'')
+   +(!near.length&&far.length?`<h5 style="margin-top:14px">L'établissement le plus proche</h5>${row(far[0].h,far[0].km)}`:'')
+   +`<div class="foot-a"><span class="mut">Prix du séjour ${fdate(S.din)} → ${fdate(S.dout)}, pour ${pax()} voyageur${pax()>1?'s':''}</span>
+       <button class="lnk" id="hAllHotels">Tous les hôtels</button></div>`;
+  $$('#hHotelPop [data-hsw]').forEach(b=>b.onclick=()=>{
+    const h=HOTELS.find(x=>x.id===b.dataset.hsw); shutPops(); switchHotel(h)});
+  $('#hAllHotels').onclick=()=>{shutPops();go('heb-hotels')};
+}
+
+/* ── rendu de la recherche ── */
+function renderHebSearch(){
+  const h=S.hotel;if(!h)return;
+  if(!S.din||!S.dout){S.din='2026-10-15';S.dout='2026-10-17'}
+  const nts=nights(),p=pax(),nr=S.rooms.length;
+  $('#hHotelLbl').textContent=h.n;
+  $('#hDateBtn').textContent=fshort(S.din)+' → '+fshort(S.dout)+' · '+nts+' nuit'+(nts>1?'s':'')
+    +(S.flex?' · ± '+S.flex+' j':'');
+  $('#hPaxLbl').textContent=p+' voyageur'+(p>1?'s':'')+' · '+nr+' chambre'+(nr>1?'s':'')+(S.pets?' · animal':'');
+  $('#hPrev').disabled=S.din<=DMIN;
+  $('#hNext').disabled=S.dout>=DMAX;
+  $('#roomsCriteria').textContent=`${h.n} · ${fdate(S.din)} → ${fdate(S.dout)} · ${nts} nuit${nts>1?'s':''}`
+    +`${S.flex?' ± '+S.flex+' j':''} · ${p} voyageur${p>1?'s':''}${S.pets?' · avec animal':''} · prix pour le séjour`;
+
+  /* bande de dates d'arrivée — élargie à la fenêtre de flexibilité */
+  const span=Math.max(3,S.flex+1), len=Math.max(9,2*span+3);
+  const start=(()=>{const k=dshift(S.din,-span);return k<DMIN?DMIN:k})();
+  $('#hDays').innerHTML=Array.from({length:len},(_,i)=>dshift(start,i))
+    .filter(k=>k<=DMAX&&dshift(k,nts)<=DMAX).map(k=>{
+      const best=stayBest(k,nts),on=k===S.din;
+      const win=S.flex&&!on&&Math.abs(Math.round((new Date(k)-new Date(S.din))/864e5))<=S.flex;
+      return `<button class="day ${on?'on':''} ${win?'win':''} ${best?'':'full'}" data-hday="${k}">
+        <div class="dd">${dweek(k)} ${+k.slice(8)}</div>
+        <div class="mut" style="font-size:10.5px">${MONTHS[+k.slice(5,7)-1].slice(0,3).toLowerCase()}.</div>
+        <div class="pp">${best?'dès '+eur(best):'complet'}</div></button>`}).join('');
+  $$('[data-hday]').forEach(b=>b.onclick=()=>{S.din=b.dataset.hday;S.dout=dshift(S.din,nts);S.dchosen=true;renderHebSearch()});
+
+  /* bandeaux : changement d'établissement, puis meilleure date de la fenêtre */
+  let hints='';
+  if(S.hnote&&S.hnote.id===h.id)
+    hints+=`<div class="hint"><div>Établissement changé — <b>${h.n}</b>, ${siteOf(h.site).n}, à ${S.hnote.km} km de votre golf précédent (${S.hnote.from}). Un même itinéraire peut mêler deux golfs : le panier reste unique.</div></div>`;
+  if(S.flex){
+    const cur=stayBest(S.din,nts), win=[];
+    for(let d=-S.flex;d<=S.flex;d++){
+      if(!d)continue; const k=dshift(S.din,d);
+      if(k>=DMIN&&dshift(k,nts)<=DMAX){const b=stayBest(k,nts); if(b)win.push({k,b})}
+    }
+    const best=win.sort((a,b)=>a.b-b.b)[0];
+    if(best&&(!cur||best.b<cur))
+      hints+=`<div class="hint"><div>${cur
+        ?`<b>${eur(cur-best.b)} de moins</b> dans votre fenêtre de ± ${S.flex} jour${S.flex>1?'s':''} : `
+        :`Vos dates sont complètes, mais <b>la fenêtre de ± ${S.flex} jour${S.flex>1?'s':''} est ouverte</b> : `}
+        ${fdate(best.k)} → ${fdate(dshift(best.k,nts))} à ${eur(best.b)}.</div>
+        <button class="btn sm sec" data-hflex="${best.k}">Décaler le séjour</button></div>`;
+  }
+  $('#hHints').innerHTML=hints;
+  $$('[data-hflex]').forEach(b=>b.onclick=()=>{S.din=b.dataset.hflex;S.dout=dshift(S.din,nts);S.dchosen=true;renderHebSearch()});
+
+  /* groupe 10+ · seuil unique, matrice V5 */
+  const grp=p>=10;
+  $('#hGroupWarn').style.display=grp?'block':'none';
+  $('#hChips').style.display=grp?'none':'flex';
+  $('#roomList').style.display=grp?'none':'grid';
+  $('#hEmpty').style.display='none';
+  if(grp){$('#roomsTitle').textContent='Demande de groupe';return}
+
+  /* chambres */
+  const all=roomsAvail(S.din,nts),f=S.hfilt||'all';
+  const list=all.filter(r=>f==='vue'?r.vue:f==='terr'?r.terr:true);
+  $$('#hChips .chip').forEach(b=>b.classList.toggle('on',b.dataset.hfilt===f));
+  $('#roomsTitle').textContent=all.length
+    ?all.length+' chambre'+(all.length>1?'s':'')+' disponible'+(all.length>1?'s':'')
+    :'Rien de disponible sur ces dates';
+  $('#roomList').innerHTML=list.map(r=>`
+   <div class="card prod wide">
+     <div class="ph">Photo ${r.n}</div>
+     <div class="body"><b class="h2">${r.n}</b><span class="sub">${r.d} · jusqu'à ${r.cap} pers.</span>
+       ${S.pets?'<span class="tag">Animaux acceptés</span>':''}
+       ${r.left===1?'<span class="tag">Dernière disponible</span>':r.left===2?'<span class="tag">2 chambres restantes</span>':''}
+       ${nr>1?`<span class="mut">${nr} chambres · prix total du séjour</span>`:''}
+       <div class="foot"><div class="price">${eur(r.tot)}<small>${nts} nuit${nts>1?'s':''} · ${eur(Math.round(r.tot/nts/nr))} / nuit</small></div>
+         <button class="btn sm" data-room="${r.id}">Choisir</button></div></div></div>`).join('');
+  $$('[data-room]').forEach(b=>b.onclick=()=>{
+    S.room=ROOMS.find(r=>r.id===b.dataset.room);S.rate='flex';renderRoom();go('heb-room')});
+
+  /* dates complètes : alternatives immédiates — d'abord d'autres dates, puis d'autres adresses */
+  if(!all.length){
+    $('#hEmpty').style.display='block';
+    const blocked=stayBlocked(h,S.din,nts);
+    $('#hEmptyT').textContent=blocked?'Nuits complètes sur ces dates'
+      :S.pets&&!ROOMS.some(r=>r.pet&&r.cap>=perRoom())?'Aucune chambre acceptant les animaux pour '+perRoom()+' personnes'
+      :'Aucune chambre pour '+p+' voyageur'+(p>1?'s':'')+' en '+nr+' chambre'+(nr>1?'s':'');
+    $('#hEmptyD').textContent=blocked
+      ?'Au moins une nuit du séjour est complète dans cet hôtel. Les dates voisines et les autres établissements restent ouverts.'
+      :S.pets?'Seules trois catégories accueillent les animaux — retirez l’animal ou ajoutez une chambre.'
+      :'Aucune catégorie n\'accueille '+perRoom()+' personnes dans la même chambre — ajoutez une chambre.';
+    const alts=[];
+    for(let i=1;i<=12&&alts.length<3;i++){
+      [dshift(S.din,i),dshift(S.din,-i)].forEach(k=>{
+        if(alts.length<3&&k>=DMIN&&dshift(k,nts)<=DMAX&&stayBest(k,nts)&&!alts.includes(k))alts.push(k)});
+    }
+    $('#hEmptyAlt').innerHTML=alts.map(k=>`<button class="btn sm sec" data-halt="${k}">${fdate(k)} → ${fdate(dshift(k,nts))} — dès ${eur(stayBest(k,nts))}</button>`).join('');
+    $$('[data-halt]').forEach(b=>b.onclick=()=>{S.din=b.dataset.halt;S.dout=dshift(S.din,nts);S.dchosen=true;renderHebSearch()});
+    const near=hotelsAround().filter(x=>x.km<=60&&stayBest(S.din,nts,x.h)).slice(0,3);
+    $('#hEmptyHotels').innerHTML=near.length
+      ?`<div class="mut" style="margin-top:18px">Ou un autre établissement, aux mêmes dates :</div>
+        <div class="row" style="gap:10px;margin-top:10px;flex-wrap:wrap">${near.map(x=>
+          `<button class="btn sm sec" data-hho="${x.h.id}">${x.h.n}${x.km?' · à '+x.km+' km':''} — dès ${eur(stayBest(S.din,nts,x.h))}</button>`).join('')}</div>`
+      :'';
+    $$('[data-hho]').forEach(b=>b.onclick=()=>switchHotel(HOTELS.find(x=>x.id===b.dataset.hho)));
+  }
+}
+$('#hHotelBtn').onclick=()=>togglePop('hotel');
+$('#hDateBtn').onclick=()=>togglePop('date');
+$('#hPaxBtn').onclick=()=>togglePop('pax');
+$('#hPrev').onclick=()=>{S.din=dshift(S.din,-1);S.dout=dshift(S.dout,-1);S.dchosen=true;renderHebSearch();if(sbOpen==='date')renderDatePop()};
+$('#hNext').onclick=()=>{S.din=dshift(S.din,1);S.dout=dshift(S.dout,1);S.dchosen=true;renderHebSearch();if(sbOpen==='date')renderDatePop()};
+$$('#hChips .chip').forEach(b=>b.onclick=()=>{S.hfilt=b.dataset.hfilt;renderHebSearch()});
+$('#hebGroupBtn').onclick=()=>openE3('heb-rooms','Hôtel seul',pax());
+$('#hEmptyE1').onclick=()=>openE1('heb',`${S.hotel.n} · ${fdate(S.din)} → ${fdate(S.dout)} · ${pax()} pers.`);
+
+/* ═════════ N4 · détail chambre & tarif ═════════ */
+const rprice=(r,h)=>{h=h||S.hotel;return Math.round(r.p*(h?h.from/320:1)/5)*5};
+function roomTotal(){const r=RATES.find(x=>x.id===S.rate);return Math.round(stayPrice(S.room,S.din,nights())*r.k)*S.rooms.length}
+function roomTax(){return pax()*nights()*3}
+function renderRoom(){
+  const n=nights(),r=RATES.find(x=>x.id===S.rate);
+  $('#roomName').textContent=S.room.n;
+  $('#roomDesc').textContent=S.room.d+' · '+S.hotel.n+' · '+fdate(S.din)+' → '+fdate(S.dout);
+  $('#rateList').innerHTML=RATES.map(x=>`
+   <button class="opt ${x.id===S.rate?'on':''}" data-rate="${x.id}"><span class="mark"></span>
+     <span style="flex:1"><span class="between"><b class="h3">${x.n}</b><b>${eur(Math.round(stayPrice(S.room,S.din,n)*x.k)*S.rooms.length)}</b></span>
+       <span class="sub" style="display:block;margin-top:3px">${x.d}</span>
+       ${x.acc?'<span class="mut" style="display:block;margin-top:5px">Connexion requise pour ce tarif — sans quitter l\'écran</span>':''}</span></button>`).join('');
+  $$('[data-rate]').forEach(b=>b.onclick=()=>{
+    const x=RATES.find(y=>y.id===b.dataset.rate);
+    if(x.acc&&!S.logged){accountModal();return}
+    S.rate=x.id;renderRoom()});
+  $('#roomAsideCrit').textContent=`${n} nuit${n>1?'s':''} · ${pax()} pers · ${S.rooms.length} chambre${S.rooms.length>1?'s':''}`;
+  $('#roomAsideRate').textContent=r.n;
+  $('#roomAsideBase').textContent=eur(roomTotal());
+  $('#roomAsideTax').textContent=eur(roomTax());
+  $('#roomAsideTot').textContent=eur(roomTotal()+roomTax());
+  $('#roomBarTot').textContent=eur(roomTotal()+roomTax());
+  $('#roomBarSub').textContent=r.n+' · '+n+' nuit'+(n>1?'s':'')+', taxes incluses';
+}
+function addRoomToCart(){
+  const r=RATES.find(x=>x.id===S.rate),n=nights();
+  S.cart=S.cart.filter(l=>l.id!=='heb');
+  S.cart.push({id:'heb',cat:'Hôtel',t:S.room.n+' · '+S.hotel.n,site:siteName(),
+    m:`${fdate(S.din)} → ${fdate(S.dout)} · ${n} nuit${n>1?'s':''} · ${pax()} pers · ${r.n}`,
+    p:roomTotal()+roomTax(),edit:'heb-room'});
+  renderExtras();go('heb-extras');
+}
+$('#roomAdd').onclick=addRoomToCart; $('#roomAddLg').onclick=addRoomToCart;
+
+/* ═════════ N4 · extras ═════════ */
+function extraPrice(x){const n=nights(),p=pax();
+  return x.per==='pers/nuit'?x.p*p*n:x.per==='pers'?x.p*p:x.p}
+function renderExtras(){
+  $('#extraList').innerHTML=EXTRAS.map(x=>{const on=S.extras.includes(x.id);return`
+   <button class="opt sq ${on?'on':''}" data-x="${x.id}"><span class="mark"></span>
+     <span style="flex:1"><span class="between"><b class="h3">${x.n}</b><b>${eur(extraPrice(x))}</b></span>
+       <span class="sub" style="display:block;margin-top:3px">${x.d} · ${eur(x.p)} ${x.per}</span></span></button>`}).join('');
+  $$('[data-x]').forEach(b=>b.onclick=()=>{
+    const id=b.dataset.x;S.extras=S.extras.includes(id)?S.extras.filter(e=>e!==id):[...S.extras,id];renderExtras()});
+  const t=S.extras.reduce((s,id)=>s+extraPrice(EXTRAS.find(x=>x.id===id)),0);
+  $('#extraTot').textContent=t?eur(t)+' d\'extras':'Aucun extra';
+  $('#extraSub').textContent=S.extras.length+' option'+(S.extras.length>1?'s':'')+' sélectionnée'+(S.extras.length>1?'s':'');
+}
+$('#extraNext').onclick=()=>{
+  S.cart=S.cart.filter(l=>!l.id.startsWith('x-'));
+  S.extras.forEach(id=>{const x=EXTRAS.find(e=>e.id===id);
+    S.cart.push({id:'x-'+id,cat:'Extra',t:x.n,site:siteName(),m:x.d+' · '+eur(x.p)+' '+x.per,p:extraPrice(x),edit:'heb-extras'})});
+  renderCross('heb');go('cross');
+};
+
+/* ═════════ N4 · GOLF — données ═════════ */
+const COURSES=[
+ {site:'touquet',id:'mer',n:'La Mer',t:'18 trous · links',d:'Élu meilleur links de France, exposé aux vents de la Manche.',from:120,idxMax:30},
+ {site:'touquet',id:'foret',n:'La Forêt',t:'18 trous · par 71',d:'Tracé abrité dans la pinède, plus technique que roulant.',from:85},
+ {site:'touquet',id:'manoir9',n:'Le Manoir',t:'9 trous',d:'Parcours d\'apprentissage, accessible sans carte verte.',from:35,noLic:true},
+ {site:'hardelot',id:'pins',n:'Les Pins',t:'18 trous · par 72',d:'Le tracé historique signé Tom Simpson, entre pins et bruyère.',from:105,idxMax:35},
+ {site:'hardelot',id:'dunes',n:'Les Dunes',t:'18 trous · par 72',d:'Plus ouvert et vallonné, largement exposé au vent.',from:80},
+ {site:'yvelines',id:'yv18',n:'Le 18 trous',t:'18 trous · par 72',d:'Parcours de parc, greens défendus par l\'eau sur le retour.',from:75},
+ {site:'yvelines',id:'yv9',n:'Le 9 trous',t:'9 trous',d:'Boucle courte, ouverte aux débutants et à l\'école de golf.',from:30,noLic:true},
+ {site:'seignosse',id:'sei18',n:'Le parcours de Seignosse',t:'18 trous · par 72',d:'Dénivelés et doglegs en pleine forêt de pins.',from:95},
+ {site:'moliets',id:'mol18',n:'Le 18 trous',t:'18 trous · par 72',d:'Signé Robert Trent Jones Sr., trois trous en bord d\'océan.',from:90},
+ {site:'moliets',id:'mol9',n:'Le 9 trous',t:'9 trous',d:'Parcours familial à l\'entrée du domaine.',from:35,noLic:true},
+ {site:'servanes',id:'srv18',n:'Le parcours de Servanes',t:'18 trous · par 72',d:'Oliviers, cyprès et vent des Alpilles.',from:70},
+ {site:'saintebaume',id:'stb18',n:'Le parcours Sainte Baume',t:'18 trous · par 72',d:'Plat et technique, au pied du massif.',from:70},
+ {site:'salette',id:'sal18',n:'Le parcours de la Salette',t:'18 trous · par 70',d:'Tracé urbain, jouable toute l\'année.',from:65},
+ {site:'grandebastide',id:'gb18',n:'Le parcours de la Grande Bastide',t:'18 trous · par 72',d:'Vallonné, greens rapides et vues sur l\'arrière-pays.',from:80},
+ {site:'opio',id:'op18',n:'Le parcours d\'Opio-Valbonne',t:'18 trous · par 72',d:'Deux rivières, oliviers centenaires et parcours de resort.',from:95},
+ {site:'roquebrune',id:'rq18',n:'Le parcours de Roquebrune',t:'18 trous · par 72',d:'Vallonné, face au Rocher, avec de forts dénivelés.',from:85},
+ {site:'cleydael',id:'cly18',n:'Cleydael',t:'18 trous · par 72',d:'Parcours de château sur 65 hectares, entouré d\'eau.',from:80}];
+const GRATES=[
+ {id:'public',n:'Green fee public',d:'Annulation gratuite jusqu\'à 48 h avant le départ',k:1},
+ {id:'lic',n:'Tarif licencié FFGolf',d:'−10 % · licence contrôlée au départ',k:.9,lic:true},
+ {id:'res',n:'Tarif résident du golf',d:'−25 % · réservé aux clients hébergés sur place',k:.75,res:true},
+ {id:'nanr',n:'Départ non modifiable',d:'−15 % · non remboursable, replay non inclus',k:.85}];
+const GEXTRAS=[
+ {id:'voiturette',n:'Voiturette 18 trous',d:'Deux places, GPS de parcours embarqué',p:45,per:'voiturette'},
+ {id:'clubs',n:'Location série de clubs',d:'Série complète, droitier ou gaucher',p:40,per:'joueur'},
+ {id:'balles',n:'Seau de practice avant le départ',d:'50 balles, practice couvert',p:12,per:'joueur'},
+ {id:'pro',n:'Mise en jeu avec un pro · 30 min',d:'Échauffement encadré avant le premier tee',p:55,per:'joueur'},
+ {id:'meteo',n:'Assurance météo',d:'Remboursement intégral si le parcours ferme',p:8,per:'joueur'}];
+const GFULL=['2026-10-17'];
+const gFull=c=>c&&c.site==='touquet'&&c.id!=='manoir9'?GFULL:[];
+const GTIMES=['07:20','07:40','08:00','08:20','08:40','09:20','10:00','10:40','11:20','12:00','13:20','14:00','14:40','15:20','16:00','16:40'];
+const GLEFT =[4,3,2,4,1,4,2,4,3,4,2,4,4,3,4,2];
+const fday=s=>{const d=new Date(s+'T12:00:00');
+  return ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'][d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()].toLowerCase();};
+const gflights=()=>Math.ceil(S.g.pax/4);
+const gidx=()=>parseFloat(String(S.g.idx).replace(',','.'))||0;
+const gIdxBlocked=()=>!!(S.g.course&&S.g.course.idxMax&&gidx()>S.g.course.idxMax&&!S.g.idxOk);
+const inCart=id=>S.cart.some(l=>l.id===id);
+
+/* ═════════ N4 · GOLF — parcours ═════════ */
+function renderCourses(){
+  const list=COURSES.filter(c=>!S.site||c.site===S.site.id);
+  $('#golfH1').textContent=S.site?'Nos parcours — '+S.site.n:'Nos parcours';
+  $('#golfSub').textContent=list.length+' tracé'+(list.length>1?'s':'')+' sur le site, du 18 trous signature au compact accessible sans licence.';
+  $('#courseList').innerHTML=list.map(c=>`
+   <div class="card prod wide">
+     <div class="ph">Photo ${c.n}</div>
+     <div class="body">
+       <span class="tag">${c.t}</span>
+       <b class="h2">${c.n}</b>
+       <span class="sub">${c.d}</span>
+       ${c.idxMax?`<span class="mut">Index maximum ${c.idxMax} — contrôlé à l'étape suivante (E2)</span>`:''}
+       ${c.noLic?'<span class="mut">Accessible sans licence ni carte verte</span>':''}
+       <div class="foot"><div class="price">${eur(c.from)}<small>par joueur, à partir de</small></div>
+         <button class="btn sm" data-course="${c.id}">Voir les départs</button></div>
+     </div></div>`).join('');
+  $$('[data-course]').forEach(b=>b.onclick=()=>{
+    S.g.course=COURSES.find(c=>c.id===b.dataset.course);
+    S.g.idxOk=false;renderGSearch();go('golf-departs');
+  });
+}
+
+/* ═════════ N4 · GOLF — recherche (parcours × joueurs × date) ═════════ */
+const DMIN='2026-10-01', DMAX='2026-11-30';
+const dshift=(k,n)=>{const d=new Date(k+'T12:00:00');d.setDate(d.getDate()+n);return iso(d)};
+const dweek=k=>{const d=new Date(k+'T12:00:00');return ['dim','lun','mar','mer','jeu','ven','sam'][d.getDay()]};
+const isWE=k=>[0,6].includes(new Date(k+'T12:00:00').getDay());
+const dhash=(k,cid)=>{let h=7;const t=k+'|'+cid;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))>>>0;return h};
+
+function gSlots(dateKey){
+  const c=S.g.course,k0=dateKey||S.g.date;
+  if(!c||!k0)return [];
+  const base=c.from,h=dhash(k0,c.id),we=isWE(k0)?1.15:1,closed=gFull(c).includes(k0);
+  const need=Math.min(S.g.pax,4),fl=gflights();
+  const raw=GTIMES.map((t,i)=>{
+    const hh=+t.slice(0,2), k=hh<9?.85:hh>=15?.7:1;
+    return {t,h:hh,p:Math.round(base*k*we/5)*5,k,
+      left:closed?0:GLEFT[(h+i*7)%GLEFT.length],
+      tag:hh<9?'Early bird':hh>=15?'Twilight':(we>1?'Week-end':'')};
+  });
+  return raw.map((s,i)=>{
+    const nxt=raw[i+1]?raw[i+1].left:0;
+    const ok=s.left>=need&&(fl<2||nxt>=S.g.pax-4);
+    return {...s,ok,pair:fl>1&&ok?raw[i+1].t:null};
+  });
+}
+const dayBest=k=>{const ok=gSlots(k).filter(s=>s.ok);return ok.length?Math.min(...ok.map(s=>s.p)):null};
+
+/* ── licence & index (E2) ── */
+function renderGLic(){
+  const c=S.g.course;if(!c)return;
+  $('#gLicTxt').innerHTML=(S.g.lic?'Licence n° <b>'+S.g.lic+'</b>':'Licence non renseignée')
+    +' · index <b>'+String(S.g.idx).replace('.',',')+'</b>'
+    +(c.noLic?' — parcours accessible sans licence':c.idxMax?' — index maximum '+c.idxMax+' sur ce parcours':'');
+  $('#gLicBtn').textContent=S.g.lic?'Modifier':'Renseigner licence & index';
+}
+function checkIdx(){
+  const c=S.g.course;if(!c)return false;
+  const bad=gIdxBlocked();
+  $('#gIdxWarn').style.display=bad?'block':'none';
+  if(bad){
+    $('#gIdxWarnT').textContent='Index '+String(S.g.idx).replace('.',',')+' — le parcours '+c.n+' est limité à l\'index '+c.idxMax;
+    const alt=COURSES.filter(x=>x.site===c.site&&!x.idxMax&&x.id!==c.id);
+    $('#gIdxWarnD').textContent=alt.length
+      ?alt.map(x=>x.n).join(' et ')+(alt.length>1?' restent ouverts':' reste ouvert')+' sans condition d\'index, aux mêmes dates.'
+      :'Les autres golfs de la Collection restent ouverts sans condition d\'index.';
+  }
+  return bad;
+}
+$('#gLicBtn').onclick=()=>e2Modal();
+$('#gIdxIgnore').onclick=()=>{S.g.idxOk=true;renderGSearch()};
+
+/* ── calendrier (feuille) ── */
+function openGCal(){
+  const cells=(y,m)=>{
+    const first=new Date(y,m,1),last=new Date(y,m+1,0);let out='';
+    for(let i=0;i<(first.getDay()+6)%7;i++)out+='<div class="d off"></div>';
+    for(let d=1;d<=last.getDate();d++){
+      const key=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const best=dayBest(key);
+      out+=`<div class="d pick ${best?'':'full'} ${key===S.g.date?'in':''}" data-gd="${key}">${d}</div>`;
+    }
+    return out;
+  };
+  sheet(head('Choisir une date','N4 · Recherche')+
+   `<div class="cals" style="margin-top:14px">${[[2026,9],[2026,10]].map(([y,m])=>
+     `<div class="cal"><h4>${MONTHS[m]} ${y}</h4><div class="dow">${DOW.map(x=>`<span>${x}</span>`).join('')}</div>
+      <div class="days">${cells(y,m)}</div></div>`).join('')}</div>
+    <div class="calleg"><span><i style="background:var(--ink)"></i>Date choisie</span>
+      <span><i style="background:repeating-linear-gradient(45deg,#f6f6f6 0 4px,#ededed 4px 8px);border:1px solid var(--g300)"></i>Aucun départ pour ${S.g.pax} joueur${S.g.pax>1?'s':''}</span></div>
+    <p class="note" style="display:block">Les jours barrés le sont pour <b>ce parcours et ce nombre de joueurs</b> : changer l'un ou l'autre rouvre des dates.</p>`);
+  $$('#sheet .d.pick').forEach(el=>el.onclick=()=>{S.g.date=el.dataset.gd;closeSheet();renderGSearch()});
+}
+
+/* ── rendu de la recherche ── */
+function renderGSearch(){
+  const c=S.g.course;if(!c)return;
+  if(!S.g.date)S.g.date='2026-10-15';
+  const p=S.g.pax,fl=gflights();
+  $('#gCourseSel').innerHTML=COURSES.filter(x=>x.site===c.site)
+    .map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${x.n} — ${x.t}</option>`).join('');
+  $('#gpaxN').textContent=p;
+  $('#gpaxMinus').disabled=p<=1;
+  $('#gflightNote').textContent=fl+' flight'+(fl>1?'s':'');
+  $('#gDateBtn').textContent=fday(S.g.date);
+  $('#gPrev').disabled=S.g.date<=DMIN;
+  $('#gNext').disabled=S.g.date>=DMAX;
+  renderGLic();
+
+  /* bande de jours */
+  const start=(()=>{let k=dshift(S.g.date,-3);return k<DMIN?DMIN:k})();
+  $('#gDays').innerHTML=Array.from({length:9},(_,i)=>dshift(start,i)).filter(k=>k<=DMAX).map(k=>{
+    const best=dayBest(k),on=k===S.g.date;
+    return `<button class="day ${on?'on':''} ${best?'':'full'}" data-gday="${k}">
+      <div class="dd">${dweek(k)} ${+k.slice(8)}</div>
+      <div class="mut" style="font-size:10.5px">${MONTHS[+k.slice(5,7)-1].slice(0,3).toLowerCase()}.</div>
+      <div class="pp">${best?'dès '+eur(best):'complet'}</div></button>`}).join('');
+  $$('[data-gday]').forEach(b=>b.onclick=()=>{S.g.date=b.dataset.gday;renderGSearch()});
+
+  /* garde-fous */
+  const grp=p>=10, bad=checkIdx();
+  $('#gGroupWarn').style.display=grp?'block':'none';
+  $('#gslotWrap').style.display=(grp||bad)?'none':'block';
+  $('#gChips').style.display=(grp||bad)?'none':'flex';
+  $('#gEmpty').style.display='none';
+  $('#gslotCrit').textContent=`${c.n} · ${fday(S.g.date)} · ${p} joueur${p>1?'s':''}${fl>1?' · '+fl+' flights':''} · prix par joueur`;
+  if(grp||bad){$('#gslotTitle').textContent=grp?'Demande de groupe':'Départ soumis à index';return}
+
+  /* créneaux */
+  const all=gSlots(),ok=all.filter(s=>s.ok);
+  $('#gslotTitle').textContent=ok.length
+    ?ok.length+' départ'+(ok.length>1?'s':'')+' disponible'+(ok.length>1?'s':'')
+    :'Aucun départ ce jour-là';
+  const f=S.g.filt||'all';
+  const keep=s=>(f==='am'?s.h<12:f==='pm'?s.h>=12:f==='disp'?s.ok:true);
+  const card=s=>`
+   <button class="card slot" data-slot="${s.t}" ${s.ok?'':'disabled'} style="${s.ok?'':'opacity:.45;cursor:not-allowed'}">
+     <div class="between"><b class="h2">${s.t}</b><b class="sub">${eur(s.p)}<span class="mut"> / j.</span></b></div>
+     <div class="mut" style="margin-top:5px">${s.ok?(s.pair?'2 départs : '+s.t+' + '+s.pair:s.left+' place'+(s.left>1?'s':'')+' restante'+(s.left>1?'s':'')):(s.left?'Places insuffisantes':'Complet')}</div>
+     ${s.tag?`<span class="tag" style="margin-top:8px">${s.tag}</span>`:''}</button>`;
+  const block=(title,list)=>list.length?`<h2 class="h2" style="margin-bottom:10px">${title}</h2><div class="grid g3 slots" style="gap:10px">${list.map(card).join('')}</div>`:'';
+  $('#gslotMorning').innerHTML=block('Matin',all.filter(s=>s.h<12&&keep(s)));
+  $('#gslotAfternoon').innerHTML=block('Après-midi',all.filter(s=>s.h>=12&&keep(s)));
+  $$('#gChips .chip').forEach(b=>b.classList.toggle('on',b.dataset.filt===f));
+  $$('[data-slot]').forEach(b=>b.onclick=()=>{
+    S.g.slot=gSlots().find(s=>s.t===b.dataset.slot);
+    if(!GRATES.find(r=>r.id===S.g.rate))S.g.rate='public';
+    renderGTarif();go('golf-tarif');
+  });
+
+  /* jour vide : alternatives immédiates, E1 à un clic */
+  if(!ok.length){
+    $('#gslotWrap').style.display='none';$('#gEmpty').style.display='block';
+    const closed=gFull(c).includes(S.g.date);
+    $('#gEmptyT').textContent=closed?'Parcours privatisé ce jour-là':'Aucun départ pour '+p+' joueur'+(p>1?'s':'')+' ce jour-là';
+    $('#gEmptyD').textContent=closed
+      ?'Le parcours '+c.n+' est réservé au Pro-Am de la Collection le '+fday(S.g.date)+'.'
+      :'Les créneaux restants n\'accueillent pas '+p+' joueurs ensemble. Essayez un autre jour, ou réduisez le flight.';
+    const alts=[];
+    for(let i=1;i<=10&&alts.length<3;i++){
+      [dshift(S.g.date,i),dshift(S.g.date,-i)].forEach(k=>{
+        if(alts.length<3&&k>=DMIN&&k<=DMAX&&dayBest(k)&&!alts.includes(k))alts.push(k)});
+    }
+    $('#gEmptyAlt').innerHTML=alts.map(k=>`<button class="btn sm sec" data-galt="${k}">${fday(k)} — dès ${eur(dayBest(k))}</button>`).join('');
+    $$('[data-galt]').forEach(b=>b.onclick=()=>{S.g.date=b.dataset.galt;renderGSearch()});
+  }
+}
+$('#gCourseSel').onchange=e=>{S.g.course=COURSES.find(x=>x.id===e.target.value);S.g.idxOk=false;renderGSearch()};
+$('#gpaxMinus').onclick=()=>{S.g.pax=Math.max(1,S.g.pax-1);renderGSearch()};
+$('#gpaxPlus').onclick=()=>{S.g.pax=Math.min(16,S.g.pax+1);renderGSearch()};
+$('#gPrev').onclick=()=>{S.g.date=dshift(S.g.date,-1);renderGSearch()};
+$('#gNext').onclick=()=>{S.g.date=dshift(S.g.date,1);renderGSearch()};
+$('#gDateBtn').onclick=openGCal;
+$$('#gChips .chip').forEach(b=>b.onclick=()=>{S.g.filt=b.dataset.filt;renderGSearch()});
+$('#gGroupBtn').onclick=()=>openE3('golf-departs','Golf seul — plusieurs flights',S.g.pax);
+$('#gEmptyE1').onclick=()=>openE1('golf',`${S.g.course.n} · ${fday(S.g.date)} · ${S.g.pax} joueur${S.g.pax>1?'s':''}`);
+
+/* ═════════ N4 · GOLF — détail du départ & tarif (E4) ═════════ */
+function grate(){return GRATES.find(r=>r.id===S.g.rate)||GRATES[0]}
+const resOk=()=>S.cart.some(l=>l.id==='heb'&&l.site===siteName());
+function gUnit(){return Math.round(S.g.slot.p*grate().k)}
+function gTotal(){return gUnit()*S.g.pax}
+function renderGTarif(){
+  const c=S.g.course,s=S.g.slot,p=S.g.pax,r=grate();
+  $('#gtarifTitle').innerHTML=c.n+' · départ '+s.t;
+  $('#gtarifSub').textContent=fday(S.g.date)+' · '+p+' joueur'+(p>1?'s':'')+' · '+gflights()+' flight'+(gflights()>1?'s':'')+(s.tag?' · '+s.tag:'');
+  $('#grateList').innerHTML=GRATES.map(x=>{
+    const locked=(x.lic&&!S.g.lic)||(x.res&&!resOk()&&!S.logged);
+    return `<button class="opt ${x.id===S.g.rate?'on':''}" data-grate="${x.id}"><span class="mark"></span>
+     <span style="flex:1"><span class="between"><b class="h3">${x.n}</b><b>${eur(Math.round(s.p*x.k))} <span class="mut">/ joueur</span></b></span>
+       <span class="sub" style="display:block;margin-top:3px">${x.d}</span>
+       ${x.lic?`<span class="mut" style="display:block;margin-top:5px">${S.g.lic?'Licence n° '+S.g.lic+' — appliquée':'Licence à renseigner (E2) — sans quitter l\'écran'}</span>`:''}
+       ${x.res?`<span class="mut" style="display:block;margin-top:5px">${resOk()?'Vous séjournez sur ce golf — tarif débloqué par votre itinéraire':'Débloqué si une nuit sur ce golf figure dans l\'itinéraire, ou sur compte membre'}</span>`:''}
+     </span></button>`}).join('');
+  $$('[data-grate]').forEach(b=>b.onclick=()=>{
+    const x=GRATES.find(y=>y.id===b.dataset.grate);
+    if(x.lic&&!S.g.lic){e2Modal();return}
+    if(x.res&&!resOk()&&!S.logged){resModal();return}
+    S.g.rate=x.id;renderGTarif();
+  });
+  $('#gAsideCrit').textContent=fday(S.g.date)+' · départ '+s.t+' · '+c.t;
+  $('#gAsideRate').textContent=r.n;
+  $('#gAsideBase').textContent=eur(gUnit())+' / joueur';
+  $('#gAsidePaxLbl').textContent='× '+p+' joueur'+(p>1?'s':'');
+  $('#gAsidePax').textContent=eur(gTotal());
+  $('#gAsideTot').textContent=eur(gTotal());
+  $('#gBarTot').textContent=eur(gTotal());
+  $('#gBarSub').textContent=r.n+' · '+p+' joueur'+(p>1?'s':'')+', taxes incluses';
+}
+function addGolfToCart(){
+  const r=grate(),p=S.g.pax;
+  S.cart=S.cart.filter(l=>l.id!=='golf'&&l.id!=='cs-gf');
+  S.cart.push({id:'golf',cat:'Golf',t:'Green fee — '+S.g.course.n,site:siteName(),
+    m:`${fday(S.g.date)} · départ ${S.g.slot.t} · ${p} joueur${p>1?'s':''} · ${r.n}`,
+    p:gTotal(),edit:'golf-tarif'});
+  renderGExtras();go('golf-extras');
+}
+$('#gAdd').onclick=addGolfToCart; $('#gAddLg').onclick=addGolfToCart;
+
+/* ═════════ N4 · GOLF — extras ═════════ */
+function gexPrice(x){return x.per==='joueur'?x.p*S.g.pax:x.p*Math.ceil(S.g.pax/2)}
+function renderGExtras(){
+  $('#gextraList').innerHTML=GEXTRAS.map(x=>{const on=S.g.extras.includes(x.id);return`
+   <button class="opt sq ${on?'on':''}" data-gx="${x.id}"><span class="mark"></span>
+     <span style="flex:1"><span class="between"><b class="h3">${x.n}</b><b>${eur(gexPrice(x))}</b></span>
+       <span class="sub" style="display:block;margin-top:3px">${x.d} · ${eur(x.p)} / ${x.per}</span></span></button>`}).join('');
+  $$('[data-gx]').forEach(b=>b.onclick=()=>{
+    const id=b.dataset.gx;
+    S.g.extras=S.g.extras.includes(id)?S.g.extras.filter(e=>e!==id):[...S.g.extras,id];
+    renderGExtras()});
+  const t=S.g.extras.reduce((s,id)=>s+gexPrice(GEXTRAS.find(x=>x.id===id)),0);
+  $('#gextraTot').textContent=t?eur(t)+' d\'extras':'Aucun extra';
+  $('#gextraSub').textContent=S.g.extras.length+' option'+(S.g.extras.length>1?'s':'')+' sélectionnée'+(S.g.extras.length>1?'s':'');
+}
+$('#gextraNext').onclick=()=>{
+  S.cart=S.cart.filter(l=>!l.id.startsWith('gx-'));
+  S.g.extras.forEach(id=>{const x=GEXTRAS.find(e=>e.id===id);
+    S.cart.push({id:'gx-'+id,cat:'Extra golf',t:x.n,site:siteName(),m:x.d+' · '+eur(x.p)+' / '+x.per,p:gexPrice(x),edit:'golf-extras'})});
+  renderCross('golf');go('cross');
+};
+
+/* ═════════ E2 · licence & index ═════════ */
+function e2Modal(){
+  sheet(head('Licence &amp; index','E2 · Module partagé')+
+  `<p class="sub" style="margin-top:12px">Sur un green fee, la licence n'est jamais un préalable : elle débloque un tarif. Sur une compétition, elle devient obligatoire — c'est la seule branche du moteur qui exige un compte.</p>
+   <label class="field" style="margin-top:14px"><span>N° de licence FFGolf</span><input id="e2Lic" value="4471908"></label>
+   <label class="field"><span>Index</span><input id="e2Idx" value="${String(S.g.idx).replace('.',',')}"></label>
+   <button class="btn full" id="e2Ok">Enregistrer</button>
+   <p class="note" style="display:block">Le contrôle réel se fait auprès de la FFGolf. En cas d'échec, le parcours continue au tarif public — jamais de cul-de-sac.</p>`);
+  $('#e2Ok').onclick=()=>{
+    S.g.lic=$('#e2Lic').value.trim();S.g.idx=$('#e2Idx').value;S.g.idxOk=false;
+    closeSheet();
+    if($('.screen.on').id==='sc-golf-tarif'){S.g.rate='lic';renderGTarif()}else renderGSearch();
+  };
+}
+function resModal(){
+  sheet(head('Tarif résident du golf','Panier commun · dépendance entre branches')+
+  `<p class="sub" style="margin-top:12px">Ce tarif s'applique automatiquement dès qu'une nuit <b>sur ce golf</b> figure dans l'itinéraire. C'est le premier bénéfice concret du panier commun : une branche modifie le prix d'une autre, sans double saisie ni double paiement. Une nuit réservée sur un autre site de la Collection ne le déclenche pas.</p>
+   <div class="grid" style="gap:10px;margin-top:16px">
+     <button class="opt" id="resHeb"><span class="mark"></span><span><b class="h3">Ajouter une nuit sur ce golf</b><span class="sub" style="display:block">Ouvre la branche Hôtel, l'itinéraire est conservé</span></span></button>
+     <button class="opt" id="resLog"><span class="mark"></span><span><b class="h3">Je suis membre — me connecter</b><span class="sub" style="display:block">Module A, sans quitter le parcours</span></span></button>
+   </div>
+   <button class="btn ghost full" style="margin-top:14px" onclick="closeSheet()">Rester au tarif public</button>`);
+  $('#resHeb').onclick=()=>{closeSheet();if(hasServ('heb')){renderHotels();go('heb-hotels')}else openSite('heb')};
+  $('#resLog').onclick=()=>{S.logged=true;S.g.rate='res';closeSheet();renderGTarif()};
+}
+
+/* ═════════ E3 · ouverture contextuelle ═════════ */
+function openE3(back,service,n){
+  $('#e3Back').dataset.go=back;
+  $('#e3Pax').value=n;
+  $('#e3Serv').value=service;
+  $('#e3Site').value=S.site?S.site.n:'Sans préférence — toute la Collection';
+  go('e3');
+}
+
+/* ═════════ E1 · module partagé, appelé par les deux branches ═════════ */
+function openE1(kind,crit){
+  const O=$('#e1Opts');
+  $('#e1Crit').textContent=crit;
+  if(kind==='heb'){
+    $('#e1Back').dataset.go='heb-rooms';
+    $('#e1Back').textContent='← Modifier ma recherche';
+    $('#e1Title').textContent='Rien de disponible sur ces dates';
+    $('#e1Note').textContent='Aucune impasse : chaque exception propose une alternative et ramène dans le parcours. E1 est appelé depuis tous les losanges de disponibilité — ici depuis l\'hébergement, à l\'identique depuis le golf.';
+    e1Opts([
+      {t:'Chercher sur des dates flexibles',d:'La bande de dates affiche le prix du séjour jour par jour',f:()=>go('heb-rooms')},
+      {t:'Me prévenir si une chambre se libère',d:'Alerte par e-mail, sans engagement',f:e1Alert},
+      {t:'Voir un autre hôtel de ce golf',d:'Les autres adresses de '+siteName()+' restent ouvertes',f:()=>go('heb-hotels')},
+      {t:'Chercher sur un autre golf de la Collection',d:SITES.filter(x=>x.serv.includes('heb')).length+' golfs proposent de l\'hébergement',f:()=>openSite('heb')},
+      {t:"Contacter l'accueil du golf",d:'Un numéro direct par établissement',f:e1Conc}]);
+  }else{
+    const proam=gFull(S.g.course).includes(S.g.date);
+    $('#e1Back').dataset.go='golf-departs';
+    $('#e1Back').textContent='← Modifier ma recherche';
+    $('#e1Title').textContent=proam?'Le parcours est privatisé ce jour-là':'Aucun départ ne convient à ce flight';
+    $('#e1Note').textContent='Même module que pour l\'hébergement, appelé depuis le losange de disponibilité du golf : les quatre sorties changent, le principe ne change pas — jamais d\'écran vide, toujours un retour au parcours.';
+    const others=COURSES.filter(c=>S.site&&c.site===S.site.id&&(!S.g.course||c.id!==S.g.course.id));
+    e1Opts([
+      {t:'Voir les départs d\'un autre jour',d:'La bande de jours affiche le meilleur prix jour par jour',f:()=>go('golf-departs')},
+      ...(others.length?[{t:'Jouer un autre parcours de ce golf',d:others.length+' autre'+(others.length>1?'s':'')+' tracé'+(others.length>1?'s':'')+' ouvert'+(others.length>1?'s':'')+' ce jour-là',f:()=>go('golf-parcours')}]:[]),
+      {t:'Jouer sur un autre golf de la Collection',d:'Les '+SITES.length+' golfs proposent des départs en ligne',f:()=>openSite('golf')},
+      proam
+        ?{t:'M\'inscrire au Pro-Am du 17 octobre',d:'220 € / joueur · places limitées',f:proamModal}
+        :{t:'Me prévenir si un départ se libère',d:'Alerte par e-mail, sans engagement',f:e1Alert},
+      {t:"Contacter l'accueil du golf",d:"L'équipe cale le départ avec le starter",f:e1Conc}]);
+  }
+  go('e1');
+}
+function e1Opts(list){
+  $('#e1Opts').innerHTML=list.map((o,i)=>`<button class="opt" data-e1i="${i}"><span class="mark"></span>
+    <span><b class="h3">${o.t}</b><span class="sub" style="display:block">${o.d}</span></span></button>`).join('');
+  $$('[data-e1i]').forEach(b=>b.onclick=()=>list[+b.dataset.e1i].f());
+}
+function e1Alert(){sheet(head('Alerte de disponibilité','E1')+
+ `<p class="sub" style="margin-top:12px">Nous vous prévenons dès qu'une place se libère, sans engagement.</p>
+  <label class="field" style="margin-top:14px"><span>E-mail</span><input placeholder="camille@exemple.fr"></label>
+  <button class="btn full" onclick="closeSheet()">Créer l'alerte</button>`)}
+function e1Conc(){sheet(head("Contacter l'accueil du golf",'E1')+
+ `<p class="sub" style="margin-top:12px">L'équipe du golf cherche une solution sur place, ou vous oriente vers une autre adresse de la Collection.</p>
+  <div class="ph" style="height:34px;border-radius:5px;margin-top:14px">Numéro d'accueil — ${siteName()} · donnée établissement, back-office</div>
+  <div class="grid g2" style="gap:10px;margin-top:12px"><button class="btn sec">Appeler l'accueil</button><button class="btn ghost">Être rappelé</button></div>
+  <button class="btn full" style="margin-top:12px" onclick="closeSheet()">Fermer</button>
+  <p class="note" style="display:block">Matrice V5 : la conciergerie centralisée est remplacée par un numéro par établissement. Le référentiel des numéros n'existe pas encore.</p>`)}
+function proamModal(){sheet(head('Pro-Am de la Collection — 17 octobre','E1 → branche Événements')+
+ `<p class="sub" style="margin-top:12px">Le parcours est privatisé pour la compétition : plutôt qu'un écran vide, l'exception ouvre la porte d'entrée « Événements » et propose une inscription, ajoutée au même itinéraire.</p>
+  <div class="card" style="padding:14px;margin-top:14px"><div class="between"><b class="h3">Pro-Am · scramble à 4</b><b>${eur(220)}<span class="mut"> / joueur</span></b></div>
+  <div class="sub" style="margin-top:4px">Départ shotgun 9 h, déjeuner et remise des prix inclus</div></div>
+  <button class="btn full" style="margin-top:16px" id="proamOk">Ajouter au panier commun</button>
+  <p class="note" style="display:block">La branche Événements n'est pas maquettée en v1 : le prototype simule le parcours et ajoute la ligne.</p>`);
+ $('#proamOk').onclick=()=>{
+   if(!inCart('cs-evt'))S.cart.push({id:'cs-evt',cat:'Événements',t:'Pro-Am de la Collection — 17 octobre',site:siteName(),
+     m:'Scramble à 4 · départ shotgun 9 h · déjeuner inclus',p:220*Math.min(S.g.pax,4),edit:null});
+   closeSheet();renderCart();renderCross(S.src);go('cross');
+ }}
+
+/* ═════════ N5 · cross-sell ═════════ */
+const CROSSBY={
+ heb:[
+  {id:'gf',c:'Golf',need:'golf',n:'Green fee sur place',d:'Départ à quelques minutes de votre chambre',p:145,u:'/joueur',branch:'golf-parcours',line:'golf',edit:'golf-tarif'},
+  {id:'resto',c:'Restaurant',need:'resto',n:'Table au Bistrot du Golf',d:'Dîner à 20 h · terrasse sur le 18',p:0,u:'sans prépaiement'},
+  {id:'spa',c:'Spa',need:'spa',n:'Soin signature 60 min',d:'Pendant votre séjour, créneaux du soir disponibles',p:130,u:'/pers'},
+  {id:'xp',c:'Expériences',need:'xp',n:'Pack Golf &amp; Spa — 2 jours',d:'2 green fees + 1 soin, tarif dégressif',p:390,u:'/pers'},
+  {id:'evt',c:'Événements',need:'evt',n:'Pro-Am de la Collection — 17 octobre',d:'Places limitées, inscription en ligne',p:220,u:'/joueur'}],
+ golf:[
+  {id:'nuit',c:'Hôtel',need:'heb',n:'Une nuit sur place',d:'Petit-déjeuner servi dès 6 h 30 pour les départs matinaux',p:240,u:'/nuit',branch:'heb-hotels',line:'heb',edit:'heb-room'},
+  {id:'resto',c:'Restaurant',need:'resto',n:'Déjeuner au Club House',d:'Après le 18, terrasse face au green — réservation sans prépaiement',p:0,u:'sans prépaiement'},
+  {id:'spa',c:'Spa',need:'spa',n:'Massage récupération 45 min',d:'Créneaux en fin de journée, à cinq minutes du club house',p:95,u:'/pers'},
+  {id:'xp',c:'Expériences',need:'xp',n:'Pack 3 parcours',d:'Trois tracés sur trois jours, tarif dégressif',p:330,u:'/joueur'},
+  {id:'evt',c:'Événements',need:'evt',n:'Pro-Am de la Collection — 17 octobre',d:'Scramble à 4, places limitées',p:220,u:'/joueur'}]};
+function renderCross(src){
+  S.src=src||S.src||'heb';src=S.src;
+  const golf=src==='golf';
+  $('#crossTitle').textContent=golf?'Votre départ est réservé.':'Votre chambre est réservée.';
+  $('#crossSub').textContent=golf
+    ?'Ce que réservent le plus souvent nos joueurs autour de leur partie.'
+    :'Ce que réservent le plus souvent nos clients qui séjournent sur place.';
+  $('#crossNote').textContent='Règle de la matrice : la suggestion arrive après un choix validé, jamais avant, ne coupe pas le parcours et alimente toujours le même panier. Source '
+    +(golf?'Golf → Hébergement × Restaurant × Spa.':'Hébergement → Golf × Restaurant × Spa × Expériences × Événements.')
+    +' Les suggestions sont d\'abord celles du golf en cours ; un service absent de ce golf n\'est pas masqué, il renvoie vers ceux qui le proposent.'
+    +(golf?' Écart à arbitrer : la maquette propose en plus Expériences et Événements, que la matrice n\'autorise pas au départ du golf.':'');
+  const here=CROSSBY[src].filter(c=>hasServ(c.need));
+  const away=CROSSBY[src].filter(c=>!hasServ(c.need)).slice(0,2);
+  const dede=w=>(/^[aeiouyéèêh]/i.test(w)?"d'":'de ')+w.toLowerCase();
+  $('#crossList').innerHTML=here.map(c=>{
+    const has=c.branch?inCart(c.line):inCart('cs-'+c.id);
+    return `<div class="card prod"><div class="ph" style="height:110px">${c.c}</div>
+     <div class="body"><span class="tag">${c.c}${c.branch?' · maquetté':''}</span><b class="h3">${c.n}</b><span class="sub">${c.d}</span>
+       <span class="mut">${siteName()}</span>
+       <div class="foot"><div class="price">${c.p?eur(c.p):'Sans prépaiement'}<small>${c.p?c.u:'Table garantie 15 min'}</small></div>
+         <button class="btn sm ${has?'ghost':''}" data-cs="${c.id}">${has?(c.branch?'Modifier':'Ajouté ✓'):(c.branch?'Réserver':'Ajouter')}</button></div></div></div>`}).join('')
+   +away.map(c=>{const k=SITES.filter(x=>x.serv.includes(c.need)).length;
+     return `<div class="card prod" style="border-style:dashed"><div class="ph" style="height:110px">${c.c}</div>
+     <div class="body"><span class="tag">${c.c}</span><b class="h3">Pas ${dede(c.c)} sur ce golf</b>
+       <span class="sub">${k} golf${k>1?'s':''} de la Collection le propose${k>1?'nt':''} — l'itinéraire peut mêler deux adresses.</span>
+       <div class="foot"><div class="mut">Autre golf</div><button class="btn sm ghost" data-away="${c.need}">Voir où</button></div></div></div>`}).join('');
+  $$('[data-away]').forEach(b=>b.onclick=()=>openSite(b.dataset.away));
+  $$('[data-cs]').forEach(b=>b.onclick=()=>{
+    const c=here.find(x=>x.id===b.dataset.cs);
+    if(c.branch){go(inCart(c.line)?c.edit:c.branch);return}
+    if(inCart('cs-'+c.id)){S.cart=S.cart.filter(l=>l.id!=='cs-'+c.id);renderCross(src);renderCart();return}
+    sheet(head('Ajouter : '+c.n,'N5 → N4 branche '+c.c)+
+    `<p class="sub" style="margin-top:12px">Dans le moteur réel, cette suggestion ouvre le parcours ${c.c} (date, paramètres, disponibilité, tarif) puis revient au <b>même itinéraire</b> — jamais un second panier, jamais un second paiement.</p>
+     <p class="note" style="display:block">Cette branche n'étant pas maquettée en v1, le prototype simule le parcours et ajoute directement la ligne au panier commun. Les branches Hôtel et Golf, elles, s'ouvrent pour de vrai.</p>
+     <button class="btn full" style="margin-top:16px" id="csOk">Simuler le parcours ${c.c} et ajouter</button>`);
+    $('#csOk').onclick=()=>{
+      S.cart.push({id:'cs-'+c.id,cat:c.c,t:c.n,site:siteName(),m:c.d+(c.p?'':' · à régler sur place'),p:c.p,edit:null});
+      closeSheet();renderCross(src);renderCart();
+      $('#crossTot').textContent=eur(total())+' — '+S.cart.length+' services';
+    };
+  });
+}
+
+/* ═════════ N7 · paiement fractionné (matrice V5) ═════════ */
+const PAY3X_MIN=200;
+function renderPay3x(){
+  const b=$('#pay3x'),ok=total()>=PAY3X_MIN;
+  if(!ok&&b.classList.contains('on')){b.classList.remove('on');$('[data-pay]').classList.add('on')}
+  b.style.display=ok?'flex':'none';
+  if(ok)$('#pay3xSub').textContent='Klarna ou Alma — 3 × '+eur(Math.round(total()/3));
+  syncPayFields();
+}
+/* les champs carte ne s'affichent que si « Carte bancaire » est sélectionné */
+function syncPayFields(){$('#cardFields').style.display=$('#payCard').classList.contains('on')?'':'none'}
+
+/* ═════════ N6 · panier ═════════ */
+function subtotal(){return S.cart.reduce((s,l)=>s+l.p,0)}
+function discount(){let d=0;S.credits.forEach(c=>{d+=c.pct?Math.round(subtotal()*c.pct):c.amt});return Math.min(d,subtotal())}
+function total(){return subtotal()-discount()}
+function renderCart(){
+  const box=$('#cartLines');
+  $('#cartEmpty').style.display=S.cart.length?'none':'block';
+  box.innerHTML=S.cart.map(l=>`
+   <div class="line"><div class="ph">${l.cat.slice(0,3)}</div>
+     <div class="l-b"><div class="between"><span class="row" style="gap:6px;flex-wrap:wrap"><span class="tag">${l.cat}</span>${l.site?`<span class="tag">${l.site}</span>`:''}</span><b>${l.p?eur(l.p):'Sur place'}</b></div>
+       <div class="h3" style="margin-top:6px">${l.t}</div>
+       <div class="sub">${l.m}</div>
+       <div class="l-acts">
+         ${l.edit?`<button data-edit="${l.edit}">Modifier</button>`:''}
+         <button data-dup="${l.id}">Dupliquer</button>
+         <button data-rm="${l.id}">Supprimer</button></div></div></div>`).join('');
+  $$('[data-edit]').forEach(b=>b.onclick=()=>go(b.dataset.edit));
+  $$('[data-rm]').forEach(b=>b.onclick=()=>{S.cart=S.cart.filter(l=>l.id!==b.dataset.rm);renderCart()});
+  $$('[data-dup]').forEach(b=>b.onclick=()=>{const l=S.cart.find(x=>x.id===b.dataset.dup);
+    S.cart.push({...l,id:l.id+'-d'+S.cart.length,edit:null});renderCart()});
+  const sites=[...new Set(S.cart.map(l=>l.site).filter(Boolean))];
+  $('#multiSite').style.display=sites.length>1?'block':'none';
+  if(sites.length>1)$('#msT').textContent='Itinéraire sur '+sites.length+' golfs — '+sites.join(' et ');
+  renderTotals('#cartTotals');
+  $('#cartBarTot').textContent=eur(total());
+  $('#cartBarSub').textContent=S.cart.length+' service'+(S.cart.length>1?'s':'')+' · un seul paiement';
+  const c=$('#cartBtn');c.classList.toggle('has',S.cart.length>0);$('#cartCount').textContent=S.cart.length;
+}
+function renderTotals(sel){
+  const el=$(sel);if(!el)return;
+  el.innerHTML=`<div class="tot"><span>Sous-total</span><span>${eur(subtotal())}</span></div>
+  ${S.credits.map(c=>`<div class="tot"><span>${c.n}</span><span>−${eur(c.pct?Math.round(subtotal()*c.pct):c.amt)}</span></div>`).join('')}
+  <div class="tot"><span>Taxes &amp; taxe de séjour</span><span>Incluses</span></div>
+  <div class="tot big"><span>Total</span><span>${eur(total())}</span></div>`;
+}
+function renderRecap(sel,withTotal=true){
+  const el=$(sel);if(!el)return;
+  el.innerHTML=S.cart.map(l=>`<div style="padding:8px 0;border-bottom:1px solid var(--g200)">
+    <div class="between"><span class="row" style="gap:6px;flex-wrap:wrap"><span class="tag">${l.cat}</span>${l.site?`<span class="tag">${l.site}</span>`:''}</span><b>${l.p?eur(l.p):'Sur place'}</b></div>
+    <div class="sub" style="margin-top:4px"><b>${l.t}</b><br>${l.m}</div></div>`).join('')
+    +(withTotal?`<div class="tot big" style="margin-top:10px"><span>Total</span><span>${eur(total())}</span></div>`:'');
+  const t=$('#infosTot'),s=$('#infosSub');
+  if(t){t.textContent=eur(total());s.textContent=S.cart.length+' service'+(S.cart.length>1?'s':'')+' · une seule confirmation'}
+}
+$('#toCheckout').onclick=$('#toCheckoutSm').onclick=()=>{if(S.cart.length)go('infos')};
+$('#payBtn').onclick=()=>{
+  if(!$('#cgvOpt').classList.contains('on')){$('#cgvOpt').style.borderColor='#a11';return}
+  S.email=$('#f-em').value||'camille.duchene@exemple.fr';
+  $('#confMail').textContent=S.email;
+  renderRecap('#confRecap');go('confirm');
+};
+$('#cgvOpt').onclick=function(){this.classList.toggle('on');this.style.borderColor=''};
+$$('[data-pay]').forEach(b=>b.onclick=()=>{$$('[data-pay]').forEach(x=>x.classList.remove('on'));b.classList.add('on');syncPayFields()});
+$('#confAcc').onclick=()=>{S.logged=true;sheet(head('Compte créé','A · Après réservation')+
+  `<p class="sub" style="margin-top:12px">Vos réservations, votre portefeuille et vos avantages fidélité sont rattachés à ${S.email}. La gestion de réservation (N8) reste à arbitrer : PMS ou booking engine ?</p>
+   <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Fermer</button>`)};
+
+$('#msConc').onclick=()=>sheet(head('Transfert entre sites','N6 · Itinéraire multi-sites')+
+ `<p class="sub" style="margin-top:12px">Un itinéraire peut couvrir deux sites de la Collection. Le moteur ne gère ni les trajets ni les horaires d'un site à l'autre : la demande part à la conciergerie, qui la traite hors du panier.</p>
+  <div class="grid g2" style="gap:10px;margin-top:14px"><button class="btn sec">Être rappelé</button><button class="btn ghost">WhatsApp</button></div>
+  <p class="note" style="display:block">Question ouverte côté client : jusqu'où le moteur doit-il aller sur le multi-sites — simple juxtaposition de lignes, ou vrai séjour itinérant avec transferts vendus&nbsp;?</p>
+  <button class="btn full" style="margin-top:12px" onclick="closeSheet()">Fermer</button>`);
+
+/* ═════════ Barre outils · point d'entrée ═════════ */
+$('#e3Site').innerHTML='<option>Sans préférence — toute la Collection</option>'+SITES.map(x=>`<option>${x.n}</option>`).join('');
+$('#entrySel').innerHTML='<option value="">Entrée : portail Collection</option>'
+  +SITES.map(x=>`<option value="${x.id}">Entrée : site — ${x.n}</option>`).join('');
+$('#entrySel').onchange=e=>{
+  S.site=e.target.value?SITES.find(x=>x.id===e.target.value):null;
+  syncSite();go('accueil');
+};
+
+/* ═════════ Hold timer ═════════ */
+let hold=15*60;
+setInterval(()=>{if(hold>0)hold--;const m=String(Math.floor(hold/60)).padStart(2,'0'),s=String(hold%60).padStart(2,'0');
+  const el=$('#holdTimer');if(el)el.textContent=m+':'+s},1000);
+
+/* ═════════ Barre outils ═════════ */
+$('#jump').innerHTML=$$('.screen').map(s=>`<option value="${s.id.slice(3)}">${s.dataset.title}</option>`).join('');
+$('#jump').onchange=e=>go(e.target.value);
+$('#annTog').onchange=e=>document.body.classList.toggle('ann',e.target.checked);
+$$('#vpSeg button').forEach(b=>b.onclick=()=>{
+  $$('#vpSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');stage.dataset.vp=b.dataset.vp});
+$('#reset').onclick=()=>{S=fresh();hold=15*60;S.rooms=[{a:2,e:0}];clearFilters();$('#entrySel').value='';syncSite();
+  renderCart();renderGExtras();$('#gIdxWarn').style.display='none';go('accueil')};
+$('#restart').onclick=()=>$('#reset').click();
+
+syncSite();renderCart();renderExtras();renderGExtras();renderCross('heb');go('accueil');
+window.closeSheet=closeSheet;
+</script>
+</body>
+</html>
