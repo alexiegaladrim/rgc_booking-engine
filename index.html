@@ -16,33 +16,44 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--canvas);
-  color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding-top:48px}
+  color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;padding-top:var(--dbh,48px)}
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0}
 svg{flex:none}
 ul{list-style:none}
 
-/* ══════════ Barre outils (hors maquette) ══════════ */
-.devbar{position:fixed;top:0;left:0;right:0;height:48px;background:var(--ink);color:#fff;z-index:100;
-  display:flex;align-items:center;gap:14px;padding:0 14px;font-size:12px}
-.devbar .db-t{font-weight:700;letter-spacing:-.2px;white-space:nowrap}
+/* ══════════ Barre outils (hors maquette) ══════════
+   Elle ne coupe plus rien : le titre se tronque, les réglages passent sur une
+   deuxième ligne quand la fenêtre est trop étroite, et la scène se décale de la
+   hauteur réelle de la barre (--dbh, tenue à jour en JS). */
+.devbar{position:fixed;top:0;left:0;right:0;min-height:48px;background:var(--ink);color:#fff;z-index:100;
+  display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;padding:7px 14px;font-size:12px}
+.devbar .db-t{font-weight:700;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  flex:1 1 200px;min-width:0}
 .devbar .db-t span{font-weight:400;color:#8f8f8f;margin-left:8px}
-.devbar .sp{flex:1}
+.db-tools{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:8px 10px;margin-left:auto;min-width:0}
+.grp{display:flex;align-items:center;gap:6px;flex:none}
+.grp-l{color:#8f8f8f;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.db-sep{width:1px;height:20px;background:#3d3d3d;flex:none}
 .seg{display:flex;flex:none;border:1px solid #3d3d3d;border-radius:6px;overflow:hidden}
 .seg button{padding:6px 11px;color:#b5b5b5;font-size:11.5px;font-weight:600}
+.seg button:hover{color:#fff}
 .seg button.on{background:#fff;color:var(--ink)}
-.dbtog{display:flex;align-items:center;gap:7px;color:#b5b5b5;font-size:11.5px;font-weight:600;cursor:pointer}
+.dbtog{display:flex;align-items:center;gap:7px;color:#b5b5b5;font-size:11.5px;font-weight:600;cursor:pointer;
+  flex:none;white-space:nowrap}
+.dbtog:hover{color:#fff}
 .dbtog input{accent-color:#fff;width:14px;height:14px}
 .devbar select{background:#2b2b2b;border:1px solid #3d3d3d;border-radius:6px;color:#e5e5e5;
-  padding:6px 8px;font-size:11.5px;max-width:230px}
-.devbar .lnk{color:#b5b5b5;font-size:11.5px;font-weight:600;text-decoration:none}
+  padding:6px 8px;font-size:11.5px;max-width:230px;min-width:110px;flex:0 1 auto;text-overflow:ellipsis}
+.devbar select:hover{border-color:#5a5a5a}
+.devbar .lnk{color:#b5b5b5;font-size:11.5px;font-weight:600;text-decoration:none;white-space:nowrap;flex:none}
 .devbar .lnk:hover{color:#fff}
 
 /* ══════════ Scène ══════════ */
 .stagewrap{display:flex;justify-content:center;padding:18px 14px 40px}
 .stage{width:100%;background:var(--paper);container-type:inline-size;position:relative}
-.stage[data-vp="desktop"]{max-width:1180px;border:1px solid var(--g300);min-height:calc(100vh - 110px)}
-.stage[data-vp="mobile"]{width:390px;max-width:100%;height:calc(100vh - 106px);overflow-y:auto;
+.stage[data-vp="desktop"]{max-width:1180px;border:1px solid var(--g300);min-height:calc(100vh - var(--dbh,48px) - 62px)}
+.stage[data-vp="mobile"]{width:390px;max-width:100%;height:calc(100vh - var(--dbh,48px) - 58px);overflow-y:auto;
   border:1px solid var(--g300);border-radius:20px;box-shadow:0 8px 30px rgba(0,0,0,.10)}
 
 /* ══════════ Annotations matrice ══════════ */
@@ -510,8 +521,13 @@ body:not(.ann) .sim,body:not(.ann) .simlnk{display:none!important}
   .maplist .prod.wide .body{padding:15px}
 }
 @container (max-width:839px){ .show-lg{display:none} }
-@media(max-width:1180px){.devbar .db-t span{display:none}}
-@media(max-width:880px){.devbar .db-t{display:none}}
+/* Au-dessus de 1150 px tout tient sur une ligne : c'est le titre qui se tronque,
+   jamais un réglage. En dessous, la barre s'autorise une seconde ligne. */
+@media(min-width:1151px){.devbar,.db-tools{flex-wrap:nowrap}}
+@media(max-width:1440px){.devbar .db-t span{display:none}}
+@media(max-width:1250px){.devbar select{max-width:178px}}
+@media(max-width:900px){.devbar select{max-width:150px;min-width:96px}}
+@media(max-width:560px){.devbar .db-t{display:none}.db-tools{justify-content:flex-start}}
 </style>
 </head>
 <body class="ann">
@@ -519,24 +535,34 @@ body:not(.ann) .sim,body:not(.ann) .simlnk{display:none!important}
 <!-- ══════════ Barre outils (hors périmètre maquette) ══════════ -->
 <div class="devbar">
   <div class="db-t">Booking Engine — Hôtel, Golf, Restaurant &amp; Spa <span>wireframe v1 · matrice POEM · le moteur commence au hub N2</span></div>
-  <div class="sp"></div>
-  <select id="entrySel" title="Point d'entrée"></select>
-  <select id="jump" title="Aller à un écran"></select>
-  <label class="dbtog"><input type="checkbox" id="annTog" checked> Annotations</label>
-  <div class="seg" id="gvSeg" title="Variante du tunnel green fee">
-    <button data-gv="1" class="on">Golf v1</button>
-    <button data-gv="2">v2</button>
+  <div class="db-tools">
+    <select id="entrySel" title="Point d'entrée"></select>
+    <span class="db-sep"></span>
+    <div class="grp" title="Variante du tunnel green fee">
+      <span class="grp-l">Golf</span>
+      <div class="seg" id="gvSeg">
+        <button data-gv="1" class="on">v1</button>
+        <button data-gv="2">v2</button>
+      </div>
+    </div>
+    <div class="grp" title="Variante du tunnel spa">
+      <span class="grp-l">Spa</span>
+      <div class="seg" id="svSeg">
+        <button data-sv="1" class="on">v1</button>
+        <button data-sv="2">v2</button>
+      </div>
+    </div>
+    <div class="grp" title="Format d'affichage de la maquette">
+      <span class="grp-l">Vue</span>
+      <div class="seg" id="vpSeg">
+        <button data-vp="desktop" class="on">Desktop</button>
+        <button data-vp="mobile">Mobile</button>
+      </div>
+    </div>
+    <span class="db-sep"></span>
+    <label class="dbtog"><input type="checkbox" id="annTog" checked> Annotations</label>
+    <button class="lnk" id="reset">Réinitialiser</button>
   </div>
-  <div class="seg" id="svSeg" title="Variante du tunnel spa">
-    <button data-sv="1" class="on">Spa v1</button>
-    <button data-sv="2">v2</button>
-  </div>
-  <div class="seg" id="vpSeg">
-    <button data-vp="desktop" class="on">Desktop</button>
-    <button data-vp="mobile">Mobile</button>
-  </div>
-  <button class="lnk" id="reset">Réinitialiser</button>
-  <a class="lnk" href="../">← Protos</a>
 </div>
 
 <div class="stagewrap">
@@ -1899,7 +1925,7 @@ function go(id){
   shutPops();
   $$('.screen').forEach(s=>s.classList.toggle('on',s.id==='sc-'+id));
   const sc=$('#sc-'+id); if(!sc)return;
-  renderSteps(sc); $('#jump').value=id;
+  renderSteps(sc);
   if(stage.dataset.vp==='mobile')stage.scrollTop=0; else window.scrollTo({top:0,behavior:'instant'});
   if(id==='panier')renderCart(); if(id==='infos')renderRecap('#infosRecap');
   if(id==='golf-tarif'&&S.g.slot)renderGTarif(); if(id==='heb-room'&&S.room)renderRoom();
@@ -5186,14 +5212,12 @@ $('#holdSim').onclick=()=>{if(!holdDead)hold=1};
 $('#holdRecheck').onclick=()=>expireModal(false);
 
 /* ═════════ Barre outils ═════════ */
-/* Le sélecteur d'écran sépare l'amont vitrine du périmètre du moteur. */
-$('#jump').innerHTML=(()=>{
-  const opts=f=>$$('.screen').filter(f).map(s=>`<option value="${s.id.slice(3)}">${s.dataset.title}</option>`).join('');
-  const grp=(lbl,f)=>{const o=opts(f);return o?`<optgroup label="${lbl}">${o}</optgroup>`:''};
-  return grp('Amont — site vitrine (hors périmètre)',s=>s.dataset.scope==='vitrine')
-       + grp('Booking engine (N2 → confirmation)',s=>s.dataset.scope!=='vitrine');
-})();
-$('#jump').onchange=e=>go(e.target.value);
+/* La barre peut passer sur deux lignes : la scène se décale de sa hauteur réelle. */
+(()=>{const bar=$('.devbar');
+  const sync=()=>document.documentElement.style.setProperty('--dbh',bar.offsetHeight+'px');
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(bar); else addEventListener('resize',sync);
+  sync();})();
+
 $('#annTog').onchange=e=>document.body.classList.toggle('ann',e.target.checked);
 /* Bascule de variante : elle repose le joueur à l'entrée du tunnel golf quand
    il y est déjà, sinon elle se contente de changer le fil d'étapes. */
