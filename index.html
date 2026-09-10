@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booking Engine — Hôtel &amp; Golf (wireframe v1)</title>
+<title>Booking Engine — Hôtel, Golf, Restaurant &amp; Spa (wireframe v1)</title>
 <link rel="icon" href="../favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -423,6 +423,65 @@ body:not(.ann) .sim,body:not(.ann) .simlnk{display:none!important}
 .aside{align-self:start}
 .aside .card{padding:16px}
 
+/* ══════════ Spa v2 · modèle Planity ══════════
+   Prestations en accordéon, une ligne par durée, créneaux en pastilles.
+   Pas de photo dans la liste : la vitrine du spa est en amont, la prise de
+   rendez-vous est un outil — on y vient en sachant ce qu'on veut. */
+.acc{border:1px solid var(--g300);border-radius:8px;background:var(--paper);overflow:hidden}
+.acc+.acc{margin-top:10px}
+.acc-h{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:14px 16px;text-align:left}
+.acc-h:hover{background:var(--g50)}
+.acc-h b{font-size:14.5px;font-weight:700;letter-spacing:-.2px}
+.acc-h .n{font-size:12px;color:var(--g500);font-weight:500;margin-left:8px}
+.acc-h .cv{transition:transform .15s;color:var(--g500)}
+.acc.open .acc-h .cv{transform:rotate(180deg)}
+.acc-b{border-top:1px solid var(--g200)}
+.prow{display:flex;align-items:center;gap:14px;padding:12px 16px;width:100%;text-align:left}
+.prow+.prow{border-top:1px solid var(--g100)}
+.prow:hover{background:var(--g50)}
+.prow .pn{flex:1;min-width:0}
+.prow .pn b{display:block;font-size:13.5px;font-weight:600}
+.prow .pn span{display:block;font-size:11.5px;color:var(--g500);margin-top:2px}
+.prow .pn .av{font-weight:600;color:var(--g700);margin-top:4px}
+.prow .pn .av.no{font-weight:500;color:var(--g400)}
+.prow .pp{font-weight:700;font-size:13.5px;white-space:nowrap}
+.prow .pb{flex:none;border:1px solid var(--g300);border-radius:6px;padding:7px 13px;font-size:12.5px;
+  font-weight:600;color:var(--g700);background:var(--paper);white-space:nowrap}
+.prow:hover .pb{border-color:var(--ink);color:var(--ink)}
+.prow.on{background:var(--g50)}
+.prow.on .pb{background:var(--ink);border-color:var(--ink);color:#fff}
+.prow.off,.prow.off:hover{background:none;opacity:.45;cursor:default}
+.selline{display:flex;align-items:flex-start;gap:10px;padding:9px 0;font-size:12.5px}
+.selline+.selline{border-top:1px solid var(--g200)}
+.selline .sn{flex:1;min-width:0}
+.selline .sn b{display:block;font-weight:600}
+.selline .sn span{display:block;color:var(--g500);font-size:11.5px;margin-top:1px}
+.selline .sx{flex:none;color:var(--g400);font-size:15px;line-height:1}
+.selline .sx:hover{color:var(--ink)}
+.week{display:flex;gap:6px;align-items:stretch;margin-bottom:6px}
+.week .wd{flex:1;min-width:0;border:1px solid var(--g300);border-radius:8px;padding:9px 4px;text-align:center;background:var(--paper)}
+.week .wd:hover{border-color:var(--g500)}
+.week .wd span{display:block;font-size:10.5px;color:var(--g500)}
+.week .wd b{display:block;font-size:14px;font-weight:700;margin-top:1px}
+.week .wd i{display:block;font-size:10px;font-style:normal;font-weight:600;margin-top:6px;color:var(--g600)}
+.week .wd.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.week .wd.full{background:var(--g50)}
+.week .wd.full span,.week .wd.full b,.week .wd.full i{color:var(--g400)}
+.pills{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
+.pill{border:1px solid var(--g300);border-radius:6px;padding:9px 6px;text-align:center;font-size:13px;
+  font-weight:600;color:var(--g800);background:var(--paper);line-height:1.2}
+.pill:hover{border-color:var(--ink)}
+.pill.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.pill small{display:block;font-size:9.5px;font-weight:500;color:var(--g500);margin-top:2px}
+.pill.on small{color:var(--g300)}
+.rdvline{display:flex;gap:14px;padding:12px 0}
+.rdvline+.rdvline{border-top:1px solid var(--g200)}
+.rdvline .rt{flex:none;width:86px;font-weight:700;font-size:13.5px}
+.rdvline .rb{flex:1;min-width:0}
+.rdvline .rb b{display:block;font-size:13.5px;font-weight:600}
+.rdvline .rb span{display:block;font-size:11.5px;color:var(--g500);margin-top:2px}
+.rdvline .rp{font-weight:700;font-size:13.5px;white-space:nowrap}
+
 /* ══════════ Container queries : bascule desktop ══════════ */
 @container (min-width:840px){
   .pad{padding:28px 34px}
@@ -459,7 +518,7 @@ body:not(.ann) .sim,body:not(.ann) .simlnk{display:none!important}
 
 <!-- ══════════ Barre outils (hors périmètre maquette) ══════════ -->
 <div class="devbar">
-  <div class="db-t">Booking Engine — Hôtel &amp; Golf <span>wireframe v1 · matrice POEM · le moteur commence au hub N2</span></div>
+  <div class="db-t">Booking Engine — Hôtel, Golf, Restaurant &amp; Spa <span>wireframe v1 · matrice POEM · le moteur commence au hub N2</span></div>
   <div class="sp"></div>
   <select id="entrySel" title="Point d'entrée"></select>
   <select id="jump" title="Aller à un écran"></select>
@@ -467,6 +526,10 @@ body:not(.ann) .sim,body:not(.ann) .simlnk{display:none!important}
   <div class="seg" id="gvSeg" title="Variante du tunnel green fee">
     <button data-gv="1" class="on">Golf v1</button>
     <button data-gv="2">v2</button>
+  </div>
+  <div class="seg" id="svSeg" title="Variante du tunnel spa">
+    <button data-sv="1" class="on">Spa v1</button>
+    <button data-sv="2">v2</button>
   </div>
   <div class="seg" id="vpSeg">
     <button data-vp="desktop" class="on">Desktop</button>
@@ -1167,6 +1230,319 @@ body:not(.ann) .sim,body:not(.ann) .simlnk{display:none!important}
     </div>
   </section>
 
+  <!-- ══════════ N4 · SPA — NOS SOINS ══════════ -->
+  <section class="screen" id="sc-spa-soins" data-title="N4 · Spa — Nos soins" data-step="1" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="hub">← Hub de sélection</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="spaH1">Nos soins</h1><p class="sub" style="margin-top:8px" id="spaSub">—</p></div>
+        <span class="node">N4 · Spa</span>
+      </div>
+
+      <div class="chips" id="spCats" style="margin-top:20px"></div>
+      <div class="grid" id="soinList"></div>
+
+      <p class="note">Même rythme que les trois autres branches : le produit d'abord, la date ensuite. Ici le produit est le <b>soin</b>, pas le spa — le référentiel n'en compte qu'un, celui de la Bégude, et faire choisir un établissement avant un soin ajouterait un écran sans question.</p>
+      <p class="note">Le catalogue est celui du back-office spa (proto <b>Spa</b>) : mêmes familles, mêmes durées, mêmes tarifs. La vente en ligne n'en ouvre qu'une partie — <b>épilation et onglerie restent au desk</b>. Elles se réservent au quart d'heure et se calent entre deux soins longs : les ouvrir en ligne suppose un pas de réservation plus fin et une règle de remplissage propre. À confirmer avec le spa.</p>
+      <p class="note">Les prix sont ceux de la grille back-office. Le spa pratique aussi des <b>forfaits et cures</b> (3 ou 5 séances) et des <b>bons cadeaux</b> : ni les uns ni les autres ne sont maquettés ici — le bon cadeau relève du paiement, la cure d'un produit à part entière, plus proche des carnets &amp; pass que du soin à l'unité.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA — RECHERCHE &amp; CRÉNEAUX ══════════ -->
+  <section class="screen" id="sc-spa-creneaux" data-title="N4 · Spa — Recherche &amp; créneaux" data-step="2" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="spa-soins">← Nos soins</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="spSlotTitle">Créneaux disponibles</h1>
+          <p class="sub" style="margin-top:8px" id="spSlotCrit">—</p></div>
+        <span class="node">N4 · Recherche &amp; créneaux</span>
+      </div>
+
+      <div class="card searchbar">
+        <label class="sb-f"><span>Soin</span><select id="spSoinSel"></select></label>
+        <div class="sb-f"><span>Personnes</span>
+          <div class="qty" style="height:42px"><button id="spPaxMinus">−</button><b id="spPaxN">1</b><button id="spPaxPlus">＋</button>
+            <span class="mut" id="spPaxNote" style="margin-left:2px">1 cabine</span></div></div>
+        <div class="sb-f"><span>Date</span>
+          <div class="row" style="gap:6px">
+            <button class="navd" id="spPrev" title="Jour précédent">‹</button>
+            <button class="datebtn caret" id="spDateBtn" data-pop="spdate" aria-expanded="false">—</button>
+            <button class="navd" id="spNext" title="Jour suivant">›</button></div></div>
+        <div class="sbpop cal2" id="spDatePop" data-pop="spdate" hidden></div>
+      </div>
+      <p class="note">Trois questions, les mêmes que sur les autres branches — soin, personnes, date. <b>La durée n'en est pas une</b> : elle se lit sous chaque horaire, avec son prix, parce qu'un créneau de fin de journée accepte souvent un 60 minutes et pas un 90.</p>
+
+      <div class="daystrip" id="spDays"></div>
+
+      <div class="chips" id="spChips">
+        <button class="chip on" data-spfilt="all">Toute la journée</button>
+        <button class="chip" data-spfilt="matin">Matin</button>
+        <button class="chip" data-spfilt="aprem">Après-midi</button>
+        <button class="chip" data-spfilt="soir">Fin de journée</button>
+        <button class="chip" data-spfilt="disp">Uniquement disponibles</button>
+      </div>
+
+      <div id="spGroupWarn" style="display:none;margin-bottom:16px">
+        <div class="card" style="padding:16px;border-style:dashed">
+          <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">E3</span>
+            <div><div class="h3" id="spGroupT">À partir de trois personnes, on passe en demande</div>
+              <p class="sub" style="margin-top:6px" id="spGroupD">Le spa compte quatre cabines : au-delà de deux personnes en même temps, il faut caler l'ordre des soins, parfois décaler un départ, parfois privatiser l'espace. Un conseiller construit le programme et l'envoie en devis.</p>
+              <button class="btn sm" style="margin-top:12px" id="spGroupBtn">Faire une demande</button></div></div>
+        </div>
+      </div>
+
+      <div id="spSlotWrap">
+        <div id="spSlotMatin"></div>
+        <div id="spSlotAprem" style="margin-top:22px"></div>
+        <div id="spSlotSoir" style="margin-top:22px"></div>
+      </div>
+
+      <div id="spEmpty" style="display:none">
+        <div class="card" style="padding:18px;border-style:dashed">
+          <div class="h3" id="spEmptyT">Complet ce jour-là</div>
+          <p class="sub" style="margin-top:6px" id="spEmptyD">—</p>
+          <div class="row" style="gap:10px;margin-top:14px;flex-wrap:wrap" id="spEmptyAlt"></div>
+          <div id="spEmptySoins"></div>
+          <button class="lnk" style="margin-top:14px;display:block" id="spEmptyE1">Voir toutes les alternatives</button>
+        </div>
+      </div>
+
+      <p class="note">Le losange de disponibilité porte sur la <b>cabine</b>, jamais sur le praticien : c'est la règle du back-office, où l'affectation se décide plus tard, à la main. Le moteur ne réserve donc pas une personne, il réserve un espace et une durée — et prévoit le battement de remise en état entre deux soins.</p>
+      <p class="note">À deux, le moteur cherche autre chose selon le soin : un <b>rituel duo</b> tient dans la cabine Duo, deux massages solo demandent <b>deux cabines libres à la même heure</b>. C'est ce qui fait qu'un créneau ouvert pour une personne peut être fermé pour deux, sans que le spa soit complet.</p>
+      <p class="note">Question ouverte : le spa ouvre-t-il <b>tout son planning</b> à la vente en ligne, ou en garde-t-il une part au desk et à l'hôtel&nbsp;? Les autres branches ont tranché (quota de départs pour le golf, plan de salle pour le restaurant) ; pour le spa, rien n'est dit. La maquette suppose l'ouverture totale.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA — DURÉE, PRATICIEN·NE &amp; CONDITIONS ══════════ -->
+  <section class="screen" id="sc-spa-soin" data-title="N4 · Spa — Durée, praticien·ne &amp; conditions (E4)" data-step="3" data-flow="spa">
+    <div class="ph" style="height:230px">Cabine et espace détente</div>
+    <div class="pad">
+      <button class="back" data-go="spa-creneaux">← Créneaux disponibles</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="spSoinTitle">—</h1><p class="sub" style="margin-top:8px" id="spSoinSub">—</p></div>
+        <span class="node">E4 · Durée &amp; conditions</span>
+      </div>
+      <div class="split" style="margin-top:8px">
+        <div>
+          <h2 class="h2" style="margin:14px 0 12px">Choisissez la durée</h2>
+          <div class="grid" id="spDurList" style="gap:10px"></div>
+
+          <h2 class="h2" style="margin:26px 0 4px">Praticien·ne</h2>
+          <p class="sub" style="margin-bottom:12px">Facultatif. Une préférence, pas une réservation : l'équipe affecte les soins la veille, en fonction des cabines et des compétences.</p>
+          <div class="grid g3" id="spPratList" style="gap:10px"></div>
+
+          <h2 class="h2" style="margin:26px 0 12px">Avant ou après le soin</h2>
+          <div class="grid" id="spOptList" style="gap:10px"></div>
+
+          <div class="row" style="gap:18px;margin-top:16px;flex-wrap:wrap">
+            <button class="lnk" id="spCondBtn">Durées, tarifs et conditions d'annulation</button>
+          </div>
+
+          <p class="note">Même module E4 que les trois autres branches, avec la même mécanique : la <b>durée porte le prix</b> comme le tarif porte celui de la chambre et la formule celui de la table. Elle porte aussi le moment de débit — un massage prend une empreinte, un rituel long se prépaie.</p>
+          <p class="note">Le nom demandé ici n'engage pas le spa. Le back-office est formel : <b>aucune affectation automatique</b>, jamais — la préférence descend en note sur la réservation, l'équipe la respecte quand elle le peut. Afficher un nom réservable en ligne serait promettre ce que le planning ne garantit pas. À arbitrer si le client veut vraiment vendre « son » praticien·ne : cela suppose d'inverser la règle d'affectation, pas seulement d'ajouter un champ.</p>
+          <p class="note">Écart relevé avec le back-office : celui-ci encaisse un <b>acompte de 30 %</b> à la réservation. Le moteur ne connaît que trois moments de débit — tout maintenant, empreinte, sur place. Un acompte est un quatrième cas : il débite une part et laisse le reste à régler au spa. À trancher, parce qu'il change l'écran de paiement et le récapitulatif du panier, pas seulement la ligne du spa.</p>
+        </div>
+        <aside class="aside show-lg">
+          <div class="card">
+            <div class="mut" id="spAsideCrit">—</div>
+            <div class="hr" style="margin:12px 0"></div>
+            <div class="tot"><span id="spAsideDurLbl">Durée</span><span id="spAsideUnit">—</span></div>
+            <div class="tot"><span id="spAsidePaxLbl">Personnes</span><span id="spAsidePax">—</span></div>
+            <div class="tot" id="spAsideOptRow" style="display:none"><span id="spAsideOptLbl">Options</span><span id="spAsideOpt">—</span></div>
+            <div class="tot big"><span>Total</span><span id="spAsideTot">—</span></div>
+            <div class="mut" style="margin-top:10px" id="spAsidePay">—</div>
+            <button class="btn full" style="margin-top:14px" id="spAddLg">Ajouter à mon panier</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="actionbar">
+      <div class="sum"><b id="spBarTot">—</b><span id="spBarSub">—</span></div>
+      <button class="btn" id="spAdd">Ajouter</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA — PRÉPARATION ══════════ -->
+  <section class="screen" id="sc-spa-prep" data-title="N4 · Spa — Préparation &amp; santé" data-step="4" data-step2="5" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="spa-soin">← Durée &amp; conditions</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Avant votre soin</h1><p class="sub" style="margin-top:8px">Facultatif, sauf mention contraire. Ces informations partent à la praticienne qui vous recevra.</p></div>
+        <span class="node">N4 · Préparation</span>
+      </div>
+
+      <h2 class="h2" style="margin:18px 0 4px">Y a-t-il quelque chose à signaler&nbsp;?</h2>
+      <p class="sub" style="margin-bottom:10px">Certains soins s'adaptent, d'autres se remplacent. Le spa vous rappelle si c'est le cas.</p>
+      <div class="grid g3" id="spSante" style="gap:10px"></div>
+      <div id="spSanteAlert" style="display:none;margin-top:12px"></div>
+
+      <h2 class="h2" style="margin:24px 0 10px">Pression souhaitée</h2>
+      <div class="grid g3" id="spPress" style="gap:10px"></div>
+
+      <h2 class="h2" style="margin:24px 0 10px">Pendant le soin</h2>
+      <div class="grid g3" id="spAmb" style="gap:10px"></div>
+
+      <label class="field" style="margin-top:20px"><span>Un mot pour la praticienne (facultatif)</span>
+        <textarea rows="3" id="spNote" placeholder="Zone à éviter, soin offert pour un anniversaire, arrivée juste après le golf…"></textarea></label>
+
+      <p class="note">Dernier écran de la branche Spa. La suite — cross-sell, panier commun, checkout — est strictement la même que pour les trois autres. Ces champs existent déjà côté back-office sous forme de <b>notes santé</b> et de <b>notes de préférence</b> sur la fiche client : le moteur les collecte à la réservation plutôt que de les faire redire à l'accueil, en peignoir, devant la file du desk.</p>
+      <p class="note">Arbitrage plus lourd qu'au restaurant. Une allergie alimentaire est déjà une donnée de santé ; une grossesse, une hypertension ou une opération récente en sont sans ambiguïté. Les conserver sur la fiche client (RCU) pour ne pas les redemander suppose un <b>consentement explicite et révocable</b>, une durée de conservation et un accès restreint à l'équipe du spa — pas au desk du golf. Ne les garder que le temps du soin évite le sujet mais rend le service moins bon à la deuxième venue. C'est une décision du client, pas du moteur.</p>
+      <p class="note">Trois contre-indications ne se traitent pas en note : elles changent le soin. Le moteur ne peut pas décider à la place du spa — il signale, propose l'alternative du catalogue quand elle existe (le massage femme enceinte, par exemple) et laisse l'équipe rappeler. Une réservation en ligne ne vaut jamais avis médical, et la maquette ne le laisse pas croire.</p>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="spPrepTot">—</b><span id="spPrepSub">Informations facultatives</span></div>
+      <button class="btn" id="spPrepNext">Continuer</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA v2 — PRESTATIONS (modèle Planity) ══════════ -->
+  <section class="screen" id="sc-spa2-prestations" data-title="N4 · Spa v2 — Prestations (Planity)" data-step="1" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="hub">← Hub de sélection</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="sp2H1">Prendre rendez-vous</h1>
+          <p class="sub" style="margin-top:8px" id="sp2Sub">—</p></div>
+        <span class="node">N4 · Spa v2</span>
+      </div>
+
+      <div class="split" style="margin-top:8px">
+        <div>
+          <div class="card searchbar" id="sp2DateBar" style="grid-template-columns:1fr;margin-top:16px">
+            <div class="row" style="gap:16px;flex-wrap:wrap;align-items:flex-end">
+              <div class="sb-f" style="flex:1;min-width:250px"><span>Quand venez-vous&nbsp;? <span class="mut" style="font-weight:500">— facultatif</span></span>
+                <div class="row" style="gap:6px">
+                  <button class="navd" id="sp2FPrev" title="Jour précédent">‹</button>
+                  <button class="datebtn caret" id="sp2DateBtn" data-pop="sp2date" aria-expanded="false">—</button>
+                  <button class="navd" id="sp2FNext" title="Jour suivant">›</button></div></div>
+              <div class="row" style="gap:12px;flex-wrap:wrap;padding-bottom:4px">
+                <button class="chip" id="sp2FOnly">Uniquement ce qui est libre</button>
+                <button class="lnk" id="sp2FClear">Peu importe la date</button></div>
+            </div>
+            <div class="sbpop cal2" id="sp2DatePop" data-pop="sp2date" hidden></div>
+          </div>
+          <p class="note" id="sp2DateNote">—</p>
+          <div id="sp2FromCart" style="display:none;margin-bottom:16px"></div>
+          <div id="sp2Acc" style="margin-top:14px"></div>
+          <p class="note">Variante demandée le 10/09 : la prise de rendez-vous suit le modèle <b>Planity</b>, la référence du secteur. Trois différences avec la v1, et elles ne sont pas cosmétiques — <b>la prestation remplace le soin</b> (une ligne par durée, prix affiché, pas de photo), <b>on peut en enchaîner plusieurs</b> dans un même rendez-vous, et <b>le praticien passe avant le créneau</b>.</p>
+          <p class="note">Pas de photo dans cette liste, volontairement. Chez Planity, la vitrine — l'ambiance, les cabines, l'équipe — est en amont ; l'écran de réservation est un outil, et le client y arrive en sachant à peu près ce qu'il veut. C'est exactement la frontière que le client a posée le 10/09 entre le site vitrine et le moteur.</p>
+          <p class="note">L'enchaînement est le vrai apport : un gommage puis un modelage, c'est un seul rendez-vous et un seul créneau à trouver, pas deux réservations à faire tenir bout à bout. Le back-office sait déjà poser plusieurs prestations sur une réservation — ce qui manque, c'est la <b>règle de vente</b> : quelles prestations s'enchaînent, dans quel ordre, et jusqu'à quelle durée totale on laisse le client composer.</p>
+        </div>
+        <aside class="aside show-lg">
+          <div class="card" id="sp2SelCard">
+            <div class="between"><b class="h3">Ma sélection</b><span class="mut" id="sp2SelN">—</span></div>
+            <div id="sp2SelList" style="margin-top:6px"></div>
+            <div class="hr" style="margin:12px 0"></div>
+            <div class="tot"><span id="sp2SelDur">Durée</span><span id="sp2SelDurV">—</span></div>
+            <div class="tot big"><span>Total</span><span id="sp2SelTot">—</span></div>
+            <button class="btn full" style="margin-top:14px" id="sp2Next">Choisir un créneau</button>
+            <p class="note" style="display:block;margin-top:10px">Les prestations s'enchaînent dans le même rendez-vous : le moteur cherche un créneau qui les tient toutes, à la suite.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="sp2BarTot">—</b><span id="sp2BarSub">Aucune prestation</span></div>
+      <button class="btn" id="sp2NextSm">Continuer</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA v2 — AVEC QUI ══════════ -->
+  <section class="screen" id="sc-spa2-qui" data-title="N4 · Spa v2 — Avec qui&nbsp;?" data-step="2" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="spa2-prestations">← Prestations</button>
+      <div class="scr-head">
+        <div><h1 class="h1">Avec qui&nbsp;?</h1>
+          <p class="sub" style="margin-top:8px" id="sp2QuiSub">—</p></div>
+        <span class="node">N4 · Praticien·ne</span>
+      </div>
+
+      <div class="grid g2" id="sp2PratList" style="margin-top:18px;gap:10px"></div>
+
+      <div id="sp2QuiWarn" style="margin-top:18px"></div>
+
+      <p class="note">C'est ici que la v2 rompt avec la v1, et avec le back-office. Chez Planity, choisir une praticienne <b>filtre les créneaux</b> : on réserve une personne, pas un espace. Le back-office spa dit exactement l'inverse — « l'affectation est manuelle, aucune praticienne n'est attribuée automatiquement », l'équipe la décide la veille selon les cabines et les compétences.</p>
+      <p class="note">Les deux modèles ne peuvent pas coexister sur le même planning. Vendre « avec Léa Martel à 14 h », c'est bloquer Léa Martel à 14 h — donc renoncer à réaffecter la veille, et accepter qu'un arrêt maladie devienne un appel au client plutôt qu'un échange de cabine. <b>C'est un arbitrage d'exploitation, pas d'interface</b> : à trancher avec le spa avant de choisir la v1 ou la v2. Piste intermédiaire, à évaluer : n'ouvrir le choix nominatif qu'aux clients qui reviennent, et laisser « sans préférence » par défaut.</p>
+      <p class="note">La liste ne montre que les praticien·ne·s <b>habilité·e·s pour toute la sélection</b> — habilitations du back-office. Enchaîner un massage et un soin visage réduit la liste à qui sait faire les deux : c'est une conséquence mécanique de l'enchaînement, que la v1 n'avait pas à traiter puisqu'elle ne vendait qu'un soin à la fois.</p>
+    </div>
+    <div class="actionbar keep">
+      <div class="sum"><b id="sp2QuiTot">—</b><span id="sp2QuiBarSub">—</span></div>
+      <button class="btn" id="sp2QuiNext">Voir les créneaux</button>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA v2 — CRÉNEAUX ══════════ -->
+  <section class="screen" id="sc-spa2-creneaux" data-title="N4 · Spa v2 — Créneaux (semaine &amp; pastilles)" data-step="3" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="spa2-qui">← Avec qui&nbsp;?</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="sp2SlotTitle">Choisissez un créneau</h1>
+          <p class="sub" style="margin-top:8px" id="sp2SlotCrit">—</p></div>
+        <span class="node">N4 · Créneaux</span>
+      </div>
+
+      <div class="row" style="gap:8px;align-items:center;margin:20px 0 10px">
+        <button class="navd" id="sp2WPrev" title="Semaine précédente">‹</button>
+        <b class="h3" id="sp2WLbl" style="flex:1;text-align:center">—</b>
+        <button class="navd" id="sp2WNext" title="Semaine suivante">›</button>
+      </div>
+      <div class="week" id="sp2Week"></div>
+      <p class="note">Une semaine à la fois, comme chez Planity, avec le nombre de créneaux sous chaque jour. La bande de dates des autres branches affiche un prix — ici le prix ne change pas d'un jour à l'autre, c'est la <b>disponibilité</b> qui varie, et c'est elle qu'on montre.</p>
+
+      <div id="sp2Next7" style="display:none;margin-bottom:16px"></div>
+      <div id="sp2Pills"></div>
+
+      <p class="note">Pastilles plutôt que cartes : un créneau de spa n'a rien à dire de plus que son heure, une fois la prestation et la personne choisies. La v1 avait besoin de cartes parce qu'elle y logeait les durées et leurs prix — en v2 ce choix est déjà fait à l'écran 1, et l'écran des créneaux redevient ce qu'il doit être : une grille d'heures.</p>
+      <p class="note">Ce que le moteur vérifie derrière chaque pastille : une cabine libre pour <b>chaque</b> prestation de la chaîne, à son propre décalage horaire, et — si une praticienne a été demandée — son agenda libre du début à la fin. Un rendez-vous de deux heures trouve donc beaucoup moins de créneaux qu'un soin d'une heure : c'est la même contrainte de quatre cabines, appliquée à une chaîne.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ N4 · SPA v2 — RENDEZ-VOUS ══════════ -->
+  <section class="screen" id="sc-spa2-rdv" data-title="N4 · Spa v2 — Votre rendez-vous (E4)" data-step="4" data-flow="spa">
+    <div class="pad">
+      <button class="back" data-go="spa2-creneaux">← Créneaux</button>
+      <div class="scr-head">
+        <div><h1 class="h1" id="sp2RdvTitle">Votre rendez-vous</h1>
+          <p class="sub" style="margin-top:8px" id="sp2RdvSub">—</p></div>
+        <span class="node">E4 · Récapitulatif &amp; conditions</span>
+      </div>
+      <div class="split" style="margin-top:8px">
+        <div>
+          <div class="card" style="padding:16px;margin-top:14px">
+            <div class="between"><b class="h3" id="sp2RdvWhen">—</b><span class="tag" id="sp2RdvWho">—</span></div>
+            <div id="sp2RdvLines" style="margin-top:8px"></div>
+          </div>
+
+          <h2 class="h2" style="margin:26px 0 12px">Avant ou après le rendez-vous</h2>
+          <div class="grid" id="sp2OptList" style="gap:10px"></div>
+
+          <div class="row" style="gap:18px;margin-top:16px;flex-wrap:wrap">
+            <button class="lnk" id="sp2CondBtn">Conditions d'annulation et no-show</button>
+            <button class="lnk" id="sp2EditBtn">Modifier la sélection</button>
+          </div>
+
+          <p class="note">Dernier écran avant le panier commun. Planity s'arrête ici : récapitulatif, coordonnées, confirmation. Le moteur, lui, continue — <b>le rendez-vous rejoint le panier</b> avec le green fee et la chambre, et ne se paie qu'une fois. C'est la seule chose que la Collection a et qu'un outil de spa n'aura jamais.</p>
+          <p class="note" id="sp2PayNote">—</p>
+        </div>
+        <aside class="aside show-lg">
+          <div class="card">
+            <div class="mut" id="sp2AsideCrit">—</div>
+            <div class="hr" style="margin:12px 0"></div>
+            <div class="tot"><span id="sp2AsideDur">Durée</span><span id="sp2AsideDurV">—</span></div>
+            <div class="tot"><span>Prestations</span><span id="sp2AsidePrest">—</span></div>
+            <div class="tot" id="sp2AsideOptRow" style="display:none"><span id="sp2AsideOptLbl">Options</span><span id="sp2AsideOpt">—</span></div>
+            <div class="tot big"><span>Total</span><span id="sp2AsideTot">—</span></div>
+            <div class="mut" style="margin-top:10px" id="sp2AsidePay">—</div>
+            <button class="btn full" style="margin-top:14px" id="sp2AddLg">Ajouter à mon panier</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="actionbar">
+      <div class="sum"><b id="sp2BarTot2">—</b><span id="sp2BarSub2">—</span></div>
+      <button class="btn" id="sp2Add">Ajouter</button>
+    </div>
+  </section>
+
   <!-- ══════════ N5 · CROSS-SELL ══════════ -->
   <section class="screen" id="sc-cross" data-title="N5 · Cross-sell contextuel">
     <div class="pad">
@@ -1481,7 +1857,7 @@ const DOORS=[
    {id:'carnets',n:'Carnets & pass',serv:'golf',d:'Licence, passeports, golf pass, carnets de cours et de voiturettes'}]},
  {id:'heb',n:'Hôtel',d:'Chambres, suites et villas',go:'heb-hotels'},
  {id:'resto',n:'Restaurant',d:'Tables et club houses',go:'resto-tables'},
- {id:'spa',n:'Spa',d:'Soins, praticiens et rituels'},
+ {id:'spa',n:'Spa',d:'Soins, rituels et accès au spa',go:'spa-soins'},
  {id:'xp',n:'Expériences',d:'Catégorie, détail et participants',def:true},
  {id:'evt',n:'Événementiel',d:'Billetterie des événements'}];
 const ALLDOORS=DOORS.reduce((a,d)=>a.concat([d],d.sub||[]),[]);
@@ -1498,6 +1874,10 @@ function fresh(){return{hotel:null,din:null,dout:null,dchosen:false,flex:0,lastN
   g:{course:null,date:null,pax:2,lic:'',idx:'24,5',idxOk:false,slot:null,rate:'public',extras:[],players:null,
      fmt:'all',focus:null},
   r:{table:null,date:null,pax:2,slot:null,form:'carte',filt:'all',occ:'',diet:[],seat:''},
+  sp:{soin:null,date:null,dchosen:false,pax:1,slot:null,dur:null,prat:'',opts:[],
+      filt:'all',cat:'all',sante:[],press:'',amb:[],
+      /* v2 « Planity » : une sélection de prestations, une personne, un créneau */
+      sel:[],acc:['massage'],prat2:'',week:null,slot2:null,fdate:null,fonly:false},
   site:null,pending:null,src:'heb',cart:[],credits:[],logged:false,email:'',dob:'',payFail:null}}
 S=fresh();
 
@@ -1529,6 +1909,14 @@ function go(id){
   if(id==='resto-creneaux'&&S.r.table)renderRSearch();
   if(id==='resto-table'&&S.r.slot)renderRTable();
   if(id==='resto-demandes')renderRDemandes();
+  if(id==='spa-soins')renderSpaSoins();
+  if(id==='spa-creneaux'&&S.sp.soin)renderSpSearch();
+  if(id==='spa-soin'&&S.sp.slot)renderSpaSoin();
+  if(id==='spa-prep')renderSpaPrep();
+  if(id==='spa2-prestations')renderSp2Prest();
+  if(id==='spa2-qui'&&sp2N())renderSp2Qui();
+  if(id==='spa2-creneaux'&&sp2N())renderSp2Slots();
+  if(id==='spa2-rdv')renderSp2Rdv();
   if(id==='heb-rooms'&&S.hotel)renderHebSearch();
   if(id==='site')renderSiteScreen();
   if(id==='golf-extras')renderGExtras(); if(id==='heb-extras')renderExtras();
@@ -1549,7 +1937,9 @@ function go(id){
 }
 const STEPS={heb:['Hôtel','Chambres','Tarif','Extras'],golf:['Parcours','Départ','Tarif','Joueurs','Extras'],
   golf2:['Date & joueurs','Tarif','Joueurs','Extras'],
-  resto:['Tables','Créneaux','Formule','Demandes']};
+  resto:['Tables','Créneaux','Formule','Demandes'],
+  spa:['Soins','Créneaux','Durée & praticien·ne','Préparation'],
+  spa2:['Prestations','Avec qui','Créneaux','Rendez-vous','Préparation']};
 /* Variante v2 du tunnel green fee (demande client du 10/09) : la date et le
    nombre de joueurs d'abord, les parcours et leurs départs en résultat. Les
    écrans d'aval sont partagés — seul le fil d'étapes est décalé d'un cran. */
@@ -1559,6 +1949,9 @@ function renderSteps(sc){
   let st=sc.dataset.step; if(!st)return;
   let flow=sc.dataset.flow||'heb';
   if(GV2&&flow==='golf'){flow='golf2';st=Math.max(1,+st-1)}
+  /* La v2 du spa a un écran de plus : les écrans partagés portent leur rang
+     dans les deux fils (`data-step` pour la v1, `data-step2` pour la v2). */
+  if(SPV2&&flow==='spa'){flow='spa2';st=sc.dataset.step2||st}
   const labels=STEPS[flow];
   const el=document.createElement('div'); el.className='steps';
   el.innerHTML=labels.map((l,i)=>{const n=i+1,cls=n<st?'done':n==st?'now':'';
@@ -1581,10 +1974,9 @@ const head=(t,n)=>`<div class="sheet-h"><div><h3 class="h2">${t}</h3>${n?`<span 
 
 function branchModal(name){
   sheet(head('Branche « '+name+' » — non maquettée dans cette v1','N3 · Points d\'entrée')+
-  `<p class="sub" style="margin-top:12px">La matrice V5 décrit six portes d'entrée, dont Golf qui en regroupe trois. Ce prototype détaille <b>Hôtel</b>, <b>Green fee</b> et <b>Restaurant</b> de bout en bout ; les autres suivent exactement le même rythme (choix du produit → date → paramètres → losange de disponibilité → détail &amp; tarif → extras) et convergent vers le même panier.</p>
+  `<p class="sub" style="margin-top:12px">La matrice V5 décrit six portes d'entrée, dont Golf qui en regroupe trois. Ce prototype détaille <b>Hôtel</b>, <b>Green fee</b>, <b>Restaurant</b> et <b>Spa</b> de bout en bout ; les autres suivent exactement le même rythme (choix du produit → date → paramètres → losange de disponibilité → détail &amp; tarif → extras) et convergent vers le même panier.</p>
   <p class="note" style="display:block">Ce que la branche ${name} ajouterait de spécifique : ${
     name==='Restaurant'?'nombre de couverts, service midi/soir, réservation sans prépaiement.':
-    name==='Spa'?'soin d\'abord, praticien optionnel, créneaux par cabine.':
     name==='Compétitions'?'contrôle de licence, index et places (E2). La V1 réservait cette branche aux clients connectés ; la V5 a retiré la contrainte, sans dire si c\'est un arbitrage ou un oubli.':
     name==='Carnets & pass'?'choix de la catégorie parmi les six de la matrice, contenu et durée de validité, nombre de bénéficiaires. Aucune règle de vente par site : la maquette les propose partout où il y a du golf, hypothèse à confirmer.':
     name==='Expériences'?'catégorie, détail, participants. La V5 remplace « Packages » par « Expériences » sans en définir le catalogue.':'billets, catégories et quantités.'}</p>
@@ -1723,6 +2115,7 @@ function siteInfo(st,serv){
     return c.length+' parcours · green fee dès '+eur(Math.min(...c.map(x=>x.from)))}
   if(serv==='resto'){const t=TABLES.filter(x=>x.site===st.id);
     return t.length+' table'+(t.length>1?'s':'')+' · menu dès '+eur(Math.min(...t.map(x=>x.from)))}
+  if(serv==='spa')return SOINS.length+' soins · dès '+eur(Math.min(...SOINS.map(x=>x.durs[0].p)))
   return st.serv.length+' services sur ce site';
 }
 function syncSite(keep){
@@ -1803,7 +2196,7 @@ function renderHub(){
   const nSites=d=>SITES.filter(x=>x.serv.includes(servOf(d))).length;
   const isOff=d=>!!st&&!st.serv.includes(servOf(d));
   const status=d=>isOff(d)
-    ?'Pas proposé ici — '+nSites(d)+' autres sites le proposent'
+    ?'Pas proposé ici — '+nSites(d)+(nSites(d)>1?' autres sites le proposent':' autre site le propose')
     :(st?'Disponible sur ce site':nSites(d)+' site'+(nSites(d)>1?'s':'')+' sur '+SITES.length);
   const badge=d=>d.go?'<span class="tag">v1</span>':d.def?'<span class="tag">à définir</span>'
     :d.sub?'<span class="tag">'+d.sub.length+' branches</span>':'';
@@ -1848,6 +2241,7 @@ function enterBranch(d){
   if(d.sub){golfModal(d);return}
   /* Variante v2 : pas d'écran « Nos parcours » à ouvrir, on entre par la date. */
   if(d.go==='golf-parcours'&&GV2){S.g.focus=null;go('golf-v2');return}
+  if(d.go==='spa-soins'&&SPV2){renderSp2Prest();go('spa2-prestations');return}
   /* Green fee sur un site qui n'a qu'un seul tracé : l'écran « Nos parcours »
      n'aurait rien à demander, on entre à l'étape 2. Même règle qu'en N2 bis,
      où choisir une adresse fixe le site et le produit d'un seul geste. */
@@ -1855,7 +2249,8 @@ function enterBranch(d){
     const cs=COURSES.filter(c=>c.site===S.site.id);
     if(cs.length===1){S.g.course=cs[0];S.g.idxOk=false;renderGSearch();go('golf-departs');return}
   }
-  if(d.go){({'heb-hotels':renderHotels,'golf-parcours':renderCourses,'resto-tables':renderTables})[d.go]();go(d.go);return}
+  if(d.go){({'heb-hotels':renderHotels,'golf-parcours':renderCourses,'resto-tables':renderTables,
+             'spa-soins':renderSpaSoins})[d.go]();go(d.go);return}
   branchModal(d.n);
 }
 /* ═════════ N2 bis · carte de la Collection ═════════ */
@@ -2123,7 +2518,8 @@ function ensureStay(){
    la barre de recherche, il ne recouvre plus l'écran. */
 const POPS={hotel:['#hHotelBtn','#hHotelPop'],date:['#hDateBtn','#hDatePop'],pax:['#hPaxBtn','#hPaxPop'],
             gdate:['#gDateBtn','#gDatePop'],rdate:['#rDateBtn','#rDatePop'],
-            g2date:['#g2DateBtn','#g2DatePop']};
+            g2date:['#g2DateBtn','#g2DatePop'],spdate:['#spDateBtn','#spDatePop'],
+            sp2date:['#sp2DateBtn','#sp2DatePop']};
 let sbOpen=null;
 function shutPops(){
   /* refermé avec une arrivée mais pas de départ : on complète sur la durée précédente */
@@ -2134,7 +2530,8 @@ function shutPops(){
 function togglePop(k){
   const open=sbOpen===k; shutPops(); if(open)return;
   ({hotel:renderHotelPop,date:renderDatePop,pax:renderPaxPop,
-    gdate:renderGDatePop,rdate:renderRDatePop,g2date:renderG2DatePop})[k]();
+    gdate:renderGDatePop,rdate:renderRDatePop,g2date:renderG2DatePop,
+    spdate:renderSpDatePop,sp2date:renderSp2DatePop})[k]();
   $(POPS[k][1]).hidden=false; $(POPS[k][0]).setAttribute('aria-expanded','true'); sbOpen=k;
 }
 document.addEventListener('click',e=>{
@@ -3109,6 +3506,7 @@ function openE3(back,service,n){
   const site=S.site?S.site.n:'sans préférence — toute la Collection';
   const dates=back==='heb-rooms'&&S.din&&S.dout ? fdate(S.din)+' → '+fdate(S.dout)
     : back==='resto-creneaux'&&S.r.date ? fday(S.r.date)
+    : back==='spa-creneaux'&&S.sp.date ? fday(S.sp.date)
     : S.g&&S.g.date ? fday(S.g.date) : 'dates à préciser';
   $('#e3Ctx').textContent=`${n} personnes · ${service} · ${dates} · ${site}`;
   $('#e3Src').textContent='formulaire hébergé · backyou.…/demande-groupe?pax='+n
@@ -3143,6 +3541,39 @@ function openE1(kind,crit){
       {t:'Chercher sur un autre golf de la Collection',d:SITES.filter(x=>x.serv.includes('resto')).length+' golfs proposent une table en ligne',f:()=>openSite('resto')},
       {t:'Être rappelé si une table se libère',d:'Le restaurant vous rappelle — les désistements tombent souvent le jour même',f:e1Alert},
       {t:'Contacter le restaurant',d:'La salle cale le service directement avec vous',f:e1Conc}]);
+  }else if(kind==='spa'&&SPV2){
+    /* En v2 ce n'est plus le soin qu'on desserre, c'est la chaîne : sa durée,
+       la personne demandée, ou la date. Le spa n'ayant qu'une adresse, la
+       branche est de toute façon privée du repli « un autre golf ». */
+    const nx=sp2Nextk(S.sp.date||DMIN), w=sp2Who();
+    $('#e1Back').dataset.go='spa2-creneaux';
+    $('#e1Back').textContent='← Modifier ma recherche';
+    $('#e1Title').textContent=w?'Aucun créneau avec '+w.n:'Aucun créneau pour ce rendez-vous';
+    $('#e1Note').textContent='Même module que pour les trois autres branches, appelé depuis le losange de disponibilité. Les sorties, elles, sont celles du modèle Planity : desserrer la chaîne plutôt que changer de produit, et toujours offrir la prochaine disponibilité plutôt qu\'un écran vide.';
+    e1Opts([
+      ...(w?[{t:'Chercher sans préférence de praticien·ne',d:'C\'est la contrainte qui ferme le plus de créneaux',
+        f:()=>{S.sp.prat2='';renderSp2Slots();go('spa2-creneaux')}}]:[]),
+      ...(sp2N()>1?[{t:'Retirer une prestation du rendez-vous',d:spDurLbl(sp2Dur())+' d\'affilée, c\'est la durée qui bloque',
+        f:()=>{renderSp2Prest();go('spa2-prestations')}}]:[{t:'Choisir une durée plus courte',d:'Un 60 minutes rentre là où un 90 ne rentre pas',
+        f:()=>{renderSp2Prest();go('spa2-prestations')}}]),
+      {t:'Aller à la prochaine disponibilité',d:nx?fday(nx.k)+' à '+nx.slot.t:'Rien sur le référentiel de démonstration',
+        f:()=>{if(nx){S.sp.date=nx.k;S.sp.week=monday(nx.k);S.sp.slot2=null}renderSp2Slots();go('spa2-creneaux')}},
+      {t:'Me prévenir si un créneau se libère',d:'Alerte par e-mail — les désistements tombent souvent la veille',f:e1Alert},
+      {t:'Contacter le spa',d:'L\'équipe cale le rendez-vous avec vous',f:e1Conc}]);
+  }else if(kind==='spa'){
+    const s=spSoin(), p=S.sp.pax;
+    const duo=SOINS.filter(x=>x.res.includes('du')&&(!s||x.id!==s.id)).length;
+    $('#e1Back').dataset.go='spa-creneaux';
+    $('#e1Back').textContent='← Modifier ma recherche';
+    $('#e1Title').textContent=p>1?'Pas deux cabines libres ce jour-là':'Aucune cabine libre pour ce soin';
+    $('#e1Note').textContent='Même module que pour les trois autres branches. Deux sorties lui sont propres : changer de soin rouvre souvent la journée — quatre cabines, toutes ne donnent pas tous les soins — et le spa n\'a qu\'une adresse, ce qui prive la branche du repli « un autre golf de la Collection ».';
+    e1Opts([
+      {t:'Voir un autre jour',d:'La bande de jours indique les journées ouvertes pour ce soin',f:()=>go('spa-creneaux')},
+      {t:'Changer de soin ou de durée',d:'Un 60 minutes rentre là où un 90 ne rentre pas',f:()=>go('spa-soins')},
+      ...(p>1&&duo?[{t:'Voir les soins qui tiennent en cabine Duo',d:duo+' soins se donnent à deux dans la même cabine',f:()=>{S.sp.cat='duo';renderSpaSoins();go('spa-soins')}}]:[]),
+      {t:'Me prévenir si un créneau se libère',d:'Alerte par e-mail — les désistements tombent souvent la veille',f:e1Alert},
+      {t:"Réserver l'accès à l'espace spa seul",d:'Piscine, hammam et sauna à la jauge, sans cabine',f:()=>{S.sp.cat='acces';renderSpaSoins();go('spa-soins')}},
+      {t:'Contacter le spa',d:'L\'équipe cale le soin avec vous, ou propose une autre durée',f:e1Conc}]);
   }else{
     const proam=gFull(S.g.course).includes(S.g.date);
     $('#e1Back').dataset.go='golf-departs';
@@ -3497,34 +3928,943 @@ $('#rDemNext').onclick=()=>{
   renderCross('resto');go('cross');
 };
 
+/* ═════════════════════════════════════════════════════════════════════
+   N4 · SPA — branche complète
+
+   Le référentiel est celui du back-office spa (proto `spa/`) : mêmes
+   familles de soins, mêmes cabines, mêmes durées, mêmes tarifs. Trois
+   règles de ce back-office conditionnent le front et ne se devinent pas :
+
+   — la disponibilité est une affaire de CABINE, pas de praticien·ne ;
+   — l'affectation d'un·e praticien·ne est MANUELLE, jamais automatique :
+     en ligne, un nom demandé ne peut donc être qu'une préférence ;
+   — le back-office encaisse des ACOMPTES de 30 %, quatrième moment de
+     débit que le moteur ne sait pas exprimer (maintenant / empreinte /
+     sur place). Écart signalé sur l'écran E4, à trancher.
+
+   Particularité de la branche : la durée n'est pas un critère de
+   recherche mais une propriété du créneau — un 60 minutes rentre là où
+   un 90 ne rentre pas. Elle porte le prix, comme le tarif porte celui de
+   la chambre et la formule celui de la table.
+   ═══════════════════════════════════════════════════════════════════ */
+const SPACATS=[
+ {id:'massage',n:'Massages'},{id:'duo',n:'À deux'},{id:'visage',n:'Visage'},
+ {id:'rituel',n:'Rituels & parcours'},{id:'corps',n:'Soins du corps'},{id:'acces',n:'Accès spa'}];
+/* Les cabines sont les ressources du back-office : c'est sur elles que porte
+   le losange de disponibilité. L'espace spa, lui, se remplit à la jauge. */
+const CABINES=[
+ {id:'s1',n:'Cabine Solo 1'},{id:'s2',n:'Cabine Solo 2'},{id:'s3',n:'Cabine Esthétique'},
+ {id:'du',n:'Cabine Duo'},{id:'es',n:'Espace Spa',jauge:25}];
+const cabName=id=>(CABINES.find(c=>c.id===id)||{}).n||'';
+const SN=(id,n,cat,res,durs,d,pay)=>({id,n,cat,res,d,pay,durs:durs.map(([m,p])=>({m,p}))});
+const SOINS=[
+ SN('mas-cal','Massage californien','massage',['s1','s2'],[[30,55],[60,95],[90,135]],'Enveloppant et lent, le massage de la détente pure.','auth'),
+ SN('mas-sue','Massage suédois','massage',['s1','s2'],[[60,95],[90,135]],'Plus tonique, sur les tensions installées.','auth'),
+ SN('mas-dt','Massage deep tissue','massage',['s1','s2'],[[60,105],[90,145]],'Pression profonde, muscle par muscle.','auth'),
+ SN('mas-pch','Massage aux pierres chaudes','massage',['s1','s2'],[[60,110],[90,150]],'Basalte chauffé le long du dos, chaleur continue.','auth'),
+ SN('mas-spo','Massage sportif','massage',['s1','s2'],[[30,60],[60,100]],'Après le parcours : jambes, dos, épaules.','auth'),
+ SN('mas-fem','Massage femme enceinte','massage',['s1','s2'],[[60,98]],'À partir du deuxième trimestre, en position latérale.','auth'),
+ SN('mas-ref','Réflexologie plantaire','massage',['s1','s2'],[[30,50],[45,70]],'Travail des zones réflexes du pied.','auth'),
+ SN('duo-det','Duo détente','duo',['du'],[[60,170],[90,240]],'Deux tables côte à côte, deux praticiennes.','now'),
+ SN('duo-sig','Duo Signature','duo',['du'],[[90,260]],'Gommage, modelage et soin du visage, à deux.','now'),
+ SN('duo-pch','Duo pierres chaudes','duo',['du'],[[60,190],[90,270]],'Le rituel aux pierres chaudes, en cabine duo.','now'),
+ SN('vis-ecl','Soin visage éclat express','visage',['s1','s2','s3'],[[30,55],[45,78]],'Nettoyage, gommage, masque — avant de sortir.','auth'),
+ SN('vis-hyd','Soin visage hydratation profonde','visage',['s1','s2','s3'],[[60,95]],'Pour les peaux desséchées par le vent et le soleil.','auth'),
+ SN('vis-aa','Soin visage anti-âge global','visage',['s1','s2','s3'],[[60,120],[75,140]],'Modelage liftant et actifs concentrés.','auth'),
+ SN('vis-hom','Soin visage homme','visage',['s1','s2','s3'],[[45,80]],'Adapté au rasage et aux peaux réactives.','auth'),
+ SN('rit-sig','Rituel Signature La Bégude','rituel',['s1','s2','du'],[[90,155],[120,195]],'Gommage à l\'huile d\'olive du domaine, modelage, soin du visage.','now'),
+ SN('rit-pro','Rituel Provence lavande','rituel',['s1','s2'],[[90,150]],'Bain de pieds, gommage et modelage à la lavande.','now'),
+ SN('rit-det','Rituel détox marin','rituel',['s1','s2'],[[90,160]],'Enveloppement aux algues suivi d\'un modelage drainant.','now'),
+ SN('rit-sen','Parcours sensoriel','rituel',['s1','s2','du'],[[120,210]],'Deux heures : hammam, gommage, modelage, tisanerie.','now'),
+ SN('rit-pre','Rituel Prestige','rituel',['s1','du'],[[180,320]],'Trois heures, le programme complet de la maison.','now'),
+ SN('cor-gag','Gommage aux agrumes','corps',['s1','s2','s3'],[[30,58]],'Sucre et zestes, à faire avant un modelage.','auth'),
+ SN('cor-alg','Enveloppement aux algues','corps',['s1','s2','s3'],[[45,88]],'Sous couverture chauffante, reminéralisant.','auth'),
+ SN('cor-dre','Drainage lymphatique','corps',['s1','s2'],[[60,105]],'Manœuvres légères, jambes lourdes.','auth'),
+ SN('cor-min','Modelage minceur','corps',['s1','s2','s3'],[[45,95],[60,120]],'Palper-rouler et actifs ciblés.','auth'),
+ SN('acc-dem','Entrée spa · demi-journée','acces',['es'],[[240,45]],'Piscine intérieure, hammam, sauna, tisanerie.','onsite'),
+ SN('acc-pei','Entrée spa · peignoir & collation','acces',['es'],[[240,62]],'La demi-journée, peignoir et chaussons fournis.','onsite'),
+ SN('acc-jou','Entrée spa · journée','acces',['es'],[[480,70]],'De l\'ouverture à la fermeture, sortie libre.','onsite')];
+const soinOf=id=>SOINS.find(s=>s.id===id);
+/* L'équipe du back-office, avec ses habilitations : une praticienne n'apparaît
+   que sur les familles qu'elle pratique. Le choix reste une préférence. */
+const SPRAT=[
+ {id:'f',n:'Une praticienne',d:'Préférence de genre, toutes familles de soins',c:'praticienne souhaitée'},
+ {id:'h',n:'Un praticien',d:'Sous réserve du planning — un seul homme dans l\'équipe',c:'praticien souhaité'},
+ {id:'LM',n:'Léa Martel',d:'Massages, rituels, soins du corps',comp:['massage','duo','rituel','corps']},
+ {id:'MB',n:'Maëva Berthaud',d:'Massages, rituels, soins du corps',comp:['massage','duo','rituel','corps']},
+ {id:'JR',n:'Julien Renaud',d:'Massages et soins du corps',comp:['massage','corps']},
+ {id:'CD',n:'Camille Delaunay',d:'Visage et soins du corps',comp:['visage','corps']}];
+const SPOPTS=[
+ {id:'avant',n:'Espace spa avant le soin',d:'Piscine intérieure, hammam et sauna, une heure avant le rendez-vous',p:25},
+ {id:'peignoir',n:'Peignoir, chaussons et collation',d:'Remis à l\'accueil, à garder pendant tout le passage',p:17},
+ {id:'tisane',n:'Prolonger à la tisanerie',d:'Sans supplément — le dire permet de garder une place',p:0}];
+const SPSANTE=[
+ {id:'aucune',n:'Rien à signaler'},
+ {id:'grossesse',n:'Grossesse en cours',alt:'mas-fem',w:'Certains soins et le hammam sont déconseillés. Le catalogue propose un massage adapté à partir du deuxième trimestre.'},
+ {id:'tension',n:'Hypertension',w:'Sauna et hammam déconseillés, pression du modelage adaptée.'},
+ {id:'allerg',n:'Allergie (huiles, fruits à coque…)',w:'Précisez laquelle plus bas : les huiles de massage en contiennent souvent.'},
+ {id:'opera',n:'Opération récente',w:'La zone opérée sera évitée ; selon la date, le spa peut rappeler avant le soin.'},
+ {id:'dos',n:'Dos ou nuque sensibles',w:'La praticienne allège la pression sur les zones concernées.'}];
+const SPPRESS=[{id:'douce',n:'Douce'},{id:'moyenne',n:'Moyenne'},{id:'forte',n:'Forte'},{id:'voir',n:'À voir avec elle'}];
+const SPAMB=[{id:'silence',n:'En silence'},{id:'musique',n:'Avec de la musique'},{id:'tamise',n:'Lumière tamisée'},
+ {id:'chaud',n:'Cabine bien chauffée'},{id:'pieds',n:'Commencer par les pieds'},{id:'indiff',n:'Peu importe'}];
+
+const spSoin=()=>S.sp.soin;
+const spDur=()=>{const s=spSoin();if(!s)return null;return s.durs.find(d=>d.m===S.sp.dur)||s.durs[0]};
+const spDurLbl=m=>m>=240?(m>=480?'Journée':'Demi-journée'):m>=60?(m%60?Math.floor(m/60)+' h '+(m%60):Math.floor(m/60)+' h'):m+' min';
+const spTime=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+/* Un soin duo est vendu pour deux : son prix ne se multiplie pas. */
+const spBase=(d)=>{const s=spSoin();d=d||spDur();return s.cat==='duo'?d.p:d.p*S.sp.pax};
+const spOptList=()=>spSoin()&&spSoin().cat==='acces'?[]:SPOPTS;
+const spOptTot=()=>S.sp.opts.reduce((t,id)=>{const o=SPOPTS.find(x=>x.id===id);return t+(o?o.p*S.sp.pax:0)},0);
+const spTotal=()=>spBase()+spOptTot();
+
+/* ── occupation des cabines ──
+   Plutôt qu'un tirage créneau par créneau, qui hacherait la journée en trous
+   de trente minutes, on pose 3 à 5 soins déjà réservés par cabine : les
+   plages libres ressemblent à celles d'un vrai planning, et un 90 minutes ne
+   rentre pas partout. Le battement de remise en état de la cabine est compté. */
+const SPOPEN=570, SPCLOSE=1200, SPSTEP=30, SPTURN=15;
+const SPGRID=(()=>{const o=[];for(let m=SPOPEN;m<=1140;m+=SPSTEP)o.push(m);return o})();
+const _bk={};
+function cabBook(k,cab){
+  const key=k+'|'+cab; if(_bk[key])return _bk[key];
+  /* Deux décalages non signés et un brassage : dhash rend un entier 32 bits
+     qui peut dépasser 2^31 (un `>>` signé y ramènerait des index négatifs),
+     et deux cabines aux identifiants voisins — s1, s2 — en sortent avec des
+     empreintes voisines, donc des plannings jumeaux. */
+  let h=dhash(k,cab); h=Math.imul(h^(h>>>15),0x2545f491)>>>0; h=(h^(h>>>13))>>>0;
+  const out=[]; let m=SPOPEN+((h>>>3)%4)*30;
+  const nb=2+(h%3)+(isWE(k)?1:0);
+  for(let i=0;i<nb&&m<SPCLOSE;i++){
+    const len=[60,90,60,45,120,90][(h>>>(i+2))%6]+SPTURN;
+    out.push([m,m+len]);
+    m+=len+30*((h>>>(i*3+5))%3);
+  }
+  return _bk[key]=out;
+}
+const cabFree=(k,cab,m,len)=>!cabBook(k,cab).some(([a,b])=>m<b&&m+len+SPTURN>a);
+/* Espace spa : pas de cabine, une jauge — deux entrées dans la journée. */
+function spAccesSlots(k,s){
+  return [[570,'Entrée du matin'],[840,'Entrée de l\'après-midi']].map(([m,tag],i)=>{
+    const left=13-((dhash(k,'es')+i*37)%14), p=S.sp.pax;
+    const durs=s.durs.map(d=>({...d,ok:m+d.m<=SPCLOSE&&left>=p,fits:m+d.m<=SPCLOSE,use:'es',solo:[],free:[]}));
+    return {m,i,t:spTime(m),tag,left,ok:durs.some(x=>x.ok),durs,jauge:true,
+      moment:m<720?'matin':'aprem'};
+  });
+}
+function spSlots(dateKey){
+  const s=spSoin(), k=dateKey||S.sp.date;
+  if(!s||!k)return [];
+  if(s.cat==='acces')return spAccesSlots(k,s);
+  const cabs=CABINES.filter(c=>s.res.includes(c.id)), p=S.sp.pax;
+  return SPGRID.map((m,i)=>{
+    const durs=s.durs.map(d=>{
+      const fits=m+d.m<=SPCLOSE;
+      const free=fits?cabs.filter(c=>cabFree(k,c.id,m,d.m)):[];
+      const solo=free.filter(c=>c.id!=='du'), duo=free.find(c=>c.id==='du');
+      /* à deux : la cabine duo suffit, sinon il faut deux cabines solo libres
+         au même horaire — c'est ce qui ferme un créneau ouvert pour une seule. */
+      const ok=fits&&(p===1?free.length>0:(!!duo||solo.length>=2));
+      const use=p===1?((solo[0]||duo||{}).id||null):(duo?'du':null);
+      return {...d,ok,fits,free,solo,duo,use};
+    });
+    return {m,i,t:spTime(m),ok:durs.some(x=>x.ok),durs,
+      moment:m<720?'matin':m<990?'aprem':'soir'};
+  });
+}
+const spDayOpen=k=>spSlots(k).some(x=>x.ok);
+const spCabLbl=d=>d.use==='es'?'Espace spa':d.use?cabName(d.use)
+  :(d.solo&&d.solo.length>=2?d.solo.slice(0,2).map(c=>c.n.replace('Cabine ','')).join(' et '):'');
+/* Le créneau nomme la cabine parce que c'est elle qui est réservée ; le détail
+   du soin en reste au type, parce que l'échange d'une solo pour l'autre se
+   décide la veille, avec l'affectation des praticiennes. */
+const spCabKind=d=>!d?'cabine attribuée la veille':d.use==='es'?'espace spa, à la jauge'
+  :d.use==='du'?'cabine duo':d.use?'cabine solo':'deux cabines solo côte à côte';
+const spFrom=list=>{const v=list.filter(x=>x.ok).map(x=>x.p);return v.length?Math.min(...v):0};
+
+/* ── N4 · catalogue des soins ── */
+function renderSpaSoins(){
+  const cat=S.sp.cat||'all';
+  const nb=c=>SOINS.filter(s=>s.cat===c).length;
+  $('#spaH1').textContent=S.site?'Nos soins — '+S.site.n:'Nos soins';
+  $('#spaSub').textContent=S.site&&S.site.serv.includes('spa')
+    ?'Le Spa de la Bégude, 336 m² — quatre cabines, un espace piscine, hammam et sauna. '+SOINS.length+' soins réservables en ligne.'
+    :SOINS.length+' soins réservables en ligne, au Spa de la Bégude — le seul spa de la Collection à ce jour.';
+  $('#spCats').innerHTML=`<button class="chip ${cat==='all'?'on':''}" data-spcat="all">Tous les soins</button>`
+    +SPACATS.map(c=>`<button class="chip ${cat===c.id?'on':''}" data-spcat="${c.id}">${c.n} <span class="mut">${nb(c.id)}</span></button>`).join('');
+  const list=SOINS.filter(s=>cat==='all'||s.cat===cat);
+  $('#soinList').innerHTML=list.map(s=>{
+    const d0=s.durs[0], duo=s.cat==='duo';
+    return `<div class="card prod wide">
+     <div class="ph">Photo ${s.n}</div>
+     <div class="body">
+       <span class="tag">${(SPACATS.find(c=>c.id===s.cat)||{}).n}</span>
+       <b class="h2">${s.n}</b>
+       <span class="sub">${s.d}</span>
+       <span class="mut">${s.durs.map(x=>spDurLbl(x.m)).join(' · ')} — ${s.res.includes('es')?'espace spa, à la jauge'
+         :s.res.length===1?cabName(s.res[0]).toLowerCase():s.res.length+' cabines possibles'}</span>
+       <div class="foot"><div class="price">${eur(d0.p)}<small>${duo?'pour deux, à partir de':'par personne, à partir de'}</small></div>
+         <button class="btn sm" data-soin="${s.id}">Voir les créneaux</button></div>
+     </div></div>`}).join('');
+  $$('[data-spcat]').forEach(b=>b.onclick=()=>{S.sp.cat=b.dataset.spcat;renderSpaSoins()});
+  $$('[data-soin]').forEach(b=>b.onclick=()=>{pickSoin(soinOf(b.dataset.soin));go('spa-creneaux')});
+}
+/* Un soin duo n'a pas de sens pour une personne seule : le choix du soin
+   corrige le nombre de personnes plutôt que d'attendre une erreur. */
+function pickSoin(s){
+  S.sp.soin=s; S.sp.dur=s.durs[0].m; S.sp.slot=null;
+  if(s.cat==='duo')S.sp.pax=2;
+  if(S.sp.prat){const p=SPRAT.find(x=>x.id===S.sp.prat);if(p&&p.comp&&!p.comp.includes(s.cat))S.sp.prat=''}
+  S.sp.opts=S.sp.opts.filter(()=>s.cat!=='acces');
+  ensureSpa(); renderSpSearch();
+}
+function ensureSpa(){
+  if(!S.sp.date)S.sp.date='2026-10-15';
+  if(S.sp.dchosen||spDayOpen(S.sp.date))return;
+  for(let i=1;i<=20;i++){const k=dshift(S.sp.date,i);
+    if(k<=DMAX&&spDayOpen(k)){S.sp.date=k;return}}
+}
+
+/* ── N4 · recherche & créneaux ── */
+function renderSpSearch(){
+  const s=spSoin(); if(!s)return;
+  ensureSpa();
+  const p=S.sp.pax, duo=s.cat==='duo', acces=s.cat==='acces';
+  $('#spSoinSel').innerHTML=SPACATS.map(c=>{
+    const l=SOINS.filter(x=>x.cat===c.id);
+    return `<optgroup label="${c.n}">${l.map(x=>
+      `<option value="${x.id}" ${x.id===s.id?'selected':''}>${x.n}</option>`).join('')}</optgroup>`}).join('');
+  $('#spPaxN').textContent=p;
+  $('#spPaxNote').textContent=acces?(p>1?p+' entrées':'1 entrée')
+    :duo?'cabine duo':p===1?'1 cabine':'2 cabines ou cabine duo';
+  $('#spDateBtn').textContent=fday(S.sp.date);
+  $('#spPrev').disabled=S.sp.date<=DMIN;
+  $('#spNext').disabled=S.sp.date>=DMAX;
+  $('#spSlotCrit').textContent=s.n+' · '+fday(S.sp.date)+' · '+p+' personne'+(p>1?'s':'')
+    +' · '+(duo?'prix pour deux':'prix par personne');
+
+  $('#spDays').innerHTML=Array.from({length:9},(_,i)=>dshift(S.sp.date,i-3))
+    .filter(k=>k>=DMIN&&k<=DMAX).map(k=>{
+      const sl=spSlots(k), open=sl.some(x=>x.ok), on=k===S.sp.date;
+      const from=spFrom(sl.flatMap(x=>x.durs));
+      return `<button class="day ${on?'on':''} ${open?'':'full'}" data-spday="${k}">
+        <div class="dd">${dweek(k)} ${+k.slice(8)}</div>
+        <div class="mut" style="font-size:10.5px">${MONTHS[+k.slice(5,7)-1].slice(0,3).toLowerCase()}.</div>
+        <div class="pp">${open?'dès '+eur(from):'complet'}</div></button>`}).join('');
+  $$('[data-spday]').forEach(b=>b.onclick=()=>{S.sp.date=b.dataset.spday;S.sp.dchosen=true;renderSpSearch()});
+
+  /* trois personnes et plus : quatre cabines, un ordre à caler — E3 */
+  const grp=p>=3&&!acces;
+  $('#spGroupWarn').style.display=grp?'block':'none';
+  $('#spSlotWrap').style.display=grp?'none':'block';
+  $('#spChips').style.display=grp?'none':'flex';
+  $('#spEmpty').style.display='none';
+  if(grp){$('#spSlotTitle').textContent='Demande de groupe';
+    $('#spGroupT').textContent='À '+p+' personnes, on passe en demande';
+    return}
+
+  const all=spSlots(), ok=all.filter(x=>x.ok);
+  $('#spSlotTitle').textContent=ok.length
+    ?ok.length+' créneau'+(ok.length>1?'x':'')+' disponible'+(ok.length>1?'s':'')
+      +' · '+s.durs.length+' durée'+(s.durs.length>1?'s':'')
+    :'Complet ce jour-là';
+  const f=S.sp.filt||'all';
+  const keep=x=>f==='all'?true:f==='disp'?x.ok:x.moment===f;
+  const durRows=x=>x.durs.map(d=>`
+    <button data-spslot="${x.m}" data-spdur="${d.m}" class="${d.ok?'':'lock'}" ${d.ok?'':'disabled'}>
+      <span class="gn">${spDurLbl(d.m)}<span class="gc">${d.ok?(x.jauge?'jauge : '+x.left+' places'
+        :spCabLbl(d)):(d.fits?'complet à cette heure':'ferme à '+spTime(SPCLOSE))}</span></span>
+      <span class="gp">${eur(s.cat==='duo'?d.p:d.p*S.sp.pax)}</span></button>`).join('');
+  const card=x=>`
+   <div class="card slot${x.ok?'':' off'}">
+     <div class="between"><b class="h2">${x.t}</b>${x.tag?`<span class="tag">${x.tag}</span>`:''}</div>
+     <div class="mut" style="margin-top:5px">${x.ok
+        ?(x.jauge?x.left+' place'+(x.left>1?'s':'')+' à cette entrée'
+          :'Fin vers '+spTime(x.m+(x.durs.find(d=>d.ok)||x.durs[0]).m))
+        :(x.jauge?'Jauge atteinte':S.sp.pax>1?'Pas deux cabines libres à cette heure':'Aucune cabine libre')}</div>
+     ${x.ok?`<div class="grates">${durRows(x)}</div>`:''}</div>`;
+  const block=(title,list)=>list.length?`<h2 class="h2" style="margin-bottom:10px">${title}</h2><div class="grid g3 slots" style="gap:10px">${list.map(card).join('')}</div>`:'';
+  $('#spSlotMatin').innerHTML=block('Matin',all.filter(x=>x.moment==='matin'&&keep(x)));
+  $('#spSlotAprem').innerHTML=block('Après-midi',all.filter(x=>x.moment==='aprem'&&keep(x)));
+  $('#spSlotSoir').innerHTML=block('Fin de journée',all.filter(x=>x.moment==='soir'&&keep(x)));
+  $$('#spChips .chip').forEach(b=>b.classList.toggle('on',b.dataset.spfilt===f));
+  $$('[data-spslot]').forEach(b=>b.onclick=()=>{
+    S.sp.slot=spSlots().find(x=>x.m===+b.dataset.spslot);
+    S.sp.dur=+b.dataset.spdur;
+    renderSpaSoin();go('spa-soin');
+  });
+
+  if(!ok.length){
+    $('#spSlotWrap').style.display='none';$('#spEmpty').style.display='block';
+    $('#spEmptyT').textContent=p>1&&!acces?'Pas deux cabines libres ce jour-là':'Complet ce jour-là';
+    $('#spEmptyD').textContent=p>1&&!acces
+      ?'Le spa n\'a que quatre cabines : à deux, il faut la cabine Duo ou deux cabines solo au même horaire. Les jours voisins et les soins qui tiennent en cabine Duo restent ouverts.'
+      :'Toutes les cabines qui donnent ce soin sont prises le '+fday(S.sp.date)+'. Les jours voisins et les autres soins restent ouverts.';
+    const alts=[];
+    for(let i=1;i<=14&&alts.length<3;i++){
+      [dshift(S.sp.date,i),dshift(S.sp.date,-i)].forEach(k=>{
+        if(alts.length<3&&k>=DMIN&&k<=DMAX&&spDayOpen(k)&&!alts.includes(k))alts.push(k)});
+    }
+    $('#spEmptyAlt').innerHTML=alts.map(k=>`<button class="btn sm sec" data-spalt="${k}">${fday(k)}</button>`).join('');
+    $$('[data-spalt]').forEach(b=>b.onclick=()=>{S.sp.date=b.dataset.spalt;S.sp.dchosen=true;renderSpSearch()});
+    /* autres soins ouverts le même jour, cabine duo d'abord quand on est deux */
+    const others=SOINS.filter(x=>x.id!==s.id&&(p===1||x.res.includes('du')||x.cat==='acces'))
+      .filter(x=>{const sv=S.sp.soin;S.sp.soin=x;const o=spDayOpen(S.sp.date);S.sp.soin=sv;return o}).slice(0,3);
+    $('#spEmptySoins').innerHTML=others.length
+      ?`<div class="mut" style="margin-top:18px">Ou un autre soin, le même jour :</div>
+        <div class="row" style="gap:10px;margin-top:10px;flex-wrap:wrap">${others.map(x=>
+          `<button class="btn sm sec" data-spso="${x.id}">${x.n} — dès ${eur(x.durs[0].p)}</button>`).join('')}</div>`
+      :'';
+    $$('[data-spso]').forEach(b=>b.onclick=()=>{pickSoin(soinOf(b.dataset.spso))});
+  }
+}
+$('#spSoinSel').onchange=e=>pickSoin(soinOf(e.target.value));
+$('#spPaxMinus').onclick=()=>{const s=spSoin();S.sp.pax=Math.max(s&&s.cat==='duo'?2:1,S.sp.pax-1);renderSpSearch()};
+$('#spPaxPlus').onclick=()=>{S.sp.pax=Math.min(8,S.sp.pax+1);renderSpSearch()};
+$('#spDateBtn').onclick=()=>togglePop('spdate');
+$('#spPrev').onclick=()=>{S.sp.date=dshift(S.sp.date,-1);S.sp.dchosen=true;renderSpSearch()};
+$('#spNext').onclick=()=>{S.sp.date=dshift(S.sp.date,1);S.sp.dchosen=true;renderSpSearch()};
+$$('#spChips .chip').forEach(b=>b.onclick=()=>{S.sp.filt=b.dataset.spfilt;renderSpSearch()});
+$('#spGroupBtn').onclick=()=>openE3('spa-creneaux','Spa — programme à plusieurs',Math.max(3,S.sp.pax));
+$('#spEmptyE1').onclick=()=>openE1('spa',spSoin().n+' · '+fday(S.sp.date)+' · '+S.sp.pax+' personne'+(S.sp.pax>1?'s':''));
+
+/* ── calendrier du spa, même panneau ancré que les trois autres branches ── */
+function renderSpDatePop(){
+  const s=spSoin();if(!s)return;
+  const cells=(y,m)=>{
+    const first=new Date(y,m,1),last=new Date(y,m+1,0);let out='';
+    for(let i=0;i<(first.getDay()+6)%7;i++)out+='<div class="d off"></div>';
+    for(let d=1;d<=last.getDate();d++){
+      const key=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      out+=`<div class="d pick ${spDayOpen(key)?'':'full'} ${key===S.sp.date?'in':''}" data-spd="${key}">${d}</div>`;
+    }
+    return out;
+  };
+  const nav=`<button class="navd" disabled title="Le référentiel de démonstration couvre octobre et novembre 2026">`;
+  $('#spDatePop').innerHTML=
+   `<div class="between" style="margin-bottom:12px">
+      ${nav}‹</button>
+      <b class="h3">Choisissez le jour du soin</b>
+      ${nav}›</button></div>
+    <div class="cals">${[[2026,9],[2026,10]].map(([y,m])=>
+      `<div class="cal"><h4>${MONTHS[m]} ${y}</h4><div class="dow">${DOW.map(x=>`<span>${x}</span>`).join('')}</div>
+       <div class="days">${cells(y,m)}</div></div>`).join('')}</div>
+    <div class="calleg" style="margin-top:16px"><span><i style="background:var(--ink)"></i>Jour choisi</span>
+      <span><i style="background:repeating-linear-gradient(45deg,#f6f6f6 0 4px,#ededed 4px 8px);border:1px solid var(--g300)"></i>Complet pour ce soin</span></div>
+    <p class="note" style="display:block;margin-top:8px">Les jours barrés le sont pour <b>ce soin, à ce nombre de personnes</b> : changer l'un ou l'autre rouvre des jours. Le spa n'a que quatre cabines — c'est la contrainte la plus serrée des quatre branches.</p>
+    <div class="foot-a"><span class="mut">${fday(S.sp.date)}${spDayOpen(S.sp.date)?' · '+s.n:' · complet pour ce soin'}</span>
+      <button class="btn sm" id="spCalOk">Voir les créneaux</button></div>`;
+  $$('#spDatePop .d.pick').forEach(el=>el.onclick=()=>{
+    S.sp.date=el.dataset.spd;S.sp.dchosen=true;renderSpSearch();renderSpDatePop();
+  });
+  $('#spCalOk').onclick=()=>shutPops();
+}
+
+/* ── E4 · durée, praticien·ne & conditions ── */
+function renderSpaSoin(){
+  const s=spSoin(),x=S.sp.slot,p=S.sp.pax,d=spDur();
+  if(!s||!x)return;
+  const duo=s.cat==='duo', acces=s.cat==='acces';
+  $('#spSoinTitle').textContent=s.n+' · '+x.t;
+  $('#spSoinSub').textContent=fday(S.sp.date)+' · '+p+' personne'+(p>1?'s':'')
+    +' · '+spCabKind(x.durs.find(y=>y.m===d.m)||x.durs[0])
+    +' · '+(acces?'entrée libre à partir de l\'heure choisie':'arrivée conseillée 15 minutes avant');
+  $('#spDurList').innerHTML=s.durs.map(v=>{
+    const av=(x.durs.find(y=>y.m===v.m)||{});
+    return `<button class="opt ${v.m===S.sp.dur?'on':''}" data-spd2="${v.m}" ${av.ok?'':'disabled style="opacity:.5"'}><span class="mark"></span>
+     <span style="flex:1"><span class="between"><b class="h3">${spDurLbl(v.m)}</b>
+       <b>${eur(duo?v.p:v.p)} <span class="mut">${duo?'pour deux':'/ pers'}</span></b></span>
+       <span class="sub" style="display:block;margin-top:3px">${acces?'Accès libre à l\'espace, sortie possible à tout moment'
+         :'Soin de '+spDurLbl(v.m)+' en cabine, hors accueil et rhabillage'}</span>
+       <span class="mut" style="display:block;margin-top:5px"><span class="paytag ${s.pay}">${PAYLBL[s.pay]}</span>${
+         av.ok?'':' — pas de cabine libre à '+x.t}</span>
+     </span></button>`}).join('');
+  $$('[data-spd2]').forEach(b=>b.onclick=()=>{S.sp.dur=+b.dataset.spd2;renderSpaSoin()});
+
+  $('#spPratList').innerHTML=[{id:'',n:'Sans préférence',d:'L\'équipe affecte selon les cabines et les compétences'}]
+    .concat(SPRAT).map(r=>{
+      const off=r.comp&&!r.comp.includes(s.cat);
+      return `<button class="opt sq ${r.id===S.sp.prat?'on':''}" data-sppr="${r.id}" ${off?'disabled style="opacity:.45"':''}>
+        <span class="mark"></span><span><b class="h3">${r.n}</b>
+        <span class="sub" style="display:block;margin-top:2px">${off?'Ne pratique pas cette famille de soins':r.d}</span></span></button>`}).join('');
+  $$('[data-sppr]').forEach(b=>b.onclick=()=>{S.sp.prat=b.dataset.sppr;renderSpaSoin()});
+
+  const opts=spOptList();
+  $('#spOptList').innerHTML=opts.length?opts.map(o=>`
+    <button class="opt sq ${S.sp.opts.includes(o.id)?'on':''}" data-spopt="${o.id}"><span class="mark"></span>
+      <span style="flex:1"><span class="between"><b class="h3">${o.n}</b><b>${o.p?eur(o.p)+' <span class="mut">/ pers</span>':'<span class="mut">Sans supplément</span>'}</b></span>
+        <span class="sub" style="display:block;margin-top:3px">${o.d}</span></span></button>`).join('')
+    :`<p class="sub">L'entrée à l'espace spa se suffit à elle-même : peignoir et collation sont déjà dans la formule choisie, ou dans celle du dessus.</p>`;
+  $$('[data-spopt]').forEach(b=>b.onclick=()=>{const id=b.dataset.spopt;
+    S.sp.opts=S.sp.opts.includes(id)?S.sp.opts.filter(o=>o!==id):[...S.sp.opts,id];renderSpaSoin()});
+
+  const nOpt=S.sp.opts.length;
+  $('#spAsideCrit').textContent=fday(S.sp.date)+' · '+x.t+' · '+s.n;
+  $('#spAsideDurLbl').textContent=spDurLbl(d.m);
+  $('#spAsideUnit').textContent=eur(d.p)+(duo?' pour deux':' / pers');
+  $('#spAsidePaxLbl').textContent=duo?'Cabine duo':'× '+p+' personne'+(p>1?'s':'');
+  $('#spAsidePax').textContent=eur(spBase());
+  $('#spAsideOptRow').style.display=nOpt?'flex':'none';
+  $('#spAsideOptLbl').textContent=nOpt+' option'+(nOpt>1?'s':'')+(p>1?' × '+p:'');
+  $('#spAsideOpt').textContent=eur(spOptTot());
+  $('#spAsideTot').textContent=eur(spTotal());
+  $('#spAsidePay').textContent=s.pay==='now'?'Débité à la réservation. Annulation gratuite jusqu\'à 48 h, remboursement intégral.'
+    :s.pay==='auth'?'Aucun débit : empreinte de carte, 50 % du soin en cas d\'annulation tardive ou de no-show.'
+    :'Aucun débit ni empreinte — l\'entrée se règle à l\'accueil du spa.';
+  $('#spBarTot').textContent=eur(spTotal());
+  $('#spBarSub').textContent=spDurLbl(d.m)+' · '+p+' personne'+(p>1?'s':'')+(nOpt?' · '+nOpt+' option'+(nOpt>1?'s':''):'');
+}
+$('#spCondBtn').onclick=()=>{const s=spSoin()||SOINS[0];
+ sheet(head('Durées, tarifs et conditions','E4 · Module partagé — branche Spa')+
+ `<div class="grid" style="gap:10px;margin-top:14px">${s.durs.map(v=>`
+   <div class="card" style="padding:12px"><div class="between"><b class="h3">${spDurLbl(v.m)}</b>
+     <b>${eur(v.p)}<span class="mut">${s.cat==='duo'?' pour deux':' / pers'}</span></b></div>
+     <div class="sub" style="margin-top:4px">${s.n}</div></div>`).join('')}
+   <div class="card" style="padding:12px"><b class="h3">Forfaits et cures</b>
+     <div class="sub" style="margin-top:4px">3 ou 5 séances, tarif dégressif — vendus au spa, pas encore en ligne.</div></div></div>
+  <div class="hr"></div>
+  <div class="tot"><span>${S.sp.pax} personne${S.sp.pax>1?'s':''} × ${spDurLbl(spDur().m)}</span><span>${eur(spBase())}</span></div>
+  <div class="tot"><span>Options</span><span>${S.sp.opts.length?eur(spOptTot()):'Aucune'}</span></div>
+  <div class="tot"><span>TVA</span><span>Incluse</span></div>
+  <p class="sub" style="margin-top:14px"><b>Annulation.</b> Massages, visage et soins du corps : empreinte de carte, annulation gratuite jusqu'à 24 h, 50 % du soin prélevés au-delà et en cas de no-show. Rituels et duos : prépayés, remboursés intégralement jusqu'à 48 h. Entrée à l'espace spa : rien à régler en ligne.</p>
+  <p class="sub" style="margin-top:10px"><b>Retard.</b> Le soin se termine à l'heure prévue : un quart d'heure de retard, c'est un quart d'heure de soin en moins — la cabine enchaîne. Règle du spa, pas du moteur.</p>
+  <p class="sub" style="margin-top:10px"><b>Âge.</b> L'espace spa et les soins sont réservés aux plus de 16 ans, mineurs accompagnés d'un adulte pour les soins.</p>
+  <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Fermer</button>
+  <p class="note" style="display:block">Montant du no-show, délai d'annulation et politique d'acompte sont propres au spa : donnée back-office, pas paramètre du moteur. Le back-office sait encaisser un <b>acompte de 30 %</b> — un quatrième moment de débit que le panier ne sait pas encore afficher.</p>`)};
+
+function addSpaToCart(){
+  const s=spSoin(),x=S.sp.slot,p=S.sp.pax,d=spDur();
+  const pr=SPRAT.find(r=>r.id===S.sp.prat);
+  const bits=[fday(S.sp.date),x.t+' → '+spTime(x.m+d.m),spDurLbl(d.m),p+' personne'+(p>1?'s':'')];
+  if(pr)bits.push(pr.c||'souhait : '+pr.n);
+  if(S.sp.opts.length)bits.push(S.sp.opts.length+' option'+(S.sp.opts.length>1?'s':''));
+  S.cart=S.cart.filter(l=>l.id!=='spa'&&l.id!=='cs-spa');
+  S.cart.push({id:'spa',cat:'Spa',t:s.n,site:siteName(),m:bits.join(' · '),
+    p:spTotal(),pay:s.pay,when:'au spa',edit:'spa-soin'});
+  renderSpaPrep();go('spa-prep');
+}
+$('#spAdd').onclick=addSpaToCart; $('#spAddLg').onclick=addSpaToCart;
+
+/* ── préparation & santé (notes de la fiche client back-office) ── */
+function renderSpaPrep(){
+  /* Écran partagé par les deux variantes : seul le retour change de cible. */
+  const bk=$('#sc-spa-prep .back');
+  bk.dataset.go=SPV2?'spa2-rdv':'spa-soin';
+  bk.textContent=SPV2?'← Votre rendez-vous':'← Durée & conditions';
+  const chip=(list,key,multi)=>list.map(o=>{
+    const on=multi?S.sp[key].includes(o.id):S.sp[key]===o.id;
+    return `<button class="opt sq ${on?'on':''}" data-sp${key}="${o.id}"><span class="mark"></span>
+      <span><b class="h3">${o.n}</b></span></button>`}).join('');
+  $('#spSante').innerHTML=chip(SPSANTE,'sante',true);
+  $('#spPress').innerHTML=chip(SPPRESS,'press',false);
+  $('#spAmb').innerHTML=chip(SPAMB,'amb',true);
+  $$('[data-spsante]').forEach(b=>b.onclick=()=>{const id=b.dataset.spsante;
+    S.sp.sante=id==='aucune'?(S.sp.sante.includes('aucune')?[]:['aucune'])
+      :(S.sp.sante.includes(id)?S.sp.sante.filter(x=>x!==id):[...S.sp.sante.filter(x=>x!=='aucune'),id]);
+    renderSpaPrep()});
+  $$('[data-sppress]').forEach(b=>b.onclick=()=>{S.sp.press=S.sp.press===b.dataset.sppress?'':b.dataset.sppress;renderSpaPrep()});
+  $$('[data-spamb]').forEach(b=>b.onclick=()=>{const id=b.dataset.spamb;
+    S.sp.amb=S.sp.amb.includes(id)?S.sp.amb.filter(x=>x!==id):[...S.sp.amb,id];renderSpaPrep()});
+
+  /* une contre-indication ne se range pas dans une note : elle change le soin */
+  const flags=S.sp.sante.map(id=>SPSANTE.find(x=>x.id===id)).filter(x=>x&&x.w);
+  const box=$('#spSanteAlert');
+  box.style.display=flags.length?'block':'none';
+  if(flags.length){
+    const cur=SPV2?(S.sp.sel[0]?soinOf(S.sp.sel[0].id):null):spSoin();
+    const alt=flags.find(f=>f.alt&&cur&&cur.id!==f.alt);
+    box.innerHTML=`<div class="card" style="padding:16px;border-style:dashed">
+      <div class="row" style="align-items:flex-start"><span class="node" style="margin-top:2px">E2</span>
+        <div style="flex:1"><div class="h3">Le spa vous rappellera avant le soin</div>
+          <p class="sub" style="margin-top:6px">${flags.map(f=>'<b>'+f.n+'</b> — '+f.w).join('<br>')}</p>
+          ${alt?`<button class="btn sm" style="margin-top:12px" data-spalt2="${alt.alt}">Voir le ${soinOf(alt.alt).n.toLowerCase()}</button>`:''}
+          <p class="note" style="display:block;margin-top:${alt?'12px':'10px'}">La réservation n'est pas bloquée : le moteur n'a pas à trancher une question médicale. Il signale, propose l'alternative du catalogue quand elle existe, et passe l'information à l'équipe.</p>
+        </div></div></div>`;
+    $$('[data-spalt2]').forEach(b=>b.onclick=()=>{
+      S.cart=S.cart.filter(l=>l.id!=='spa');
+      const id=b.dataset.spalt2, so=soinOf(id);
+      if(SPV2){S.sp.sel=[{id,dur:so.durs[0].m}];S.sp.acc=[so.cat];S.sp.slot2=null;
+        if(S.sp.prat2&&!sp2Prats().some(r=>r.id===S.sp.prat2))S.sp.prat2='';
+        renderSp2Slots();go('spa2-creneaux');return}
+      pickSoin(so);go('spa-creneaux');
+    });
+  }
+  const nb=S.sp.sante.filter(x=>x!=='aucune').length+(S.sp.press&&S.sp.press!=='voir'?1:0)
+    +S.sp.amb.filter(x=>x!=='indiff').length;
+  $('#spPrepTot').textContent=nb?nb+' précision'+(nb>1?'s':''):'Aucune précision';
+  $('#spPrepSub').textContent=S.sp.sante.filter(x=>x!=='aucune').length
+    ?'Dont des informations de santé — transmises à l\'équipe du spa'
+    :'Transmises à la praticienne qui vous recevra';
+}
+$('#spPrepNext').onclick=()=>{
+  const l=S.cart.find(x=>x.id==='spa');
+  if(l){
+    const bits=[];
+    const n=S.sp.sante.filter(x=>x!=='aucune').length; if(n)bits.push(n+' point'+(n>1?'s':'')+' de santé');
+    const pr=SPPRESS.find(x=>x.id===S.sp.press); if(pr&&pr.id!=='voir')bits.push('pression '+pr.n.toLowerCase());
+    const am=S.sp.amb.filter(x=>x!=='indiff').length; if(am)bits.push(am+' préférence'+(am>1?'s':''));
+    l.m=l.m.split(' — ')[0]+(bits.length?' — '+bits.join(', '):'');
+  }
+  renderCross('spa');go('cross');
+};
+
+/* ═════════════════════════════════════════════════════════════════════
+   N4 · SPA v2 — modèle Planity (demande du 10/09)
+
+   Même référentiel, même aval, autre architecture d'information :
+
+   v1 — un soin, puis un créneau, puis la durée et un souhait de praticien·ne.
+        On réserve une CABINE ; l'équipe affecte la personne la veille, à la
+        main, comme le back-office l'impose aujourd'hui.
+   v2 — des PRESTATIONS (une ligne par durée) qu'on enchaîne dans un même
+        rendez-vous, puis la personne, puis l'heure. On réserve quelqu'un.
+
+   La bascule n'est pas graphique : elle demande au spa de renoncer à
+   réaffecter ses praticiennes la veille. C'est l'arbitrage porté par l'écran
+   « Avec qui ? », et il se tranche avant de choisir la variante.
+   ═══════════════════════════════════════════════════════════════════ */
+let SPV2=false;
+/* Agenda d'une praticienne : même générateur que les cabines, autre graine.
+   Il n'existe que pour la v2 — en v1, personne n'est bloqué à l'avance. */
+function pratBook(k,id){
+  let h=dhash(k,'prat|'+id); h=Math.imul(h^(h>>>15),0x27d4eb2f)>>>0; h=(h^(h>>>13))>>>0;
+  const out=[]; let m=SPOPEN+((h>>>4)%3)*30;
+  const nb=3+(h%3)+(isWE(k)?1:0);
+  for(let i=0;i<nb&&m<SPCLOSE;i++){
+    const len=[60,90,45,120,60,90][(h>>>(i+1))%6]+SPTURN;
+    out.push([m,m+len]); m+=len+30*((h>>>(i*3+7))%3);
+  }
+  return out;
+}
+const pratFree=(k,id,m,len)=>!pratBook(k,id).some(([a,b])=>m<b&&m+len>a);
+
+const sp2N=()=>S.sp.sel.length;
+const sp2Dur=()=>S.sp.sel.reduce((t,x)=>t+x.dur,0);
+const sp2Line=x=>{const s=soinOf(x.id);return{s,dur:x.dur,p:(s.durs.find(d=>d.m===x.dur)||s.durs[0]).p}};
+const sp2Prest=()=>S.sp.sel.reduce((t,x)=>t+sp2Line(x).p,0);
+/* Un rendez-vous Planity, c'est une personne — sauf prestation duo, vendue
+   pour deux et facturée comme telle. Le compteur de personnes de la v1
+   disparaît : c'est la simplification la plus visible du modèle. */
+const sp2Pax=()=>S.sp.sel.some(x=>soinOf(x.id).cat==='duo')?2:1;
+const sp2Cats=()=>[...new Set(S.sp.sel.map(x=>soinOf(x.id).cat))];
+const sp2Prats=()=>SPRAT.filter(r=>r.comp&&sp2Cats().every(c=>r.comp.includes(c)));
+const sp2Opts=()=>S.sp.sel.every(x=>soinOf(x.id).cat==='acces')?[]:SPOPTS;
+const sp2OptTot=()=>S.sp.opts.reduce((t,id)=>{const o=SPOPTS.find(x=>x.id===id);return t+(o?o.p*sp2Pax():0)},0);
+const sp2Total=()=>sp2Prest()+sp2OptTot();
+/* Trois prestations peuvent porter trois politiques de paiement ; le panier
+   n'en affiche qu'une par ligne. On retient la plus engageante. */
+const sp2Pay=()=>{const p=S.sp.sel.map(x=>soinOf(x.id).pay);
+  return p.includes('now')?'now':p.includes('auth')?'auth':'onsite'};
+const sp2Who=()=>SPRAT.find(r=>r.id===S.sp.prat2);
+
+/* Un créneau tient si CHAQUE prestation de la chaîne trouve une cabine libre
+   à son propre décalage — et, si une praticienne est demandée, si son agenda
+   est libre du début à la fin. */
+/* Prestations qui ne s'enchaînent pas : le duo occupe la cabine à deux, et
+   l'entrée à l'espace spa n'est pas une cabine mais une jauge — elle enveloppe
+   un soin plutôt qu'elle ne le suit (c'est l'option « espace spa avant le
+   soin » de l'écran Rendez-vous, pas une prestation à mettre à la queue). */
+const SOLO_CATS=['duo','acces'];
+const sp2Alone=id=>SOLO_CATS.includes(soinOf(id).cat);
+function sp2SlotsFor(k,sel,who){
+  if(!sel.length)return [];
+  if(sel.length===1&&soinOf(sel[0].id).cat==='acces'){
+    const s=soinOf(sel[0].id), dur=sel[0].dur;
+    return [[570,'Entrée du matin'],[840,'Entrée de l\'après-midi']].map(([m,tag],i)=>{
+      const left=13-((dhash(k,'es')+i*37)%14);
+      return {m,t:spTime(m),end:Math.min(m+dur,SPCLOSE),tag,left,jauge:true,
+        ok:m+dur<=SPCLOSE&&left>0,cabs:['es'],moment:m<720?'matin':'aprem'};
+    });
+  }
+  const tot=sel.reduce((t,x)=>t+x.dur,0);
+  return SPGRID.map(m=>{
+    if(m+tot>SPCLOSE)return {m,t:spTime(m),ok:false};
+    let off=0, ok=true; const cabs=[];
+    for(const x of sel){
+      const s=soinOf(x.id);
+      const c=CABINES.filter(c=>s.res.includes(c.id)).find(c=>cabFree(k,c.id,m+off,x.dur));
+      if(!c){ok=false;break}
+      cabs.push(c.id); off+=x.dur;
+    }
+    if(ok&&who)ok=pratFree(k,who,m,tot);
+    return {m,t:spTime(m),end:m+tot,ok,cabs,moment:m<720?'matin':m<990?'aprem':'soir'};
+  }).filter(x=>x.m+tot<=SPCLOSE);
+}
+const sp2Slots=k=>sp2SlotsFor(k,S.sp.sel,S.sp.prat2);
+const sp2Open=k=>sp2Slots(k).filter(x=>x.ok);
+/* Disponibilité d'une prestation à une date donnée, « si on l'ajoutait » :
+   la sélection en cours sert de préfixe, sans quoi le compteur mentirait dès
+   la deuxième prestation du rendez-vous. Une prestation déjà retenue est
+   mesurée telle quelle, pas en double. */
+function rowAvail(k,id,dur){
+  const cur=S.sp.sel, has=cur.some(x=>x.id===id&&x.dur===dur);
+  const sel=has?cur
+    :sp2Alone(id)?[{id,dur}]
+    :cur.filter(x=>!sp2Alone(x.id)).concat([{id,dur}]);
+  const ok=sp2SlotsFor(k,sel,S.sp.prat2).filter(x=>x.ok);
+  return {n:ok.length,first:ok[0]};
+}
+/* La date qu'un autre service du panier a déjà fixée : c'est ce qu'un outil de
+   spa isolé ne peut pas savoir, et c'est gratuit ici. */
+function cartWhen(){
+  if(S.cart.some(l=>l.id==='golf')&&S.g.date)return {k:S.g.date,w:'Vous jouez',x:'votre départ'};
+  if(S.cart.some(l=>l.id==='heb')&&S.din)return {k:S.din,w:'Vous arrivez',x:'votre séjour'};
+  if(S.cart.some(l=>l.id==='resto')&&S.r.date)return {k:S.r.date,w:'Vous dînez',x:'votre table'};
+  return null;
+}
+const monday=k=>{const d=new Date(k+'T12:00:00');return dshift(k,-((d.getDay()+6)%7))};
+function sp2Nextk(from){
+  for(let i=0;i<45;i++){const k=dshift(from,i);
+    if(k>DMAX)return null;
+    if(k>=DMIN){const o=sp2Open(k);if(o.length)return {k,slot:o[0]}}}
+  return null;
+}
+
+/* ── écran 1 · prestations en accordéon ── */
+function sp2Has(id,dur){return S.sp.sel.some(x=>x.id===id&&x.dur===dur)}
+function sp2Pick(id,dur){
+  if(sp2Has(id,dur)){S.sp.sel=S.sp.sel.filter(x=>!(x.id===id&&x.dur===dur))}
+  else if(sp2Alone(id)){S.sp.sel=[{id,dur}]}
+  else{S.sp.sel=S.sp.sel.filter(x=>!sp2Alone(x.id)).concat([{id,dur}])}
+  if(S.sp.prat2&&!sp2Prats().some(r=>r.id===S.sp.prat2))S.sp.prat2='';
+  S.sp.slot2=null;
+  renderSp2Prest();
+}
+/* Une journée « ouverte » : pour la sélection en cours s'il y en a une, sinon
+   pour le spa en général — assez pour barrer un jour vraiment plein sans
+   recalculer tout le catalogue à chaque case du calendrier. */
+const sp2DayOpen=k=>sp2N()?sp2Open(k).length>0
+  :SPGRID.some(m=>CABINES.some(c=>c.id!=='es'&&cabFree(k,c.id,m,60)));
+
+function renderSp2Prest(){
+  const k=S.sp.fdate, nsel=sp2N();
+  $('#sp2Sub').textContent=k
+    ?'Le Spa de la Bégude · ce qui reste libre le '+fday(k)+(nsel?', compte tenu du rendez-vous en cours.':'.')
+    :'Le Spa de la Bégude · '+SOINS.length+' prestations — choisissez-en une ou plusieurs, elles s\'enchaîneront dans le même rendez-vous.';
+
+  /* ── barre de date : un filtre, pas une étape ── */
+  $('#sp2DateBtn').textContent=k?fday(k):'Peu importe — tout le catalogue';
+  $('#sp2FPrev').disabled=!k||k<=DMIN;
+  $('#sp2FNext').disabled=!k||k>=DMAX;
+  $('#sp2FOnly').style.display=k?'':'none';
+  $('#sp2FClear').style.display=k?'':'none';
+  $('#sp2FOnly').classList.toggle('on',!!S.sp.fonly);
+  $('#sp2DateNote').innerHTML=k
+    ?`Chaque ligne porte la disponibilité du <b>${fday(k)}</b>${nsel?', calculée avec '+(nsel>1?'les '+nsel+' prestations déjà retenues':'la prestation déjà retenue')+' — sans quoi le compteur mentirait dès la deuxième':''}. Une prestation complète ce jour-là reste choisissable : l'écran des créneaux proposera la prochaine disponibilité plutôt qu'un cul-de-sac.`
+    :'Planity ne demande pas la date ici — son client choisit un salon, puis une prestation. Au spa d\'un resort, la date est souvent <b>déjà connue</b> : on est sur place entre un départ et un dîner. Elle reste facultative et n\'agit que comme filtre — même logique que la v2 du green fee, où la date recalcule les parcours ouverts.';
+
+  /* la date qu'un autre service du panier a déjà fixée */
+  const cw=cartWhen(), box=$('#sp2FromCart');
+  box.style.display=cw&&cw.k!==k?'block':'none';
+  if(cw&&cw.k!==k){
+    box.innerHTML=`<div class="card" style="padding:13px 15px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-style:dashed">
+      <span class="mut" style="flex:1"><b style="color:var(--ink)">${cw.w} le ${fday(cw.k)}</b> — ${cw.x} est déjà dans votre panier. Voir ce que le spa a de libre ce jour-là&nbsp;?</span>
+      <button class="btn sm sec" id="sp2UseCart">Utiliser cette date</button></div>`;
+    $('#sp2UseCart').onclick=()=>{S.sp.fdate=cw.k;S.sp.date=cw.k;S.sp.week=monday(cw.k);S.sp.slot2=null;renderSp2Prest()};
+  }
+
+  /* ── catalogue ── */
+  const open=S.sp.acc;
+  $('#sp2Acc').innerHTML=SPACATS.map(c=>{
+    const list=SOINS.filter(s=>s.cat===c.id), on=open.includes(c.id);
+    const nSel=S.sp.sel.filter(x=>soinOf(x.id).cat===c.id).length;
+    const rows=[];
+    let libres=0;
+    list.forEach(s=>s.durs.forEach(d=>{
+      const sel=sp2Has(s.id,d.m), av=k?rowAvail(k,s.id,d.m):null;
+      if(av&&av.n)libres++;
+      if(k&&S.sp.fonly&&!sel&&av.n===0)return;
+      rows.push(`<button class="prow ${sel?'on':''}" data-p2="${s.id}" data-p2d="${d.m}">
+        <span class="pn"><b>${s.n}</b><span>${spDurLbl(d.m)} · ${s.d}</span>
+          ${av?`<span class="av ${av.n?'':'no'}">${av.n
+             ?'dès '+av.first.t+' · '+av.n+' créneau'+(av.n>1?'x':'')+' le '+fshort(k)
+             :'complet le '+fshort(k)}</span>`:''}</span>
+        <span class="pp">${eur(d.p)}${s.cat==='duo'?'<span class="mut" style="font-weight:500"> /2 pers</span>':''}</span>
+        <span class="pb">${sel?'Retirer':'Choisir'}</span></button>`);
+    }));
+    const cnt=k?(libres?libres+' libre'+(libres>1?'s':'')+' le '+fshort(k):'rien de libre le '+fshort(k))
+              :list.length+' prestation'+(list.length>1?'s':'');
+    return `<div class="acc ${on?'open':''}">
+      <button class="acc-h" data-acc="${c.id}">
+        <span><b>${c.n}</b><span class="n">${cnt}${nSel?' · '+nSel+' choisie'+(nSel>1?'s':''):''}</span></span>
+        <svg class="cv" width="12" height="12" viewBox="0 0 10 10"><path d="M1 3.5 5 7.5 9 3.5" fill="none"
+          stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      ${on?`<div class="acc-b">${rows.length?rows.join('')
+        :`<p class="sub" style="padding:14px 16px">Aucune prestation de cette famille n'est libre le ${fday(k)}. Décochez « uniquement ce qui est libre » pour les voir quand même.</p>`}</div>`:''}
+    </div>`}).join('');
+  $$('[data-acc]').forEach(b=>b.onclick=()=>{const id=b.dataset.acc;
+    S.sp.acc=open.includes(id)?open.filter(x=>x!==id):[...open,id];renderSp2Prest()});
+  $$('[data-p2]').forEach(b=>b.onclick=()=>sp2Pick(b.dataset.p2,+b.dataset.p2d));
+
+  /* ── ma sélection ── */
+  const n=sp2N();
+  $('#sp2SelN').textContent=n?n+' prestation'+(n>1?'s':''):'vide';
+  $('#sp2SelList').innerHTML=n?S.sp.sel.map((x,i)=>{const l=sp2Line(x);
+    return `<div class="selline"><span class="sn"><b>${l.s.n}</b><span>${spDurLbl(l.dur)}${l.s.cat==='duo'?' · pour deux':''}</span></span>
+      <b>${eur(l.p)}</b><button class="sx" data-p2rm="${i}">✕</button></div>`}).join('')
+    :'<p class="sub" style="margin-top:6px">Aucune prestation choisie.</p>';
+  $$('[data-p2rm]').forEach(b=>b.onclick=()=>{S.sp.sel.splice(+b.dataset.p2rm,1);
+    if(S.sp.prat2&&!sp2Prats().some(r=>r.id===S.sp.prat2))S.sp.prat2='';renderSp2Prest()});
+  $('#sp2SelDur').textContent=n>1?'Durée cumulée':'Durée';
+  $('#sp2SelDurV').textContent=n?spDurLbl(sp2Dur()):'—';
+  $('#sp2SelTot').textContent=n?eur(sp2Prest()):'—';
+  $('#sp2Next').disabled=!n; $('#sp2NextSm').disabled=!n;
+  $('#sp2BarTot').textContent=n?eur(sp2Prest()):'—';
+  $('#sp2BarSub').textContent=n?n+' prestation'+(n>1?'s':'')+' · '+spDurLbl(sp2Dur())
+    +(k?' · '+fshort(k):''):'Aucune prestation';
+}
+/* calendrier de la barre de date, même panneau ancré que partout ailleurs */
+function renderSp2DatePop(){
+  const cells=(y,m)=>{
+    const first=new Date(y,m,1),last=new Date(y,m+1,0);let out='';
+    for(let i=0;i<(first.getDay()+6)%7;i++)out+='<div class="d off"></div>';
+    for(let d=1;d<=last.getDate();d++){
+      const key=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      out+=`<div class="d pick ${sp2DayOpen(key)?'':'full'} ${key===S.sp.fdate?'in':''}" data-p2cal="${key}">${d}</div>`;
+    }
+    return out;
+  };
+  const nav=`<button class="navd" disabled title="Le référentiel de démonstration couvre octobre et novembre 2026">`;
+  const k=S.sp.fdate;
+  $('#sp2DatePop').innerHTML=
+   `<div class="between" style="margin-bottom:12px">
+      ${nav}‹</button><b class="h3">Quand venez-vous&nbsp;?</b>${nav}›</button></div>
+    <div class="cals">${[[2026,9],[2026,10]].map(([y,m])=>
+      `<div class="cal"><h4>${MONTHS[m]} ${y}</h4><div class="dow">${DOW.map(x=>`<span>${x}</span>`).join('')}</div>
+       <div class="days">${cells(y,m)}</div></div>`).join('')}</div>
+    <div class="calleg" style="margin-top:16px"><span><i style="background:var(--ink)"></i>Jour retenu</span>
+      <span><i style="background:repeating-linear-gradient(45deg,#f6f6f6 0 4px,#ededed 4px 8px);border:1px solid var(--g300)"></i>Spa fermé ou complet</span></div>
+    <p class="note" style="display:block;margin-top:8px">${sp2N()
+      ?'Les jours barrés le sont <b>pour le rendez-vous en cours</b> ('+spDurLbl(sp2Dur())+') : retirer une prestation en rouvre.'
+      :'Les jours barrés sont ceux où aucune cabine ne dégage une heure. Une fois des prestations choisies, ce calendrier se resserre sur elles.'}</p>
+    <div class="foot-a"><span class="mut">${k?fday(k):'Aucune date — tout le catalogue est affiché'}</span>
+      <button class="btn sm" id="sp2CalOk">Voir les prestations</button></div>`;
+  $$('#sp2DatePop .d.pick').forEach(el=>el.onclick=()=>{
+    S.sp.fdate=el.dataset.p2cal;S.sp.date=S.sp.fdate;S.sp.week=monday(S.sp.fdate);S.sp.slot2=null;
+    renderSp2Prest();renderSp2DatePop();
+  });
+  $('#sp2CalOk').onclick=()=>shutPops();
+}
+$('#sp2DateBtn').onclick=()=>togglePop('sp2date');
+const sp2Shift=d=>{S.sp.fdate=dshift(S.sp.fdate,d);S.sp.date=S.sp.fdate;
+  S.sp.week=monday(S.sp.fdate);S.sp.slot2=null;renderSp2Prest()};
+$('#sp2FPrev').onclick=()=>sp2Shift(-1);
+$('#sp2FNext').onclick=()=>sp2Shift(1);
+$('#sp2FOnly').onclick=()=>{S.sp.fonly=!S.sp.fonly;renderSp2Prest()};
+$('#sp2FClear').onclick=()=>{S.sp.fdate=null;S.sp.fonly=false;renderSp2Prest()};
+/* La date du filtre devient celle de l'écran des créneaux : ce serait absurde
+   de la demander deux fois. */
+const sp2Go2=()=>{if(!sp2N())return;
+  if(S.sp.fdate){S.sp.date=S.sp.fdate;S.sp.week=monday(S.sp.fdate);S.sp.slot2=null}
+  renderSp2Qui();go('spa2-qui')};
+$('#sp2Next').onclick=sp2Go2; $('#sp2NextSm').onclick=sp2Go2;
+
+/* ── écran 2 · avec qui ── */
+function renderSp2Qui(){
+  const prats=sp2Prats(), cats=sp2Cats();
+  $('#sp2QuiSub').textContent=sp2N()>1
+    ? sp2N()+' prestations enchaînées · '+spDurLbl(sp2Dur())+' — la même personne pour tout le rendez-vous.'
+    : sp2Line(S.sp.sel[0]).s.n+' · '+spDurLbl(sp2Dur())+' — au choix, quelqu\'un en particulier ou l\'équipe.';
+  const card=(id,n,d,note)=>`<button class="opt ${S.sp.prat2===id?'on':''}" data-p2w="${id}"><span class="mark"></span>
+    <span style="flex:1"><b class="h3">${n}</b>
+      <span class="sub" style="display:block;margin-top:3px">${d}</span>
+      ${note?`<span class="mut" style="display:block;margin-top:5px">${note}</span>`:''}</span></button>`;
+  $('#sp2PratList').innerHTML=
+    card('','Sans préférence','L\'équipe attribue la praticienne selon les cabines et les compétences',
+         'Le plus de créneaux — c\'est aussi la règle actuelle du spa')
+   +prats.map(r=>{
+      const nb=(()=>{let t=0;const w=S.sp.prat2;S.sp.prat2=r.id;
+        for(let i=0;i<7;i++){const k=dshift(S.sp.date||DMIN,i);if(k<=DMAX)t+=sp2Open(k).length}
+        S.sp.prat2=w;return t})();
+      return card(r.id,r.n,r.d,nb?nb+' créneaux sur les sept prochains jours':'Aucun créneau cette semaine')}).join('');
+  $$('[data-p2w]').forEach(b=>b.onclick=()=>{S.sp.prat2=b.dataset.p2w;S.sp.slot2=null;renderSp2Qui()});
+
+  const out=SPRAT.filter(r=>r.comp&&!prats.includes(r));
+  const fams=cats.map(c=>(SPACATS.find(x=>x.id===c)||{}).n.toLowerCase()).join(' et ');
+  $('#sp2QuiWarn').innerHTML=out.length&&sp2N()>1
+    ?`<div class="card" style="padding:14px;border-style:dashed"><div class="row" style="align-items:flex-start">
+       <span class="node" style="margin-top:2px">E2</span>
+       <div><div class="h3">${prats.length
+          ?out.length+' praticien·ne'+(out.length>1?'·s':'')+' écarté·e'+(out.length>1?'·s':'')+" par l'enchaînement"
+          :"Personne dans l'équipe ne fait les deux"}</div>
+         <p class="sub" style="margin-top:6px">${prats.length
+           ?out.map(r=>r.n).join(', ')+' '+(out.length>1?'ne sont pas habilité·e·s':'n\'est pas habilité·e')+' sur les familles choisies ('+fams+').'
+           :'Aucun·e praticien·ne n\'est habilité·e à la fois sur '+fams+' — c\'est le référentiel de compétences du back-office, pas une limite du moteur.'}
+           Le spa sait pourtant enchaîner ce rendez-vous : <b>deux personnes se relaient</b> entre les prestations. La vente en ligne, elle, ne propose pas de réserver deux praticiennes à la suite — c'est la limite du modèle Planity appliqué à un spa d'hôtel, et l'une des raisons de garder « sans préférence » par défaut.</p>
+       </div></div></div>`:'';
+
+  const w=sp2Who();
+  $('#sp2QuiTot').textContent=w?w.n:'Sans préférence';
+  $('#sp2QuiBarSub').textContent=sp2N()+' prestation'+(sp2N()>1?'s':'')+' · '+spDurLbl(sp2Dur())+' · '+eur(sp2Prest());
+}
+$('#sp2QuiNext').onclick=()=>{renderSp2Slots();go('spa2-creneaux')};
+
+/* ── écran 3 · semaine et pastilles ── */
+function renderSp2Slots(){
+  if(!sp2N())return;
+  if(!S.sp.date)S.sp.date=DMIN<'2026-10-15'?'2026-10-15':DMIN;
+  if(!S.sp.week)S.sp.week=monday(S.sp.date);
+  const w=sp2Who(), days=Array.from({length:7},(_,i)=>dshift(S.sp.week,i));
+  $('#sp2SlotCrit').textContent=sp2N()+' prestation'+(sp2N()>1?'s':'')+' · '+spDurLbl(sp2Dur())
+    +' · '+(w?'avec '+w.n:'sans préférence de praticien·ne')+' · '+eur(sp2Prest());
+  const inb=days.filter(k=>k>=DMIN&&k<=DMAX);
+  $('#sp2WLbl').textContent=inb.length
+    ?(fshort(inb[0])+' → '+fshort(inb[inb.length-1])).replace(/\./g,'.')
+    :'Hors référentiel';
+  $('#sp2WPrev').disabled=dshift(S.sp.week,-7)<dshift(DMIN,-6);
+  $('#sp2WNext').disabled=dshift(S.sp.week,7)>DMAX;
+  $('#sp2Week').innerHTML=days.map(k=>{
+    const hs=k>=DMIN&&k<=DMAX, n=hs?sp2Open(k).length:0;
+    return `<button class="wd ${k===S.sp.date?'on':''} ${n?'':'full'}" data-p2d2="${k}" ${hs?'':'disabled'}>
+      <span>${dweek(k)}</span><b>${+k.slice(8)}</b>
+      <i>${!hs?'—':n?n+' créneau'+(n>1?'x':''):'complet'}</i></button>`}).join('');
+  $$('[data-p2d2]').forEach(b=>b.onclick=()=>{S.sp.date=b.dataset.p2d2;S.sp.slot2=null;renderSp2Slots()});
+
+  const slots=sp2Open(S.sp.date);
+  $('#sp2SlotTitle').textContent=slots.length
+    ?slots.length+' créneau'+(slots.length>1?'x':'')+' le '+fday(S.sp.date)
+    :'Complet le '+fday(S.sp.date);
+  const block=(t,list)=>list.length?`<h2 class="h2" style="margin:18px 0 10px">${t}</h2>
+    <div class="pills">${list.map(x=>`<button class="pill ${S.sp.slot2===x.m?'on':''}" data-p2s="${x.m}">${x.t}
+      <small>${x.jauge?x.left+' place'+(x.left>1?'s':''):'→ '+spTime(x.end)}</small></button>`).join('')}</div>`:'';
+  $('#sp2Pills').innerHTML=slots.length
+    ?block('Matin',slots.filter(x=>x.moment==='matin'))
+     +block('Après-midi',slots.filter(x=>x.moment==='aprem'))
+     +block('Fin de journée',slots.filter(x=>x.moment==='soir'))
+    :`<div class="card" style="padding:18px;border-style:dashed">
+        <div class="h3">Aucune disponibilité ce jour-là</div>
+        <p class="sub" style="margin-top:6px">${w?'Avec '+w.n+', le rendez-vous de '+spDurLbl(sp2Dur())+' ne trouve pas de place le '+fday(S.sp.date)+'. Sans préférence de praticien·ne, la journée rouvre presque toujours.':'Les cabines ne dégagent pas '+spDurLbl(sp2Dur())+' d\'affilée le '+fday(S.sp.date)+'.'}</p>
+        <div class="row" style="gap:10px;margin-top:14px;flex-wrap:wrap">
+          ${w?'<button class="btn sm sec" id="sp2NoPrat">Chercher sans préférence</button>':''}
+          <button class="btn sm sec" id="sp2Split">Voir toutes les alternatives</button></div></div>`;
+  $$('[data-p2s]').forEach(b=>b.onclick=()=>{
+    S.sp.slot2=+b.dataset.p2s;renderSp2Rdv();go('spa2-rdv')});
+  if($('#sp2NoPrat'))$('#sp2NoPrat').onclick=()=>{S.sp.prat2='';renderSp2Slots()};
+  if($('#sp2Split'))$('#sp2Split').onclick=()=>openE1('spa',
+    sp2N()+' prestation'+(sp2N()>1?'s':'')+' · '+spDurLbl(sp2Dur())+' · '+fday(S.sp.date));
+
+  /* « prochaine disponibilité », le repli de Planity : jamais de cul-de-sac */
+  const nx=sp2Nextk(slots.length?dshift(S.sp.date,1):S.sp.date);
+  const box=$('#sp2Next7');
+  box.style.display=nx?'block':'none';
+  if(nx)box.innerHTML=`<div class="card" style="padding:13px 15px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span class="mut" style="flex:1">${slots.length?'Prochaine disponibilité après ce jour':'Prochaine disponibilité'} :
+      <b style="color:var(--ink)">${fday(nx.k)} à ${nx.slot.t}</b></span>
+    <button class="btn sm sec" id="sp2Jump">Y aller</button></div>`;
+  if($('#sp2Jump'))$('#sp2Jump').onclick=()=>{S.sp.date=nx.k;S.sp.week=monday(nx.k);S.sp.slot2=null;renderSp2Slots()};
+}
+$('#sp2WPrev').onclick=()=>{S.sp.week=dshift(S.sp.week,-7);renderSp2Slots()};
+$('#sp2WNext').onclick=()=>{S.sp.week=dshift(S.sp.week,7);renderSp2Slots()};
+
+/* ── écran 4 · le rendez-vous ── */
+function renderSp2Rdv(){
+  if(!sp2N()||S.sp.slot2==null)return;
+  const w=sp2Who(), m0=S.sp.slot2;
+  $('#sp2RdvSub').textContent='Le Spa de la Bégude · '+siteName()+' · arrivée conseillée 15 minutes avant';
+  $('#sp2RdvWhen').textContent=fday(S.sp.date)+' · '+spTime(m0)+' → '+spTime(m0+sp2Dur());
+  $('#sp2RdvWho').textContent=w?'avec '+w.n:'praticien·ne attribué·e par le spa';
+  let off=0;
+  $('#sp2RdvLines').innerHTML=S.sp.sel.map(x=>{const l=sp2Line(x),t=spTime(m0+off);off+=x.dur;
+    return `<div class="rdvline"><span class="rt">${t}</span>
+      <span class="rb"><b>${l.s.n}</b><span>${spDurLbl(l.dur)}${l.s.cat==='duo'?' · pour deux':''} · ${PAYLBL[l.s.pay].toLowerCase()}</span></span>
+      <span class="rp">${eur(l.p)}</span></div>`}).join('');
+
+  const opts=sp2Opts();
+  $('#sp2OptList').innerHTML=opts.length?opts.map(o=>`
+    <button class="opt sq ${S.sp.opts.includes(o.id)?'on':''}" data-p2o="${o.id}"><span class="mark"></span>
+      <span style="flex:1"><span class="between"><b class="h3">${o.n}</b><b>${o.p?eur(o.p)+(sp2Pax()>1?' <span class="mut">/ pers</span>':''):'<span class="mut">Sans supplément</span>'}</b></span>
+        <span class="sub" style="display:block;margin-top:3px">${o.d}</span></span></button>`).join('')
+    :`<p class="sub">L'entrée à l'espace spa se suffit à elle-même.</p>`;
+  $$('[data-p2o]').forEach(b=>b.onclick=()=>{const id=b.dataset.p2o;
+    S.sp.opts=S.sp.opts.includes(id)?S.sp.opts.filter(o=>o!==id):[...S.sp.opts,id];renderSp2Rdv()});
+
+  const pay=sp2Pay(), mix=[...new Set(S.sp.sel.map(x=>soinOf(x.id).pay))];
+  $('#sp2PayNote').innerHTML=mix.length>1
+    ?`Cas révélé par l'enchaînement : les prestations de ce rendez-vous portent <b>${mix.length} politiques de paiement différentes</b> (${mix.map(p=>PAYLBL[p].toLowerCase()).join(', ')}). Le panier n'affiche qu'un moment de débit par ligne : la maquette retient le plus engageant, <b>${PAYLBL[pay].toLowerCase()}</b>, appliqué à tout le rendez-vous. C'est un choix de maquette, pas une règle validée — l'autre option est d'éclater le rendez-vous en autant de lignes que de politiques, au prix de la lisibilité du panier.`
+    :`Toutes les prestations de ce rendez-vous portent la même politique : <b>${PAYLBL[pay].toLowerCase()}</b>. Le back-office sait par ailleurs encaisser un <b>acompte de 30 %</b>, quatrième moment de débit que le moteur ne sait pas exprimer — arbitrage ouvert, commun aux deux variantes.`;
+
+  const nOpt=S.sp.opts.length;
+  $('#sp2AsideCrit').textContent=fday(S.sp.date)+' · '+spTime(m0)+(w?' · '+w.n:'');
+  $('#sp2AsideDur').textContent=sp2N()>1?'Durée cumulée':'Durée';
+  $('#sp2AsideDurV').textContent=spDurLbl(sp2Dur());
+  $('#sp2AsidePrest').textContent=eur(sp2Prest());
+  $('#sp2AsideOptRow').style.display=nOpt?'flex':'none';
+  $('#sp2AsideOptLbl').textContent=nOpt+' option'+(nOpt>1?'s':'')+(sp2Pax()>1?' × 2':'');
+  $('#sp2AsideOpt').textContent=eur(sp2OptTot());
+  $('#sp2AsideTot').textContent=eur(sp2Total());
+  $('#sp2AsidePay').textContent=pay==='now'?'Débité à la réservation. Annulation gratuite jusqu\'à 48 h, remboursement intégral.'
+    :pay==='auth'?'Aucun débit : empreinte de carte, 50 % du rendez-vous en cas d\'annulation tardive ou de no-show.'
+    :'Aucun débit ni empreinte — tout se règle à l\'accueil du spa.';
+  $('#sp2BarTot2').textContent=eur(sp2Total());
+  $('#sp2BarSub2').textContent=sp2N()+' prestation'+(sp2N()>1?'s':'')+' · '+spDurLbl(sp2Dur());
+}
+$('#sp2EditBtn').onclick=()=>{renderSp2Prest();go('spa2-prestations')};
+$('#sp2CondBtn').onclick=()=>{
+  const mix=[...new Set(S.sp.sel.map(x=>soinOf(x.id).pay))];
+  sheet(head('Conditions du rendez-vous','E4 · Module partagé — branche Spa v2')+
+ `<div class="grid" style="gap:10px;margin-top:14px">${S.sp.sel.map(x=>{const l=sp2Line(x);
+   return `<div class="card" style="padding:12px"><div class="between"><b class="h3">${l.s.n}</b>
+     <span class="paytag ${l.s.pay}">${PAYLBL[l.s.pay]}</span></div>
+     <div class="sub" style="margin-top:4px">${spDurLbl(l.dur)} · ${eur(l.p)}</div></div>`}).join('')}</div>
+  <div class="hr"></div>
+  <div class="tot"><span>${sp2N()} prestation${sp2N()>1?'s':''} · ${spDurLbl(sp2Dur())}</span><span>${eur(sp2Prest())}</span></div>
+  <div class="tot"><span>Options</span><span>${S.sp.opts.length?eur(sp2OptTot()):'Aucune'}</span></div>
+  <div class="tot"><span>TVA</span><span>Incluse</span></div>
+  <p class="sub" style="margin-top:14px"><b>Annulation.</b> Le rendez-vous s'annule d'un bloc : massages, visage et soins du corps jusqu'à 24 h, rituels et duos jusqu'à 48 h. Au-delà, 50 % du montant sont dus. Annuler une seule prestation d'un enchaînement décale les autres — la modification passe par le spa.</p>
+  <p class="sub" style="margin-top:10px"><b>Retard.</b> Un enchaînement ne se rattrape pas : la cabine suivante est déjà prise. Un quart d'heure de retard, c'est la dernière prestation écourtée ou reportée.</p>
+  <button class="btn full" style="margin-top:16px" onclick="closeSheet()">Fermer</button>
+  ${mix.length>1?`<p class="note" style="display:block">Ce rendez-vous mêle ${mix.length} politiques de paiement. Le panier n'en affiche qu'une par ligne — point à trancher.</p>`:''}`)};
+
+function addSpa2ToCart(){
+  const m0=S.sp.slot2, w=sp2Who(), n=sp2N(), first=sp2Line(S.sp.sel[0]).s;
+  const bits=[fday(S.sp.date),spTime(m0)+' → '+spTime(m0+sp2Dur()),spDurLbl(sp2Dur())];
+  if(n>1)bits.push(S.sp.sel.map(x=>sp2Line(x).s.n).join(' + '));
+  bits.push(w?'avec '+w.n:'praticien·ne attribué·e par le spa');
+  if(S.sp.opts.length)bits.push(S.sp.opts.length+' option'+(S.sp.opts.length>1?'s':''));
+  S.cart=S.cart.filter(l=>l.id!=='spa'&&l.id!=='cs-spa');
+  S.cart.push({id:'spa',cat:'Spa',t:first.n+(n>1?' + '+(n-1)+' prestation'+(n>2?'s':''):''),
+    site:siteName(),m:bits.join(' · '),p:sp2Total(),pay:sp2Pay(),when:'au spa',edit:'spa2-rdv'});
+  renderSpaPrep();go('spa-prep');
+}
+$('#sp2Add').onclick=addSpa2ToCart; $('#sp2AddLg').onclick=addSpa2ToCart;
+
 /* ═════════ N5 · cross-sell ═════════ */
 const CROSSBY={
  heb:[
   {id:'gf',c:'Golf',need:'golf',n:'Green fee sur place',d:'Départ à quelques minutes de votre chambre',p:145,u:'/joueur',branch:'golf-parcours',line:'golf',edit:'golf-tarif'},
   {id:'resto',c:'Restaurant',need:'resto',n:'Une table pendant le séjour',d:'Club house ou table gastronomique, à quelques pas de la chambre',p:0,u:'sans prépaiement',branch:'resto-tables',line:'resto',edit:'resto-table'},
-  {id:'spa',c:'Spa',need:'spa',n:'Soin signature 60 min',d:'Pendant votre séjour, créneaux du soir disponibles',p:130,u:'/pers'},
+  {id:'spa',c:'Spa',need:'spa',n:'Rituel Signature La Bégude',d:'Gommage, modelage et soin du visage — 1 h 30, pendant le séjour',p:155,u:'/pers',branch:'spa-soins',line:'spa',edit:'spa-soin',soin:'rit-sig',dur:90},
   {id:'xp',c:'Expériences',need:'xp',n:'Pack Golf &amp; Spa — 2 jours',d:'2 green fees + 1 soin, tarif dégressif',p:390,u:'/pers'},
   {id:'evt',c:'Événements',need:'evt',n:'Pro-Am de la Collection — 17 octobre',d:'Places limitées, inscription en ligne',p:220,u:'/joueur'}],
  golf:[
   {id:'nuit',c:'Hôtel',need:'heb',n:'Une nuit sur place',d:'Petit-déjeuner servi dès 6 h 30 pour les départs matinaux',p:240,u:'/nuit',branch:'heb-hotels',line:'heb',edit:'heb-room'},
   {id:'resto',c:'Restaurant',need:'resto',n:'Déjeuner au club house',d:'Après le 18, terrasse face au green — rien à régler en ligne',p:0,u:'sans prépaiement',branch:'resto-tables',line:'resto',edit:'resto-table'},
-  {id:'spa',c:'Spa',need:'spa',n:'Massage récupération 45 min',d:'Créneaux en fin de journée, à cinq minutes du club house',p:95,u:'/pers'},
+  {id:'spa',c:'Spa',need:'spa',n:'Massage sportif — 60 min',d:'Jambes, dos, épaules — créneaux de fin de journée, à cinq minutes du club house',p:100,u:'/pers',branch:'spa-soins',line:'spa',edit:'spa-soin',soin:'mas-spo',dur:60},
   {id:'xp',c:'Expériences',need:'xp',n:'Pack 3 parcours',d:'Trois tracés sur trois jours, tarif dégressif',p:330,u:'/joueur'},
   {id:'evt',c:'Événements',need:'evt',n:'Pro-Am de la Collection — 17 octobre',d:'Scramble à 4, places limitées',p:220,u:'/joueur'}],
  /* Le bloc Golf reste en tête, y compris au départ du restaurant (arbitrage du 04/09). */
  resto:[
   {id:'gf',c:'Golf',need:'golf',n:'Un départ avant la table',d:'Neuf ou dix-huit trous, puis déjeuner au club house',p:145,u:'/joueur',branch:'golf-parcours',line:'golf',edit:'golf-tarif'},
   {id:'nuit',c:'Hôtel',need:'heb',n:'Une nuit sur place',d:'Plutôt que de reprendre la route après le dîner',p:240,u:'/nuit',branch:'heb-hotels',line:'heb',edit:'heb-room'},
-  {id:'spa',c:'Spa',need:'spa',n:'Soin signature 60 min',d:'Avant le dîner, créneaux de fin de journée',p:130,u:'/pers'},
+  {id:'spa',c:'Spa',need:'spa',n:'Massage californien — 60 min',d:'Avant le dîner, créneaux de fin de journée',p:95,u:'/pers',branch:'spa-soins',line:'spa',edit:'spa-soin',soin:'mas-cal',dur:60},
   {id:'xp',c:'Expériences',need:'xp',n:'Dégustation au chai du domaine',d:'Une heure avec le sommelier, avant de passer à table',p:45,u:'/pers'},
-  {id:'evt',c:'Événements',need:'evt',n:'Pro-Am de la Collection — 17 octobre',d:'Déjeuner et remise des prix inclus',p:220,u:'/joueur'}]};
+  {id:'evt',c:'Événements',need:'evt',n:'Pro-Am de la Collection — 17 octobre',d:'Déjeuner et remise des prix inclus',p:220,u:'/joueur'}],
+ /* Le spa n'existe qu'à Opio : ses suggestions sont donc toutes sur place. */
+ spa:[
+  {id:'gf',c:'Golf',need:'golf',n:'Un départ le matin même',d:'Dix-huit trous avant le soin — le spa ouvre à 9 h 30',p:145,u:'/joueur',branch:'golf-parcours',line:'golf',edit:'golf-tarif'},
+  {id:'nuit',c:'Hôtel',need:'heb',n:'Une nuit au Château de la Bégude',d:'Le soin en fin de journée, la chambre à trois minutes à pied',p:240,u:'/nuit',branch:'heb-hotels',line:'heb',edit:'heb-room'},
+  {id:'resto',c:'Restaurant',need:'resto',n:'Dîner après le soin',d:'La Table de la Bégude, à la sortie du spa — rien à régler en ligne',p:0,u:'sans prépaiement',branch:'resto-tables',line:'resto',edit:'resto-table'},
+  {id:'xp',c:'Expériences',need:'xp',n:'Pack Golf &amp; Spa — 2 jours',d:'2 green fees + 1 soin, tarif dégressif',p:390,u:'/pers'}]};
 const CROSSHEAD={
  heb:{t:'Votre chambre est réservée.',s:'Ce que réservent le plus souvent nos clients qui séjournent sur place.',
       src:'Hébergement → Golf × Restaurant × Spa × Expériences × Événements.'},
  golf:{t:'Votre départ est réservé.',s:'Ce que réservent le plus souvent nos joueurs autour de leur partie.',
       src:'Golf → Hébergement × Restaurant × Spa.'},
  resto:{t:'Votre table est réservée.',s:'Ce que réservent le plus souvent nos clients autour d\'un repas au golf.',
-      src:'Restaurant → Golf × Hébergement × Spa × Expériences × Événements — combinaison absente de la matrice V5, à valider.'}};
+      src:'Restaurant → Golf × Hébergement × Spa × Expériences × Événements — combinaison absente de la matrice V5, à valider.'},
+ spa:{t:'Votre soin est réservé.',s:'Ce que réservent le plus souvent nos clients autour d\'un passage au spa.',
+      src:'Spa → Golf × Hébergement × Restaurant × Expériences — combinaison absente de la matrice V5, à valider comme celle du restaurant.'}};
 function renderCross(src){
   S.src=src||S.src||'heb';src=S.src;
   const golf=src==='golf', H=CROSSHEAD[src]||CROSSHEAD.heb;
@@ -3551,6 +4891,12 @@ function renderCross(src){
   $$('[data-away]').forEach(b=>b.onclick=()=>openSite(b.dataset.away));
   $$('[data-cs]').forEach(b=>b.onclick=()=>{
     const c=here.find(x=>x.id===b.dataset.cs);
+    /* une suggestion qui nomme un produit précis entre dessus, pas sur le catalogue */
+    if(c.branch&&c.soin&&!inCart(c.line)){
+      const so=soinOf(c.soin), du=c.dur||so.durs[0].m;
+      if(SPV2){S.sp.sel=[{id:so.id,dur:du}];S.sp.acc=[so.cat];
+        S.sp.slot2=null;renderSp2Qui();go('spa2-qui');return}
+      pickSoin(so);S.sp.dur=du;go('spa-creneaux');return}
     if(c.branch){go(inCart(c.line)?c.edit:c.branch);return}
     if(inCart('cs-'+c.id)){S.cart=S.cart.filter(l=>l.id!=='cs-'+c.id);renderCross(src);renderCart();return}
     sheet(head('Ajouter : '+c.n,'N5 → N4 branche '+c.c)+
@@ -3859,15 +5205,27 @@ $$('#gvSeg button').forEach(b=>b.onclick=()=>{
   if(!GOLFSC.includes(cur)){renderSteps($('.screen.on'));return}
   if(GV2)go('golf-v2'); else {renderCourses();go('golf-parcours')}
 });
+/* Même bascule que pour le golf : elle repose le client à l'entrée du tunnel
+   spa quand il y est déjà, sinon elle se contente de changer le fil d'étapes. */
+const SPASC=['spa-soins','spa-creneaux','spa-soin','spa-prep',
+             'spa2-prestations','spa2-qui','spa2-creneaux','spa2-rdv'];
+$$('#svSeg button').forEach(b=>b.onclick=()=>{
+  $$('#svSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  SPV2=b.dataset.sv==='2';shutPops();
+  const cur=$('.screen.on').id.slice(3);
+  if(!SPASC.includes(cur)){renderSteps($('.screen.on'));return}
+  if(SPV2){renderSp2Prest();go('spa2-prestations')} else {renderSpaSoins();go('spa-soins')}
+});
 $$('#vpSeg button').forEach(b=>b.onclick=()=>{
   $$('#vpSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');stage.dataset.vp=b.dataset.vp});
 $('#reset').onclick=()=>{S=fresh();holdRestart();S.rooms=[{a:2,e:0}];clearFilters();$('#entrySel').value='';
   GV2=false;$$('#gvSeg button').forEach((x,i)=>x.classList.toggle('on',i===0));
-  syncSite();syncDob('');renderTables();
+  SPV2=false;$$('#svSeg button').forEach((x,i)=>x.classList.toggle('on',i===0));
+  syncSite();syncDob('');renderTables();renderSpaSoins();
   renderCart();renderGExtras();$('#gIdxWarn').style.display='none';go('accueil')};
 $('#restart').onclick=()=>$('#reset').click();
 
-syncSite();renderCart();renderExtras();renderGExtras();renderTables();renderCross('heb');go('accueil');
+syncSite();renderCart();renderExtras();renderGExtras();renderTables();renderSpaSoins();renderCross('heb');go('accueil');
 window.closeSheet=closeSheet;
 </script>
 </body>
