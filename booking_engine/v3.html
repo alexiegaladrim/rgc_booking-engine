@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réserver — Le Touquet Golf Resort</title>
+<link rel="icon" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════ Direction artistique Resonance — Le Touquet ══════════
+   Mêmes jetons que les écrans client existants (reservation_joueur, eshop) :
+   Jost, or #BE9B45, crème, encre chaude. Les --g* de la v2 sont remappés sur
+   la gamme chaude pour que les styles en ligne générés en JS suivent. */
+:root{
+  --gold:#BE9B45; --gold-dark:#A5842F; --gold-light:#F3EAD5; --gold-soft:#FBF6EA;
+  --ink:#221C15; --ink-2:#1B150F; --ink-soft:#6B6257;
+  --cream:#FAF7F1; --sand:#F3EEE4; --line:#E8E2D6; --line-2:#DDD5C6;
+  --green:#5E8C5A; --green-soft:#E9F1E7; --terra:#B4653C; --terra-soft:#F6E9E1;
+  --g800:#3A322A; --g700:#5A5147; --g600:#6B6257; --g500:#8C8377; --g400:#B3AA9C;
+  --g300:#DDD5C6; --g200:#E8E2D6; --g100:#F1ECE3; --g50:#FAF7F1;
+  --paper:#fff; --canvas:#EFEAE1;
+  --shadow:0 1px 2px rgba(34,28,21,.04),0 8px 24px rgba(34,28,21,.06);
+  --shadow-lg:0 24px 70px rgba(34,28,21,.22);
+  --r:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Jost',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--canvas);
+  color:var(--ink);font-size:14.5px;font-weight:400;-webkit-font-smoothing:antialiased;letter-spacing:.1px}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer;background:none;border:0;text-align:inherit}
+button:disabled{cursor:not-allowed}
+b,strong{font-weight:500}
+svg{flex:none}
+ul{list-style:none}
+::selection{background:var(--gold-light)}
+
+/* ══════════ Scène ══════════ */
+.stagewrap{display:flex;justify-content:center;padding:0}
+.stage{width:100%;background:var(--cream);container-type:inline-size;position:relative}
+.stage[data-vp="desktop"]{min-height:calc(100vh - 0px)}
+.stagewrap:has(.stage[data-vp="mobile"]){padding:22px 14px 40px;background:radial-gradient(900px 500px at 50% -10%,rgba(190,155,69,.18),transparent 60%),linear-gradient(160deg,#2A2118,#1B150F);min-height:calc(100vh - 0px)}
+.stage[data-vp="mobile"]{height:100%;overflow-y:auto}
+.stage[data-vp="mobile"]::-webkit-scrollbar{width:0}
+/* cadre : en mobile, il contient la modale et le toast (le transform en fait
+   le repère des éléments en position fixe) */
+.frame{width:100%;display:flex;justify-content:center}
+.frame:has(> .stage[data-vp="mobile"]){width:390px;max-width:100%;height:calc(100vh - 0px - 62px);
+  overflow:hidden;transform:translateZ(0);box-shadow:var(--shadow-lg),0 0 0 9px #0d0a07,0 0 0 11px #2a2118;border-radius:38px}
+.frame:has(> .stage[data-vp="mobile"]) .sheet-bg{align-items:flex-end;padding:0}
+.frame:has(> .stage[data-vp="mobile"]) .sheet{width:100%;max-height:88%;border-radius:22px 22px 0 0}
+.frame:has(> .stage[data-vp="mobile"]) .toast{bottom:18px;max-width:calc(100% - 28px)}
+.screen{display:none}
+.screen.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.inner{max-width:1180px;margin:0 auto}
+
+/* ══════════ Annotations (masquées par défaut) ══════════ */
+.node{display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:#7a5f1f;border:1px dashed #cdb070;background:#fffaf0;padding:5px 8px;border-radius:4px;white-space:nowrap;letter-spacing:.06em}
+.note{border-left:2px dashed #cdb070;padding:3px 0 3px 10px;font-family:'Inter',sans-serif;font-size:11.5px;line-height:1.5;color:#7a6a50;margin:12px 0;background:#fffaf0;letter-spacing:0}
+.oob{display:flex;align-items:flex-start;gap:12px;padding:12px 26px;font-family:'Inter',sans-serif;font-size:11.5px;line-height:1.55;color:#7a6a50;border-bottom:1px dashed #cdb070;background:#fffaf0;letter-spacing:0}
+.oob b{display:block;color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!important}
+
+/* ══════════ Primitives ══════════ */
+.ph{background:linear-gradient(135deg,var(--sand),var(--gold-soft));border:1px dashed var(--line-2);border-radius:12px;
+  display:grid;place-items:center;color:var(--g500);font-size:11px;letter-spacing:.12em;text-transform:uppercase;overflow:hidden}
+.ph.img{background-size:cover;background-position:center;border:0;color:transparent;font-size:0}
+.card{border:1px solid var(--line);background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ink);color:#fff;
+  border-radius:999px;padding:14px 24px;font-size:12px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;line-height:1;white-space:nowrap;transition:.18s}
+.btn:hover{background:var(--gold-dark)}
+.btn[disabled]{background:var(--g200);color:var(--g500)}
+.btn.sec{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.sec:hover{background:var(--ink);color:#fff}
+.btn.ghost{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--gold);color:var(--gold-dark)}
+.btn.ghost[disabled],.btn.sec[disabled]{background:transparent;color:var(--g400);box-shadow:inset 0 0 0 1px var(--g200)}
+.btn.gold{background:var(--gold);color:#fff}
+.btn.gold:hover{background:var(--gold-dark)}
+.btn.sm{padding:10px 16px;font-size:10.5px;letter-spacing:1.3px}
+.btn.full{width:100%}
+.lnk{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px;color:var(--ink);font-size:13px}
+.lnk:hover{color:var(--gold-dark)}
+.lnk:disabled{color:var(--g400);text-decoration:none}
+.h1{font-size:36px;font-weight:300;letter-spacing:.3px;line-height:1.12;text-wrap:balance}
+.h1 b{font-weight:500}
+.h2{font-size:19px;font-weight:500;letter-spacing:.2px;line-height:1.25}
+.h3{font-size:14.5px;font-weight:500;letter-spacing:.2px}
+.sub{font-size:14px;color:var(--ink-soft);line-height:1.6;font-weight:300}
+.mut{font-size:12.5px;color:var(--g600);line-height:1.5;font-weight:300}
+.eyebrow{display:block;font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dark);font-weight:500;margin-bottom:10px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--sand);color:var(--g700);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.tag.dk{background:var(--ink);color:#fff}
+.tag.ol{background:var(--gold-light);color:var(--gold-dark)}
+.field{display:block;margin-bottom:14px}
+.field > span{display:block;font-size:10.5px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--g600);margin-bottom:7px}
+.field input,.field select,.field textarea,.inp{width:100%;border:1.5px solid var(--line);border-radius:12px;
+  padding:12px 14px;background:var(--paper);outline:none;transition:.15s}
+.field input:focus,.field select:focus,.inp:focus{border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
+.hr{height:1px;background:var(--line);margin:18px 0}
+.row{display:flex;align-items:center;gap:10px}
+.wrap{flex-wrap:wrap}
+.between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.chkbox{display:flex;align-items:flex-start;gap:11px;font-size:13px;line-height:1.55;color:var(--g700);cursor:pointer}
+.chkbox input{accent-color:var(--gold);width:17px;height:17px;margin-top:2px;flex:none}
+
+/* ══════════ En-tête ══════════ */
+.appbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.appbar-in{display:flex;align-items:center;gap:18px;padding:12px 32px;max-width:1280px;margin:0 auto}
+.wordmark{display:flex;align-items:center;gap:14px;cursor:pointer;line-height:1.15}
+.wordmark img{height:40px;display:block}
+.wordmark .wm-t{border-left:1px solid var(--line-2);padding-left:14px;font-size:11px;font-weight:500;letter-spacing:2.6px;text-transform:uppercase}
+.wordmark .wm-t small{display:block;font-size:8.5px;letter-spacing:3px;color:var(--gold-dark);margin-top:3px}
+.ico{height:40px;min-width:40px;border:1px solid var(--line);border-radius:999px;display:inline-flex;align-items:center;
+  justify-content:center;gap:8px;color:var(--ink);padding:0 14px;font-size:11px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap;background:#fff;transition:.15s}
+.ico:hover{border-color:var(--gold);color:var(--gold-dark)}
+.ico .av{width:26px;height:26px;font-size:10px;margin-left:-8px}
+.cartbtn{position:relative;padding:0 12px}
+.cartbtn b{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;border-radius:10px;background:var(--gold);
+  color:#fff;font-size:10.5px;font-weight:500;display:none;place-items:center;padding:0 5px;letter-spacing:0;border:2px solid #fff}
+.cartbtn.has b{display:grid}
+.av{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--gold-light);display:inline-grid;place-items:center;
+  font-size:12px;font-weight:500;flex:none;letter-spacing:1px}
+.av.lt{background:var(--sand);color:var(--g700)}
+
+/* ══════════ Mise en page ══════════ */
+.pad{padding:30px 32px 64px;max-width:1244px;margin:0 auto}
+.back{font-size:11px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--g600);margin-bottom:16px;display:inline-flex;gap:6px}
+.back:hover{color:var(--gold-dark)}
+.scr-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px;align-items:start}
+.aside{position:sticky;top:88px}
+.aside > .card{padding:22px!important;border-radius:20px}
+.fil{display:flex;gap:0;flex-wrap:wrap;margin-bottom:22px;align-items:center}
+.fil span{font-size:10.5px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--g400);white-space:nowrap;display:flex;align-items:center}
+.fil span + span::before{content:"";width:34px;height:1px;background:var(--line-2);margin:0 12px}
+.fil span.on{color:var(--ink)}
+.fil span.on::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);margin-left:8px}
+.fil span.done{color:var(--gold-dark)}
+.sect{display:flex;align-items:center;gap:10px;font-size:10.5px;font-weight:500;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold-dark);margin:30px 0 14px}
+.sect::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* bandeau de tarif */
+.pbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-radius:18px;padding:18px 22px;margin-bottom:22px;
+  background:radial-gradient(500px 200px at 0% 0%,rgba(190,155,69,.28),transparent 70%),linear-gradient(135deg,#2A2118,#1B150F);
+  color:rgba(243,234,213,.78);font-size:13.5px;line-height:1.55;font-weight:300}
+.pbar > div{flex:1;min-width:220px}
+.pbar b{color:#fff;font-weight:500}
+.pbar .btn{background:var(--gold);color:#fff}
+.pbar .btn:hover{background:#fff;color:var(--ink)}
+.pbar .lnk{color:#F3EAD5}
+.pbar.on{background:var(--gold-soft);color:var(--g700);border:1px solid var(--gold-light)}
+.pbar.on b{color:var(--ink)}
+.pbar.on .lnk{color:var(--ink)}
+.pbar.on .av{background:var(--gold);color:#fff}
+
+/* prix */
+.price{font-size:24px;font-weight:400;letter-spacing:-.2px;text-align:right;white-space:nowrap;line-height:1.15}
+.price small{display:block;font-size:10px;font-weight:400;color:var(--g500);letter-spacing:1.2px;text-transform:uppercase;margin-top:4px}
+.was{text-decoration:line-through;text-decoration-color:var(--terra);color:var(--g500);font-weight:300;font-size:.66em;margin-right:7px;letter-spacing:0}
+.stl{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;background:var(--gold-light);color:var(--gold-dark);
+  border-radius:999px;padding:4px 9px;margin-top:6px;white-space:nowrap}
+.stl::before{content:"✦";font-size:9px}
+
+/* héros du portail */
+.hero{position:relative;min-height:540px;display:flex;align-items:flex-end;color:#fff;background:#1B150F center/cover}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,15,10,.62) 0%,rgba(20,15,10,.25) 55%,rgba(20,15,10,0) 80%),linear-gradient(180deg,rgba(20,15,10,.3) 0%,rgba(20,15,10,.15) 35%,rgba(20,15,10,.85) 100%)}
+.hero-in{position:relative;width:100%;max-width:1244px;margin:0 auto;padding:60px 32px 110px}
+.hero .eyebrow{color:#F6E7C1;text-shadow:0 1px 10px rgba(0,0,0,.55)}
+.hero h1{font-size:54px;font-weight:300;letter-spacing:.5px;line-height:1.05;max-width:720px;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.hero h1 b{font-weight:500}
+.hero p{font-size:16px;font-weight:400;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.6);max-width:560px;margin-top:14px;line-height:1.6}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.badges span{border:1px solid rgba(243,234,213,.4);border-radius:999px;padding:7px 14px;font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;backdrop-filter:blur(6px);background:rgba(20,15,10,.45);color:#fff}
+.quick{position:relative;margin:-64px auto 0;max-width:1180px;padding:0 32px;z-index:2}
+.quick .card{display:grid;grid-template-columns:repeat(3,1fr);padding:8px;border-radius:22px;box-shadow:var(--shadow-lg)}
+.quick button{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;text-align:left;transition:.15s}
+.quick button:hover{background:var(--gold-soft)}
+.quick button + button{box-shadow:-1px 0 0 var(--line)}
+.quick .qi{width:44px;height:44px;border-radius:14px;background:var(--gold-light);color:var(--gold-dark);display:grid;place-items:center;flex:none}
+.quick b{display:block;font-size:15px}
+.quick small{display:block;font-size:12px;color:var(--g600);font-weight:300;margin-top:2px}
+.quick .go{margin-left:auto;color:var(--gold)}
+
+/* portes */
+.door{padding:0;display:flex;flex-direction:column;text-align:left;cursor:pointer;overflow:hidden;transition:.2s}
+.door:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(34,28,21,.12);border-color:var(--gold-light)}
+.door .ph{height:230px;border-radius:0;margin:0}
+.door > :not(.ph){margin-left:22px;margin-right:22px}
+.door > .tag{margin-top:-16px;position:relative;align-self:flex-start;background:#fff;box-shadow:var(--shadow)}
+.door > b{margin-top:12px;font-size:24px;font-weight:300}
+.door > .sub{margin-top:6px}
+.door .foot{margin-top:auto;padding:18px 0 22px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;border-top:1px solid var(--line);margin-top:18px}
+.door .foot .price{font-size:20px}
+.door > .tag,.pack > .tag,.xsell > .tag{align-self:flex-start}
+.split{display:grid;grid-template-columns:1.1fr 1fr;gap:0;align-items:stretch;border-radius:22px;overflow:hidden;background:var(--ink);color:#F3EAD5;margin-top:48px}
+.split .ph{border-radius:0;min-height:320px}
+.split > div:last-child{padding:40px}
+.split .h1{color:#fff;font-size:32px}
+.split .sub{color:rgba(243,234,213,.75)}
+.split ul{margin:18px 0 24px;display:grid;gap:10px}
+.split li{display:flex;gap:10px;font-size:14px;font-weight:300}
+.split li::before{content:"✦";color:var(--gold)}
+
+/* recherche golf */
+.searchbar{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:0;padding:8px;margin-bottom:16px;border-radius:20px}
+.sb-f{padding:8px 16px}
+.sb-f + .sb-f{box-shadow:-1px 0 0 var(--line)}
+.sb-f > span{display:block;font-size:10px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:6px}
+.sb-f select,.sb-f input{width:100%;height:40px;border:0;border-radius:10px;padding:0 8px;background:var(--cream);font-size:14px}
+.navd{width:36px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:16px;color:var(--ink);flex:none;background:#fff}
+.navd:hover:not(:disabled){border-color:var(--gold);color:var(--gold-dark)}
+.navd:disabled{color:var(--g300)}
+.qty{display:inline-flex;align-items:center;gap:12px;height:40px}
+.qty button{width:34px;height:34px;border:1px solid var(--line-2);border-radius:50%;font-size:15px;line-height:1;background:#fff;transition:.15s}
+.qty button:hover:not(:disabled){border-color:var(--gold);color:var(--gold-dark)}
+.qty button:disabled{color:var(--g300);border-color:var(--g200)}
+.qty b{min-width:16px;text-align:center;font-size:16px}
+.qty.sm{height:32px;gap:9px}
+.qty.sm button{width:30px;height:30px}
+.daystrip{display:flex;gap:8px;overflow-x:auto;margin:4px 0 22px;padding:2px 2px 6px}
+.daystrip::-webkit-scrollbar{height:0}
+.day{min-width:86px;flex:1;border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;background:var(--paper);transition:.15s}
+.day:hover{border-color:var(--gold)}
+.day.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.day.on .mut{color:#c9bfae}
+.day .dd{font-size:13px;font-weight:500;text-transform:capitalize}
+.day .pp{font-size:12px;font-weight:500;margin-top:6px;color:var(--gold-dark)}
+.day.on .pp{color:var(--gold-light)}
+.day.full .pp{color:var(--g400);font-weight:300}
+.crs{padding:0;margin-bottom:16px;overflow:hidden}
+.crs.off{background:var(--paper)}
+.crs.off .crs-img{filter:grayscale(.8);opacity:.6}
+.crs-h{display:flex;gap:20px;align-items:stretch;padding:0}
+.crs-img{width:210px;flex:none;background:var(--sand) center/cover;min-height:150px}
+.crs-t{flex:1;min-width:0;padding:20px 0}
+.crs-h .price{padding:20px 22px 0 0}
+.crs > :not(.crs-h){margin:0 22px 20px}
+.crs .gtimes{margin-top:0;padding-top:16px;border-top:1px solid var(--line)}
+.gtimes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.gtime{border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;min-width:74px;background:var(--paper);transition:.15s}
+.gtime:hover{border-color:var(--gold);background:var(--gold-soft)}
+.gtime b{display:block;font-size:15px;font-weight:500}
+.gtime i{display:block;font-style:normal;font-size:10px;letter-spacing:.5px;color:var(--g500);margin-top:1px}
+.gtime.more{color:var(--gold-dark);font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:500}
+
+/* bandeau d'écran avec photo */
+.band{position:relative;border-radius:22px;overflow:hidden;min-height:190px;display:flex;align-items:flex-end;color:#fff;margin-bottom:24px;background:#1B150F center/cover}
+.band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(27,21,15,.85),rgba(27,21,15,.25))}
+.band > div{position:relative;padding:26px 30px}
+.band .eyebrow{color:var(--gold-light)}
+.band .h1{color:#fff}
+.band .sub{color:#EDE5D6}
+
+/* joueurs */
+.prow{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.prow:first-child{border-top:0}
+.prow .pb{flex:1;min-width:0}
+.prow .pb b{display:block;font-size:15px}
+.prow .pp{text-align:right;font-weight:500;white-space:nowrap;font-size:17px}
+.prow.warn .av{background:var(--terra-soft);color:var(--terra)}
+.optrow{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+.optrow:first-child{border-top:0}
+.optrow > div:first-child{flex:1;min-width:0}
+.sumline{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:6px 0;color:var(--g700);font-weight:300}
+.sumline b{color:var(--ink);white-space:nowrap;font-weight:500}
+.sumtot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line);margin-top:12px;padding-top:14px}
+.sumtot .h3{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--g600)}
+.sumtot b{font-size:30px;font-weight:300;letter-spacing:-.3px}
+.alert{display:flex;gap:14px;align-items:flex-start;border:1px solid #EBCDBB;background:var(--terra-soft);border-radius:16px;padding:15px 16px;margin:14px 0;font-size:13.5px;line-height:1.55;color:#6d3f25;font-weight:300}
+.alert b{color:#4b2914;font-weight:500}
+.alert .ic{width:28px;height:28px;border-radius:9px;background:var(--terra);color:#fff;display:grid;place-items:center;font-weight:500;font-size:13px;flex:none}
+.alert.soft{border-color:#EAD9AD;background:#FBF3DF;color:#5C4A28}
+.alert.soft b{color:var(--ink)}
+.alert.soft .ic{background:var(--gold)}
+
+/* onglets & puces */
+.tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin-bottom:24px;overflow-x:auto}
+.tabs::-webkit-scrollbar{height:0}
+.tabs button{padding:12px 4px;margin-right:18px;font-size:11px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--g500);white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--ink);border-color:var(--gold)}
+.tabs button i{font-style:normal;font-size:10px;color:#fff;background:var(--gold);border-radius:10px;padding:1px 7px;margin-left:7px;letter-spacing:0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;font-size:12.5px;color:var(--ink);background:var(--paper);transition:.15s;white-space:nowrap}
+.chip:hover{border-color:var(--gold)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip:disabled{color:var(--g400)}
+
+/* compétitions */
+.comp{display:grid;grid-template-columns:88px minmax(0,1fr) auto;gap:22px;padding:22px;margin-bottom:16px;align-items:start;transition:.15s}
+.comp:hover{border-color:var(--gold-light)}
+.cdate{background:var(--ink);color:#fff;border-radius:14px;text-align:center;padding:12px 4px;line-height:1.1}
+.cdate small{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:1.8px;color:var(--gold-light)}
+.cdate b{display:block;font-size:32px;font-weight:300;margin:2px 0}
+.res.past .cdate{background:var(--sand);color:var(--g600)}
+.res.past .cdate small{color:var(--g500)}
+.cond{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.bar{height:4px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:14px;max-width:300px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-dark))}
+.cside{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:170px}
+.checks{display:grid;gap:0}
+.ck{display:flex;gap:13px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--line);font-size:14px}
+.ck:first-child{border-top:0}
+.ck .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:600;flex:none;margin-top:0}
+.ck.ok .ic{background:var(--green-soft);color:var(--green)}
+.ck.ko .ic{background:var(--terra);color:#fff}
+.ck.ko b{color:var(--terra)}
+.ck > div{flex:1;min-width:0}
+.ck small{display:block;color:var(--g600);font-size:12.5px;margin-top:2px;line-height:1.5;font-weight:300}
+.radios{display:grid;gap:10px}
+.radio{display:flex;gap:13px;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;cursor:pointer;text-align:left;width:100%;background:var(--paper);transition:.15s}
+.radio:hover{border-color:var(--gold)}
+.radio.on{border-color:var(--gold);background:var(--gold-soft)}
+.radio .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--line-2);flex:none;position:relative;align-self:flex-start;margin-top:1px}
+.radio.on .dot{border-color:var(--gold)}
+.radio.on .dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold)}
+.radio > div{flex:1;min-width:0}
+.radio small{display:block;color:var(--g600);font-size:12px;margin-top:3px;line-height:1.45;font-weight:300}
+.radio.dis{opacity:.5;cursor:not-allowed}
+
+/* cours */
+.pro{display:flex;gap:14px;align-items:center}
+.pro .ph{width:56px;height:56px;border-radius:50%;flex:none;border:0;background:linear-gradient(135deg,var(--ink),#4a3c2c);color:var(--gold-light);font-size:15px;letter-spacing:1px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.wcol h6{font-size:12px;font-weight:500;text-align:center;padding:9px 0;margin-bottom:10px;background:var(--sand);border-radius:12px;letter-spacing:.5px}
+.wcol h6 small{display:block;font-weight:300;color:var(--g600);font-size:11px}
+.pills{display:grid;gap:6px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:8px 0;font-size:13px;font-weight:400;text-align:center;background:var(--paper);width:100%;transition:.15s}
+.pill:hover{border-color:var(--gold);background:var(--gold-soft)}
+.pill.on{background:var(--gold);color:#fff;border-color:var(--gold)}
+.wcol .none{font-size:11px;color:var(--g400);text-align:center;padding:8px 0}
+.lesson{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:20px;padding:0;margin-bottom:14px;align-items:center;overflow:hidden}
+.lesson::before{content:"";align-self:stretch;min-height:120px;background:var(--lesson-img,linear-gradient(135deg,var(--sand),var(--gold-soft))) center/cover}
+.lesson > .cside{padding-right:22px}
+.lesson > div:first-of-type{padding:18px 0}
+.pack{padding:22px;display:flex;flex-direction:column;gap:8px}
+.pack .foot{margin-top:auto;padding-top:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;border-top:1px solid var(--line)}
+
+/* panier & maintien */
+.hold{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid #EAD9AD;background:#FBF3DF;border-radius:14px;
+  padding:11px 16px;font-size:13px;color:#5C4A28;margin-bottom:20px;line-height:1.5;font-weight:300}
+.hold::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(190,155,69,.2);flex:none;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(190,155,69,0)}}
+.hold span:nth-child(2){flex:1;min-width:200px}
+.hold b{color:var(--ink);font-weight:500}
+.hold .holdTimer{font-variant-numeric:tabular-nums}
+.hold.dead{border-color:#EBCDBB;background:var(--terra-soft)}
+.hold.dead::before{background:var(--terra);animation:none;box-shadow:none}
+.cline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
+.cline:first-child{border-top:0;padding-top:6px}
+.cline .cl-p{text-align:right}
+.cline ul{margin-top:10px;display:grid;gap:4px;background:var(--cream);border-radius:12px;padding:10px 12px}
+.cline li{display:flex;justify-content:space-between;gap:14px;font-size:12.5px;color:var(--g600);font-weight:300}
+.cline li b{font-weight:500;color:var(--ink);white-space:nowrap}
+.xsell{padding:0 0 18px;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.xsell > :not(.ph){margin-left:18px;margin-right:18px}
+.xsell .ph{height:150px!important;margin:0 0 10px!important;border-radius:0!important}
+.xsell .foot{margin-top:auto;padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.done-t{font-size:10.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--green)}
+.codebox{display:flex;gap:8px}
+.codebox input{flex:1;min-width:0;height:44px;border:1.5px solid var(--line);border-radius:999px;padding:0 16px;text-transform:uppercase;outline:none}
+.codebox input:focus{border-color:var(--gold)}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;padding:12px 0}
+.sw i{width:42px;height:24px;border-radius:12px;background:var(--line);flex:none;position:relative;transition:background .15s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:9px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.sw.on i{background:var(--gold)}
+.sw.on i::after{transform:translateX(18px)}
+.qr{width:92px;height:92px;flex:none;border-radius:12px;padding:8px;background:#fff;border:1px solid var(--line);position:relative;
+  background-image:repeating-conic-gradient(var(--ink) 0 25%,#fff 0 50%);background-size:12px 12px;background-origin:content-box;background-clip:content-box}
+.qr::after{content:"";position:absolute;inset:36%;background:#fff url(../favicon.png) center/70% no-repeat;border-radius:4px}
+.qr.lg{width:200px;height:200px;background-size:18px 18px;padding:14px}
+
+/* espace perso */
+.mcard{border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;min-height:230px;color:#fff;position:relative;overflow:hidden;
+  background:radial-gradient(420px 260px at 100% 0%,rgba(190,155,69,.55),transparent 65%),linear-gradient(135deg,#2A2118,#120e0a);box-shadow:var(--shadow-lg)}
+.mcard::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(243,234,213,.14)}
+.mcard .mut{color:#c7bba8}
+.mcard .tag{background:rgba(243,234,213,.12);color:var(--gold-light)}
+.ttable{width:100%;border-collapse:collapse;font-size:14px}
+.ttable th{font-size:10px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold-dark);text-align:left;padding:12px;border-bottom:1px solid var(--line)}
+.ttable td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-weight:300}
+.ttable tr:last-child td{border-bottom:0}
+.ttable td.r,.ttable th.r{text-align:right;white-space:nowrap}
+.ttable td b{font-weight:500}
+.res{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:18px;padding:18px 20px;margin-bottom:12px;align-items:start}
+.res.past{background:var(--cream);box-shadow:none}
+.res .acts{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.prog{display:flex;gap:5px;margin-top:10px}
+.prog i{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.prog i.on{background:var(--gold)}
+.hello{display:flex;align-items:center;gap:16px}
+
+/* feuille modale & toast */
+.sheet-bg{position:fixed;inset:0;background:rgba(27,21,15,.5);backdrop-filter:blur(3px);z-index:200;display:none;align-items:center;justify-content:center;padding:18px}
+.sheet-bg.on{display:flex}
+.sheet::-webkit-scrollbar{width:0}
+.sheet{background:var(--paper);border-radius:24px;width:min(540px,100%);max-height:calc(100vh - 40px);overflow-y:auto;padding:28px 28px 24px;box-shadow:var(--shadow-lg);animation:fade .25s ease}
+.sheet .h2{font-size:24px;font-weight:300}
+.sheet .x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);font-size:14px;color:var(--g600);flex:none}
+.sheet .x:hover{border-color:var(--gold);color:var(--gold-dark)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--ink);color:#F3EAD5;border-radius:999px;
+  padding:12px 22px;font-size:13.5px;z-index:300;opacity:0;pointer-events:none;transition:.25s;max-width:calc(100vw - 32px);box-shadow:var(--shadow-lg);font-weight:300}
+.toast b{color:var(--gold)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.appfoot{background:var(--ink);color:#bfb3a1;padding:40px 32px;font-size:12.5px;font-weight:300;margin-top:40px}
+.appfoot .inner{display:flex;gap:28px;flex-wrap:wrap;align-items:center}
+.appfoot img{height:34px;filter:brightness(0) invert(1);opacity:.85}
+.appfoot span:first-of-type{margin-right:auto}
+.okmark{width:64px;height:64px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:28px;margin-bottom:14px}
+
+/* bouton discret de présentation : bascule desktop / cadre mobile */
+.vptog{position:fixed;left:14px;bottom:14px;z-index:400;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(34,28,21,.55);color:#F3EAD5;opacity:.28;transition:.2s;backdrop-filter:blur(6px)}
+.vptog:hover,.vptog:focus-visible{opacity:1;background:var(--ink)}
+.vptog .i-desk{display:none}
+body.vp-mobile .vptog .i-desk{display:block}
+body.vp-mobile .vptog .i-mob{display:none}
+
+/* ══════════ Mobile (conteneur) ══════════ */
+@container (max-width:900px){
+  .two{grid-template-columns:1fr}
+  .aside{position:static}
+  .g3{grid-template-columns:1fr}
+  .week{grid-template-columns:repeat(7,96px);overflow-x:auto;padding-bottom:4px}
+  .quick .card{grid-template-columns:1fr}
+  .quick button + button{box-shadow:0 -1px 0 var(--line)}
+  .split{grid-template-columns:1fr}
+}
+@container (max-width:560px){
+  .pad{padding:20px 18px 48px}
+  .appbar-in{padding:10px 16px;gap:8px}
+  .wordmark img{height:30px}
+  .wordmark .wm-t{display:none}
+  .ico{padding:0 11px}
+  .ico .lbl{display:none}
+  .ico .av{margin:0}
+  .g2{grid-template-columns:1fr}
+  .h1{font-size:28px}
+  .hero{min-height:520px}
+  .hero::before{background:linear-gradient(180deg,rgba(20,15,10,.55) 0%,rgba(20,15,10,.5) 45%,rgba(20,15,10,.88) 100%)}
+  .hero .eyebrow{letter-spacing:2px}
+  .hero p{font-size:15px}
+  .badges span{font-size:9.5px;padding:6px 11px}
+  .hero-in{padding:40px 20px 96px}
+  .hero h1{font-size:36px}
+  .quick{padding:0 16px}
+  .searchbar{grid-template-columns:1fr 1fr}
+  .searchbar .sb-f:first-child{grid-column:1/-1;box-shadow:0 1px 0 var(--line)}
+  .searchbar .sb-f:nth-child(2){box-shadow:none}
+  .scr-head .node{display:none!important}
+  .crs-h{flex-wrap:wrap;gap:0}
+  .crs-img{width:100%;min-height:130px}
+  .crs-t{padding:16px 20px 4px;flex:1 1 100%}
+  .crs-h .price{flex:1 1 100%}
+  .pbar{padding:16px}
+  .pbar .av{display:none}
+  .crs-h .price{padding:0 20px 14px;text-align:left}
+  .crs > :not(.crs-h){margin:0 20px 18px}
+  .comp{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:18px}
+  .comp .cside{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;min-width:0}
+  .comp .cside .price{text-align:left}
+  .cdate b{font-size:24px}
+  .res{grid-template-columns:60px minmax(0,1fr);padding:16px}
+  .res .acts{grid-column:1/-1;flex-direction:row;justify-content:flex-start;flex-wrap:wrap}
+  .lesson{grid-template-columns:1fr}
+  .lesson::before{min-height:120px}
+  .lesson > div{padding:0 18px}
+  .lesson > .cside{padding:0 18px 18px;flex-direction:row;align-items:center;justify-content:space-between;min-width:0}
+  .ttable .hide-s{display:none}
+  .band > div{padding:20px}
+  .split > div:last-child{padding:26px}
+  .fil span + span::before{width:14px;margin:0 8px}
+  .appfoot{padding:28px 18px}
+}
+</style>
+</head>
+<body>
+
+<div class="stagewrap">
+<div class="frame" id="frame">
+<div class="stage" id="stage" data-vp="desktop">
+
+  <header class="appbar">
+    <div class="appbar-in">
+      <div class="wordmark" data-go="accueil"><img data-logo src="" alt="Resonance Golf Collection"><span class="wm-t">Le Touquet<small>Golf Resort</small></span></div>
+      <div style="flex:1"></div>
+      <button class="ico" data-act="site" title="Changer de golf">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        <span class="lbl">Le Touquet</span></button>
+      <button class="ico" id="accBtn" data-act="account"></button>
+      <button class="ico cartbtn" id="cartBtn" data-go="panier" title="Panier">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16l-1.4 12H5.4L4 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>
+        <b id="cartCount">0</b></button>
+    </div>
+  </header>
+
+  <section class="screen" id="sc-accueil" data-title="Portail du golf · 3 portes"><div id="v-accueil"></div></section>
+  <section class="screen" id="sc-gf" data-title="Green fee · 1 — Date, joueurs & départs"><div class="pad" id="v-gf"></div></section>
+  <section class="screen" id="sc-gf-joueurs" data-title="Green fee · 2 — Joueurs, tarifs & options"><div class="pad" id="v-gf-joueurs"></div></section>
+  <section class="screen" id="sc-comp" data-title="Compétitions · 1 — Calendrier"><div class="pad" id="v-comp"></div></section>
+  <section class="screen" id="sc-comp-inscr" data-title="Compétitions · 2 — Inscription & éligibilité"><div class="pad" id="v-comp-inscr"></div></section>
+  <section class="screen" id="sc-cours" data-title="Cours · 1 — Catalogue (individuel, collectif, stages, carnets)"><div class="pad" id="v-cours"></div></section>
+  <section class="screen" id="sc-cours-ind" data-title="Cours · 2 — Cours individuel : pro & créneau"><div class="pad" id="v-cours-ind"></div></section>
+  <section class="screen" id="sc-cross" data-title="Ajouté au panier · suggestions"><div class="pad" id="v-cross"></div></section>
+  <section class="screen" id="sc-panier" data-title="Panier commun"><div class="pad" id="v-panier"></div></section>
+  <section class="screen" id="sc-checkout" data-title="Checkout — compte & paiement"><div class="pad" id="v-checkout"></div></section>
+  <section class="screen" id="sc-confirm" data-title="Confirmation"><div class="pad" id="v-confirm"></div></section>
+  <section class="screen" id="sc-espace" data-title="Espace personnel"><div class="pad" id="v-espace"></div></section>
+
+  <footer class="appfoot"><div class="inner"><img data-logo src="" alt=""><span>Le Touquet Golf Resort · Avenue du Golf, 62520 Le Touquet-Paris-Plage · 03 21 06 28 00</span><span>CGV</span><span>Mentions légales</span><span>Contact</span></div></footer>
+</div>
+<div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+</div>
+</div>
+
+<button class="vptog" id="vpTog" title="Basculer vue mobile / desktop (touche M)" aria-label="Basculer vue mobile / desktop">
+  <svg class="i-mob" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18h2"/></svg>
+  <svg class="i-desk" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+</button>
+
+<script>
+/* ═════════ Outils ═════════ */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const eur=n=>(Math.round(n*100)/100).toLocaleString('fr-FR',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})+' €';
+const plural=(n,s,p)=>n+' '+(n>1?(p||s+'s'):s);
+const NOW=new Date('2026-09-17T11:00:00');          /* horloge figée de la démo */
+const TODAY='2026-09-17', DMIN='2026-09-18', DMAX='2026-12-20';
+const MONTHS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const MABR=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const DAYS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const dobj=k=>new Date(k+'T12:00:00');
+const dkey=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const dshift=(k,n)=>{const d=dobj(k);d.setDate(d.getDate()+n);return dkey(d)};
+const fday=k=>{const d=dobj(k);return DAYS[d.getDay()]+' '+d.getDate()+' '+MONTHS[d.getMonth()]};
+const fshort=k=>{const d=dobj(k);return DAYS[d.getDay()].slice(0,3)+'. '+d.getDate()+' '+MABR[d.getMonth()]};
+const fdm=k=>{const d=dobj(k);return d.getDate()+' '+MONTHS[d.getMonth()]};
+const wday=k=>dobj(k).getDay();
+const isWe=k=>[0,6].includes(wday(k));
+const toMin=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+const toT=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const hash=s=>{let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)};
+const at=(k,t)=>new Date(k+'T'+(t||'23:59')+':00');
+const uid=()=>Math.random().toString(36).slice(2,8);
+const ageAt=(dob,k)=>{const b=dobj(dob),d=dobj(k);let a=d.getFullYear()-b.getFullYear();
+  if(d.getMonth()<b.getMonth()||(d.getMonth()===b.getMonth()&&d.getDate()<b.getDate()))a--;return a};
+const fidx=v=>v==null?'—':v.toFixed(1).replace('.',',');
+
+/* ═════════ Statuts & comptes de démonstration ═════════ */
+const ST={
+  visiteur:{n:'Prix public',s:'Aucun statut'},
+  abonne:  {n:'Abonné Le Touquet',s:'Forêt & Manoir inclus · La Mer à 60 € · cours −20 %'},
+  reseau:  {n:'Membre réseau RGC',s:'−40 % sur les green fees · cours −10 %'},
+  jeune:   {n:'Jeune −26 ans',s:'−50 % sur les green fees · cours −30 %'},
+  senior:  {n:'Senior 65 ans +',s:'−35 % sur les green fees du lundi au vendredi'},
+  licencie:{n:'Licencié FFGolf',s:'−20 % sur les green fees'}};
+const P=(o)=>Object.assign({partners:[],credits:{},avoir:0,avoirEnd:null},o);
+const SEED_PROFILES={
+  claire: P({id:'claire',n:'Claire Dumas',ini:'CD',email:'claire.dumas@email.fr',dob:'1982-04-11',st:['abonne','licencie'],
+    lic:'8412337',idx:14.2,cert:'2027-03-02',home:'Abonnement 7 j/7 · Le Touquet Golf Resort · 2026',
+    credits:{30:{left:3,tot:5,end:'2027-02-14'}},avoir:25,avoirEnd:'2027-06-30',partners:['paul','sophie']}),
+  marc:   P({id:'marc',n:'Marc Lefèvre',ini:'ML',email:'marc.lefevre@email.fr',dob:'1975-09-02',st:['reseau','licencie'],
+    lic:'7203318',idx:22.5,cert:'2026-08-30',home:'Abonné du Golf d\'Hardelot · réciprocité Collection',partners:['claire']}),
+  leo:    P({id:'leo',n:'Léo Garnier',ini:'LG',email:'leo.garnier@email.fr',dob:'2007-05-19',st:['jeune','licencie'],
+    lic:'9931045',idx:8.4,cert:'2027-01-10',home:'Tarif jeune jusqu\'au 19/05/2033'}),
+  bernard:P({id:'bernard',n:'Bernard Roux',ini:'BR',email:'bernard.roux@email.fr',dob:'1958-02-07',st:['senior','licencie'],
+    lic:'5520871',idx:31.0,cert:'2027-05-20',home:'Tarif senior · jours de semaine',partners:['sophie']}),
+  sophie: P({id:'sophie',n:'Sophie Marchand',ini:'SM',email:'sophie.marchand@email.fr',dob:'1988-11-23',st:['licencie'],
+    lic:'8830412',idx:12.7,cert:'2027-02-01',home:'Licenciée FFGolf · sans abonnement'}),
+  paul:   P({id:'paul',n:'Paul Dumas',ini:'PD',email:'paul.dumas@email.fr',dob:'1979-07-30',st:['licencie'],
+    lic:'8412338',idx:24.0,cert:'2027-01-15',home:'Licencié FFGolf',hidden:true})};
+const DEMO=['claire','marc','leo','bernard','sophie'];
+
+const LOGO='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTY0IiBoZWlnaHQ9Ijk2IiB2aWV3Qm94PSIwIDAgMTY0IDk2IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMzM0NV81NzAxKSI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNODIuMTIzNyA0MC45MzA5QzgyLjIxMSA0MS40NTQ2IDgyLjI5ODIgNDEuOTc4MiA4Mi40NzI4IDQyLjQxNDZDODIuNjQ3MyA0Mi45MzgyIDgyLjkwOTEgNDMuNDYxOCA4My4xNzEgNDMuOTg1NUM4My42OTQ2IDQ0LjA3MjcgODQuMzA1NSA0NC4xNiA4NC45MTY0IDQ0LjA3MjdDODUuNDQgNDQuMDcyNyA4NS44NzY0IDQzLjk4NTUgODYuNDg3MyA0My44OTgyQzg1Ljg3NjQgNDQuNTk2NCA4NC45MTY0IDQ0Ljk0NTUgODMuOTU2NCA0NC45NDU1Qzg0LjMwNTUgNDUuMjk0NiA4NC42NTQ2IDQ1LjY0MzYgODUuMDAzNyA0NS45OTI3Qzg0LjA0MzcgNDUuOTA1NSA4My4yNTgyIDQ1LjQ2OTEgODIuNjQ3MyA0NC43NzA5QzgxLjc3NDYgNDQuNTA5MSA4MC45ODkxIDQzLjg5ODIgODAuNjQgNDMuMDI1NUM4MS4wNzY0IDQzLjI4NzMgODEuNTEyOCA0My40NjE4IDgyLjAzNjQgNDMuNjM2NEM4MS42ODczIDQyLjc2MzYgODEuNjg3MyA0MS44MDM2IDgyLjEyMzcgNDAuOTMwOVpNNzUuODQgNDAuMzJDNzUuOTI3MyA0MC44NDM2IDc2LjAxNDYgNDEuMzY3MyA3Ni4xODkxIDQxLjgwMzZDNzYuMzYzNyA0Mi4zMjczIDc2LjYyNTUgNDIuODUwOSA3Ni44ODczIDQzLjM3NDZDNzcuNDEwOSA0My40NjE4IDc4LjAyMTkgNDMuNTQ5MSA3OC42MzI4IDQzLjQ2MThDNzkuMTU2NCA0My40NjE4IDc5LjU5MjggNDMuMzc0NSA4MC4yMDM3IDQzLjI4NzNDNzkuNTkyOCA0My45ODU1IDc4LjYzMjggNDQuMzM0NiA3Ny42NzI4IDQ0LjMzNDZDNzguMDIxOSA0NC42ODM2IDc4LjM3MDkgNDUuMDMyNyA3OC43MiA0NS4zODE4Qzc3Ljc2IDQ1LjI5NDYgNzYuOTc0NiA0NC44NTgyIDc2LjM2MzcgNDQuMTZDNzUuNDkxIDQzLjg5ODIgNzQuNzA1NSA0My4yODczIDc0LjM1NjQgNDIuNDE0NkM3NC43OTI4IDQyLjY3NjQgNzUuMjI5MSA0Mi44NTA5IDc1Ljc1MjggNDMuMDI1NUM3NS40MDM3IDQyLjE1MjcgNzUuNDAzNyA0MS4xMDU1IDc1Ljg0IDQwLjMyWk04Ny40NDczIDM5LjA5ODJDODcuNTM0NiAzOS42MjE4IDg3LjYyMTkgNDAuMTQ1NSA4Ny43OTY0IDQwLjU4MThDODcuOTcwOSA0MS4xMDU1IDg4LjIzMjggNDEuNjI5MSA4OC40OTQ2IDQyLjE1MjdDODkuMDE4MiA0Mi4yNCA4OS42MjkxIDQyLjMyNzMgOTAuMjQgNDIuMjRDOTAuNzYzNyA0Mi4yNCA5MS4yIDQyLjE1MjcgOTEuODEwOSA0Mi4wNjU1QzkxLjIgNDIuNzYzNiA5MC4yNCA0My4xMTI3IDg5LjI4IDQzLjExMjdDODkuNjI5MSA0My40NjE4IDg5Ljk3ODIgNDMuODEwOSA5MC4zMjczIDQ0LjE2Qzg5LjM2NzMgNDQuMDcyNyA4OC41ODE5IDQzLjYzNjQgODcuOTcxIDQyLjkzODJDODcuMDk4MiA0Mi42NzY0IDg2LjMxMjggNDIuMDY1NSA4NS45NjM3IDQxLjE5MjdDODYuNCA0MS40NTQ2IDg2LjgzNjQgNDEuNjI5MSA4Ny4zNiA0MS44MDM2Qzg3LjAxMSA0MC45MzA5IDg3LjAxMDkgMzkuOTcwOSA4Ny40NDczIDM5LjA5ODJaTTcwLjQyOTEgMzcuODc2NEM3MC41MTY0IDM4LjQgNzAuNjkwOSAzOC45MjM2IDcwLjg2NTUgMzkuMzZDNzEuMDQgMzkuODgzNiA3MS4zMDE5IDQwLjQwNzMgNzEuNjUwOSA0MC44NDM2QzcyLjE3NDYgNDAuOTMwOSA3Mi43ODU1IDQwLjkzMDkgNzMuMzk2NCA0MC44NDM2QzczLjkyIDQwLjc1NjQgNzQuMzU2NCA0MC42NjkxIDc0Ljg4IDQwLjU4MThDNzQuMjY5MSA0MS4zNjczIDczLjM5NjQgNDEuNzE2NCA3Mi40MzY0IDQxLjcxNjRDNzIuNzg1NSA0Mi4wNjU1IDczLjEzNDYgNDIuNDE0NiA3My41NzEgNDIuNjc2NEM3Mi42MTEgNDIuNjc2NCA3MS44MjU1IDQyLjI0IDcxLjIxNDYgNDEuNTQxOEM3MC4zNDE5IDQxLjI4IDY5LjU1NjQgNDAuNzU2NCA2OS4xMiAzOS44ODM2QzY5LjU1NjQgNDAuMTQ1NSA3MC4wOCA0MC4zMiA3MC41MTY0IDQwLjQ5NDZDNzAuMTY3MyAzOS43OTY0IDcwLjA4IDM4Ljc0OTEgNzAuNDI5MSAzNy44NzY0Wk03Ni4wMTQ2IDM2LjEzMDlDNzYuMTAxOSAzNi42NTQ2IDc2LjE4OTEgMzcuMTc4MiA3Ni4zNjM3IDM3LjYxNDVDNzYuNTM4MiAzOC4xMzgyIDc2LjggMzguNjYxOCA3Ny4wNjE5IDM5LjE4NTVDNzcuNTg1NSAzOS4yNzI3IDc4LjE5NjQgMzkuMzYgNzguODA3MyAzOS4yNzI3Qzc5LjMzMSAzOS4yNzI3IDc5Ljc2NzMgMzkuMTg1NSA4MC4zNzgyIDM5LjA5ODJDNzkuNzY3MyAzOS43OTY0IDc4LjgwNzMgNDAuMTQ1NSA3Ny44NDczIDQwLjE0NTVDNzguMTk2NCA0MC40OTQ2IDc4LjU0NTUgNDAuODQzNiA3OC44OTQ2IDQxLjE5MjdDNzcuOTM0NiA0MS4xMDU1IDc3LjE0OTEgNDAuNjY5MSA3Ni41MzgyIDM5Ljk3MDlDNzUuNjY1NSAzOS43MDkxIDc0Ljg4IDM5LjA5ODIgNzQuNTMxIDM4LjIyNTVDNzQuOTY3MyAzOC40ODczIDc1LjQwMzcgMzguNjYxOCA3NS45MjczIDM4LjgzNjRDNzUuNTc4MiAzNy45NjM2IDc1LjU3ODIgMzYuOTE2NCA3Ni4wMTQ2IDM2LjEzMDlaTTgxLjI1MDkgMzUuMDgzNkM4MS4zMzgyIDM1LjYwNzMgODEuNDI1NSAzNi4xMzA5IDgxLjYgMzYuNTY3M0M4MS43NzQ2IDM3LjA5MDkgODIuMDM2NCAzNy42MTQ2IDgyLjI5ODIgMzguMTM4MkM4Mi44MjE5IDM4LjIyNTUgODMuNDMyOCAzOC4zMTI3IDg0LjA0MzcgMzguMjI1NUM4NC41NjczIDM4LjIyNTUgODUuMDAzNyAzOC4xMzgyIDg1LjYxNDYgMzguMDUwOUM4NS4wMDM3IDM4Ljc0OTEgODQuMDQzNyAzOS4wOTgyIDgzLjA4MzcgMzkuMDk4MkM4My40MzI4IDM5LjQ0NzMgODMuNzgxOSAzOS43OTY0IDg0LjEzMSA0MC4xNDU1QzgzLjE3MSA0MC4wNTgyIDgyLjM4NTUgMzkuNjIxOCA4MS43NzQ2IDM4LjkyMzZDODAuOTAxOSAzOC42NjE4IDgwLjExNjQgMzguMDUwOSA3OS43NjczIDM3LjE3ODJDODAuMjAzNyAzNy40NCA4MC42NCAzNy42MTQ2IDgxLjE2MzcgMzcuNzg5MUM4MC44MTQ2IDM2LjkxNjQgODAuNzI3MyAzNS45NTY0IDgxLjI1MDkgMzUuMDgzNlpNODcuODgzNyAzNC4xMjM2Qzg3Ljk3MDkgMzQuNjQ3MyA4OC4wNTgyIDM1LjE3MDkgODguMjMyOCAzNS42MDczQzg4LjQwNzMgMzYuMTMwOSA4OC42NjkxIDM2LjY1NDUgODguOTMxIDM3LjE3ODJDODkuNDU0NiAzNy4yNjU1IDkwLjA2NTUgMzcuMzUyNyA5MC42NzY0IDM3LjI2NTVDOTEuMiAzNy4yNjU1IDkxLjYzNjQgMzcuMTc4MiA5Mi4yNDczIDM3LjA5MDlDOTEuNjM2NCAzNy43ODkxIDkwLjY3NjQgMzguMTM4MiA4OS43MTY0IDM4LjEzODJDOTAuMDY1NSAzOC40ODczIDkwLjQxNDYgMzguODM2NCA5MC43NjM3IDM5LjE4NTVDODkuODAzNyAzOS4wOTgyIDg5LjAxODIgMzguNjYxOCA4OC40MDczIDM3Ljk2MzZDODcuNTM0NiAzNy43MDE4IDg2Ljc0OTEgMzcuMDkwOSA4Ni40IDM2LjIxODJDODYuODM2NCAzNi40OCA4Ny4yNzI4IDM2LjY1NDYgODcuNzk2NCAzNi44MjkxQzg3LjUzNDYgMzUuOTU2NCA4Ny40NDczIDM0LjkwOTEgODcuODgzNyAzNC4xMjM2Wk02Ni4wNjU1IDM0LjEyMzZDNjYuMTUyOCAzNC42NDczIDY2LjMyNzMgMzUuMTcwOSA2Ni41MDE5IDM1LjYwNzNDNjYuNjc2NCAzNi4xMzA5IDY2LjkzODIgMzYuNjU0NSA2Ny4yODczIDM3LjA5MDlDNjcuODEwOSAzNy4xNzgyIDY4LjQyMTkgMzcuMTc4MiA2OS4wMzI4IDM3LjA5MDlDNjkuNTU2NCAzNy4wMDM2IDY5Ljk5MjggMzYuOTE2NCA3MC41MTY0IDM2LjgyOTFDNjkuOTA1NSAzNy42MTQ2IDY5LjAzMjggMzcuOTYzNiA2OC4wNzI4IDM3Ljk2MzZDNjguNDIxOSAzOC4zMTI3IDY4Ljc3MSAzOC42NjE4IDY5LjIwNzMgMzguOTIzNkM2OC4yNDczIDM4LjkyMzYgNjcuNDYxOSAzOC40ODczIDY2Ljg1MDkgMzcuNzg5MUM2NS45NzgyIDM3LjUyNzMgNjUuMTkyOCAzNy4wMDM2IDY0Ljc1NjQgMzYuMTMwOUM2NS4xOTI4IDM2LjM5MjcgNjUuNzE2NCAzNi41NjczIDY2LjE1MjggMzYuNzQxOEM2NS44MDM3IDM1Ljk1NjQgNjUuNzE2NCAzNC45OTY0IDY2LjA2NTUgMzQuMTIzNlpNOTMuODE4MiAzMy4xNjM2QzkzLjkwNTUgMzMuNjg3MyA5My45OTI4IDM0LjIxMDkgOTQuMTY3MyAzNC42NDczQzk0LjM0MTkgMzUuMTcwOSA5NC42MDM3IDM1LjY5NDUgOTQuODY1NSAzNi4yMTgyQzk1LjM4OTEgMzYuMzA1NSA5NiAzNi4zOTI3IDk2LjYxMSAzNi4zMDU1Qzk3LjEzNDYgMzYuMzA1NSA5Ny41NzA5IDM2LjIxODIgOTguMTgxOSAzNi4xMzA5Qzk3LjU3MDkgMzYuODI5MSA5Ni42MTEgMzcuMTc4MiA5NS42NTEgMzcuMTc4MkM5NiAzNy41MjczIDk2LjM0OTEgMzcuODc2NCA5Ni42OTgyIDM4LjIyNTVDOTUuNzM4MiAzOC4xMzgyIDk0Ljk1MjggMzcuNzAxOCA5NC4zNDE5IDM3LjAwMzZDOTMuNDY5MSAzNi43NDE4IDkyLjY4MzcgMzYuMTMwOSA5Mi4zMzQ2IDM1LjI1ODJDOTIuNzcxIDM1LjUyIDkzLjIwNzMgMzUuNjk0NSA5My43MzEgMzUuODY5MUM5My4zODE5IDM0Ljk5NjQgOTMuMzgxOSAzMy45NDkxIDkzLjgxODIgMzMuMTYzNlpNNjkuOTA1NSAzMi4yOTA5QzY5Ljk5MjggMzIuODE0NSA3MC4xNjczIDMzLjMzODIgNzAuMzQxOSAzMy43NzQ2QzcwLjUxNjQgMzQuMjk4MiA3MC43NzgyIDM0LjgyMTggNzEuMTI3MyAzNS4yNTgyQzcxLjY1MSAzNS4zNDU1IDcyLjI2MTkgMzUuMzQ1NSA3Mi44NzI4IDM1LjI1ODJDNzMuMzk2NCAzNS4xNzA5IDczLjgzMjggMzUuMDgzNiA3NC4zNTY0IDM0Ljk5NjRDNzMuNzQ1NSAzNS43ODE4IDcyLjg3MjggMzYuMTMwOSA3MS45MTI4IDM2LjEzMDlDNzIuMjYxOSAzNi40OCA3Mi42MTA5IDM2LjgyOTEgNzMuMDQ3MyAzNy4wOTA5QzcyLjA4NzMgMzcuMDkwOSA3MS4zMDE5IDM2LjY1NDYgNzAuNjkxIDM1Ljk1NjRDNjkuODE4MiAzNS42OTQ1IDY5LjAzMjggMzUuMTcwOSA2OC41OTY0IDM0LjI5ODJDNjkuMDMyOCAzNC41NiA2OS41NTY0IDM0LjczNDYgNjkuOTkyOCAzNC45MDkxQzY5LjU1NjQgMzQuMTIzNiA2OS40NjkxIDMzLjA3NjQgNjkuOTA1NSAzMi4yOTA5Wk03NC44OCAzMS4xNTY0Qzc0Ljk2NzMgMzEuNjggNzUuMTQxOSAzMi4yMDM2IDc1LjMxNjQgMzIuNjRDNzUuNDkxIDMzLjE2MzYgNzUuNzUyOCAzMy42ODczIDc2LjEwMTkgMzQuMTIzNkM3Ni42MjU1IDM0LjIxMDkgNzcuMjM2NCAzNC4yMTA5IDc3Ljg0NzMgMzQuMTIzNkM3OC4zNzA5IDM0LjAzNjQgNzguODA3MyAzMy45NDkxIDc5LjMzMSAzMy44NjE4Qzc4LjcyIDM0LjY0NzMgNzcuODQ3MyAzNC45OTY0IDc2Ljg4NzMgMzQuOTk2NEM3Ny4yMzY0IDM1LjM0NTUgNzcuNTg1NSAzNS42OTQ1IDc4LjAyMTkgMzUuOTU2NEM3Ny4wNjE5IDM1Ljk1NjQgNzYuMjc2NCAzNS41MiA3NS42NjU1IDM0LjgyMThDNzQuNzkyOCAzNC41NiA3NC4wMDczIDM0LjAzNjQgNzMuNTcxIDMzLjE2MzZDNzQuMDA3MyAzMy40MjU1IDc0LjUzMSAzMy42IDc0Ljk2NzMgMzMuNzc0NkM3NC41MzEgMzIuOTg5MSA3NC41MzEgMzIuMDI5MSA3NC44OCAzMS4xNTY0Wk04MC44MTQ2IDI5LjQxMDlDODAuOTAxOSAyOS45MzQ2IDgwLjk4OTEgMzAuNDU4MiA4MS4xNjM3IDMwLjg5NDZDODEuMzM4MiAzMS40MTgyIDgxLjYgMzEuOTQxOCA4MS44NjE5IDMyLjQ2NTVDODIuMzg1NSAzMi41NTI3IDgyLjk5NjQgMzIuNjQgODMuNjA3MyAzMi41NTI3Qzg0LjEzMSAzMi41NTI3IDg0LjU2NzMgMzIuNDY1NSA4NS4xNzgyIDMyLjM3ODJDODQuNTY3MyAzMy4wNzY0IDgzLjYwNzMgMzMuNDI1NSA4Mi42NDczIDMzLjQyNTVDODIuOTk2NCAzMy43NzQ2IDgzLjM0NTUgMzQuMTIzNiA4My42OTQ2IDM0LjQ3MjdDODIuNzM0NiAzNC4zODU1IDgxLjk0OTEgMzMuOTQ5MSA4MS4zMzgyIDMzLjI1MDlDODAuNDY1NSAzMi45ODkxIDc5LjY4IDMyLjM3ODIgNzkuMzMxIDMxLjUwNTVDNzkuNzY3MyAzMS43NjczIDgwLjIwMzcgMzEuOTQxOCA4MC43MjczIDMyLjExNjRDODAuMzc4MiAzMS4zMzA5IDgwLjI5MSAzMC4yODM2IDgwLjgxNDYgMjkuNDEwOVpNNjIuOTIzNyAyOC42MjU1QzYzLjAxMDkgMjkuMTQ5MSA2My4xODU1IDI5LjY3MjcgNjMuMzYgMzAuMTA5MUM2My41MzQ2IDMwLjYzMjcgNjMuNzk2NCAzMS4xNTY0IDY0LjE0NTUgMzEuNTkyN0M2NC42NjkxIDMxLjY4IDY1LjI4IDMxLjY4IDY1Ljg5MSAzMS41OTI3QzY2LjQxNDYgMzEuNTA1NSA2Ni44NTA5IDMxLjQxODIgNjcuMzc0NiAzMS4zMzA5QzY2Ljc2MzcgMzIuMTE2NCA2NS44OTEgMzIuNDY1NSA2NC45MzEgMzIuNDY1NUM2NS4yOCAzMi44MTQ2IDY1LjYyOTEgMzMuMTYzNiA2Ni4wNjU1IDMzLjQyNTVDNjUuMTA1NSAzMy40MjU1IDY0LjMyIDMyLjk4OTEgNjMuNzA5MSAzMi4yOTA5QzYyLjgzNjQgMzIuMDI5MSA2Mi4wNTA5IDMxLjUwNTUgNjEuNjE0NiAzMC42MzI3QzYyLjA1MDkgMzAuODk0NSA2Mi41NzQ2IDMxLjA2OTEgNjMuMDEwOSAzMS4yNDM2QzYyLjY2MTkgMzAuNDU4MiA2Mi41NzQ2IDI5LjQ5ODIgNjIuOTIzNyAyOC42MjU1Wk02OC42ODM3IDI3LjE0MThDNjguNzcwOSAyNy42NjU1IDY4Ljk0NTUgMjguMTg5MSA2OS4xMiAyOC42MjU1QzY5LjI5NDYgMjkuMTQ5MSA2OS41NTY0IDI5LjY3MjcgNjkuOTA1NSAzMC4xMDkxQzcwLjQyOTEgMzAuMTk2NCA3MS4wNCAzMC4xOTY0IDcxLjY1MDkgMzAuMTA5MUM3Mi4xNzQ2IDMwLjAyMTggNzIuNjExIDI5LjkzNDUgNzMuMTM0NiAyOS44NDczQzcyLjUyMzcgMzAuNjMyNyA3MS42NTEgMzAuOTgxOCA3MC42OTEgMzAuOTgxOEM3MS4wNCAzMS4zMzA5IDcxLjM4OTEgMzEuNjggNzEuODI1NSAzMS45NDE4QzcwLjg2NTUgMzEuOTQxOCA3MC4wOCAzMS41MDU1IDY5LjQ2OTEgMzAuODA3M0M2OC41OTY0IDMwLjU0NTUgNjcuODEwOSAzMC4wMjE4IDY3LjM3NDYgMjkuMTQ5MUM2Ny44MTA5IDI5LjQxMDkgNjguMzM0NiAyOS41ODU1IDY4Ljc3MSAyOS43NkM2OC4zMzQ2IDI4Ljk3NDUgNjguMjQ3MyAyOC4wMTQ1IDY4LjY4MzcgMjcuMTQxOFpNOTcuMjIxOSAyNS4xMzQ1Qzk3LjMwOTEgMjUuNjU4MiA5Ny4zOTY0IDI2LjE4MTggOTcuNTcxIDI2LjYxODJDOTcuNzQ1NSAyNy4xNDE4IDk4LjAwNzMgMjcuNjY1NSA5OC4yNjkxIDI4LjE4OTFDOTguNzkyOCAyOC4yNzY0IDk5LjQwMzcgMjguMzYzNiAxMDAuMDE1IDI4LjI3NjRDMTAwLjUzOCAyOC4yNzY0IDEwMC45NzUgMjguMTg5MSAxMDEuNTg1IDI4LjEwMThDMTAwLjk3NSAyOC44IDEwMC4wMTUgMjkuMTQ5MSA5OS4wNTQ2IDI5LjE0OTFDOTkuNDAzNyAyOS40OTgyIDk5Ljc1MjggMjkuODQ3MyAxMDAuMTAyIDMwLjE5NjRDOTkuMTQxOSAzMC4xMDkxIDk4LjM1NjQgMjkuNjcyNyA5Ny43NDU1IDI4Ljk3NDZDOTYuODcyOCAyOC43MTI3IDk2LjA4NzMgMjguMTAxOCA5NS43MzgyIDI3LjIyOTFDOTYuMTc0NiAyNy40OTA5IDk2LjYxMSAyNy42NjU1IDk3LjEzNDYgMjcuODRDOTYuODcyOCAyNi45NjczIDk2Ljc4NTUgMjUuOTIgOTcuMjIxOSAyNS4xMzQ1Wk03NC4wMDczIDI1LjIyMThDNzQuMDk0NiAyNS43NDU1IDc0LjI2OTEgMjYuMjY5MSA3NC40NDM3IDI2LjcwNTVDNzQuNjE4MiAyNy4yMjkxIDc0Ljg4IDI3Ljc1MjcgNzUuMjI5MSAyOC4xODkxQzc1Ljc1MjggMjguMjc2NCA3Ni4zNjM3IDI4LjI3NjQgNzYuOTc0NiAyOC4xODkxQzc3LjQ5ODIgMjguMTAxOCA3Ny45MzQ2IDI4LjAxNDUgNzguNDU4MiAyNy45MjczQzc3Ljg0NzMgMjguNzEyNyA3Ni45NzQ2IDI5LjA2MTggNzYuMDE0NiAyOS4wNjE4Qzc2LjM2MzcgMjkuNDEwOSA3Ni43MTI4IDI5Ljc2IDc3LjE0OTEgMzAuMDIxOEM3Ni4xODkxIDMwLjAyMTggNzUuNDAzNyAyOS41ODU1IDc0Ljc5MjggMjguODg3M0M3My45MiAyOC42MjU1IDczLjEzNDYgMjguMTAxOCA3Mi42OTgyIDI3LjIyOTFDNzMuMTM0NiAyNy40OTA5IDczLjY1ODIgMjcuNjY1NSA3NC4wOTQ2IDI3Ljg0QzczLjc0NTUgMjcuMDU0NSA3My42NTgyIDI2LjA5NDUgNzMuOTIgMjUuMzA5MUw3NC4wMDczIDI1LjIyMThaTTg4LjU4MTkgMjMuNzM4MkM4OC42NjkxIDI0LjI2MTggODguNzU2NCAyNC43ODU1IDg4LjkzMSAyNS4yMjE4Qzg5LjEwNTUgMjUuNzQ1NSA4OS4zNjczIDI2LjI2OTEgODkuNjI5MSAyNi43OTI3QzkwLjE1MjggMjYuODggOTAuNzYzNyAyNi45NjczIDkxLjM3NDYgMjYuODhDOTEuODk4MiAyNi44OCA5Mi4zMzQ2IDI2Ljc5MjcgOTIuOTQ1NSAyNi43MDU1QzkyLjMzNDYgMjcuNDAzNiA5MS4zNzQ2IDI3Ljc1MjcgOTAuNDE0NiAyNy43NTI3QzkwLjc2MzcgMjguMTAxOCA5MS4xMTI4IDI4LjQ1MDkgOTEuNDYxOSAyOC44QzkwLjUwMTkgMjguNzEyNyA4OS43MTY0IDI4LjI3NjQgODkuMTA1NSAyNy41NzgyQzg4LjIzMjggMjcuMzE2NCA4Ny40NDczIDI2LjcwNTUgODcuMDk4MiAyNS44MzI3Qzg3LjUzNDYgMjYuMDk0NSA4Ny45NzEgMjYuMjY5MSA4OC40OTQ2IDI2LjQ0MzZDODguMTQ1NSAyNS41NzA5IDg4LjE0NTUgMjQuNjEwOSA4OC41ODE5IDIzLjczODJaTTc5LjY4IDIzLjgyNTVDNzkuNzY3MyAyNC4zNDkxIDc5Ljk0MTkgMjQuODcyNyA4MC4xMTY0IDI1LjMwOTFDODAuMjkxIDI1LjgzMjcgODAuNTUyOCAyNi4zNTY0IDgwLjkwMTkgMjYuNzkyN0M4MS40MjU1IDI2Ljg4IDgyLjAzNjQgMjYuODggODIuNjQ3MyAyNi43OTI3QzgzLjE3MDkgMjYuNzA1NSA4My42MDczIDI2LjYxODIgODQuMTMxIDI2LjUzMDlDODMuNTIgMjcuMzE2NCA4Mi42NDczIDI3LjY2NTUgODEuNjg3MyAyNy42NjU1QzgyLjAzNjQgMjguMDE0NSA4Mi4zODU1IDI4LjM2MzYgODIuODIxOSAyOC42MjU1QzgxLjg2MTkgMjguNjI1NSA4MS4wNzY0IDI4LjE4OTEgODAuNDY1NSAyNy40OTA5Qzc5LjU5MjggMjcuMjI5MSA3OC44MDczIDI2LjcwNTUgNzguMzcxIDI1LjgzMjdDNzguODA3MyAyNi4wOTQ1IDc5LjMzMSAyNi4yNjkxIDc5Ljc2NzMgMjYuNDQzNkM3OS4zMzEgMjUuNjU4MiA3OS4yNDM3IDI0LjY5ODIgNzkuNjggMjMuODI1NVpNNjIuNDg3MyAyMy4xMjczQzYyLjU3NDYgMjMuNjUwOSA2Mi43NDkxIDI0LjE3NDUgNjIuOTIzNyAyNC42MTA5QzYzLjA5ODIgMjUuMTM0NiA2My4zNiAyNS42NTgyIDYzLjcwOTEgMjYuMDk0NUM2NC4yMzI4IDI2LjE4MTggNjQuODQzNyAyNi4xODE4IDY1LjQ1NDYgMjYuMDk0NUM2NS45NzgyIDI2LjAwNzMgNjYuNDE0NiAyNS45MiA2Ni45MzgyIDI1LjgzMjdDNjYuMzI3MyAyNi42MTgyIDY1LjQ1NDYgMjYuOTY3MyA2NC40OTQ2IDI2Ljk2NzNDNjQuODQzNyAyNy4zMTY0IDY1LjE5MjggMjcuNjY1NSA2NS42MjkxIDI3LjkyNzNDNjQuNjY5MSAyNy45MjczIDYzLjg4MzcgMjcuNDkwOSA2My4yNzI4IDI2Ljc5MjdDNjIuNCAyNi41MzA5IDYxLjYxNDYgMjYuMDA3MyA2MS4xNzgyIDI1LjEzNDVDNjEuNjE0NiAyNS4zOTY0IDYyLjEzODIgMjUuNTcwOSA2Mi41NzQ2IDI1Ljc0NTVDNjIuMTM4MiAyNC45NiA2Mi4wNTA5IDI0IDYyLjQ4NzMgMjMuMTI3M1pNNjYuODUwOSAyMC41OTY0QzY2LjkzODIgMjEuMTIgNjcuMTEyOCAyMS42NDM2IDY3LjI4NzMgMjIuMDhDNjcuNDYxOSAyMi42MDM2IDY3LjcyMzcgMjMuMTI3MyA2OC4wNzI4IDIzLjU2MzZDNjguNTk2NCAyMy42NTA5IDY5LjIwNzMgMjMuNjUwOSA2OS44MTgyIDIzLjU2MzZDNzAuMzQxOSAyMy40NzY0IDcwLjc3ODIgMjMuMzg5MSA3MS4zMDE5IDIzLjMwMThDNzAuNjkwOSAyNC4wODczIDY5LjgxODIgMjQuNDM2NCA2OC44NTgyIDI0LjUyMzZDNjkuMjA3MyAyNC44NzI3IDY5LjU1NjQgMjUuMjIxOCA2OS45OTI4IDI1LjQ4MzZDNjkuMDMyOCAyNS40ODM2IDY4LjI0NzMgMjUuMDQ3MyA2Ny42MzY0IDI0LjM0OTFDNjYuNzYzNyAyNC4wODczIDY1Ljk3ODIgMjMuNTYzNiA2NS41NDE5IDIyLjY5MDlDNjUuOTc4MiAyMi45NTI3IDY2LjUwMTkgMjMuMTI3MyA2Ni45MzgyIDIzLjMwMThDNjYuNTg5MSAyMi40MjkxIDY2LjUwMTkgMjEuNDY5MSA2Ni44NTA5IDIwLjU5NjRaTTg0LjIxODIgMTYuODQzNkM4NC4zMDU1IDE3LjM2NzMgODQuNDggMTcuODkwOSA4NC42NTQ2IDE4LjMyNzNDODQuODI5MSAxOC44NTA5IDg1LjA5MSAxOS4zNzQ1IDg1LjQ0IDE5LjgxMDlDODUuOTYzNyAxOS44OTgyIDg2LjU3NDYgMTkuODk4MiA4Ny4xODU1IDE5LjgxMDlDODcuNzA5MSAxOS43MjM2IDg4LjE0NTUgMTkuNjM2NCA4OC42NjkxIDE5LjU0OTFDODguMDU4MiAyMC4zMzQ1IDg3LjE4NTUgMjAuNjgzNiA4Ni4yMjU1IDIwLjY4MzZDODYuNTc0NiAyMS4wMzI3IDg2LjkyMzcgMjEuMzgxOCA4Ny4zNiAyMS42NDM2Qzg2LjQgMjEuNjQzNiA4NS42MTQ2IDIxLjIwNzMgODUuMDAzNyAyMC41MDkxQzg0LjEzMSAyMC4yNDczIDgzLjM0NTUgMTkuNzIzNiA4Mi45MDkxIDE4Ljg1MDlDODMuMzQ1NSAxOS4xMTI3IDgzLjg2OTEgMTkuMjg3MyA4NC4zMDU1IDE5LjQ2MThDODMuODY5MSAxOC42NzY0IDgzLjg2OTEgMTcuNzE2NCA4NC4yMTgyIDE2Ljg0MzZaTTc2LjEwMTkgMTUuNzk2NEM3Ni4xODkxIDE2LjMyIDc2LjM2MzcgMTYuODQzNiA3Ni41MzgyIDE3LjI4Qzc2LjcxMjggMTcuODAzNiA3Ni45NzQ2IDE4LjMyNzMgNzcuMzIzNyAxOC43NjM2Qzc3Ljg0NzMgMTguODUwOSA3OC40NTgyIDE4Ljg1MDkgNzkuMDY5MSAxOC43NjM2Qzc5LjU5MjggMTguNjc2NCA4MC4wMjkxIDE4LjU4OTEgODAuNTUyOCAxOC41MDE4Qzc5Ljk0MTkgMTkuMjg3MyA3OS4wNjkxIDE5LjYzNjQgNzguMTA5MSAxOS42MzY0Qzc4LjQ1ODIgMTkuOTg1NSA3OC44MDczIDIwLjMzNDUgNzkuMjQzNyAyMC41OTY0Qzc4LjI4MzcgMjAuNTk2NCA3Ny40OTgyIDIwLjE2IDc2Ljg4NzMgMTkuNDYxOEM3Ni4wMTQ2IDE5LjIgNzUuMjI5MSAxOC42NzY0IDc0Ljc5MjggMTcuODAzNkM3NS4yMjkxIDE4LjA2NTUgNzUuNzUyOCAxOC4yNCA3Ni4xODkxIDE4LjQxNDVDNzUuNzUyOCAxNy42MjkxIDc1LjY2NTUgMTYuNjY5MSA3Ni4xMDE5IDE1Ljc5NjRaTTk3LjMwOTEgMTEuMjU4MkM5Ny4zOTY0IDExLjc4MTggOTcuNTcwOSAxMi4zMDU1IDk3Ljc0NTUgMTIuNzQxOEM5Ny45MiAxMy4yNjU1IDk4LjE4MTkgMTMuNzg5MSA5OC41MzEgMTQuMjI1NUM5OS4wNTQ2IDE0LjMxMjcgOTkuNjY1NSAxNC4zMTI3IDEwMC4yNzYgMTQuMjI1NUMxMDAuOCAxNC4xMzgyIDEwMS4yMzYgMTQuMDUwOSAxMDEuNzYgMTMuOTYzNkMxMDEuMTQ5IDE0Ljc0OTEgMTAwLjI3NiAxNS4wOTgyIDk5LjMxNjQgMTUuMDk4MkM5OS42NjU1IDE1LjQ0NzMgMTAwLjAxNSAxNS43OTY0IDEwMC40NTEgMTYuMDU4MkM5OS41NzgyIDE2LjA1ODIgOTguNzA1NSAxNS42MjE4IDk4LjA5NDYgMTUuMDEwOUM5Ny4zMDkxIDE3LjI4IDk1LjM4OTEgMTkuMTEyNyA5My4yMDczIDIwLjA3MjdDOTMuMDMyOCAyMC4xNiA5Mi44NTgyIDIwLjA3MjcgOTIuNzcxIDE5Ljg5ODJDOTIuNjgzNyAxOS43MjM2IDkyLjc3MSAxOS41NDkxIDkyLjk0NTUgMTkuNDYxOEM5NS4xMjczIDE4LjY3NjQgOTYuOTYgMTcuMDE4MiA5Ny44MzI4IDE0LjkyMzZDOTcuMDQ3MyAxNC42NjE4IDk2LjM0OTEgMTQuMTM4MiA5NiAxMy4zNTI3Qzk2LjQzNjQgMTMuNjE0NSA5Ni45NiAxMy43ODkxIDk3LjM5NjQgMTMuOTYzNkM5Ni45NiAxMy4wOTA5IDk2Ljg3MjggMTIuMTMwOSA5Ny4zMDkxIDExLjI1ODJaTTY1LjM2NzMgMTQuODM2NEM2NS40NTQ2IDE1LjM2IDY1LjYyOTEgMTUuODgzNiA2NS44MDM3IDE2LjMyQzY1Ljk3ODIgMTYuODQzNiA2Ni4yNCAxNy4zNjczIDY2LjU4OTEgMTcuODAzNkM2Ny4xMTI4IDE3Ljg5MDkgNjcuNzIzNyAxNy44OTA5IDY4LjMzNDYgMTcuODAzNkM2OC44NTgyIDE3LjcxNjQgNjkuMjk0NiAxNy42MjkxIDY5LjgxODIgMTcuNTQxOEM2OS4yMDczIDE4LjMyNzMgNjguMzM0NiAxOC42NzY0IDY3LjM3NDYgMTguNjc2NEM2Ny43MjM3IDE5LjAyNTUgNjguMDcyOCAxOS4zNzQ1IDY4LjUwOTEgMTkuNjM2NEM2Ny41NDkxIDE5LjYzNjQgNjYuNzYzNyAxOS4yIDY2LjE1MjggMTguNTAxOEM2NS4yOCAxOC4yNCA2NC40OTQ2IDE3LjcxNjQgNjQuMDU4MiAxNi44NDM2QzY0LjQ5NDYgMTcuMTA1NSA2NS4wMTgyIDE3LjI4IDY1LjQ1NDYgMTcuNDU0NUM2NS4wMTgyIDE2LjY2OTEgNjQuOTMxIDE1LjcwOTEgNjUuMzY3MyAxNC44MzY0Wk03MS4zMDE5IDguNDY1NDZDNzEuMzg5MSA4Ljk4OTA5IDcxLjU2MzcgOS41MTI3MyA3MS43MzgyIDkuOTQ5MDlDNzEuOTEyOCAxMC40NzI3IDcyLjE3NDYgMTAuOTk2NCA3Mi41MjM3IDExLjQzMjdDNzMuMDQ3MyAxMS41MiA3My42NTgyIDExLjUyIDc0LjI2OTEgMTEuNDMyN0M3NC43OTI4IDExLjM0NTUgNzUuMjI5MSAxMS4yNTgyIDc1Ljc1MjggMTEuMTcwOUM3NS4xNDE5IDExLjk1NjQgNzQuMjY5MSAxMi4zMDU1IDczLjMwOTEgMTIuMzA1NUM3My42NTgyIDEyLjY1NDUgNzQuMDA3MyAxMy4wMDM2IDc0LjQ0MzcgMTMuMjY1NUM3My40ODM3IDEzLjI2NTUgNzIuNjk4MiAxMi44MjkxIDcyLjA4NzMgMTIuMTMwOUM3MS4yMTQ2IDExLjg2OTEgNzAuNDI5MSAxMS4zNDU1IDY5Ljk5MjggMTAuNDcyN0M3MC40MjkxIDEwLjczNDUgNzAuOTUyOCAxMC45MDkxIDcxLjM4OTEgMTEuMDgzNkM3MS4wNCAxMC4yOTgyIDcwLjk1MjggOS4zMzgxOCA3MS4zMDE5IDguNDY1NDZaTTc5LjA2OTEgNi4yODM2NEM3OS4xNTY0IDYuODA3MjcgNzkuMzMwOSA3LjMzMDkxIDc5LjUwNTUgNy43NjcyN0M3OS42OCA4LjI5MDkxIDc5Ljk0MTkgOC44MTQ1NSA4MC4yOTEgOS4yNTA5MUM4MC44MTQ2IDkuMzM4MTggODEuNDI1NSA5LjMzODE4IDgyLjAzNjQgOS4yNTA5MUM4Mi41NiA5LjE2MzY0IDgyLjk5NjQgOS4wNzYzNyA4My41MiA4Ljk4OTA5QzgyLjkwOTEgOS43NzQ1NSA4Mi4wMzY0IDEwLjEyMzYgODEuMDc2NCAxMC4xMjM2QzgxLjQyNTUgMTAuNDcyNyA4MS43NzQ2IDEwLjgyMTggODIuMjEwOSAxMS4wODM2QzgxLjI1MDkgMTEuMDgzNiA4MC40NjU1IDEwLjY0NzMgNzkuODU0NiA5Ljk0OTA5Qzc4Ljk4MTkgOS42ODcyNyA3OC4xOTY0IDkuMTYzNjQgNzcuNzYgOC4yOTA5MUM3OC4xOTY0IDguNTUyNzMgNzguNzIgOC43MjcyNyA3OS4xNTY0IDguOTAxODJDNzguNzIgOC4xMTYzNiA3OC42MzI4IDcuMDY5MDkgNzkuMDY5MSA2LjI4MzY0Wk05NS41NjM3IDBDOTUuNjUxIDAuNTIzNjM2IDk1LjgyNTUgMS4wNDcyNyA5NiAxLjQ4MzY0Qzk2LjE3NDYgMi4wMDcyNyA5Ni40MzY0IDIuNTMwOTEgOTYuNzg1NSAyLjk2NzI3Qzk3LjMwOTEgMy4wNTQ1NSA5Ny45MiAzLjA1NDU1IDk4LjUzMSAyLjk2NzI3Qzk5LjA1NDYgMi44OCA5OS40OTEgMi43OTI3MyAxMDAuMDE1IDIuNzA1NDVDOTkuNDAzNyAzLjQ5MDkxIDk4LjUzMSAzLjg0IDk3LjU3MSAzLjg0Qzk3LjkyIDQuMTg5MDkgOTguMjY5MSA0LjUzODE4IDk4LjcwNTUgNC44Qzk3LjgzMjggNC44IDk2Ljk2IDQuMzYzNjQgOTYuMzQ5MSAzLjc1MjczQzk1LjU2MzcgNi4wMjE4MiA5My42NDM3IDcuODU0NTUgOTEuNDYxOSA4LjgxNDU1QzkxLjI4NzMgOC45MDE4MiA5MS4xMTI4IDguODE0NTUgOTEuMDI1NSA4LjY0QzkwLjkzODIgOC40NjU0NiA5MS4wMjU1IDguMjkwOTEgOTEuMiA4LjIwMzY0QzkzLjM4MTkgNy40MTgxOCA5NS4yMTQ2IDUuNzYgOTYuMDg3MyAzLjY2NTQ1Qzk1LjMwMTkgMy40MDM2NCA5NC42MDM3IDIuODggOTQuMTY3MyAyLjA5NDU1Qzk0LjYwMzcgMi4zNTYzNiA5NS4xMjczIDIuNTMwOTEgOTUuNTYzNyAyLjcwNTQ1Qzk1LjIxNDYgMS44MzI3MyA5NS4xMjczIDAuODcyNzI3IDk1LjU2MzcgMFoiIGZpbGw9IiMxODFEMjciLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zLjkyNzI3IDc3LjA2MThIMFY1OS45NTY0SDMuOTI3MjdWNjMuNzk2NEM0Ljk3NDU1IDYxLjI2NTUgNi45ODE4MiA1OS41MiAxMC4wMzY0IDU5LjYwNzNWNjMuNzk2NEg5Ljc3NDU1QzYuMjgzNjQgNjMuNzk2NCAzLjkyNzI3IDY2LjA2NTUgMy45MjcyNyA3MC42MDM2Vjc3LjA2MThaTTI0LjYxMDkgNjcuMjg3M0MyNC4zNDkxIDY0Ljc1NjQgMjIuODY1NSA2Mi43NDkxIDIwLjI0NzMgNjIuNzQ5MUMxNy44MDM2IDYyLjc0OTEgMTYuMTQ1NSA2NC41ODE4IDE1Ljc5NjQgNjcuMjg3M0gyNC42MTA5Wk0yMC43NzA5IDc0LjI2OTFDMjIuNjkwOSA3NC4yNjkxIDI0LjA4NzMgNzMuNTcwOSAyNS4zOTY0IDcyLjI2MThMMjcuNjY1NSA3NC4yNjkxQzI2LjAwNzMgNzYuMTg5MSAyMy44MjU1IDc3LjQ5ODIgMjAuNTk2NCA3Ny40OTgyQzE1LjYyMTggNzcuNDk4MiAxMS43ODE4IDczLjkyIDExLjc4MTggNjguNTk2NEMxMS43ODE4IDYzLjYyMTggMTUuMjcyNyA1OS42MDczIDIwLjE2IDU5LjYwNzNDMjUuNjU4MiA1OS42MDczIDI4LjM2MzYgNjMuODgzNiAyOC4zNjM2IDY4Ljg1ODJDMjguMzYzNiA2OS4yMDczIDI4LjM2MzYgNjkuNTU2NCAyOC4yNzY0IDY5LjkwNTVIMTUuODgzNkMxNi4zMiA3Mi42OTgyIDE4LjI0IDc0LjI2OTEgMjAuNzcwOSA3NC4yNjkxWk0zOC40IDc3LjQxMDlDMzUuOTU2NCA3Ny40MTA5IDMzLjI1MDkgNzYuNTM4MiAzMS4wNjkxIDc0Ljg4TDMyLjgxNDUgNzIuMTc0NUMzNC42NDczIDczLjU3MDkgMzYuNjU0NSA3NC4yNjkxIDM4LjQ4NzMgNzQuMjY5MUM0MC4xNDU1IDc0LjI2OTEgNDEuMTkyNyA3My41NzA5IDQxLjE5MjcgNzIuNDM2NFY3Mi4zNDkxQzQxLjE5MjcgNzEuMDQgMzkuMzYgNzAuNjAzNiAzNy4zNTI3IDY5LjkwNTVDMzQuODIxOCA2OS4yMDczIDMxLjk0MTggNjguMTYgMzEuOTQxOCA2NC44NDM2VjY0Ljc1NjRDMzEuOTQxOCA2MS41MjczIDM0LjY0NzMgNTkuNTIgMzguMDUwOSA1OS41MkM0MC4yMzI3IDU5LjUyIDQyLjUwMTggNjAuMzA1NSA0NC4zMzQ1IDYxLjQ0TDQyLjc2MzYgNjQuMjMyN0M0MS4xMDU1IDYzLjE4NTUgMzkuMzYgNjIuNTc0NSAzNy44NzY0IDYyLjU3NDVDMzYuMzA1NSA2Mi41NzQ1IDM1LjQzMjcgNjMuMjcyNyAzNS40MzI3IDY0LjMyVjY0LjU4MThDMzUuNDMyNyA2NS44MDM2IDM3LjI2NTUgNjYuMzI3MyAzOS4yNzI3IDY3LjAyNTVDNDEuODAzNiA2Ny44MTA5IDQ0LjU5NjQgNjguOTQ1NSA0NC41OTY0IDcyVjcyLjA4NzNDNDQuNzcwOSA3NS42NjU1IDQxLjk3ODIgNzcuNDEwOSAzOC40IDc3LjQxMDlaTTU2Ljk4OTEgNjMuMDEwOUM1My44NDczIDYzLjAxMDkgNTEuODQgNjUuNDU0NSA1MS44NCA2OC41MDkxQzUxLjg0IDcxLjU2MzYgNTQuMDIxOCA3NC4wOTQ1IDU3LjA3NjQgNzQuMDk0NUM2MC4zMDU1IDc0LjA5NDUgNjIuMzEyNyA3MS42NTA5IDYyLjMxMjcgNjguNTk2NEM2Mi4zMTI3IDY1LjU0MTggNjAuMTMwOSA2My4wMTA5IDU2Ljk4OTEgNjMuMDEwOVpNNTYuOTg5MSA3Ny40OTgyQzUxLjc1MjcgNzcuNDk4MiA0Ny45MTI3IDczLjQ4MzYgNDcuOTEyNyA2OC41OTY0QzQ3LjkxMjcgNjMuNjIxOCA1MS44NCA1OS42MDczIDU3LjA3NjQgNTkuNjA3M0M2Mi4zMTI3IDU5LjYwNzMgNjYuMjQgNjMuNjIxOCA2Ni4yNCA2OC41MDkxQzY2LjI0IDczLjM5NjQgNjIuMzEyNyA3Ny40OTgyIDU2Ljk4OTEgNzcuNDk4MlpNNzQuMTgxOCA3Ny4wNjE4SDcwLjI1NDVWNTkuOTU2NEg3NC4xODE4VjYyLjU3NDVDNzUuMzE2NCA2MC45MTY0IDc2Ljg4NzMgNTkuNTIgNzkuNTkyNyA1OS41MkM4My40MzI3IDU5LjUyIDg1LjcwMTggNjIuMTM4MiA4NS43MDE4IDY2LjE1MjdWNzcuMDYxOEg4MS43NzQ2VjY3LjM3NDVDODEuNzc0NiA2NC43NTY0IDgwLjQ2NTUgNjMuMTg1NSA3OC4xMDkxIDYzLjE4NTVDNzUuODQgNjMuMTg1NSA3NC4yNjkxIDY0Ljc1NjQgNzQuMjY5MSA2Ny40NjE4Vjc3LjA2MThINzQuMTgxOFpNMTAxLjA2MiA2OS44MTgyQzEwMC4wMTUgNjkuNDY5MSA5OC42MTgyIDY5LjEyIDk3LjEzNDYgNjkuMTJDOTQuNjkwOSA2OS4xMiA5My4yMDczIDcwLjE2NzMgOTMuMjA3MyA3MS45MTI3VjcyQzkzLjIwNzMgNzMuNjU4MiA5NC42OTA5IDc0LjUzMDkgOTYuNTIzNiA3NC41MzA5Qzk5LjE0MTggNzQuNTMwOSAxMDEuMDYyIDczLjA0NzMgMTAxLjA2MiA3MC45NTI3VjY5LjgxODJaTTEwMC44ODcgNzcuMDYxOFY3NC45NjczQzk5Ljc1MjcgNzYuMzYzNiA5Ny45MiA3Ny40MTA5IDk1LjMwMTggNzcuNDEwOUM5Mi4wNzI3IDc3LjQxMDkgODkuMTkyNyA3NS41NzgyIDg5LjE5MjcgNzIuMDg3M1Y3MkM4OS4xOTI3IDY4LjMzNDUgOTIuMTYgNjYuNTAxOCA5Ni4xNzQ2IDY2LjUwMThDOTguMjY5MSA2Ni41MDE4IDk5LjU3ODIgNjYuNzYzNiAxMDAuODg3IDY3LjJWNjYuNzYzNkMxMDAuODg3IDY0LjQwNzMgOTkuNDAzNiA2My4wOTgyIDk2LjYxMDkgNjMuMDk4MkM5NC42OTA5IDYzLjA5ODIgOTMuMjk0NSA2My41MzQ1IDkxLjcyMzYgNjQuMTQ1NUw5MC43NjM2IDYxLjA5MDlDOTIuNjgzNiA2MC4yMTgyIDk0LjUxNjQgNTkuNjk0NSA5Ny4zMDkxIDU5LjY5NDVDMTAyLjM3MSA1OS42OTQ1IDEwNC45MDIgNjIuNCAxMDQuOTAyIDY2LjkzODJWNzcuMDYxOEgxMDAuODg3Wk0xMTMuNDU1IDc3LjA2MThIMTA5LjUyN1Y1OS45NTY0SDExMy40NTVWNjIuNTc0NUMxMTQuNTg5IDYwLjkxNjQgMTE2LjE2IDU5LjUyIDExOC44NjUgNTkuNTJDMTIyLjcwNSA1OS41MiAxMjQuOTc1IDYyLjEzODIgMTI0Ljk3NSA2Ni4xNTI3Vjc3LjA2MThIMTIxLjA0N1Y2Ny4zNzQ1QzEyMS4wNDcgNjQuNzU2NCAxMTkuNzM4IDYzLjE4NTUgMTE3LjM4MiA2My4xODU1QzExNS4xMTMgNjMuMTg1NSAxMTMuNTQyIDY0Ljc1NjQgMTEzLjU0MiA2Ny40NjE4Vjc3LjA2MThIMTEzLjQ1NVpNMTM3LjYyOSA3Ny40OTgyQzEzMi40OCA3Ny40OTgyIDEyOC43MjcgNzMuNDgzNiAxMjguNzI3IDY4LjU5NjRDMTI4LjcyNyA2My43MDkxIDEzMi40OCA1OS42MDczIDEzNy42MjkgNTkuNjA3M0MxNDAuODU4IDU5LjYwNzMgMTQyLjg2NSA2MC44MjkxIDE0NC41MjQgNjIuNTc0NUwxNDIuMDggNjUuMTkyN0MxNDAuODU4IDYzLjg4MzYgMTM5LjYzNiA2My4wMTA5IDEzNy42MjkgNjMuMDEwOUMxMzQuNzQ5IDYzLjAxMDkgMTMyLjY1NSA2NS40NTQ1IDEzMi42NTUgNjguNTA5MUMxMzIuNjU1IDcxLjU2MzYgMTM0Ljc0OSA3NC4wOTQ1IDEzNy44MDQgNzQuMDk0NUMxMzkuNjM2IDc0LjA5NDUgMTQxLjAzMyA3My4yMjE4IDE0Mi4yNTUgNzEuOTEyN0wxNDQuNjExIDc0LjI2OTFDMTQzLjA0IDc2LjEwMTggMTQxLjAzMyA3Ny40OTgyIDEzNy42MjkgNzcuNDk4MlpNMTU5LjYyMiA2Ny4yODczQzE1OS4zNiA2NC43NTY0IDE1Ny44NzYgNjIuNzQ5MSAxNTUuMjU4IDYyLjc0OTFDMTUyLjgxNSA2Mi43NDkxIDE1MS4xNTYgNjQuNTgxOCAxNTAuODA3IDY3LjI4NzNIMTU5LjYyMlpNMTU1Ljc4MiA3NC4yNjkxQzE1Ny43MDIgNzQuMjY5MSAxNTkuMDk4IDczLjU3MDkgMTYwLjQwNyA3Mi4yNjE4TDE2Mi42NzYgNzQuMjY5MUMxNjEuMDE4IDc2LjE4OTEgMTU4LjgzNiA3Ny40OTgyIDE1NS42MDcgNzcuNDk4MkMxNTAuNjMzIDc3LjQ5ODIgMTQ2Ljc5MyA3My45MiAxNDYuNzkzIDY4LjU5NjRDMTQ2Ljc5MyA2My42MjE4IDE1MC4yODQgNTkuNjA3MyAxNTUuMTcxIDU5LjYwNzNDMTYwLjY2OSA1OS42MDczIDE2My4zNzUgNjMuODgzNiAxNjMuMzc1IDY4Ljg1ODJDMTYzLjM3NSA2OS4yMDczIDE2My4zNzUgNjkuNTU2NCAxNjMuMjg3IDY5LjkwNTVIMTUwLjYzM0MxNTEuMjQ0IDcyLjY5ODIgMTUzLjI1MSA3NC4yNjkxIDE1NS43ODIgNzQuMjY5MVoiIGZpbGw9IiMxODFEMjciLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMy45MTI4IDk2QzIzLjM4OTEgOTYgMjIuODY1NSA5NS45MTI3IDIyLjQyOTEgOTUuNzM4MkMyMS45OTI4IDk1LjU2MzYgMjEuNjQzNyA5NS4zMDE4IDIxLjI5NDYgOTUuMDRDMjAuOTQ1NSA5NC42OTA5IDIwLjc3MSA5NC4zNDE4IDIwLjU5NjQgOTMuOTA1NEMyMC40MjE5IDkzLjQ2OTEgMjAuMzM0NiA5My4wMzI3IDIwLjMzNDYgOTIuNTA5MUMyMC4zMzQ2IDkxLjk4NTUgMjAuNDIxOSA5MS41NDkxIDIwLjU5NjQgOTEuMTEyN0MyMC43NzEgOTAuNjc2NCAyMS4wMzI4IDkwLjMyNzMgMjEuMzgxOSA4OS45NzgyQzIxLjczMSA4OS42MjkxIDIyLjA4IDg5LjM2NzMgMjIuNTE2NCA4OS4xOTI3QzIyLjk1MjggODkuMDE4MiAyMy4zODkxIDg4LjkzMDkgMjMuOTEyOCA4OC45MzA5QzI0LjI2MTkgODguOTMwOSAyNC41MjM3IDg4LjkzMDkgMjQuNzg1NSA4OS4wMTgyQzI1LjA0NzMgODkuMDE4MiAyNS4zMDkxIDg5LjEwNTQgMjUuNDgzNyA4OS4xOTI3QzI1LjY1ODIgODkuMjggMjUuOTIgODkuMzY3MyAyNi4wOTQ2IDg5LjQ1NDVDMjYuMjY5MSA4OS41NDE4IDI2LjQ0MzcgODkuNzE2NCAyNi42MTgyIDg5Ljg5MDlMMjUuNjU4MiA5MS4wMjU1QzI1LjU3MSA5MC45MzgyIDI1LjM5NjQgOTAuODUwOSAyNS4zMDkxIDkwLjc2MzZDMjUuMjIxOSA5MC42NzY0IDI1LjA0NzMgOTAuNTg5MSAyNC44NzI4IDkwLjU4OTFDMjQuNjk4MiA5MC41MDE4IDI0LjYxMSA5MC41MDE4IDI0LjQzNjQgOTAuNDE0NUMyNC4yNjE5IDkwLjQxNDUgMjQuMDg3MyA5MC4zMjczIDIzLjkxMjggOTAuMzI3M0MyMy42NTEgOTAuMzI3MyAyMy4zODkxIDkwLjQxNDUgMjMuMTI3MyA5MC41MDE4QzIyLjg2NTUgOTAuNTg5MSAyMi42OTEgOTAuNzYzNiAyMi41MTY0IDkwLjkzODJDMjIuMzQxOSA5MS4xMTI3IDIyLjE2NzMgOTEuMzc0NSAyMi4wOCA5MS42MzY0QzIxLjk5MjggOTEuODk4MiAyMS45MDU1IDkyLjE2IDIxLjkwNTUgOTIuNDIxOEMyMS45MDU1IDkyLjc3MDkgMjEuOTkyOCA5My4wMzI3IDIyLjA4IDkzLjI5NDVDMjIuMTY3MyA5My41NTY0IDIyLjM0MTkgOTMuODE4MiAyMi41MTY0IDkzLjk5MjdDMjIuNjkxIDk0LjE2NzMgMjIuOTUyOCA5NC4zNDE4IDIzLjIxNDYgOTQuNDI5MUMyMy40NzY0IDk0LjUxNjQgMjMuNzM4MiA5NC42MDM2IDI0LjA4NzMgOTQuNjAzNkMyNC42MTEgOTQuNjAzNiAyNS4xMzQ2IDk0LjQyOTEgMjUuNDgzNyA5NC4xNjczVjkzLjIwNzNIMjRWOTEuODk4MkgyNi45NjczVjk0Ljg2NTRDMjYuNjE4MiA5NS4xMjczIDI2LjE4MTkgOTUuMzg5MSAyNS43NDU1IDk1LjY1MDlDMjUuMDQ3MyA5NS45MTI3IDI0LjUyMzcgOTYgMjMuOTEyOCA5NlpNMzMuMzM4MiA5NC42MDM2QzMzLjYgOTQuNjAzNiAzMy45NDkxIDk0LjUxNjQgMzQuMjExIDk0LjQyOTFDMzQuNDcyOCA5NC4zNDE4IDM0LjY0NzMgOTQuMTY3MyAzNC44MjE5IDkzLjk5MjdDMzQuOTk2NCA5My44MTgyIDM1LjE3MSA5My41NTY0IDM1LjI1ODIgOTMuMjk0NUMzNS4zNDU1IDkzLjAzMjcgMzUuNDMyOCA5Mi43NzA5IDM1LjQzMjggOTIuNTA5MUMzNS40MzI4IDkyLjI0NzMgMzUuMzQ1NSA5MS44OTgyIDM1LjI1ODIgOTEuNzIzNkMzNS4xNzEgOTEuNDYxOCAzNC45OTY0IDkxLjIgMzQuODIxOSA5MS4wMjU1QzM0LjY0NzMgOTAuODUwOSAzNC4zODU1IDkwLjY3NjQgMzQuMTIzNyA5MC41ODkxQzMzLjg2MTkgOTAuNTAxOCAzMy42IDkwLjQxNDUgMzMuMjUxIDkwLjQxNDVDMzIuOTAxOSA5MC40MTQ1IDMyLjY0IDkwLjUwMTggMzIuMzc4MiA5MC41ODkxQzMyLjExNjQgOTAuNjc2NCAzMS45NDE5IDkwLjg1MDkgMzEuNzY3MyA5MS4wMjU1QzMxLjU5MjggOTEuMiAzMS40MTgyIDkxLjQ2MTggMzEuMzMxIDkxLjcyMzZDMzEuMjQzNyA5MS45ODU0IDMxLjE1NjQgOTIuMjQ3MyAzMS4xNTY0IDkyLjUwOTFDMzEuMTU2NCA5Mi43NzA5IDMxLjI0MzcgOTMuMTIgMzEuMzMxIDkzLjI5NDVDMzEuNDE4MiA5My41NTY0IDMxLjU5MjggOTMuODE4MiAzMS43NjczIDkzLjk5MjdDMzEuOTQxOSA5NC4xNjczIDMyLjIwMzcgOTQuMzQxOCAzMi40NjU1IDk0LjQyOTFDMzIuNzI3MyA5NC41MTY0IDMzLjA3NjQgOTQuNjAzNiAzMy4zMzgyIDk0LjYwMzZaTTMzLjMzODIgOTZDMzIuODE0NiA5NiAzMi4yOTEgOTUuOTEyNyAzMS44NTQ2IDk1LjczODJDMzEuNDE4MiA5NS41NjM2IDMxLjA2OTEgOTUuMzAxOCAzMC43MiA5NC45NTI3QzMwLjM3MSA5NC42MDM2IDMwLjEwOTEgOTQuMjU0NSAyOS45MzQ2IDkzLjgxODJDMjkuNzYgOTMuMzgxOCAyOS42NzI4IDkyLjk0NTUgMjkuNjcyOCA5Mi40MjE4QzI5LjY3MjggOTEuODk4MiAyOS43NiA5MS40NjE4IDI5LjkzNDYgOTEuMDI1NUMzMC4xMDkxIDkwLjU4OTEgMzAuMzcxIDkwLjI0IDMwLjcyIDg5Ljg5MDlDMzEuMDY5MSA4OS41NDE4IDMxLjQxODIgODkuMjggMzEuODU0NiA4OS4xMDU0QzMyLjI5MSA4OC45MzA5IDMyLjgxNDYgODguODQzNiAzMy4zMzgyIDg4Ljg0MzZDMzMuODYxOSA4OC44NDM2IDM0LjM4NTUgODguOTMwOSAzNC44MjE5IDg5LjEwNTRDMzUuMjU4MiA4OS4yOCAzNS42MDczIDg5LjU0MTggMzUuOTU2NCA4OS44OTA5QzM2LjMwNTUgOTAuMjQgMzYuNTY3MyA5MC41ODkxIDM2Ljc0MTkgOTEuMDI1NUMzNi45MTY0IDkxLjQ2MTggMzcuMDAzNyA5MS44OTgyIDM3LjAwMzcgOTIuNDIxOEMzNy4wMDM3IDkyLjk0NTUgMzYuOTE2NCA5My4zODE4IDM2Ljc0MTkgOTMuODE4MkMzNi41NjczIDk0LjI1NDUgMzYuMzA1NSA5NC42MDM2IDM1Ljk1NjQgOTQuOTUyN0MzNS42MDczIDk1LjMwMTggMzUuMjU4MiA5NS41NjM2IDM0LjgyMTkgOTUuNzM4MkMzNC4zODU1IDk1LjkxMjcgMzMuODYxOSA5NiAzMy4zMzgyIDk2Wk00MC4wNTgyIDg5LjEwNTRINDEuNTQxOVY5NC42MDM2SDQ0Ljk0NTVWOTZINDAuMDU4MlY4OS4xMDU0Wk00Ny45MTI4IDg5LjEwNTRINTMuMTQ5MVY5MC41MDE4SDQ5LjQ4MzdWOTEuOTg1NUg1Mi43MTI4VjkzLjM4MThINDkuNDgzN1Y5Nkg0OFY4OS4xMDU0SDQ3LjkxMjhaTTYzLjk3MSA5NkM2My40NDczIDk2IDYzLjAxMSA5NS45MTI3IDYyLjU3NDYgOTUuNzM4MkM2Mi4xMzgyIDk1LjU2MzYgNjEuNzg5MSA5NS4zMDE4IDYxLjQ0IDk0Ljk1MjdDNjEuMDkxIDk0LjYwMzYgNjAuOTE2NCA5NC4yNTQ1IDYwLjc0MTkgOTMuODE4MkM2MC41NjczIDkzLjM4MTggNjAuNDggOTIuOTQ1NSA2MC40OCA5Mi40MjE4QzYwLjQ4IDkxLjg5ODIgNjAuNTY3MyA5MS40NjE4IDYwLjc0MTkgOTEuMDI1NUM2MC45MTY0IDkwLjU4OTEgNjEuMTc4MiA5MC4yNCA2MS40NCA4OS44OTA5QzYxLjc4OTEgODkuNTQxOCA2Mi4xMzgyIDg5LjI4IDYyLjU3NDYgODkuMTA1NEM2My4wMTEgODguOTMwOSA2My41MzQ2IDg4Ljg0MzYgNjQuMDU4MiA4OC44NDM2QzY0LjQwNzMgODguODQzNiA2NC42NjkxIDg4Ljg0MzYgNjQuOTMxIDg4LjkzMDlDNjUuMTkyOCA4OS4wMTgyIDY1LjQ1NDYgODkuMDE4MiA2NS42MjkxIDg5LjEwNTRDNjUuODAzNyA4OS4xOTI3IDY2LjA2NTUgODkuMjggNjYuMjQgODkuNDU0NUM2Ni40MTQ2IDg5LjU0MTggNjYuNTg5MSA4OS43MTY0IDY2Ljc2MzcgODkuODkwOUw2NS44MDM3IDkxLjAyNTVDNjUuNTQxOSA5MC43NjM2IDY1LjI4IDkwLjU4OTEgNjUuMDE4MiA5MC41MDE4QzY0Ljc1NjQgOTAuMzI3MyA2NC40MDczIDkwLjMyNzMgNjQuMDU4MiA5MC4zMjczQzYzLjc5NjQgOTAuMzI3MyA2My41MzQ2IDkwLjQxNDUgNjMuMjcyOCA5MC41MDE4QzYzLjAxMSA5MC41ODkxIDYyLjgzNjQgOTAuNzYzNiA2Mi42NjE5IDkwLjkzODJDNjIuNDg3MyA5MS4xMTI3IDYyLjMxMjggOTEuMzc0NSA2Mi4yMjU1IDkxLjYzNjRDNjIuMTM4MiA5MS44OTgyIDYyLjA1MSA5Mi4xNiA2Mi4wNTEgOTIuNDIxOEM2Mi4wNTEgOTIuNjgzNiA2Mi4xMzgyIDkzLjAzMjcgNjIuMjI1NSA5My4yMDczQzYyLjMxMjggOTMuNDY5MSA2Mi40ODczIDkzLjczMDkgNjIuNjYxOSA5My45MDU0QzYyLjgzNjQgOTQuMDggNjMuMDExIDk0LjI1NDUgNjMuMjcyOCA5NC4zNDE4QzYzLjUzNDYgOTQuNDI5MSA2My43OTY0IDk0LjUxNjQgNjQuMDU4MiA5NC41MTY0QzY0LjQwNzMgOTQuNTE2NCA2NC43NTY0IDk0LjQyOTEgNjUuMDE4MiA5NC4zNDE4QzY1LjI4IDk0LjE2NzMgNjUuNTQxOSA5My45OTI3IDY1LjgwMzcgOTMuNzMwOUw2Ni43NjM3IDk0LjY5MDlDNjYuNTg5MSA5NC44NjU1IDY2LjQxNDYgOTUuMDQgNjYuMjQgOTUuMjE0NUM2Ni4wNjU1IDk1LjM4OTEgNjUuODAzNyA5NS40NzY0IDY1LjYyOTEgOTUuNTYzNkM2NS4zNjczIDk1LjY1MDkgNjUuMTkyOCA5NS43MzgyIDY0LjkzMSA5NS44MjU1QzY0LjU4MTkgOTYgNjQuMzIgOTYgNjMuOTcxIDk2Wk03My4wNDczIDk0LjYwMzZDNzMuMzA5MSA5NC42MDM2IDczLjY1ODIgOTQuNTE2NCA3My45MiA5NC40MjkxQzc0LjE4MTkgOTQuMzQxOCA3NC4zNTY0IDk0LjE2NzMgNzQuNTMxIDkzLjk5MjdDNzQuNzA1NSA5My44MTgyIDc0Ljg4IDkzLjU1NjQgNzQuOTY3MyA5My4yOTQ1Qzc1LjA1NDYgOTMuMDMyNyA3NS4xNDE5IDkyLjc3MDkgNzUuMTQxOSA5Mi41MDkxQzc1LjE0MTkgOTIuMjQ3MyA3NS4wNTQ2IDkxLjg5ODIgNzQuOTY3MyA5MS43MjM2Qzc0Ljg4IDkxLjQ2MTggNzQuNzA1NSA5MS4yIDc0LjUzMSA5MS4wMjU1Qzc0LjM1NjQgOTAuODUwOSA3NC4wOTQ2IDkwLjY3NjQgNzMuODMyOCA5MC41ODkxQzczLjU3MSA5MC41MDE4IDczLjMwOTEgOTAuNDE0NSA3Mi45NiA5MC40MTQ1QzcyLjYxMSA5MC40MTQ1IDcyLjM0OTEgOTAuNTAxOCA3Mi4wODczIDkwLjU4OTFDNzEuODI1NSA5MC42NzY0IDcxLjY1MSA5MC44NTA5IDcxLjQ3NjQgOTEuMDI1NUM3MS4zMDE5IDkxLjIgNzEuMTI3MyA5MS40NjE4IDcxLjA0IDkxLjcyMzZDNzAuOTUyOCA5MS45ODU0IDcwLjg2NTUgOTIuMjQ3MyA3MC44NjU1IDkyLjUwOTFDNzAuODY1NSA5Mi43NzA5IDcwLjk1MjggOTMuMTIgNzEuMDQgOTMuMjk0NUM3MS4xMjczIDkzLjQ2OTEgNzEuMzAxOSA5My44MTgyIDcxLjQ3NjQgOTMuOTkyN0M3MS42NTEgOTQuMTY3MyA3MS45MTI4IDk0LjM0MTggNzIuMTc0NiA5NC40MjkxQzcyLjQzNjQgOTQuNTE2NCA3Mi43ODU1IDk0LjYwMzYgNzMuMDQ3MyA5NC42MDM2Wk03My4wNDczIDk2QzcyLjUyMzcgOTYgNzIgOTUuOTEyNyA3MS41NjM3IDk1LjczODJDNzEuMTI3MyA5NS41NjM2IDcwLjc3ODIgOTUuMzAxOCA3MC40MjkxIDk0Ljk1MjdDNzAuMDggOTQuNjAzNiA2OS44MTgyIDk0LjI1NDUgNjkuNjQzNyA5My44MTgyQzY5LjQ2OTEgOTMuMzgxOCA2OS4zODE5IDkyLjk0NTUgNjkuMzgxOSA5Mi40MjE4QzY5LjM4MTkgOTEuODk4MiA2OS40NjkxIDkxLjQ2MTggNjkuNjQzNyA5MS4wMjU1QzY5LjgxODIgOTAuNTg5MSA3MC4wOCA5MC4yNCA3MC40MjkxIDg5Ljg5MDlDNzAuNzc4MiA4OS41NDE4IDcxLjEyNzMgODkuMjggNzEuNTYzNyA4OS4xMDU0QzcyIDg4LjkzMDkgNzIuNTIzNyA4OC44NDM2IDczLjA0NzMgODguODQzNkM3My41NzEgODguODQzNiA3NC4wOTQ2IDg4LjkzMDkgNzQuNTMxIDg5LjEwNTRDNzQuOTY3MyA4OS4yOCA3NS4zMTY0IDg5LjU0MTggNzUuNjY1NSA4OS44OTA5Qzc2LjAxNDYgOTAuMjQgNzYuMjc2NCA5MC41ODkxIDc2LjQ1MSA5MS4wMjU1Qzc2LjYyNTUgOTEuNDYxOCA3Ni43MTI4IDkxLjg5ODIgNzYuNzEyOCA5Mi40MjE4Qzc2LjcxMjggOTIuOTQ1NSA3Ni42MjU1IDkzLjM4MTggNzYuNDUxIDkzLjgxODJDNzYuMjc2NCA5NC4yNTQ1IDc2LjAxNDYgOTQuNjAzNiA3NS42NjU1IDk0Ljk1MjdDNzUuMzE2NCA5NS4zMDE4IDc0Ljk2NzMgOTUuNTYzNiA3NC41MzEgOTUuNzM4MkM3NC4wOTQ2IDk1LjkxMjcgNzMuNTcxIDk2IDczLjA0NzMgOTZaTTc5Ljc2NzMgODkuMTA1NEg4MS4yNTFWOTQuNjAzNkg4NC42NTQ2Vjk2SDc5Ljc2NzNWODkuMTA1NFpNODcuNjIxOSA4OS4xMDU0SDg5LjEwNTVWOTQuNjAzNkg5Mi41MDkxVjk2SDg3LjYyMTlWODkuMTA1NFpNOTUuMzg5MSA4OS4xMDU0SDEwMC41MzhWOTAuNDE0NUg5Ni44NzI4VjkxLjgxMDlIMTAwLjEwMlY5My4xMkg5Ni44NzI4Vjk0LjUxNjRIMTAwLjYyNVY5NS44MjU1SDk1LjM4OTFWODkuMTA1NFpNMTA2LjkwOSA5NkMxMDYuMzg1IDk2IDEwNS45NDkgOTUuOTEyNyAxMDUuNTEzIDk1LjczODJDMTA1LjA3NiA5NS41NjM2IDEwNC43MjcgOTUuMzAxOCAxMDQuMzc4IDk0Ljk1MjdDMTA0LjAyOSA5NC42MDM2IDEwMy44NTUgOTQuMjU0NSAxMDMuNjggOTMuODE4MkMxMDMuNTA2IDkzLjM4MTggMTAzLjQxOCA5Mi45NDU1IDEwMy40MTggOTIuNDIxOEMxMDMuNDE4IDkxLjg5ODIgMTAzLjUwNiA5MS40NjE4IDEwMy42OCA5MS4wMjU1QzEwMy44NTUgOTAuNTg5MSAxMDQuMTE2IDkwLjI0IDEwNC4zNzggODkuODkwOUMxMDQuNzI3IDg5LjU0MTggMTA1LjA3NiA4OS4yOCAxMDUuNTEzIDg5LjEwNTRDMTA1Ljk0OSA4OC45MzA5IDEwNi40NzMgODguODQzNiAxMDYuOTk2IDg4Ljg0MzZDMTA3LjM0NSA4OC44NDM2IDEwNy42MDcgODguODQzNiAxMDcuODY5IDg4LjkzMDlDMTA4LjEzMSA4OS4wMTgyIDEwOC4zOTMgODkuMDE4MiAxMDguNTY3IDg5LjEwNTRDMTA4Ljc0MiA4OS4xOTI3IDEwOS4wMDQgODkuMjggMTA5LjE3OCA4OS40NTQ1QzEwOS4zNTMgODkuNTQxOCAxMDkuNTI3IDg5LjcxNjQgMTA5LjcwMiA4OS44OTA5TDEwOC43NDIgOTEuMDI1NUMxMDguNDggOTAuNzYzNiAxMDguMjE4IDkwLjU4OTEgMTA3Ljk1NiA5MC41MDE4QzEwNy42OTUgOTAuMzI3MyAxMDcuMzQ1IDkwLjMyNzMgMTA2Ljk5NiA5MC4zMjczQzEwNi43MzUgOTAuMzI3MyAxMDYuNDczIDkwLjQxNDUgMTA2LjIxMSA5MC41MDE4QzEwNS45NDkgOTAuNTg5MSAxMDUuNzc1IDkwLjc2MzYgMTA1LjYgOTAuOTM4MkMxMDUuNDI1IDkxLjExMjcgMTA1LjI1MSA5MS4zNzQ1IDEwNS4xNjQgOTEuNjM2NEMxMDUuMDc2IDkxLjg5ODIgMTA0Ljk4OSA5Mi4xNiAxMDQuOTg5IDkyLjQyMThDMTA0Ljk4OSA5Mi42ODM2IDEwNS4wNzYgOTMuMDMyNyAxMDUuMTY0IDkzLjIwNzNDMTA1LjI1MSA5My40NjkxIDEwNS40MjUgOTMuNzMwOSAxMDUuNiA5My45MDU0QzEwNS43NzUgOTQuMDggMTA1Ljk0OSA5NC4yNTQ1IDEwNi4yMTEgOTQuMzQxOEMxMDYuNDczIDk0LjQyOTEgMTA2LjczNSA5NC41MTY0IDEwNi45OTYgOTQuNTE2NEMxMDcuMzQ1IDk0LjUxNjQgMTA3LjY5NSA5NC40MjkxIDEwNy45NTYgOTQuMzQxOEMxMDguMjE4IDk0LjE2NzMgMTA4LjQ4IDkzLjk5MjcgMTA4Ljc0MiA5My43MzA5TDEwOS43MDIgOTQuNjkwOUMxMDkuNTI3IDk0Ljg2NTUgMTA5LjM1MyA5NS4wNCAxMDkuMTc4IDk1LjIxNDVDMTA5LjAwNCA5NS4zODkxIDEwOC43NDIgOTUuNDc2NCAxMDguNTY3IDk1LjU2MzZDMTA4LjMwNiA5NS42NTA5IDEwOC4xMzEgOTUuNzM4MiAxMDcuODY5IDk1LjgyNTVDMTA3LjUyIDk2IDEwNy4yNTggOTYgMTA2LjkwOSA5NlpNMTE0LjI0IDkwLjQxNDVIMTEyLjE0NVY4OS4wMTgySDExNy44MThWOTAuNDE0NUgxMTUuNzI0Vjk1LjgyNTVIMTE0LjI0VjkwLjQxNDVaTTEyMC44NzMgOTUuOTEyN0gxMjIuMzU2Vjg5LjEwNTRIMTIwLjg3M1Y5NS45MTI3Wk0xMjkuMTY0IDk0LjYwMzZDMTI5LjQyNSA5NC42MDM2IDEyOS43NzUgOTQuNTE2NCAxMzAuMDM2IDk0LjQyOTFDMTMwLjI5OCA5NC4zNDE4IDEzMC40NzMgOTQuMTY3MyAxMzAuNjQ3IDkzLjk5MjdDMTMwLjgyMiA5My44MTgyIDEzMC45OTYgOTMuNTU2NCAxMzEuMDg0IDkzLjI5NDVDMTMxLjE3MSA5My4wMzI3IDEzMS4yNTggOTIuNzcwOSAxMzEuMjU4IDkyLjUwOTFDMTMxLjI1OCA5Mi4yNDczIDEzMS4xNzEgOTEuODk4MiAxMzEuMDg0IDkxLjcyMzZDMTMwLjk5NiA5MS40NjE4IDEzMC44MjIgOTEuMiAxMzAuNjQ3IDkxLjAyNTVDMTMwLjQ3MyA5MC44NTA5IDEzMC4yMTEgOTAuNjc2NCAxMjkuOTQ5IDkwLjU4OTFDMTI5LjY4NyA5MC41MDE4IDEyOS40MjUgOTAuNDE0NSAxMjkuMDc2IDkwLjQxNDVDMTI4LjcyNyA5MC40MTQ1IDEyOC40NjUgOTAuNTAxOCAxMjguMjA0IDkwLjU4OTFDMTI3Ljk0MiA5MC42NzY0IDEyNy43NjcgOTAuODUwOSAxMjcuNTkzIDkxLjAyNTVDMTI3LjQxOCA5MS4yIDEyNy4yNDQgOTEuNDYxOCAxMjcuMTU2IDkxLjcyMzZDMTI3LjA2OSA5MS45ODU0IDEyNi45ODIgOTIuMjQ3MyAxMjYuOTgyIDkyLjUwOTFDMTI2Ljk4MiA5Mi43NzA5IDEyNy4wNjkgOTMuMTIgMTI3LjE1NiA5My4yOTQ1QzEyNy4yNDQgOTMuNTU2NCAxMjcuNDE4IDkzLjgxODIgMTI3LjU5MyA5My45OTI3QzEyNy43NjcgOTQuMTY3MyAxMjguMDI5IDk0LjM0MTggMTI4LjI5MSA5NC40MjkxQzEyOC41NTMgOTQuNTE2NCAxMjguODE1IDk0LjYwMzYgMTI5LjE2NCA5NC42MDM2Wk0xMjkuMTY0IDk2QzEyOC42NCA5NiAxMjguMTE2IDk1LjkxMjcgMTI3LjY4IDk1LjczODJDMTI3LjI0NCA5NS41NjM2IDEyNi44OTUgOTUuMzAxOCAxMjYuNTQ1IDk0Ljk1MjdDMTI2LjE5NiA5NC42MDM2IDEyNS45MzUgOTQuMjU0NSAxMjUuNzYgOTMuODE4MkMxMjUuNTg2IDkzLjM4MTggMTI1LjQ5OCA5Mi45NDU1IDEyNS40OTggOTIuNDIxOEMxMjUuNDk4IDkxLjg5ODIgMTI1LjU4NiA5MS40NjE4IDEyNS43NiA5MS4wMjU1QzEyNS45MzUgOTAuNTg5MSAxMjYuMTk2IDkwLjI0IDEyNi41NDUgODkuODkwOUMxMjYuODk1IDg5LjU0MTggMTI3LjI0NCA4OS4yOCAxMjcuNjggODkuMTA1NEMxMjguMTE2IDg4LjkzMDkgMTI4LjY0IDg4Ljg0MzYgMTI5LjE2NCA4OC44NDM2QzEyOS42ODcgODguODQzNiAxMzAuMjExIDg4LjkzMDkgMTMwLjY0NyA4OS4xMDU0QzEzMS4wODQgODkuMjggMTMxLjQzMyA4OS41NDE4IDEzMS43ODIgODkuODkwOUMxMzIuMTMxIDkwLjI0IDEzMi4zOTMgOTAuNTg5MSAxMzIuNTY3IDkxLjAyNTVDMTMyLjc0MiA5MS40NjE4IDEzMi44MjkgOTEuODk4MiAxMzIuODI5IDkyLjQyMThDMTMyLjgyOSA5Mi45NDU1IDEzMi43NDIgOTMuMzgxOCAxMzIuNTY3IDkzLjgxODJDMTMyLjM5MyA5NC4yNTQ1IDEzMi4xMzEgOTQuNjAzNiAxMzEuNzgyIDk0Ljk1MjdDMTMxLjQzMyA5NS4zMDE4IDEzMS4wODQgOTUuNTYzNiAxMzAuNjQ3IDk1LjczODJDMTMwLjEyNCA5NS45MTI3IDEyOS42ODcgOTYgMTI5LjE2NCA5NlpNMTM1Ljg4NCA4OS4xMDU0SDEzNy4yOEwxNDAuNTA5IDkzLjI5NDVWODkuMTA1NEgxNDEuOTkzVjk1LjkxMjdIMTQwLjY4NEwxMzcuMzY3IDkxLjU0OTFWOTUuOTEyN0gxMzUuODg0Vjg5LjEwNTRaIiBmaWxsPSIjRDVBNjQ0Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMzM0NV81NzAxIj4KPHJlY3Qgd2lkdGg9IjE2My41NDkiIGhlaWdodD0iOTYiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==';
+const IMGB='https://www.letouquetgolfresort.com/wp-content/uploads/sites/12/';
+const IMG={hero:IMGB+'2023/03/le-touquet-golf-resort.jpg',mer:IMGB+'2021/03/golf-du-touquet-la-mer.jpg',
+  mer2:IMGB+'2025/06/La-Mer-Hole-12-site.png',foret:IMGB+'2021/03/La-Foret-Green-3-1.jpg',manoir:IMGB+'2021/05/Le-Manoir-Trou-2.jpg',
+  acad:IMGB+'2021/02/practice-golf-le-touquet.jpg',stage:IMGB+'2021/03/stage-golf.jpeg',kids:IMGB+'2024/02/stages-enfants-golf-du-touquet.jpg',
+  range:IMGB+'2025/12/Practice-Trackman-LTQ-4.jpg',putting:IMGB+'2022/12/putting-green-le-touquet-golf-modifiee.png',
+  comp:IMGB+'2026/09/Photo-Background-Cleanup.png',links:IMGB+'2023/07/parcours-18-trous-touquet.jpg',
+  decouverte:IMGB+'2021/02/Golf-du-Touquet-Practice-Driving-range.jpg'};
+const CRSIMG={mer:IMG.mer2,foret:IMG.foret,manoir:IMG.manoir};
+const COMPIMG={automne:IMG.links,seniors:IMG.foret,proam:IMG.comp,jeunes:IMG.manoir,toussaint:IMG.links,noel:IMG.foret};
+const TAGIMG={'Green fee':IMG.links,'Compétition':IMG.comp,'Cours':IMG.acad,'Cours collectif':IMG.putting,'Carnet':IMG.range,'Stage':IMG.stage};
+const cap=x=>x[0].toUpperCase()+x.slice(1);
+const bg=u=>`background-image:url('${u}')`;
+/* ═════════ Référentiel du site ═════════ */
+/* Cadences du planning v2 : La Mer toutes les 10 min, La Forêt et Le Manoir
+   toutes les 9 min, Le Manoir décalé de −5 min (starter commun). */
+const CRS=[
+  {id:'mer',n:'La Mer',t:'18 trous · par 72 · links',p:120,we:20,cad:10,from:'08:00',to:'16:00',idxMax:30},
+  {id:'foret',n:'La Forêt',t:'18 trous · par 71',p:85,we:10,cad:9,from:'08:00',to:'16:06'},
+  {id:'manoir',n:'Le Manoir',t:'9 trous · par 32',p:38,we:0,cad:9,from:'07:55',to:'17:01',nine:true}];
+const crs=id=>CRS.find(c=>c.id===id);
+const GOPTS=[
+  {id:'voit',n:'Voiturette',d:'2 places · GPS de parcours',p:45,p9:25,pa:30,per:'voit'},
+  {id:'chariot',n:'Chariot électrique',d:'Batterie chargée, à retirer au starter',p:15,pa:10,per:'j'},
+  {id:'clubs',n:'Location de clubs',d:'Série complète, droitier ou gaucher',p:40,per:'j'},
+  {id:'seau',n:'Seau de practice',d:'50 balles avant le départ',p:5,pa:0,per:'j'}];
+const PROS={
+  jcm:{n:'Jean-Charles Martin',t:'Pro PGA · swing & long jeu',days:[1,2,3,4,5,6]},
+  lou:{n:'Lou Castel',t:'Pro PGA · petit jeu & jeunes',days:[0,3,4,5,6]}};
+const LESSON={30:45,60:80};
+const COLL=[
+  {id:'c1',n:'Atelier petit jeu',d:'2026-09-19',h:'10:00',dur:60,pro:'jcm',lvl:'Index 36 et moins',idxMax:36,cap:6,left:2,p:30},
+  {id:'c2',n:'Initiation découverte',d:'2026-09-20',h:'14:00',dur:45,pro:'lou',lvl:'Débutants · sans licence',cap:4,left:4,p:25},
+  {id:'c5',n:'Cours collectif enfants',d:'2026-09-23',h:'14:00',dur:60,pro:'lou',lvl:'Enfants de 7 à 12 ans',cap:8,left:3,p:18,kid:true},
+  {id:'c3',n:'Atelier bunker',d:'2026-09-26',h:'10:00',dur:90,pro:'jcm',lvl:'Index 36 et moins',idxMax:36,cap:6,left:0,p:40},
+  {id:'c4',n:'Putting — lire les greens',d:'2026-09-27',h:'11:00',dur:60,pro:'lou',lvl:'Tous niveaux',cap:6,left:5,p:30}];
+const STAGES=[
+  {id:'s1',n:'Stage perfectionnement — petit jeu & putting',d:'2026-10-24',d2:'2026-10-25',sched:'2 jours · 9 h 30 – 12 h 30',pro:'lou',lvl:'Index 10 à 36',cap:8,left:3,p:290},
+  {id:'s2',n:'Stage Toussaint jeunes',d:'2026-10-26',d2:'2026-10-28',sched:'3 matinées · 9 h – 12 h',pro:'jcm',lvl:'De 8 à 17 ans',cap:10,left:6,p:180,kid:true},
+  {id:'s3',n:'Stage « Premier parcours »',d:'2026-11-07',d2:'2026-11-08',sched:'2 jours · 10 h – 16 h, déjeuner inclus',pro:'jcm',lvl:'Débutants · carte verte à la clé',cap:6,left:6,p:390}];
+const CARNETS=[
+  {id:'k5-30',n:'Carnet 5 cours · 30 min',q:5,dur:30,p:200},
+  {id:'k10-30',n:'Carnet 10 cours · 30 min',q:10,dur:30,p:380},
+  {id:'k5-60',n:'Carnet 5 cours · 1 h',q:5,dur:60,p:360}];
+const COMPS=[
+  {id:'automne',n:'Coupe d\'Automne',date:'2026-10-04',h:'08:00',close:'2026-10-01',crs:'mer',fmt:'Stroke play · individuel',team:0,idxMax:30,dj:25,cap:120,taken:82,series:'2 séries messieurs · 1 série dames'},
+  {id:'seniors',n:'Trophée des Seniors',date:'2026-10-13',h:'09:00',close:'2026-10-09',crs:'foret',fmt:'Stableford · individuel',team:0,idxMax:36,dj:20,cap:72,taken:40,minAge:65,series:'Série unique'},
+  {id:'proam',n:'Pro-Am de la Collection',date:'2026-10-17',h:'09:00',close:'2026-10-10',crs:'mer',fmt:'Scramble · équipes composées par le club',team:0,idxMax:24,dj:60,cap:64,taken:64,wait:3,series:'Équipes de 3 amateurs + 1 pro'},
+  {id:'jeunes',n:'Challenge Jeunes',date:'2026-10-21',h:'14:00',close:'2026-10-18',crs:'manoir',fmt:'Stableford · 9 trous',team:0,idxMax:54,dj:15,djJ:8,cap:40,taken:12,maxAge:25,series:'−18 ans · 18-25 ans'},
+  {id:'toussaint',n:'Greensome de la Toussaint',date:'2026-10-31',h:'09:00',close:'2026-10-28',crs:'foret',fmt:'Greensome · équipes de 2',team:2,idxMax:36,dj:20,cap:80,taken:46,series:'Série mixte'},
+  {id:'noel',n:'Coupe de Noël',date:'2026-12-13',h:'10:00',close:'2026-12-10',crs:'foret',fmt:'Scramble à 2',team:2,idxMax:54,dj:15,cap:60,taken:8,series:'Série unique'}];
+const comp=id=>COMPS.find(c=>c.id===id);
+const COMPS_SEED=COMPS.map(c=>({id:c.id,taken:c.taken,wait:c.wait}));
+const PROMOS={AUTOMNE15:{pct:.15,on:['gf','ind','coll','stage'],n:'Offre d\'automne −15 %',d:'green fees, cours et stages'},
+              GOLF10:{pct:.10,on:['gf'],n:'Code GOLF10 −10 %',d:'green fees uniquement'}};
+const HOLD=10*60;
+
+/* ═════════ Tarifs selon le statut ═════════
+   Règle unique : quand une personne cumule plusieurs statuts, le tarif le plus
+   avantageux s'applique — jamais de cumul de remises entre statuts. */
+function gfPub(c,k){return c.p+(isWe(k)?c.we:0)}
+function gfPrice(c,k,sts){
+  const base=gfPub(c,k);let best={p:base,st:null};
+  (sts||[]).forEach(s=>{
+    let p=base;
+    if(s==='abonne')p=c.id==='mer'?60:0;
+    else if(s==='reseau')p=base*.6;
+    else if(s==='jeune')p=base*.5;
+    else if(s==='senior')p=isWe(k)?base:base*.65;
+    else if(s==='licencie')p=base*.8;
+    p=Math.round(p);
+    if(p<best.p)best={p,st:s};
+  });
+  return {...best,pub:base};
+}
+const LK={abonne:.8,reseau:.9,jeune:.7};
+function lessonPrice(base,sts){
+  let best={p:base,st:null};
+  (sts||[]).forEach(s=>{if(LK[s]){const p=Math.round(base*LK[s]);if(p<best.p)best={p,st:s}}});
+  return {...best,pub:base};
+}
+function stagePrice(s,sts){
+  if(s.kid)return {p:s.p,st:null,pub:s.p};
+  const k={abonne:.9,jeune:.8};let best={p:s.p,st:null};
+  (sts||[]).forEach(x=>{if(k[x]){const p=Math.round(s.p*k[x]);if(p<best.p)best={p,st:x}}});
+  return {...best,pub:s.p};
+}
+function optPrice(o,c,sts){
+  const base=c&&c.nine&&o.p9!=null?o.p9:o.p;
+  if((sts||[]).includes('abonne')&&o.pa!=null)return {p:c&&c.nine&&o.id==='voit'?15:o.pa,pub:base,st:'abonne'};
+  return {p:base,pub:base,st:null};
+}
+/* compétition : droit de jeu + green fee du jour ; l'abonné ne paie que le droit de jeu */
+function compPrice(cp,sts){
+  sts=sts||[];
+  const c=crs(cp.crs), g=gfPrice(c,cp.date,sts);
+  const gf=sts.includes('abonne')?0:g.p;
+  const dj=sts.includes('jeune')&&cp.djJ?cp.djJ:cp.dj;
+  const pubT=cp.dj+gfPub(c,cp.date);
+  const st=sts.includes('abonne')?'abonne':(g.st||(dj<cp.dj?'jeune':null));
+  return {dj,gf,p:dj+gf,pub:pubT,gfPub:gfPub(c,cp.date),st};
+}
+/* affichage d'un prix avec le prix public barré */
+function pr(x,opt){
+  opt=opt||{};
+  const inc=x.p===0&&x.pub>0;
+  const main=inc?'Inclus':eur(x.p);
+  return (x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:'')+main
+    +(opt.small?`<small>${opt.small}</small>`:'')
+    +(x.st&&!opt.nost?`<br><span class="stl">Tarif ${ST[x.st].n}</span>`:'');
+}
+
+/* ═════════ État ═════════ */
+let PROFILES, S, hold=HOLD, holdDead=false;
+function seedRes(){
+  return {
+    claire:[
+      {id:'r1',kind:'ind',t:'Cours individuel · 30 min',sub:'Jean-Charles Martin · practice',d:'2026-09-18',h:'10:00',pay:'credit',amount:0},
+      {id:'r2',kind:'gf',t:'Green fee · La Forêt',sub:'2 joueurs · Claire Dumas, Paul Dumas · 1 voiturette',d:'2026-09-21',h:'08:18',pay:'card',amount:98},
+      {id:'r3',kind:'comp',t:'Coupe d\'Automne',sub:'Série dames · départ souhaité : tôt',d:'2026-10-04',h:'08:00',close:'2026-10-01',pay:'card',amount:25},
+      {id:'r4',kind:'gf',t:'Green fee · La Mer',sub:'1 joueur · Claire Dumas',d:'2026-09-06',h:'09:40',pay:'card',amount:60,past:true},
+      {id:'r5',kind:'ind',t:'Cours individuel · 30 min',sub:'Jean-Charles Martin',d:'2026-09-02',h:'11:00',pay:'credit',amount:0,past:true}],
+    marc:[
+      {id:'r6',kind:'gf',t:'Green fee · La Mer',sub:'2 joueurs · Marc Lefèvre, Claire Dumas',d:'2026-09-26',h:'10:20',pay:'card',amount:144},
+      {id:'r7',kind:'comp',t:'Pro-Am de la Collection',sub:'Liste d\'attente · position 2',d:'2026-10-17',h:'09:00',close:'2026-10-10',pay:'wait',amount:0,wait:2}],
+    leo:[{id:'r8',kind:'gf',t:'Green fee · La Mer',sub:'1 joueur',d:'2026-08-29',h:'15:10',pay:'card',amount:70,past:true}],
+    bernard:[{id:'r9',kind:'coll',t:'Atelier petit jeu',sub:'Jean-Charles Martin · 1 h',d:'2026-09-19',h:'10:00',pay:'card',amount:30}],
+    sophie:[]};
+}
+function fresh(){
+  PROFILES=JSON.parse(JSON.stringify(SEED_PROFILES));
+  COMPS_SEED.forEach(x=>Object.assign(comp(x.id),{taken:x.taken,wait:x.wait}));
+  return {user:null,
+    gf:{date:'2026-09-24',pax:2,moment:'all',crs:null,t:null,players:[],opts:{},idxOk:false,editOf:null},
+    comp:{filter:'all',id:null,partner:null,split:'me',pref:'indiff',wait:false},
+    cours:{tab:'ind',pro:'any',dur:30,wk:0,slot:null,useCredit:true},
+    cart:[],promo:null,promoErr:'',useAvoir:true,lastAdded:null,
+    co:{mode:'login',guest:false,cgv:false,garantie:false,newAcc:{}},
+    space:'resa',resTab:'avenir',res:seedRes(),done:null,ref:1040};
+}
+const me=()=>S.user?PROFILES[S.user]:null;
+const mySt=()=>me()?me().st:[];
+function certOk(p,k){return p&&p.cert&&p.cert>=k}
+
+/* ═════════ Navigation & couche globale ═════════ */
+const R={};
+function go(id){
+  closeSheet();
+  $$('.screen').forEach(s=>s.classList.toggle('on',s.id==='sc-'+id));
+  S.screen=id;
+  render();
+  const st=$('#stage');
+  if(st.dataset.vp==='mobile')st.scrollTop=0; else window.scrollTo(0,0);
+}
+function render(){
+  const id=S.screen;
+  if(R[id])R[id]();
+  const u=me();
+  $('#accBtn').innerHTML=u
+    ?`<span class="av">${u.ini}</span><span class="lbl">Mon espace</span>`
+    :`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg><span class="lbl">Se connecter</span>`;
+  const n=S.cart.length;
+  $('#cartCount').textContent=n;
+  $('#cartBtn').classList.toggle('has',n>0);
+  paintHold();
+  $$('img[data-logo]').forEach(i=>{if(!i.getAttribute('src'))i.src=LOGO});
+}
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]');
+  if(g&&!g.disabled){e.preventDefault();go(g.dataset.go);return}
+  const a=e.target.closest('[data-act]');
+  if(a&&!a.disabled&&ACT[a.dataset.act]){e.preventDefault();ACT[a.dataset.act](a)}
+});
+const ACT={};
+
+function sheet(html){$('#sheet').innerHTML=html;$('#sheetBg').classList.add('on')}
+function closeSheet(){$('#sheetBg').classList.remove('on')}
+$('#sheetBg').addEventListener('click',e=>{if(e.target.id==='sheetBg')closeSheet()});
+ACT.close=closeSheet;
+const shead=(t,node)=>`<div class="between" style="align-items:flex-start;margin-bottom:6px">
+  <div>${node?`<span class="node" style="margin-bottom:8px">${node}</span>`:''}<div class="h2">${t}</div></div>
+  <button class="x" data-act="close" aria-label="Fermer">✕</button></div>`;
+let toastT;
+function toast(t){const el=$('#toast');el.innerHTML=t;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('on'),3200)}
+
+/* fil d'étapes commun aux trois parcours */
+function fil(steps,cur){
+  return `<div class="fil">${steps.map((s,i)=>`<span class="${i===cur?'on':i<cur?'done':''}">${i+1}. ${s}</span>`).join('')}</div>`;
+}
+/* bandeau de tarif : incite à se connecter, puis confirme le statut appliqué */
+function pbar(ctx){
+  const u=me();
+  if(!u)return `<div class="pbar"><div><b>Abonné, membre du réseau, licencié, jeune ou senior&nbsp;?</b>
+      Connectez-vous : ${ctx||'tous les prix'} se recalculent avec votre tarif, le prix public reste affiché barré.</div>
+      <button class="btn sm" data-act="login">Me connecter</button>
+      <button class="lnk" data-act="signup">Créer un compte</button></div>`;
+  return `<div class="pbar on"><span class="av">${u.ini}</span><div><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}<br>
+      Vos tarifs sont appliqués. Quand vous cumulez plusieurs statuts, le plus avantageux l'emporte.</div>
+      <button class="lnk" data-go="espace">Mon espace</button></div>`;
+}
+
+/* ═════════ Connexion & création de compte ═════════ */
+ACT.account=()=>{if(me()){S.space='resa';go('espace')}else ACT.login()};
+ACT.login=()=>{
+  sheet(shead('Connexion','Espace personnel')+
+  `<p class="sub" style="margin:4px 0 16px">Une fois connecté·e, les prix de tout le site — et ceux déjà dans votre panier — sont recalculés avec votre tarif.</p>
+   <label class="field"><span>E-mail</span><input type="email" id="lgMail" placeholder="vous@exemple.fr"></label>
+   <label class="field"><span>Mot de passe</span><input type="password" id="lgPwd" placeholder="••••••••"></label>
+   <button class="btn full" data-act="loginMail">Se connecter</button>
+   <div class="between" style="margin-top:10px"><button class="lnk" style="font-size:12px">Mot de passe oublié</button>
+     <button class="lnk" style="font-size:12px" data-act="signup">Créer un compte</button></div>
+   <div class="hr"></div>
+   <div class="sect" style="margin-top:0">Comptes de démonstration</div>
+   <div class="radios">${DEMO.map(id=>{const p=PROFILES[id];return `<button class="radio" data-act="loginAs" data-id="${id}">
+     <span class="av lt">${p.ini}</span><div><b>${p.n}</b><small>${p.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(p.idx)}</small></div></button>`}).join('')}</div>
+   <p class="note">Dans le vrai moteur, pas de liste : l'e-mail suffit à retrouver la fiche RCU et ses statuts. La liste sert seulement à changer de profil pendant la démo.</p>`);
+};
+ACT.loginMail=()=>{
+  const m=($('#lgMail').value||'').trim().toLowerCase();
+  const p=Object.values(PROFILES).find(x=>x.email===m);
+  if(p)ACT.loginAs({dataset:{id:p.id}}); else toast('Pour la démo, choisissez un compte ci-dessous.');
+};
+ACT.loginAs=a=>{closeSheet();login(a.dataset.id)};
+function login(id){
+  const before=cartTotals().due;
+  S.user=id||null;
+  S.gf.players.forEach(p=>{if(p.type==='acc'&&p.id===id)p.type='self'});
+  S.co.guest=false;
+  const after=cartTotals().due;
+  render();
+  if(id){
+    const d=before-after;
+    toast(S.cart.length&&d>0?`Connecté·e : votre tarif s'applique, <b>−${eur(d)}</b> sur votre panier.`
+      :`Connecté·e en tant que ${PROFILES[id].n}. Vos tarifs sont appliqués.`);
+  }
+}
+ACT.logout=()=>{login(null);if(S.screen==='espace')go('accueil');toast('Vous êtes déconnecté·e. Les prix publics sont rétablis.')};
+ACT.signup=()=>{
+  sheet(shead('Créer mon compte','Espace personnel')+signupForm()+
+   `<button class="btn full" style="margin-top:6px" data-act="signupGo">Créer mon compte</button>`);
+  bindSignup();
+};
+function signupForm(){
+  const a=S.co.newAcc;
+  return `<p class="sub" style="margin:4px 0 14px">Deux informations suffisent à calculer votre tarif : votre date de naissance (tarifs jeune et senior) et votre numéro de licence FFGolf.</p>
+   <div class="grid g2" style="gap:0 12px">
+     <label class="field"><span>Prénom</span><input id="suFn" value="${a.fn||''}"></label>
+     <label class="field"><span>Nom</span><input id="suLn" value="${a.ln||''}"></label></div>
+   <label class="field"><span>E-mail</span><input id="suMail" type="email" value="${a.mail||''}"></label>
+   <label class="field"><span>Date de naissance</span><input id="suDob" type="date" value="${a.dob||''}"></label>
+   <label class="field"><span>N° de licence FFGolf <i style="font-style:normal;font-weight:400;color:var(--g500)">— facultatif</i></span>
+     <div class="row"><input id="suLic" inputmode="numeric" placeholder="7 à 8 chiffres" value="${a.lic||''}" style="flex:1">
+       <button class="btn sm sec" data-act="suCheck" type="button">Vérifier</button></div></label>
+   <div id="suLicRes">${a.licOk?licCard(a):''}</div>
+   <label class="field"><span>Mot de passe</span><input type="password" placeholder="8 caractères minimum"></label>
+   <p class="note">La vérification interroge l'espace licencié FFGolf : elle rapporte l'index et la validité du certificat médical, utiles plus tard pour les compétitions. Démo : tout numéro de 7 ou 8 chiffres est reconnu.</p>`;
+}
+function licCard(a){
+  return `<div class="alert soft" style="margin-top:-4px"><span class="ic">✓</span><div><b>Licence ${a.lic} reconnue</b> · index ${fidx(a.idx)} · certificat médical valable jusqu'au ${fdm(a.cert)} 2027.<br>Le tarif Licencié FFGolf vous sera appliqué.</div></div>`;
+}
+function bindSignup(){
+  const a=S.co.newAcc;
+  [['suFn','fn'],['suLn','ln'],['suMail','mail'],['suDob','dob'],['suLic','lic']].forEach(([i,k])=>{
+    const el=$('#'+i);if(el)el.oninput=()=>{a[k]=el.value;if(k==='lic'){a.licOk=false;$('#suLicRes').innerHTML=''}}});
+}
+ACT.suCheck=()=>{
+  const a=S.co.newAcc;
+  if(!/^\d{7,8}$/.test((a.lic||'').trim())){$('#suLicRes').innerHTML='<p class="mut" style="margin:-6px 0 12px">Numéro introuvable : il compte 7 ou 8 chiffres.</p>';return}
+  Object.assign(a,{licOk:true,idx:18.0,cert:'2027-04-01'});
+  $('#suLicRes').innerHTML=licCard(a);
+};
+function createAccount(){
+  const a=S.co.newAcc;
+  if(!a.fn||!a.ln||!a.mail||!a.dob){toast('Prénom, nom, e-mail et date de naissance sont requis.');return null}
+  const age=ageAt(a.dob,TODAY), st=[];
+  if(age<26)st.push('jeune');
+  if(age>=65)st.push('senior');
+  if(a.licOk)st.push('licencie');
+  const id='new'+uid();
+  PROFILES[id]=P({id,n:a.fn+' '+a.ln,ini:(a.fn[0]+a.ln[0]).toUpperCase(),email:a.mail,dob:a.dob,st,
+    lic:a.licOk?a.lic:null,idx:a.licOk?a.idx:null,cert:a.licOk?a.cert:null,home:'Compte créé le 17/09/2026'});
+  S.res[id]=[];
+  S.co.newAcc={};
+  return id;
+}
+ACT.signupGo=()=>{const id=createAccount();if(!id)return;closeSheet();login(id)};
+
+ACT.site=()=>sheet(shead('Choisir un golf','Sélecteur de site')+
+  `<p class="sub" style="margin:4px 0 14px">Le moteur est le même sur les douze golfs de la Collection : seul le référentiel change (parcours, cadences, pros, compétitions, grilles de tarifs).</p>
+   <div class="radios">${['Le Touquet Golf Resort','Golf d\'Hardelot','Golf des Yvelines','Golf de Seignosse','Opio-Valbonne Golf Resort','… et 7 autres golfs'].map((n,i)=>
+    `<button class="radio ${i?'dis':'on'}" ${i?'disabled':''}><span class="dot"></span><div><b>${n}</b>${i?'<small>Non maquetté dans ce proto</small>':'<small>Golf maquetté</small>'}</div></button>`).join('')}</div>
+   <p class="note">Question ouverte : le statut « Membre réseau RGC » vaut-il le même tarif sur les douze sites, ou chaque site fixe-t-il sa grille de réciprocité&nbsp;?</p>`);
+
+/* ═════════ Portail du golf ═════════ */
+R.accueil=()=>{
+  const u=me(), st=mySt(), k='2026-09-24';
+  const gfFrom=Math.min(...CRS.map(c=>gfPrice(c,k,st).p));
+  const cmin=COMPS.filter(c=>c.taken<c.cap).length;
+  const lp=lessonPrice(LESSON[30],st);
+  const nxt=COMPS.find(c=>c.taken<c.cap);
+  const ic={gf:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V3l10 4-10 4"/><path d="M3 21h14"/></svg>',
+    comp:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/></svg>',
+    cours:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M6 21v-4a6 6 0 0 1 12 0v4"/></svg>'};
+  const arrow='<svg class="go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  $('#v-accueil').innerHTML=`
+  <div class="oob"><span class="node">Hors moteur</span><div><b>Portail du golf — site vitrine</b>
+    Le booking engine commence aux trois portes (cadrage du 17/09/2026). Hôtel, spa et restaurant restent dans la v1.</div></div>
+  <section class="hero" style="background-image:url('${IMG.hero}')"><div class="hero-in">
+    <span class="eyebrow">Resonance Golf Collection · Côte d'Opale</span>
+    <h1>Entre mer et forêt, <b>réservez votre golf</b></h1>
+    <p>Trois parcours dont La Mer, élu meilleur links de France, une académie et un calendrier de compétitions toute l'année.</p>
+    <div class="badges"><span>Top 100 des resorts du monde</span><span>45 trous</span><span>2 h 30 de Paris</span></div>
+  </div></section>
+  <div class="quick"><div class="card">
+    <button data-go="gf"><span class="qi">${ic.gf}</span><span><b>Réserver un départ</b><small>${gfFrom===0?'Inclus dans votre abonnement':'dès '+eur(gfFrom)+(u?' à votre tarif':' par joueur')}</small></span>${arrow}</button>
+    <button data-go="comp"><span class="qi">${ic.comp}</span><span><b>S'inscrire à une compétition</b><small>${cmin} inscriptions ouvertes</small></span>${arrow}</button>
+    <button data-go="cours"><span class="qi">${ic.cours}</span><span><b>Prendre un cours</b><small>dès ${eur(lp.p)} les 30 min</small></span>${arrow}</button>
+  </div></div>
+  <div class="pad" style="padding-top:44px">
+    ${pbar()}
+    <div class="scr-head"><div><span class="eyebrow">Réserver en ligne</span><h2 class="h1">Que souhaitez-vous <b>réserver</b>&nbsp;?</h2></div>
+      <span class="node">Entrée · 3 portes</span></div>
+    <div class="grid g3">
+      <div class="card door" data-go="gf"><div class="ph img" style="background-image:url('${IMG.mer2}')"></div>
+        <span class="tag">3 parcours · 45 trous</span><b>Green fee</b>
+        <span class="sub">La date et le nombre de joueurs suffisent : tous les départs ouverts s'affichent, parcours par parcours.</span>
+        <div class="foot"><div class="price" style="text-align:left">${gfFrom===0?'Inclus':'dès '+eur(gfFrom)}<small>${u?'à votre tarif':'par joueur'}</small></div>
+          <span class="btn sm">Réserver</span></div></div>
+      <div class="card door" data-go="comp"><div class="ph img" style="background-image:url('${IMG.comp}')"></div>
+        <span class="tag">${cmin} inscriptions ouvertes</span><b>Compétitions</b>
+        <span class="sub">Prochaine : ${nxt.n}, ${fday(nxt.date)}. Licence et index vérifiés dès l'inscription.</span>
+        <div class="foot"><div class="price" style="text-align:left">${plural(COMPS.length,'date')}<small>d'ici décembre</small></div>
+          <span class="btn sm">Calendrier</span></div></div>
+      <div class="card door" data-go="cours"><div class="ph img" style="background-image:url('${IMG.acad}')"></div>
+        <span class="tag">2 pros PGA</span><b>Cours &amp; stages</b>
+        <span class="sub">Cours individuels, ateliers collectifs, stages et carnets de cours.</span>
+        <div class="foot"><div class="price" style="text-align:left">dès ${eur(lp.p)}<small>le cours de 30 min</small></div>
+          <span class="btn sm">Réserver</span></div></div>
+    </div>
+    <p class="note">Les trois portes affichent déjà le prix du statut quand le client est connecté (« Inclus » pour un abonné). C'est la promesse du cadrage : le bon prix dès le premier écran.</p>
+    <div class="split">
+      <div class="ph img" style="background-image:url('${IMG.foret}')"></div>
+      <div><span class="eyebrow" style="color:var(--gold)">Espace personnel</span>
+        <h2 class="h1">Vos avantages, <b>appliqués partout</b></h2>
+        <p class="sub" style="margin-top:12px">Abonné, membre du réseau Resonance, licencié, jeune ou senior : connectez-vous une fois, chaque prix du site tient compte de votre statut.</p>
+        <ul><li>Vos tarifs affichés dès la recherche</li><li>Vos réservations, QR codes et annulations</li><li>Vos carnets de cours et vos avoirs</li></ul>
+        ${u?`<button class="btn gold" data-go="espace">Mon espace</button>`:`<div class="row wrap"><button class="btn gold" data-act="login">Me connecter</button><button class="btn sec" style="color:#fff;box-shadow:inset 0 0 0 1.5px rgba(243,234,213,.5)" data-act="signup">Créer un compte</button></div>`}
+      </div>
+    </div>
+  </div>`;
+};
+
+/* ═════════ Green fee · 1 — date, joueurs, départs ═════════ */
+function slots(c,k){
+  const out=[];
+  for(let m=toMin(c.from);m<=toMin(c.to);m+=c.cad){
+    const t=toT(m), h=hash(c.id+k+t);
+    let free=[4,4,3,2,0,1,4,2,0,3,4,1][h%12];
+    if(isWe(k)&&h%3===0)free=0;
+    out.push({t,free});
+  }
+  return out;
+}
+const inMoment=(t,mo)=>mo==='all'||(mo==='am'?toMin(t)<720:toMin(t)>=720);
+function openSlots(c,k,pax,mo){return slots(c,k).filter(s=>s.free>=pax&&inMoment(s.t,mo))}
+R.gf=()=>{
+  const g=S.gf, st=mySt(), u=me();
+  const start=(()=>{const x=dshift(g.date,-3);return x<DMIN?DMIN:x})();
+  const days=Array.from({length:9},(_,i)=>dshift(start,i)).filter(k=>k<=DMAX);
+  const G2MAX=14;
+  const rows=CRS.map(c=>{
+    const ok=openSlots(c,g.date,g.pax,g.moment);
+    const blocked=!!(c.idxMax&&u&&u.idx>c.idxMax);
+    return {c,ok,blocked,price:gfPrice(c,g.date,st)};
+  });
+  const tot=rows.reduce((t,r)=>t+(r.blocked?0:r.ok.length),0);
+  $('#v-gf').innerHTML=`
+   ${g.editOf?`<div class="alert soft"><span class="ic">↺</span><div><b>Modification de votre départ du ${fday(g.editOf.d)} à ${g.editOf.h}</b><br>Votre départ actuel reste réservé tant que le nouveau n'est pas confirmé.</div><button class="lnk" data-act="gfEditCancel">Abandonner</button></div>`:''}
+   ${fil(['Départ','Joueurs & options','Panier'],0)}
+   <button class="back" data-go="accueil">← Le Touquet Golf Resort</button>
+   <div class="scr-head"><div><span class="eyebrow">Green fee · Le Touquet</span><h1 class="h1">Quand souhaitez-vous <b>jouer</b>&nbsp;?</h1>
+     <p class="sub" style="margin-top:6px">${fday(g.date)} · ${plural(g.pax,'joueur')} · ${u?'prix à votre tarif':'prix public par joueur'}</p></div>
+     <span class="node">Green fee · tunnel v2</span></div>
+   ${pbar('les green fees')}
+   <div class="card searchbar">
+     <div class="sb-f"><span>Date de jeu</span><div class="row" style="gap:6px">
+       <button class="navd" data-act="gfDay" data-n="-1" ${g.date<=DMIN?'disabled':''}>‹</button>
+       <input type="date" id="gfDate" min="${DMIN}" max="${DMAX}" value="${g.date}">
+       <button class="navd" data-act="gfDay" data-n="1" ${g.date>=DMAX?'disabled':''}>›</button></div></div>
+     <div class="sb-f"><span>Joueurs</span><div class="qty">
+       <button data-act="gfPax" data-n="-1" ${g.pax<=1?'disabled':''}>−</button><b>${g.pax}</b>
+       <button data-act="gfPax" data-n="1" ${g.pax>=4?'disabled':''}>＋</button>
+       <span class="mut">${g.pax>=4?'max. par départ':''}</span></div></div>
+     <label class="sb-f"><span>Moment</span><select id="gfMoment">
+       <option value="all">Toute la journée</option><option value="am">Matin</option><option value="pm">Après-midi</option></select></label>
+   </div>
+   <p class="note">Même logique que le tunnel green fee v2 validé le 10/09 : la date et le nombre de joueurs d'abord, puis les départs ouverts pour tout le groupe, parcours par parcours. Quatre joueurs maximum par départ : au-delà, on réserve un second départ.</p>
+   <div class="daystrip">${days.map(k=>{
+     const best=Math.min(...CRS.filter(c=>!(c.idxMax&&u&&u.idx>c.idxMax)&&openSlots(c,k,g.pax,g.moment).length).map(c=>gfPrice(c,k,st).p));
+     const has=isFinite(best);
+     return `<button class="day ${k===g.date?'on':''} ${has?'':'full'}" data-act="gfSetDay" data-k="${k}">
+       <div class="dd">${DAYS[wday(k)].slice(0,3)}. ${+k.slice(8)}</div><div class="mut" style="font-size:10.5px">${MABR[+k.slice(5,7)-1]}</div>
+       <div class="pp">${has?(best===0?'Inclus':'dès '+eur(best)):'complet'}</div></button>`}).join('')}</div>
+   <div class="between" style="margin-bottom:12px"><b class="h2">${tot?`${plural(rows.filter(r=>r.ok.length&&!r.blocked).length,'parcours ouvert','parcours ouverts')} · ${plural(tot,'départ')}`:'Aucun départ pour ce groupe ce jour-là'}</b>
+     <span class="mut">pour ${plural(g.pax,'joueur')}</span></div>
+   ${rows.map(r=>{
+     const c=r.c, shown=r.ok.slice(0,G2MAX), rest=r.ok.length-shown.length;
+     const tags=`<span class="tag">${c.t}</span>${c.nine?'<span class="tag">Sans index minimum</span>':''}${c.idxMax?`<span class="tag">Index ≤ ${c.idxMax}</span>`:''}`;
+     const body=r.blocked
+       ?`<div class="alert"><span class="ic">!</span><div><b>Votre index (${fidx(u.idx)}) dépasse la limite de ${c.idxMax} fixée pour La Mer.</b><br>Les départs existent, mais le starter ne peut pas vous faire partir. La Forêt et Le Manoir vous sont ouverts.</div></div>`
+       :r.ok.length?`<div class="gtimes">${shown.map(s=>`<button class="gtime" data-act="gfPick" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl. libres</i></button>`).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`
+       :`<p class="mut" style="margin-top:10px">Aucun départ n'accueille ${plural(g.pax,'joueur')} ensemble ${g.moment==='all'?'ce jour-là':g.moment==='am'?'le matin':'l\'après-midi'}.</p>`;
+     return `<div class="card crs ${r.ok.length&&!r.blocked?'':'off'}">
+       <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
+         <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
+         <span class="mut">Départ toutes les ${c.cad} min${c.id==='manoir'?' · décalé de 5 min sur La Forêt (starter commun)':''}</span></div>
+         <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}</div></div>
+       ${body}</div>`}).join('')}
+   <p class="note">Le prix affiché en tête de parcours est celui du client connecté. Les autres joueurs sont tarifés un par un à l'étape suivante, chacun selon son propre statut : un abonné qui invite un ami voit « Inclus » ici, mais paiera la place de l'ami.</p>
+   <p class="note">Senior : la remise ne vaut que du lundi au vendredi. Passez sur un samedi avec Bernard Roux pour voir le prix remonter au tarif licencié.</p>`;
+  $('#gfDate').onchange=e=>{if(e.target.value){g.date=e.target.value;render()}};
+  $('#gfMoment').value=g.moment;
+  $('#gfMoment').onchange=e=>{g.moment=e.target.value;render()};
+};
+ACT.gfDay=a=>{S.gf.date=dshift(S.gf.date,+a.dataset.n);render()};
+ACT.gfSetDay=a=>{S.gf.date=a.dataset.k;render()};
+ACT.gfPax=a=>{S.gf.pax=Math.min(4,Math.max(1,S.gf.pax+ +a.dataset.n));render()};
+ACT.gfEditCancel=()=>{S.gf.editOf=null;S.space='resa';go('espace')};
+ACT.gfMore=a=>{
+  const c=crs(a.dataset.c), g=S.gf;
+  sheet(shead(`${c.n} — tous les départs`,fday(g.date))+
+   `<div class="gtimes">${openSlots(c,g.date,g.pax,g.moment).map(s=>`<button class="gtime" data-act="gfPick" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl.</i></button>`).join('')}</div>`);
+};
+ACT.gfPick=a=>{
+  closeSheet();
+  const g=S.gf;
+  g.crs=a.dataset.c;g.t=a.dataset.t;g.idxOk=false;
+  const players=[{type:'self'}];
+  for(let i=1;i<g.pax;i++)players.push({type:'guest',n:''});
+  g.players=players;
+  g.opts={};
+  go('gf-joueurs');
+};
+
+/* ═════════ Green fee · 2 — joueurs, tarifs & options ═════════ */
+function playerInfo(p,i){
+  const u=me();
+  if(p.type==='self')return u
+    ?{n:u.n,you:true,st:u.st,idx:u.idx,sub:u.st.map(s=>ST[s].n).join(' · ')}
+    :{n:'Vous',you:true,st:[],idx:null,sub:'Non connecté·e · prix public',anon:true};
+  if(p.type==='acc'){const x=PROFILES[p.id];return {n:x.n,st:x.st,idx:x.idx,sub:'Compte rattaché · '+x.st.map(s=>ST[s].n).join(' · ')}}
+  if(p.type==='lic')return {n:p.n,st:['licencie'],idx:p.idx,sub:'Licence '+p.lic+' · vérifiée FFGolf'};
+  return {n:p.n||'Joueur '+(i+1),st:[],idx:null,sub:'Invité·e sans compte · prix public',guest:true};
+}
+function gfCalc(l){
+  const c=crs(l.crs), items=[];
+  l.players.forEach((p,i)=>{const pi=playerInfo(p,i);items.push({n:pi.n+(pi.you?' (vous)':''),...gfPrice(c,l.d,pi.st),grp:'gf'})});
+  GOPTS.forEach(o=>{const q=l.opts[o.id]||0;if(!q)return;
+    const x=optPrice(o,c,mySt());items.push({n:`${o.n} × ${q}`,p:x.p*q,pub:x.pub*q,st:x.st,grp:'gf'})});
+  return items;
+}
+function gfIdxState(){
+  const g=S.gf, c=crs(g.crs);
+  if(!c.idxMax)return {need:false};
+  const info=g.players.map(playerInfo);
+  const over=info.filter(x=>x.idx!=null&&x.idx>c.idxMax);
+  const unknown=info.filter(x=>x.idx==null);
+  return {need:true,over,unknown,ok:!over.length&&(!unknown.length||g.idxOk)};
+}
+R['gf-joueurs']=()=>{
+  const g=S.gf, c=crs(g.crs), u=me();
+  if(!c){go('gf');return}
+  const line={d:g.date,h:g.t,crs:g.crs,players:g.players,opts:g.opts};
+  const items=gfCalc(line);
+  const tot=items.reduce((t,x)=>t+x.p,0), pub=items.reduce((t,x)=>t+x.pub,0);
+  const ix=gfIdxState();
+  const used=g.players.filter(p=>p.type==='acc').map(p=>p.id);
+  const maxQ=o=>o.per==='voit'?Math.ceil(g.pax/2):g.pax;
+  $('#v-gf-joueurs').innerHTML=`
+   ${fil(['Départ','Joueurs & options','Panier'],1)}
+   <button class="back" data-go="gf">← Changer de départ</button>
+   <div class="band" style="${bg(CRSIMG[c.id])}"><div><span class="eyebrow">${c.t}</span>
+     <h1 class="h1">${c.n} · <b>${g.t.replace(':',' h ')}</b></h1>
+     <p class="sub" style="margin-top:6px">${cap(fday(g.date))} · ${plural(g.pax,'joueur')}</p></div></div>
+     <span class="node">Tarif par joueur</span>
+   ${pbar('votre place et vos options')}
+   <div class="two"><div>
+     <div class="card" style="padding:6px 16px">
+       ${g.players.map((p,i)=>{const pi=playerInfo(p,i), x=gfPrice(c,g.date,pi.st);
+         const warn=c.idxMax&&pi.idx!=null&&pi.idx>c.idxMax;
+         return `<div class="prow ${warn?'warn':''}">
+           <span class="av ${pi.you&&!pi.anon?'':'lt'}">${pi.anon||pi.guest?(i+1):pi.n.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
+           <div class="pb"><b>${pi.n}${pi.you&&!pi.anon?' <span class="mut">(vous)</span>':''}</b>
+             <span class="mut">${pi.sub}${pi.idx!=null?' · index '+fidx(pi.idx):''}</span>
+             ${pi.anon?`<div style="margin-top:4px"><button class="lnk" style="font-size:12px" data-act="login">Me connecter pour appliquer mon tarif</button></div>`:''}</div>
+           <div class="pp">${pr(x)}</div>
+           ${pi.you?'':`<button class="btn sm ghost" data-act="gfPlayer" data-i="${i}">${p.type==='guest'?'Rattacher':'Changer'}</button>`}
+         </div>`}).join('')}
+     </div>
+     <p class="note">Chaque joueur est tarifé selon son propre statut. Rattacher un joueur (compte Resonance ou licence FFGolf) peut faire baisser sa place ; sans rattachement, il paie le prix public. Le réservant règle l'ensemble.</p>
+     ${ix.need?`<div class="sect">Index maximum · ${c.n}</div>
+       ${ix.over.length?`<div class="alert"><span class="ic">!</span><div><b>${ix.over.map(x=>x.n).join(', ')} : index supérieur à ${c.idxMax}.</b><br>Le départ ne peut pas être réservé avec ce joueur. Retirez-le du départ ou choisissez La Forêt, sans limite d'index.</div></div>`:''}
+       ${ix.unknown.length?`<label class="chkbox card" style="padding:12px 14px"><input type="checkbox" id="gfIdxOk" ${g.idxOk?'checked':''}>
+         <span>Je certifie que ${ix.unknown.length>1?'les joueurs sans index connu ont':ix.unknown[0].you?'j\'ai':ix.unknown[0].n+' a'} un index inférieur ou égal à ${c.idxMax}. Il sera contrôlé au départ.</span></label>`
+        :ix.over.length?'':`<p class="mut">Index vérifié pour tous les joueurs rattachés ✓</p>`}`:''}
+     <div class="sect">Options</div>
+     <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,c,mySt()), q=g.opts[o.id]||0;
+       return `<div class="optrow"><div><b class="h3">${o.n}${c.nine&&o.id==='voit'?' 9 trous':''}</b><div class="mut">${o.d}</div></div>
+         <div style="text-align:right;font-weight:700;white-space:nowrap;font-size:13px">${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0?'Offert':eur(x.p)}<div class="mut" style="font-weight:500">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
+         <div class="qty sm"><button data-act="gfOpt" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''}>−</button><b>${q}</b><button data-act="gfOpt" data-o="${o.id}" data-n="1" ${q>=maxQ(o)?'disabled':''}>＋</button></div></div>`}).join('')}</div>
+     <p class="note">Les options suivent le statut du réservant : l'abonné a le seau de practice offert et la voiturette à tarif membre. Elles sont réglées avec le départ, sans passer par la caisse.</p>
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="h3" style="margin-bottom:8px">Récapitulatif</div>
+     ${items.map(x=>`<div class="sumline"><span>${x.n}</span><b>${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0&&x.pub>0?'Inclus':eur(x.p)}</b></div>`).join('')}
+     ${pub>tot?`<div class="sumline"><span>Économie liée aux statuts</span><b>−${eur(pub-tot)}</b></div>`:''}
+     <div class="sumtot"><span class="h3">Total</span><b>${eur(tot)}</b></div>
+     <p class="mut" style="margin:8px 0 14px">${tot===0?'Aucun paiement : départ inclus dans votre abonnement.':'Annulation gratuite jusqu\'à 24 h avant le départ.'}</p>
+     <button class="btn full" data-act="gfAdd" ${ix.need&&!ix.ok?'disabled':''}>Ajouter au panier</button>
+     ${ix.need&&!ix.ok?`<p class="mut" style="margin-top:8px">${ix.over.length?'Un joueur dépasse l\'index maximum.':'Cochez la déclaration d\'index pour continuer.'}</p>`:''}
+   </div></aside></div>`;
+  const cb=$('#gfIdxOk');if(cb)cb.onchange=e=>{g.idxOk=e.target.checked;render()};
+};
+ACT.gfOpt=a=>{const o=a.dataset.o;S.gf.opts[o]=Math.max(0,(S.gf.opts[o]||0)+ +a.dataset.n);render()};
+ACT.gfPlayer=a=>{
+  const i=+a.dataset.i, g=S.gf, u=me(), p=g.players[i];
+  const used=g.players.map(x=>x.type==='acc'?x.id:x.type==='self'&&u?u.id:null).filter(Boolean);
+  const partners=u?u.partners.filter(id=>!used.includes(id)):[];
+  sheet(shead(`Joueur ${i+1}`,'Rattacher un joueur')+
+   `<p class="sub" style="margin:4px 0 14px">Rattachez ce joueur à son compte ou à sa licence : son tarif s'applique à sa place.</p>
+   ${partners.length?`<div class="sect" style="margin-top:0">Mes partenaires de jeu</div><div class="radios">${partners.map(id=>{const x=PROFILES[id];
+     return `<button class="radio" data-act="gfSetP" data-i="${i}" data-type="acc" data-id="${id}"><span class="av lt">${x.ini}</span><div><b>${x.n}</b><small>${x.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(x.idx)}</small></div><b>${pr(gfPrice(crs(g.crs),g.date,x.st),{nost:true})}</b></button>`}).join('')}</div>`:''}
+   <div class="sect">Rechercher un compte ou une licence</div>
+   <div class="codebox"><input id="pSearch" placeholder="E-mail ou n° de licence FFGolf" style="text-transform:none"><button class="btn sm" data-act="gfSearch" data-i="${i}">Rechercher</button></div>
+   <div id="pRes" style="margin-top:10px"></div>
+   <div class="sect">Ou sans compte</div>
+   <div class="codebox"><input id="pGuest" placeholder="Prénom et nom (facultatif)" value="${p.type==='guest'?p.n||'':''}" style="text-transform:none"><button class="btn sm sec" data-act="gfSetGuest" data-i="${i}">Invité·e au prix public</button></div>
+   <p class="note">Démo : essayez sophie.marchand@email.fr, 5520871 (Bernard Roux, index 31 — bloqué sur La Mer) ou n'importe quel numéro à 7 chiffres.</p>`);
+};
+ACT.gfSearch=a=>{
+  const i=+a.dataset.i, q=($('#pSearch').value||'').trim().toLowerCase(), g=S.gf;
+  const acc=Object.values(PROFILES).find(x=>x.email===q||x.lic===q);
+  let html;
+  if(acc&&acc.id===S.user)html='<p class="mut">C\'est votre propre compte : vous êtes déjà le joueur 1.</p>';
+  else if(acc)html=`<button class="radio" data-act="gfSetP" data-i="${i}" data-type="acc" data-id="${acc.id}"><span class="av lt">${acc.ini}</span><div><b>${acc.n}</b><small>${acc.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(acc.idx)}</small></div><b>${pr(gfPrice(crs(g.crs),g.date,acc.st),{nost:true})}</b></button>
+    <p class="mut" style="margin-top:6px">Seuls le nom, le statut et l'index sont visibles : l'e-mail et le téléphone restent privés.</p>`;
+  else if(/^\d{7,8}$/.test(q)){const idx=q==='1234567'?38:20;
+    html=`<button class="radio" data-act="gfSetP" data-i="${i}" data-type="lic" data-lic="${q}" data-idx="${idx}"><span class="av lt">FF</span><div><b>Licencié·e FFGolf n° ${q}</b><small>Pas de compte Resonance · index ${fidx(idx)} · tarif Licencié FFGolf</small></div><b>${pr(gfPrice(crs(g.crs),g.date,['licencie']),{nost:true})}</b></button>`}
+  else html='<p class="mut">Aucun compte ni licence trouvés. Ajoutez ce joueur comme invité·e.</p>';
+  $('#pRes').innerHTML=html;
+};
+ACT.gfSetP=a=>{
+  const d=a.dataset, g=S.gf;
+  g.players[+d.i]=d.type==='acc'?{type:'acc',id:d.id}:{type:'lic',lic:d.lic,idx:+d.idx,n:'Licencié·e n° '+d.lic};
+  closeSheet();render();
+};
+ACT.gfSetGuest=a=>{S.gf.players[+a.dataset.i]={type:'guest',n:($('#pGuest').value||'').trim()};closeSheet();render()};
+ACT.gfAdd=()=>{
+  const g=S.gf;
+  addLine({kind:'gf',d:g.date,h:g.t,crs:g.crs,players:JSON.parse(JSON.stringify(g.players)),opts:{...g.opts},editOf:g.editOf});
+  g.editOf=null;
+};
+
+/* ═════════ Compétitions ═════════ */
+function partnerInfo(p){
+  if(!p)return null;
+  if(p.type==='acc'){const x=PROFILES[p.id];return {n:x.n,st:x.st,idx:x.idx,lic:x.lic,cert:x.cert,dob:x.dob,ini:x.ini}}
+  return {n:p.n,st:['licencie'],idx:p.idx,lic:p.lic,cert:'2027-06-30',dob:null,ini:'FF'};
+}
+function eligibility(cp,x,who){
+  const ck=[], you=who==='you';
+  if(!x)return [{ok:false,n:'Compte requis',d:'L\'inscription vérifie la licence, le certificat et l\'index : elle se fait depuis un compte.',fix:'login',fixN:'Me connecter'}];
+  ck.push(x.lic
+    ?{ok:true,n:'Licence FFGolf 2026 valide',d:'N° '+x.lic}
+    :{ok:false,n:'Aucune licence FFGolf',d:'Une licence de l\'année est obligatoire pour toute compétition fédérale.',fix:you?'addLic':null,fixN:'Ajouter ma licence'});
+  if(x.lic)ck.push(certOk(x,cp.date)
+    ?{ok:true,n:'Certificat médical valide le jour J',d:'Valable jusqu\'au '+fdm(x.cert)+' '+x.cert.slice(0,4)}
+    :{ok:false,n:'Certificat médical expiré',d:'Expiré le '+fdm(x.cert)+' '+x.cert.slice(0,4)+'. Il doit couvrir la date de la compétition ('+fdm(cp.date)+').',fix:you?'cert':null,fixN:'Déposer un certificat'});
+  if(x.idx!=null)ck.push(x.idx<=cp.idxMax
+    ?{ok:true,n:'Index '+fidx(x.idx)+' — limite '+cp.idxMax,d:'Index relevé à la FFGolf ce matin.'}
+    :{ok:false,n:'Index '+fidx(x.idx)+' supérieur à la limite de '+cp.idxMax,d:'L\'inscription n\'est pas possible. Elle le redeviendra si l\'index descend sous '+cp.idxMax+' avant la clôture du '+fdm(cp.close)+'.'});
+  if(cp.minAge&&x.dob){const a=ageAt(x.dob,cp.date);ck.push(a>=cp.minAge
+    ?{ok:true,n:'Réservée aux '+cp.minAge+' ans et plus',d:a+' ans le jour de l\'épreuve'}
+    :{ok:false,n:'Réservée aux '+cp.minAge+' ans et plus',d:a+' ans le jour de l\'épreuve.'})}
+  if(cp.maxAge&&x.dob){const a=ageAt(x.dob,cp.date);ck.push(a<=cp.maxAge
+    ?{ok:true,n:'Réservée aux '+(cp.maxAge+1)+' ans et moins',d:a+' ans le jour de l\'épreuve'}
+    :{ok:false,n:'Réservée aux moins de '+(cp.maxAge+1)+' ans',d:a+' ans le jour de l\'épreuve.'})}
+  return ck;
+}
+const eligOk=ck=>ck.every(c=>c.ok);
+function compRegistered(cp){
+  const u=me();if(!u)return null;
+  const r=(S.res[u.id]||[]).find(r=>r.kind==='comp'&&r.compId===cp.id||r.kind==='comp'&&r.t===cp.n);
+  if(r&&!r.cancelled)return r.pay==='wait'?'wait':'in';
+  if(S.cart.some(l=>l.kind==='comp'&&l.compId===cp.id))return 'cart';
+  return null;
+}
+const isFull=cp=>cp.taken>=cp.cap;
+R.comp=()=>{
+  const u=me(), f=S.comp.filter;
+  let list=COMPS.filter(cp=>f==='all'||(f==='ind'&&!cp.team)||(f==='eq'&&cp.team)||(f==='me'&&u&&eligOk(eligibility(cp,u,'you'))));
+  $('#v-comp').innerHTML=`
+   ${fil(['Compétition','Inscription','Panier'],0)}
+   <button class="back" data-go="accueil">← Le Touquet Golf Resort</button>
+   <div class="scr-head"><div><span class="eyebrow">Saison 2026</span><h1 class="h1">Calendrier des <b>compétitions</b></h1>
+     <p class="sub" style="margin-top:6px">Licence, certificat médical et index sont vérifiés à l'inscription : pas de mauvaise surprise au départ.</p></div>
+     <span class="node">Compétitions</span></div>
+   ${pbar('droits de jeu et green fees')}
+   <div class="chips">${[['all','Toutes'],['ind','Individuelles'],['eq','En équipe'],['me','Ouvertes pour moi']].map(([k,n])=>
+     `<button class="chip ${f===k?'on':''}" data-act="compFilter" data-f="${k}" ${k==='me'&&!u?'disabled title="Connectez-vous"':''}>${n}</button>`).join('')}</div>
+   ${list.length?list.map(cp=>{
+     const c=crs(cp.crs), x=compPrice(cp,mySt()), d=dobj(cp.date), reg=compRegistered(cp);
+     const ck=u?eligibility(cp,u,'you'):null, ko=ck&&ck.find(k=>!k.ok);
+     const full=isFull(cp);
+     const cta=reg==='in'?'<span class="tag ol">✓ Inscrit·e</span>'
+       :reg==='wait'?'<span class="tag ol">En liste d\'attente</span>'
+       :reg==='cart'?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>'
+       :`<button class="btn sm ${full||ko?'sec':''}" data-act="compOpen" data-id="${cp.id}">${ko&&ko.fix!=='cert'?'Voir les conditions':full?'Liste d\'attente':'S\'inscrire'}</button>`;
+     return `<div class="card comp">
+       <div class="cdate"><small>${DAYS[d.getDay()].slice(0,3)}.</small><b>${d.getDate()}</b><small>${MABR[d.getMonth()]}</small></div>
+       <div><b class="h2">${cp.n}</b>
+         <div class="mut" style="margin-top:3px">${cp.fmt} · ${c.n} · ${cp.series}</div>
+         <div class="cond"><span class="tag">Licence + certificat</span><span class="tag">Index ≤ ${cp.idxMax}</span>
+           ${cp.minAge?`<span class="tag">${cp.minAge} ans et +</span>`:''}${cp.maxAge?`<span class="tag">−${cp.maxAge+1} ans</span>`:''}
+           ${cp.team?'<span class="tag">Équipe de 2</span>':''}</div>
+         <div class="bar"><i style="width:${Math.round(cp.taken/cp.cap*100)}%"></i></div>
+         <div class="mut" style="margin-top:5px">${full?`Complet · ${plural(cp.wait,'personne')} en liste d'attente`:`${cp.cap-cp.taken} places sur ${cp.cap}`} · clôture le ${fdm(cp.close)}</div>
+         ${u&&!reg?`<div style="margin-top:8px;font-size:12px">${ko?`<b>✕ ${ko.n}</b>`:'<b>✓ Vous êtes éligible</b>'}</div>`:''}
+       </div>
+       <div class="cside"><div class="price">${pr(x,{small:cp.team?'par joueur':'droit de jeu + green fee'})}</div>${cta}</div>
+     </div>`}).join('')
+   :'<div class="card" style="padding:24px;text-align:center"><b class="h3">Aucune compétition ouverte pour votre profil</b><p class="sub" style="margin-top:6px">Vérifiez votre certificat médical dans votre espace : c\'est la cause la plus fréquente.</p></div>'}
+   <p class="note">Le prix d'une compétition additionne le droit de jeu et le green fee du jour. L'abonné ne paie que le droit de jeu ; le jeune a un droit de jeu réduit sur le Challenge Jeunes ; les autres statuts s'appliquent au green fee seulement.</p>
+   <p class="note">Le filtre « Ouvertes pour moi » applique les mêmes contrôles que l'inscription. Avec Marc Lefèvre (certificat expiré), il est vide : c'est voulu, et l'état vide renvoie vers la cause.</p>`;
+};
+ACT.compFilter=a=>{S.comp.filter=a.dataset.f;render()};
+ACT.compOpen=a=>{
+  Object.assign(S.comp,{id:a.dataset.id,partner:null,split:'me',pref:'indiff'});
+  go('comp-inscr');
+};
+R['comp-inscr']=()=>{
+  const cp=comp(S.comp.id);if(!cp){go('comp');return}
+  const u=me(), c=crs(cp.crs), sc=S.comp, full=isFull(cp);
+  const ck=eligibility(cp,u,'you');
+  const pi=partnerInfo(sc.partner), pck=pi?eligibility(cp,pi,'partner'):null;
+  const okYou=eligOk(ck), okPart=!cp.team||(pi&&eligOk(pck));
+  const reg=compRegistered(cp);
+  const x=compPrice(cp,mySt()), xp=pi?compPrice(cp,pi.st):null;
+  const items=[{n:'Droit de jeu'+(cp.team?' — vous':''),p:x.dj,pub:cp.dj},{n:'Green fee '+c.n+(cp.team?' — vous':''),p:x.gf,pub:x.gfPub}];
+  if(cp.team&&xp&&sc.split==='me')items.push({n:'Droit de jeu — '+pi.n,p:xp.dj,pub:cp.dj},{n:'Green fee — '+pi.n,p:xp.gf,pub:xp.gfPub});
+  const tot=items.reduce((t,i)=>t+i.p,0), pub=items.reduce((t,i)=>t+i.pub,0);
+  const partners=u?u.partners:[];
+  const ckHtml=list=>`<div class="checks">${list.map(k=>`<div class="ck ${k.ok?'ok':'ko'}"><span class="ic">${k.ok?'✓':'✕'}</span>
+     <div><b>${k.n}</b><small>${k.d}</small></div>${k.fix?`<button class="btn sm ${k.fix==='login'?'':'sec'}" data-act="${k.fix}">${k.fixN}</button>`:''}</div>`).join('')}</div>`;
+  $('#v-comp-inscr').innerHTML=`
+   ${fil(['Compétition','Inscription','Panier'],1)}
+   <button class="back" data-go="comp">← Calendrier</button>
+   <div class="band" style="${bg(COMPIMG[cp.id])}"><div><span class="eyebrow">${cp.fmt}</span>
+     <h1 class="h1"><b>${cp.n}</b></h1>
+     <p class="sub" style="margin-top:6px">${cap(fday(cp.date))} · premiers départs à ${cp.h.replace(':',' h ')} · ${c.n}</p></div></div>
+     <span class="node">${full?'Liste d\'attente':'Inscription'}</span>
+   ${full?`<div class="alert"><span class="ic">i</span><div><b>Compétition complète — ${plural(cp.wait,'personne')} en liste d'attente.</b><br>
+     Inscrivez-vous en liste d'attente, sans rien payer. Si une place se libère, vous recevez un e-mail et un SMS : vous avez alors <b>24 h</b> pour confirmer et régler l'inscription, sinon la place passe à la personne suivante.</div></div>`:''}
+   ${reg==='in'||reg==='wait'?`<div class="alert soft"><span class="ic">✓</span><div><b>${reg==='in'?'Vous êtes déjà inscrit·e à cette compétition.':'Vous êtes déjà en liste d\'attente.'}</b> Retrouvez-la dans votre espace.</div><button class="btn sm sec" data-go="espace">Mon espace</button></div>`:''}
+   <div class="two"><div>
+     <div class="sect" style="margin-top:0">1 · Vos conditions d'inscription</div>
+     <div class="card" style="padding:4px 16px">${ckHtml(ck)}</div>
+     ${!okYou&&u?`<p class="mut" style="margin-top:8px">L'inscription reste bloquée tant qu'une condition n'est pas remplie. Le message dit toujours pourquoi, et comment la débloquer quand c'est possible.</p>`:''}
+     ${cp.team?`<div class="sect">2 · Votre partenaire</div>
+       <div class="card" style="padding:14px 16px">
+       ${pi?`<div class="between"><div class="row"><span class="av lt">${pi.ini}</span><div><b>${pi.n}</b><div class="mut">${pi.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(pi.idx)}</div></div></div>
+            <button class="btn sm ghost" data-act="compPartnerX">Changer</button></div>
+            <div style="margin-top:8px">${ckHtml(pck)}</div>`
+         :`<p class="sub" style="margin-bottom:12px">Un ${cp.fmt.split(' ·')[0].toLowerCase()} se joue à deux : les conditions sont vérifiées pour chacun des deux joueurs.</p>
+           ${partners.length?`<div class="radios" style="margin-bottom:12px">${partners.map(id=>{const p=PROFILES[id];return `<button class="radio" data-act="compPartner" data-id="${id}"><span class="av lt">${p.ini}</span><div><b>${p.n}</b><small>Partenaire habituel · index ${fidx(p.idx)}</small></div></button>`}).join('')}</div>`:''}
+           <div class="codebox"><input id="cpSearch" placeholder="E-mail ou n° de licence du partenaire" style="text-transform:none" ${u?'':'disabled'}><button class="btn sm" data-act="compSearch" ${u?'':'disabled'}>Rechercher</button></div>
+           <div id="cpRes" style="margin-top:8px"></div>
+           <p class="note">Démo : 1234567 donne un licencié d'index 38, refusé sur un greensome limité à 36.</p>`}
+       ${pi?`<div class="sect" style="margin-top:14px">Qui règle l'inscription du partenaire&nbsp;?</div>
+         <div class="radios">
+           <button class="radio ${sc.split==='me'?'on':''}" data-act="compSplit" data-v="me"><span class="dot"></span><div><b>Je règle les deux inscriptions</b><small>Le tarif de ${pi.n.split(' ')[0]} s'applique à sa part.</small></div></button>
+           <button class="radio ${sc.split==='each'?'on':''}" data-act="compSplit" data-v="each"><span class="dot"></span><div><b>Chacun règle sa part</b><small>${pi.n.split(' ')[0]} reçoit un lien de paiement. L'équipe est tenue 48 h ; sans paiement, l'inscription de l'équipe est annulée.</small></div></button>
+         </div>`:''}
+       </div>`:''}
+     <div class="sect">${cp.team?3:2} · Vos préférences</div>
+     <div class="card" style="padding:14px 16px">
+       <div class="h3" style="margin-bottom:8px">Heure de départ souhaitée</div>
+       <div class="chips">${[['tot','Plutôt tôt'],['tard','Plutôt tard'],['indiff','Indifférent']].map(([k,n])=>`<button class="chip ${sc.pref===k?'on':''}" data-act="compPref" data-v="${k}">${n}</button>`).join('')}</div>
+       <label class="field" style="margin:0"><span>Message au comité de compétition <i style="font-style:normal;font-weight:400;color:var(--g500)">— facultatif</i></span>
+         <input placeholder="Ex. partir avec Paul Dumas, contrainte horaire…"></label>
+       <p class="mut" style="margin-top:8px">Les horaires de départ sont publiés par le club 48 h avant l'épreuve. Série attribuée selon l'index : ${cp.series}.</p>
+     </div>
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="h3" style="margin-bottom:8px">${full?'Liste d\'attente':'Récapitulatif'}</div>
+     ${items.map(i=>`<div class="sumline"><span>${i.n}</span><b>${i.p<i.pub?`<span class="was">${eur(i.pub)}</span>`:''}${i.p===0&&i.pub>0?'Inclus':eur(i.p)}</b></div>`).join('')}
+     ${pub>tot?`<div class="sumline"><span>Économie liée aux statuts</span><b>−${eur(pub-tot)}</b></div>`:''}
+     <div class="sumtot"><span class="h3">${full?'À régler si une place se libère':'Total'}</span><b>${eur(tot)}</b></div>
+     <p class="mut" style="margin:8px 0 14px">${full?'Rien n\'est débité aujourd\'hui.':'Paiement en ligne à l\'inscription. Désinscription remboursée jusqu\'à la clôture du '+fdm(cp.close)+'.'}</p>
+     <button class="btn full" data-act="${full?'compWait':'compAdd'}" ${okYou&&okPart&&!reg?'':'disabled'}>${full?'Rejoindre la liste d\'attente':'Ajouter au panier'}</button>
+     ${!u?'<p class="mut" style="margin-top:8px">Connectez-vous pour vérifier vos conditions.</p>':cp.team&&!pi?'<p class="mut" style="margin-top:8px">Choisissez votre partenaire.</p>':''}
+   </div></aside></div>`;
+};
+ACT.compPref=a=>{S.comp.pref=a.dataset.v;render()};
+ACT.compSplit=a=>{S.comp.split=a.dataset.v;render()};
+ACT.compPartner=a=>{S.comp.partner={type:'acc',id:a.dataset.id};render()};
+ACT.compPartnerX=()=>{S.comp.partner=null;render()};
+ACT.compSearch=()=>{
+  const q=($('#cpSearch').value||'').trim().toLowerCase();
+  const acc=Object.values(PROFILES).find(x=>x.email===q||x.lic===q);
+  if(acc&&acc.id!==S.user){S.comp.partner={type:'acc',id:acc.id};render();return}
+  if(/^\d{7,8}$/.test(q)){S.comp.partner={type:'lic',lic:q,idx:q==='1234567'?38:20,n:q==='1234567'?'Julien Morel':'Licencié·e n° '+q};render();return}
+  $('#cpRes').innerHTML='<p class="mut">Aucun licencié trouvé avec cet e-mail ou ce numéro.</p>';
+};
+ACT.cert=()=>sheet(shead('Déposer un certificat médical','Mes documents')+
+  `<p class="sub" style="margin:4px 0 14px">Pour un adulte, le certificat de non contre-indication à la pratique du golf en compétition est valable un an. Il est transmis à la FFGolf avec votre licence.</p>
+   <div class="ph" style="height:110px;border-radius:8px;margin-bottom:12px">Glisser un fichier · PDF, JPG</div>
+   <label class="field"><span>Date du certificat</span><input type="date" value="2026-09-15"></label>
+   <button class="btn full" data-act="certGo">Envoyer le certificat</button>
+   <p class="note">Démo : le certificat est accepté immédiatement. Dans le vrai flux, il passe « en cours de validation » à la FFGolf (24 à 48 h) : l'inscription pourrait-elle être acceptée sous réserve pendant ce délai&nbsp;? Arbitrage à rendre.</p>`);
+ACT.certGo=()=>{me().cert='2027-09-15';closeSheet();render();toast('Certificat enregistré : valable jusqu\'au 15 septembre 2027.')};
+ACT.addLic=()=>sheet(shead('Ajouter ma licence FFGolf','Mes documents')+
+  `<label class="field"><span>N° de licence</span><input id="alLic" inputmode="numeric" placeholder="7 à 8 chiffres"></label>
+   <button class="btn full" data-act="addLicGo">Vérifier et rattacher</button>`);
+ACT.addLicGo=()=>{
+  const v=($('#alLic').value||'').trim();if(!/^\d{7,8}$/.test(v)){toast('Le numéro compte 7 ou 8 chiffres.');return}
+  const u=me();Object.assign(u,{lic:v,idx:18.0,cert:'2027-04-01'});if(!u.st.includes('licencie'))u.st.push('licencie');
+  closeSheet();render();toast('Licence rattachée : tarif Licencié FFGolf appliqué.');
+};
+ACT.compAdd=()=>{
+  const sc=S.comp;
+  addLine({kind:'comp',compId:sc.id,partner:sc.partner?{...sc.partner}:null,split:sc.split,pref:sc.pref});
+};
+ACT.compWait=()=>{
+  const cp=comp(S.comp.id), u=me(), pos=cp.wait+1;
+  S.res[u.id].push({id:'r'+uid(),kind:'comp',compId:cp.id,t:cp.n,sub:'Liste d\'attente · position '+pos,d:cp.date,h:cp.h,close:cp.close,pay:'wait',amount:0,wait:pos});
+  cp.wait=pos;
+  sheet(shead('Vous êtes sur la liste d\'attente','Liste d\'attente')+
+   `<div style="text-align:center;margin:14px 0"><div style="font-size:44px;font-weight:700;letter-spacing:-1px">${pos}<sup style="font-size:18px">e</sup></div><div class="sub">position sur la liste · ${cp.n}</div></div>
+    <div class="checks">
+      <div class="ck ok"><span class="ic">1</span><div><b>Rien n'est débité aujourd'hui</b></div></div>
+      <div class="ck ok"><span class="ic">2</span><div><b>Une place se libère&nbsp;?</b><small>Vous êtes prévenu·e par e-mail et SMS, dans l'ordre de la liste.</small></div></div>
+      <div class="ck ok"><span class="ic">3</span><div><b>24 h pour confirmer et payer</b><small>Passé ce délai, la place est proposée à la personne suivante.</small></div></div>
+      <div class="ck ok"><span class="ic">4</span><div><b>À la clôture du ${fdm(cp.close)}</b><small>Sans place libérée, la liste est close et vous êtes prévenu·e.</small></div></div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn" data-act="close" data-go="espace">Voir dans mon espace</button><button class="btn ghost" data-act="close">Fermer</button></div>`);
+  render();
+};
+
+/* ═════════ Cours & stages ═════════ */
+function lessonSlots(pro,k,dur){
+  if(!PROS[pro].days.includes(wday(k)))return [];
+  const out=[];
+  for(let m=540;m+dur<=1080;m+=30){
+    const t=toT(m);
+    if(m>=720&&m<840)continue;                 /* pause déjeuner du pro */
+    if(hash(pro+k+t)%5<2)continue;             /* déjà réservé */
+    if(S.cart.some(l=>l.kind==='ind'&&l.pro===pro&&l.d===k&&l.h===t))continue;
+    out.push(t);
+  }
+  return out;
+}
+const lessonKey=(l)=>l.kind==='ind'?'ind'+l.dur:l.kind;
+R.cours=()=>{
+  const u=me(), st=mySt(), tab=S.cours.tab;
+  const tabs=[['ind','Cours individuels'],['coll','Cours collectifs',COLL.length],['stage','Stages',STAGES.length],['carnet','Carnets de cours']];
+  let body='';
+  if(tab==='ind'){
+    body=`<div class="grid g2">${[30,60].map(d=>{const x=lessonPrice(LESSON[d],st);const cr=u&&u.credits[d]&&u.credits[d].left;
+      return `<div class="card pack"><span class="tag">1 élève · avec le pro de votre choix</span>
+        <b class="h2">Cours individuel · ${d===30?'30 min':'1 h'}</b>
+        <span class="sub">${d===30?'Un point précis : grip, sortie de bunker, routine de putting.':'Le temps de travailler un geste et de le mettre en jeu sur le practice ou le parcours.'}</span>
+        ${cr?`<span class="tag ol" style="align-self:flex-start">${plural(cr,'crédit')} carnet disponible${cr>1?'s':''}</span>`:''}
+        <div class="foot"><div class="price" style="text-align:left">${pr(x,{small:'le cours'})}</div>
+          <button class="btn sm" data-act="indOpen" data-d="${d}">Choisir un créneau</button></div></div>`}).join('')}</div>
+      <div class="sect">Nos pros</div>
+      <div class="grid g2">${Object.entries(PROS).map(([id,p])=>`<div class="card pro" style="padding:16px"><div class="ph">${p.n.split(' ').map(w=>w[0]).join('')}</div>
+        <div style="flex:1"><b class="h3">${p.n}</b><div class="mut">${p.t}</div><div class="mut">Présent ${p.days.map(d=>DAYS[d].slice(0,3)+'.').join(' ')}</div></div>
+        <button class="btn sm ghost" data-act="indOpen" data-d="30" data-pro="${id}">Réserver</button></div>`).join('')}</div>`;
+  }
+  if(tab==='coll'){
+    body=COLL.map(c=>{const x=lessonPrice(c.p,st), full=!c.left, low=u&&c.idxMax&&u.idx!=null&&u.idx>c.idxMax;
+      const inC=S.cart.some(l=>l.kind==='coll'&&l.id===c.id);
+      return `<div class="card lesson" style="--lesson-img:url('${({c1:IMG.acad,c2:IMG.decouverte,c5:IMG.kids,c3:IMG.links,c4:IMG.putting})[c.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">${fshort(c.d)} · ${c.h}</span><span class="tag">${c.dur} min</span><span class="tag">${c.lvl}</span></div>
+        <b class="h2" style="display:block;margin-top:8px">${c.n}</b>
+        <div class="mut">${PROS[c.pro].n} · ${full?'complet':plural(c.left,'place')+' sur '+c.cap}</div>
+        ${low?`<div style="margin-top:6px;font-size:12px"><b>✕ Niveau conseillé : ${c.lvl.toLowerCase()} — votre index est ${fidx(u.idx)}</b></div>`:''}</div>
+        <div class="cside" style="min-width:0"><div class="price">${pr(x,{small:c.kid?'par enfant':'par personne'})}</div>
+        ${inC?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>':`<button class="btn sm" data-act="collOpen" data-id="${c.id}" ${full?'disabled':''}>${full?'Complet':'S\'inscrire'}</button>`}</div></div>`}).join('')
+      +`<p class="note">Le niveau est un conseil, pas un blocage : un index trop élevé est signalé mais n'interdit pas l'inscription. C'est l'inverse des compétitions, où l'index maximum est une règle fédérale.</p>`;
+  }
+  if(tab==='stage'){
+    body=STAGES.map(s=>{const x=stagePrice(s,st);const inC=S.cart.some(l=>l.kind==='stage'&&l.id===s.id);
+      return `<div class="card lesson" style="--lesson-img:url('${({s1:IMG.stage,s2:IMG.kids,s3:IMG.manoir})[s.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">Du ${fdm(s.d)} au ${fdm(s.d2)}</span><span class="tag">${s.lvl}</span></div>
+        <b class="h2" style="display:block;margin-top:8px">${s.n}</b>
+        <div class="mut">${s.sched} · ${PROS[s.pro].n} · ${plural(s.left,'place')} sur ${s.cap}</div></div>
+        <div class="cside" style="min-width:0"><div class="price">${pr(x,{small:s.kid?'par enfant':'le stage'})}</div>
+        ${inC?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>':`<button class="btn sm" data-act="stageOpen" data-id="${s.id}">S'inscrire</button>`}</div></div>`}).join('')
+      +`<p class="note">Les dates d'un stage sont fixées par l'académie : on s'inscrit au programme entier, sans choisir de créneau. Désinscription gratuite jusqu'à 7 jours avant le premier jour.</p>`;
+  }
+  if(tab==='carnet'){
+    body=`<div class="grid g3">${CARNETS.map(k=>{const x=lessonPrice(k.p,st), unit=LESSON[k.dur]*k.q;
+      return `<div class="card pack"><span class="tag">Valable 12 mois</span><b class="h2">${k.n}</b>
+        <span class="sub">Soit ${eur(Math.round(x.p/k.q*100)/100)} le cours au lieu de ${eur(LESSON[k.dur])} à l'unité — ${eur(unit-k.p)} d'économie au prix public.</span>
+        <div class="foot"><div class="price" style="text-align:left">${pr(x)}</div>
+          <button class="btn sm" data-act="carnetAdd" data-id="${k.id}" ${S.cart.some(l=>l.kind==='carnet'&&l.id===k.id)?'disabled':''}>${S.cart.some(l=>l.kind==='carnet'&&l.id===k.id)?'Dans le panier':'Ajouter'}</button></div></div>`}).join('')}</div>
+      ${u&&Object.keys(u.credits).length?`<div class="alert soft"><span class="ic">i</span><div>${Object.entries(u.credits).map(([d,c])=>`<b>${c.left} cours de ${d==='30'?'30 min':'1 h'}</b> restants sur votre carnet (valable jusqu'au ${fdm(c.end)} ${c.end.slice(0,4)})`).join('<br>')}. Ils s'utilisent directement au moment de réserver un cours.</div><button class="lnk" data-act="spaceTab" data-t="carnets">Voir mes carnets</button></div>`:''}
+      <p class="note">Le carnet est un produit comme un autre dans le panier : il est payé, puis ses crédits apparaissent dans l'espace personnel. Ils ne sont pas utilisables dans le même panier que leur achat — à confirmer avec le client, c'est une simplification.</p>`;
+  }
+  $('#v-cours').innerHTML=`
+   ${fil(['Cours','Créneau','Panier'],0)}
+   <button class="back" data-go="accueil">← Le Touquet Golf Resort</button>
+   <div class="band" style="${bg(IMG.acad)}"><div><span class="eyebrow">Académie du Touquet</span><h1 class="h1">Cours &amp; <b>stages</b></h1>
+     <p class="sub" style="margin-top:6px">Deux pros PGA, un practice couvert et une zone de petit jeu.</p></div></div>
+   ${pbar('les cours, stages et carnets')}
+   <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="coursTab" data-t="${k}">${n}${c?`<i>${c}</i>`:''}</button>`).join('')}</div>
+   ${body}`;
+};
+ACT.coursTab=a=>{S.cours.tab=a.dataset.t;render()};
+ACT.indOpen=a=>{Object.assign(S.cours,{dur:+a.dataset.d,pro:a.dataset.pro||'any',slot:null,wk:0});go('cours-ind')};
+R['cours-ind']=()=>{
+  const sc=S.cours, u=me(), st=mySt();
+  const start=dshift(DMIN,sc.wk*7), days=Array.from({length:7},(_,i)=>dshift(start,i));
+  const pros=sc.pro==='any'?Object.keys(PROS):[sc.pro];
+  const x=lessonPrice(LESSON[sc.dur],st);
+  const cr=u&&u.credits[sc.dur]&&u.credits[sc.dur].left||0;
+  const useCr=cr>0&&sc.useCredit;
+  $('#v-cours-ind').innerHTML=`
+   ${fil(['Cours','Créneau','Panier'],1)}
+   <button class="back" data-go="cours">← Cours &amp; stages</button>
+   <div class="scr-head"><div><span class="eyebrow">Académie</span><h1 class="h1">Cours <b>individuel</b></h1>
+     <p class="sub" style="margin-top:6px">Choisissez votre pro, la durée, puis un créneau.</p></div>
+     <span class="node">Pro · durée · créneau</span></div>
+   <div class="two"><div>
+     <div class="sect" style="margin-top:0">Avec qui&nbsp;?</div>
+     <div class="grid g3">${[['any','Peu importe','Tous les créneaux des deux pros']].concat(Object.entries(PROS).map(([k,p])=>[k,p.n,p.t])).map(([k,n,d])=>
+       `<button class="radio ${sc.pro===k?'on':''}" data-act="indPro" data-v="${k}"><span class="dot"></span><div><b>${n}</b><small>${d}</small></div></button>`).join('')}</div>
+     <div class="sect">Durée</div>
+     <div class="chips">${[30,60].map(d=>`<button class="chip ${sc.dur===d?'on':''}" data-act="indDur" data-v="${d}">${d===30?'30 min':'1 h'} · ${eur(lessonPrice(LESSON[d],st).p)}</button>`).join('')}</div>
+     <div class="between" style="margin:18px 0 10px"><div class="sect" style="margin:0">Créneaux · semaine du ${fdm(start)}</div>
+       <div class="row" style="gap:6px"><button class="navd" style="height:32px" data-act="indWk" data-n="-1" ${sc.wk<=0?'disabled':''}>‹</button><button class="navd" style="height:32px" data-act="indWk" data-n="1" ${sc.wk>=5?'disabled':''}>›</button></div></div>
+     <div class="week">${days.map(k=>{
+       const all=[];pros.forEach(p=>lessonSlots(p,k,sc.dur).forEach(t=>{if(!all.some(z=>z.t===t))all.push({t,pro:p})}));
+       all.sort((a,b)=>a.t<b.t?-1:1);
+       return `<div class="wcol"><h6>${DAYS[wday(k)][0].toUpperCase()+DAYS[wday(k)].slice(1,3)}.<small>${fdm(k)}</small></h6><div class="pills">
+         ${all.length?all.map(z=>`<button class="pill ${sc.slot&&sc.slot.d===k&&sc.slot.t===z.t?'on':''}" data-act="indSlot" data-d="${k}" data-t="${z.t}" data-p="${z.pro}">${z.t}</button>`).join(''):'<div class="none">—</div>'}</div></div>`}).join('')}</div>
+     <p class="note">Avec « Peu importe », le créneau est attribué au premier pro libre et son nom apparaît au récapitulatif avant l'ajout au panier : le client sait toujours avec qui il a rendez-vous.</p>
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="h3" style="margin-bottom:8px">Votre cours</div>
+     ${sc.slot?`<div class="sumline"><span>Date</span><b>${fshort(sc.slot.d)} · ${sc.slot.t}</b></div>
+       <div class="sumline"><span>Pro</span><b>${PROS[sc.slot.pro].n}</b></div>
+       <div class="sumline"><span>Durée</span><b>${sc.dur===30?'30 min':'1 h'}</b></div>`
+     :'<p class="mut">Choisissez un créneau.</p>'}
+     ${cr?`<div class="sect" style="margin-top:14px">Règlement</div><div class="radios">
+       <button class="radio ${useCr?'on':''}" data-act="indCredit" data-v="1"><span class="dot"></span><div><b>1 crédit de mon carnet</b><small>Il vous en restera ${cr-1}</small></div></button>
+       <button class="radio ${useCr?'':'on'}" data-act="indCredit" data-v="0"><span class="dot"></span><div><b>Payer le cours</b><small>${eur(x.p)}</small></div></button></div>`
+     :u?'':`<p class="mut" style="margin-top:10px">Connectez-vous pour appliquer votre tarif ou utiliser un carnet.</p>`}
+     <div class="sumtot"><span class="h3">Total</span><b>${useCr?'0 €':eur(x.p)}</b></div>
+     ${!useCr&&x.p<x.pub?`<p class="mut" style="margin-top:4px"><span class="was">${eur(x.pub)}</span>Tarif ${ST[x.st].n}</p>`:''}
+     <p class="mut" style="margin:8px 0 14px">Annulation ou modification gratuite jusqu'à 48 h avant le cours.</p>
+     <button class="btn full" data-act="indAdd" ${sc.slot?'':'disabled'}>Ajouter au panier</button>
+   </div></aside></div>`;
+};
+ACT.indPro=a=>{S.cours.pro=a.dataset.v;S.cours.slot=null;render()};
+ACT.indDur=a=>{S.cours.dur=+a.dataset.v;S.cours.slot=null;render()};
+ACT.indWk=a=>{S.cours.wk+= +a.dataset.n;render()};
+ACT.indSlot=a=>{S.cours.slot={d:a.dataset.d,t:a.dataset.t,pro:a.dataset.p};render()};
+ACT.indCredit=a=>{S.cours.useCredit=a.dataset.v==='1';render()};
+ACT.indAdd=()=>{
+  const sc=S.cours, u=me();
+  const cr=u&&u.credits[sc.dur]&&u.credits[sc.dur].left||0;
+  addLine({kind:'ind',d:sc.slot.d,h:sc.slot.t,pro:sc.slot.pro,dur:sc.dur,credit:cr>0&&sc.useCredit,editOf:sc.editOf||null});
+  sc.slot=null;sc.editOf=null;
+};
+function kidFields(kid){
+  return kid?`<div class="sect" style="margin-top:14px">Participant</div>
+    <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom de l'enfant</span><input id="kidN" placeholder="Ex. Jules"></label>
+    <label class="field"><span>Âge</span><input id="kidA" type="number" min="5" max="17" placeholder="9"></label></div>`:'';
+}
+ACT.collOpen=a=>{
+  const c=COLL.find(x=>x.id===a.dataset.id), u=me(), x=lessonPrice(c.p,mySt());
+  const low=u&&c.idxMax&&u.idx!=null&&u.idx>c.idxMax;
+  sheet(shead(c.n,'Cours collectif')+
+   `<p class="sub" style="margin:4px 0 12px">${fday(c.d)} · ${c.h} · ${c.dur} min · ${PROS[c.pro].n}</p>
+    <div class="sumline"><span>Niveau</span><b>${c.lvl}</b></div>
+    <div class="sumline"><span>Places restantes</span><b>${c.left} sur ${c.cap}</b></div>
+    <div class="sumline"><span>Prix</span><b>${c.p>x.p?`<span class="was">${eur(c.p)}</span>`:''}${eur(x.p)}</b></div>
+    ${low?`<div class="alert soft"><span class="ic">!</span><div><b>Cet atelier est conseillé à partir d'un index ${c.idxMax}.</b> Votre index est ${fidx(u.idx)}. Vous pouvez vous inscrire ; l'initiation découverte est peut-être plus adaptée.</div></div>`:''}
+    ${kidFields(c.kid)}
+    <button class="btn full" style="margin-top:14px" data-act="collAdd" data-id="${c.id}">Ajouter au panier</button>`);
+};
+ACT.collAdd=a=>{
+  const c=COLL.find(x=>x.id===a.dataset.id);
+  const kid=c.kid?{n:($('#kidN').value||'').trim(),a:$('#kidA').value}:null;
+  if(c.kid&&!kid.n){toast('Indiquez le prénom de l\'enfant.');return}
+  closeSheet();addLine({kind:'coll',id:c.id,d:c.d,h:c.h,kid});
+};
+ACT.stageOpen=a=>{
+  const s=STAGES.find(x=>x.id===a.dataset.id), x=stagePrice(s,mySt());
+  sheet(shead(s.n,'Stage')+
+   `<p class="sub" style="margin:4px 0 12px">Du ${fday(s.d)} au ${fday(s.d2)} · ${s.sched}</p>
+    <div class="sumline"><span>Encadrement</span><b>${PROS[s.pro].n}</b></div>
+    <div class="sumline"><span>Niveau</span><b>${s.lvl}</b></div>
+    <div class="sumline"><span>Places restantes</span><b>${s.left} sur ${s.cap}</b></div>
+    <div class="sumline"><span>Prix</span><b>${s.p>x.p?`<span class="was">${eur(s.p)}</span>`:''}${eur(x.p)}</b></div>
+    <div class="sect">Programme</div>
+    <div class="ph" style="height:80px;border-radius:6px">Programme jour par jour</div>
+    ${kidFields(s.kid)}
+    <button class="btn full" style="margin-top:14px" data-act="stageAdd" data-id="${s.id}">Ajouter au panier</button>`);
+};
+ACT.stageAdd=a=>{
+  const s=STAGES.find(x=>x.id===a.dataset.id);
+  const kid=s.kid?{n:($('#kidN').value||'').trim(),a:$('#kidA').value}:null;
+  if(s.kid&&!kid.n){toast('Indiquez le prénom de l\'enfant.');return}
+  closeSheet();addLine({kind:'stage',id:s.id,d:s.d,h:'09:00',kid});
+};
+ACT.carnetAdd=a=>addLine({kind:'carnet',id:a.dataset.id});
+
+/* ═════════ Panier commun ═════════
+   Une ligne garde ses paramètres, pas son prix : le prix est recalculé à
+   chaque affichage, ce qui permet de réécrire le panier à la connexion. */
+const KTAG={gf:'Green fee',comp:'Compétition',ind:'Cours',coll:'Cours collectif',stage:'Stage',carnet:'Carnet'};
+function lineView(l){
+  const u=me(), st=mySt();
+  let v={tag:KTAG[l.kind],items:[],sub:'',title:''};
+  if(l.kind==='gf'){const c=crs(l.crs);
+    v.title='Green fee · '+c.n;
+    v.sub=`${fday(l.d)} · départ ${l.h} · ${plural(l.players.length,'joueur')}`;
+    v.items=gfCalc(l);v.cancel='Annulation gratuite jusqu\'à 24 h avant le départ';}
+  if(l.kind==='comp'){const cp=comp(l.compId), c=crs(cp.crs), x=compPrice(cp,st), pi=partnerInfo(l.partner);
+    v.title=cp.n;
+    v.sub=`${fday(cp.date)} · ${c.n} · ${cp.fmt}${pi?' · avec '+pi.n:''}`;
+    v.items=[{n:'Droit de jeu',p:x.dj,pub:cp.dj},{n:'Green fee du jour',p:x.gf,pub:x.gfPub,st:x.st}];
+    if(pi&&l.split==='me'){const y=compPrice(cp,pi.st);v.items.push({n:'Droit de jeu — '+pi.n,p:y.dj,pub:cp.dj},{n:'Green fee — '+pi.n,p:y.gf,pub:y.gfPub,st:y.st})}
+    if(pi&&l.split==='each')v.extra=`${pi.n.split(' ')[0]} recevra un lien pour régler sa part (${eur(compPrice(cp,pi.st).p)}). Équipe tenue 48 h.`;
+    v.cancel='Désinscription remboursée jusqu\'à la clôture du '+fdm(cp.close);v.acc=true;}
+  if(l.kind==='ind'){
+    v.title=`Cours individuel · ${l.dur===30?'30 min':'1 h'}`;
+    v.sub=`${fday(l.d)} · ${l.h} · ${PROS[l.pro].n}`;
+    const x=lessonPrice(LESSON[l.dur],st);
+    v.items=[l.credit&&u&&u.credits[l.dur]?{n:'Réglé avec 1 crédit carnet',p:0,pub:0,credit:true}:{n:'Cours',...x}];
+    v.cancel='Annulation gratuite jusqu\'à 48 h avant le cours';v.acc=true;}
+  if(l.kind==='coll'){const c=COLL.find(x=>x.id===l.id);
+    v.title=c.n;v.sub=`${fday(c.d)} · ${c.h} · ${c.dur} min · ${PROS[c.pro].n}${l.kid?' · pour '+l.kid.n:''}`;
+    v.items=[{n:l.kid?'Inscription '+l.kid.n:'Inscription',...(l.kid?{p:c.p,pub:c.p,st:null}:lessonPrice(c.p,st))}];
+    v.cancel='Annulation gratuite jusqu\'à 48 h avant le cours';v.acc=true;}
+  if(l.kind==='stage'){const s=STAGES.find(x=>x.id===l.id);
+    v.title=s.n;v.sub=`Du ${fdm(s.d)} au ${fdm(s.d2)} · ${s.sched}${l.kid?' · pour '+l.kid.n:''}`;
+    v.items=[{n:'Stage complet',...stagePrice(s,st)}];
+    v.cancel='Désinscription gratuite jusqu\'à 7 jours avant le stage';v.acc=true;}
+  if(l.kind==='carnet'){const k=CARNETS.find(x=>x.id===l.id);
+    v.title=k.n;v.sub=`${k.q} cours de ${k.dur===30?'30 min':'1 h'} · valable 12 mois à partir de l'achat`;
+    v.items=[{n:'Carnet',...lessonPrice(k.p,st)}];v.cancel='Crédits utilisables dès le paiement confirmé';v.acc=true;}
+  v.total=v.items.reduce((t,i)=>t+i.p,0);
+  v.pub=v.items.reduce((t,i)=>t+(i.credit?0:i.pub),0);
+  const pm=S.promo&&PROMOS[S.promo];
+  const pk=l.kind==='ind'||l.kind==='coll'?l.kind:l.kind;
+  v.promo=pm&&pm.on.includes(pk)?Math.round(v.total*pm.pct*100)/100:0;
+  return v;
+}
+function cartTotals(){
+  let pub=0,sub=0,promo=0;
+  S.cart.forEach(l=>{const v=lineView(l);pub+=v.pub;sub+=v.total;promo+=v.promo});
+  const u=me();
+  const after=sub-promo;
+  const avoir=u&&u.avoir&&S.useAvoir?Math.min(u.avoir,after):0;
+  return {pub,sub,save:pub-sub,promo,avoir,due:Math.max(0,Math.round((after-avoir)*100)/100)};
+}
+function addLine(l){
+  l.uid=uid();
+  if(!S.cart.length){hold=HOLD;holdDead=false}
+  S.cart.push(l);
+  S.lastAdded=l;
+  go('cross');
+}
+
+/* maintien des places — 10 min dès le premier ajout */
+const mmss=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
+function holdHtml(){
+  return `<div class="hold ${holdDead?'dead':''}" data-hold><span class="node" style="border-style:solid">Maintien</span>${holdDead
+    ?`<span><b>Délai dépassé</b> — les places ne sont plus bloquées pour vous. Les lignes restent dans votre panier : il suffit de revérifier les disponibilités.</span>
+      <button class="btn sm sec" data-act="holdRecheck">Revérifier</button>`
+    :`<span>Vos places sont <b>bloquées pour vous</b> encore <b class="holdTimer">${mmss(hold)}</b>. Elles sont dans votre panier : la réservation n'est confirmée qu'au paiement.</span>
+      <button class="lnk" style="font-size:12px" data-act="holdSim">Simuler l'expiration</button>`}</div>`;
+}
+function paintHold(){$$('[data-hold]').forEach(el=>{el.outerHTML=S.cart.length?holdHtml():''})}
+setInterval(()=>{
+  if(!S||!S.cart.length)return;
+  if(hold>0){hold--;if(!hold){holdDead=true;paintHold()}}
+  $$('.holdTimer').forEach(e=>e.textContent=mmss(hold));
+},1000);
+ACT.holdSim=()=>{hold=1};
+ACT.holdRecheck=()=>{hold=HOLD;holdDead=false;paintHold();toast('Disponibilités revérifiées : toutes vos lignes sont encore disponibles.')};
+
+/* ═════════ Ajouté au panier · suggestions ═════════ */
+R.cross=()=>{
+  const l=S.lastAdded;if(!l){go('panier');return}
+  const v=lineView(l), has=k=>S.cart.some(x=>x.kind===k);
+  const sug=[];
+  const nextComp=COMPS.find(cp=>!isFull(cp)&&cp.date>(l.d||TODAY)&&(!l.crs||cp.crs===l.crs))||COMPS[0];
+  if(l.kind==='gf'){
+    sug.push({k:'ind',tag:'Cours',t:'Un cours de 30 min avant votre départ',d:`Échauffement et routine avec un pro, le ${fdm(l.d)} au matin.`,p:lessonPrice(45,mySt()),act:'xInd',data:`data-d="${l.d}"`});
+    sug.push({k:'comp',tag:'Compétition',t:nextComp.n,d:`${fday(nextComp.date)} · ${crs(nextComp.crs).n} · ${nextComp.fmt}`,p:compPrice(nextComp,mySt()),act:'compOpen',data:`data-id="${nextComp.id}"`});
+    sug.push({k:'carnet',tag:'Carnet',t:'Carnet 5 cours · 30 min',d:'Le cours revient à 40 € au lieu de 45 €, valable 12 mois.',p:lessonPrice(200,mySt()),act:'xCarnet'});
+  } else if(l.kind==='comp'){
+    const cp=comp(l.compId), c=crs(cp.crs), rk=dshift(cp.date,-1);
+    sug.push({k:'gf',tag:'Green fee',t:`Reconnaissance de ${c.n} la veille`,d:`${fday(rk)} — jouez le tracé avant l'épreuve.`,p:gfPrice(c,rk,mySt()),act:'xGf',data:`data-d="${rk}" data-c="${c.id}"`});
+    sug.push({k:'coll',tag:'Cours collectif',t:'Putting — lire les greens',d:'Atelier d\'une heure avec Lou Castel, le 27 septembre.',p:lessonPrice(30,mySt()),act:'xTab',data:'data-t="coll"'});
+    sug.push({k:'ind',tag:'Cours',t:'Un cours individuel d\'1 h',d:'Préparer la compétition avec un pro.',p:lessonPrice(80,mySt()),act:'xInd',data:`data-dur="60"`});
+  } else {
+    const k=l.d||'2026-09-24';
+    sug.push({k:'gf',tag:'Green fee',t:l.kind==='carnet'?'Mettre vos cours en jeu':'Jouer le même jour',d:l.kind==='carnet'?'Un 9 trous sur Le Manoir, accessible à tous les niveaux.':`Un départ l'après-midi du ${fdm(k)}, après votre cours.`,p:gfPrice(crs('manoir'),k,mySt()),act:'xGf',data:`data-d="${k}" data-c="manoir"`});
+    if(l.kind!=='carnet')sug.push({k:'carnet',tag:'Carnet',t:'Carnet 5 cours · 30 min',d:'Pour la suite : 5 cours, valable 12 mois.',p:lessonPrice(200,mySt()),act:'xCarnet'});
+    else sug.push({k:'ind',tag:'Cours',t:'Réserver votre premier cours',d:'Les crédits seront disponibles dès le paiement confirmé.',p:lessonPrice(45,mySt()),act:'xInd',data:''});
+    sug.push({k:'comp',tag:'Compétition',t:nextComp.n,d:`${fday(nextComp.date)} · ${nextComp.fmt}`,p:compPrice(nextComp,mySt()),act:'compOpen',data:`data-id="${nextComp.id}"`});
+  }
+  sug.forEach(s=>{const d=(s.data||'').match(/data-d="([^"]+)"/), id=(s.data||'').match(/data-id="([^"]+)"/);
+    s.dup=s.k==='gf'?S.cart.some(x=>x.kind==='gf'&&d&&x.d===d[1])
+      :s.k==='comp'?!!(id&&(S.cart.some(x=>x.kind==='comp'&&x.compId===id[1])||compRegistered(comp(id[1]))))
+      :has(s.k)});
+  $('#v-cross').innerHTML=`
+   ${holdHtml()}
+   <div class="scr-head"><div><span class="tag ol">✓ Ajouté à votre panier</span>
+     <h1 class="h1" style="margin-top:12px">${v.title}</h1><p class="sub" style="margin-top:4px">${v.sub} · ${v.total===0&&v.pub>0?'inclus':eur(v.total)}</p></div>
+     <span class="node">Suggestions</span></div>
+   <div class="row wrap" style="margin-bottom:22px"><button class="btn" data-go="panier">Voir mon panier (${S.cart.length})</button>
+     <button class="btn ghost" data-go="accueil">Continuer mes réservations</button></div>
+   <div class="sect">${l.kind==='gf'?'Pour compléter votre partie':l.kind==='comp'?'Pour préparer la compétition':'Pour aller plus loin'}</div>
+   <div class="grid g3">${sug.map(s=>{const inC=s.dup;
+     return `<div class="card xsell"><div class="ph img" style="${bg(TAGIMG[s.tag]||IMG.mer)}"></div>
+       <span class="tag" style="align-self:flex-start">${s.tag}</span><b class="h3">${s.t}</b><span class="mut">${s.d}</span>
+       <div class="foot"><b>${s.p.p===0&&s.p.pub>0?'Inclus':(s.p.p<s.p.pub?`<span class="was">${eur(s.p.pub)}</span>`:'')+eur(s.p.p)}</b>
+       ${inC?'<span class="done-t">Déjà dans votre panier</span>':`<button class="btn sm sec" data-act="${s.act}" ${s.data||''}>Ajouter</button>`}</div></div>`}).join('')}</div>
+   <p class="note">Les suggestions croisent les trois activités du périmètre et reprennent la date de la ligne ajoutée. Un service déjà au panier est marqué « Déjà dans votre panier » et ne peut pas être ajouté une seconde fois (règle du 17/09).</p>`;
+};
+ACT.xInd=a=>{Object.assign(S.cours,{dur:+(a.dataset.dur||30),pro:'any',slot:null,wk:a.dataset.d?Math.max(0,Math.floor((dobj(a.dataset.d)-dobj(DMIN))/864e5/7)):0});go('cours-ind')};
+ACT.xGf=a=>{Object.assign(S.gf,{date:a.dataset.d,moment:'all'});go('gf')};
+ACT.xTab=a=>{S.cours.tab=a.dataset.t;go('cours')};
+ACT.xCarnet=()=>addLine({kind:'carnet',id:'k5-30'});
+
+/* ═════════ Panier ═════════ */
+R.panier=()=>{
+  const u=me(), T=cartTotals();
+  if(!S.cart.length){
+    $('#v-panier').innerHTML=`<div class="scr-head"><h1 class="h1">Votre panier</h1><span class="node">Panier commun</span></div>
+     <div class="card" style="padding:34px;text-align:center"><b class="h2">Votre panier est vide</b>
+     <p class="sub" style="margin:6px 0 16px">Un départ, une compétition ou un cours : tout se règle en un seul paiement.</p>
+     <div class="row wrap" style="justify-content:center"><button class="btn sm" data-go="gf">Green fee</button><button class="btn sm ghost" data-go="comp">Compétitions</button><button class="btn sm ghost" data-go="cours">Cours</button></div></div>`;
+    return;
+  }
+  const pm=S.promo&&PROMOS[S.promo];
+  $('#v-panier').innerHTML=`
+   <div class="scr-head"><div><span class="eyebrow">Récapitulatif</span><h1 class="h1">Votre <b>panier</b></h1><p class="sub" style="margin-top:4px">${plural(S.cart.length,'réservation')} · un seul paiement</p></div><span class="node">Panier commun</span></div>
+   ${holdHtml()}
+   ${pbar('les lignes de votre panier')}
+   <div class="two"><div class="card" style="padding:14px 18px">
+     ${S.cart.map(l=>{const v=lineView(l);return `<div class="cline"><div>
+       <div class="row wrap" style="gap:6px"><span class="tag">${v.tag}</span>${v.total===0&&v.pub>0?'<span class="tag ol">Sans paiement</span>':''}${l.editOf?'<span class="tag ol">Modification</span>':''}</div>
+       <b class="h3" style="display:block;margin-top:7px">${v.title}</b><div class="mut">${v.sub}</div>
+       <ul>${v.items.map(i=>`<li><span>${i.n}${i.st?` · <i style="font-style:normal">tarif ${ST[i.st].n}</i>`:''}</span><b>${i.p<i.pub?`<span class="was">${eur(i.pub)}</span>`:''}${i.credit?'1 crédit':i.p===0&&i.pub>0?'Inclus':eur(i.p)}</b></li>`).join('')}
+         ${v.promo?`<li><span>${pm.n}</span><b>−${eur(v.promo)}</b></li>`:''}</ul>
+       ${v.extra?`<p class="mut" style="margin-top:6px">${v.extra}</p>`:''}
+       <p class="mut" style="margin-top:6px">${v.cancel}</p>
+       <div class="row" style="margin-top:8px;gap:14px">${l.kind==='gf'?`<button class="lnk" style="font-size:12px" data-act="lineEditGf" data-u="${l.uid}">Modifier les joueurs</button>`:''}<button class="lnk" style="font-size:12px" data-act="lineDel" data-u="${l.uid}">Retirer</button></div></div>
+       <div class="cl-p"><div class="price">${v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div></div>`}).join('')}
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="h3" style="margin-bottom:10px">Code promo</div>
+     ${pm?`<div class="between"><span class="tag ol">${S.promo}</span><button class="lnk" style="font-size:12px" data-act="promoX">Retirer</button></div><p class="mut" style="margin-top:6px">${pm.n} · ${pm.d}</p>`
+       :`<div class="codebox"><input id="promoIn" placeholder="Ex. AUTOMNE15"><button class="btn sm sec" data-act="promoGo">Appliquer</button></div>
+         ${S.promoErr?`<p class="mut" style="margin-top:6px">${S.promoErr}</p>`:''}`}
+     ${u&&u.avoir?`<button class="sw ${S.useAvoir?'on':''}" data-act="avoirTog"><span><b class="h3">Utiliser mon avoir</b><br><span class="mut">${eur(u.avoir)} disponibles · jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}</span></span><i></i></button>`:''}
+     <div class="hr" style="margin:12px 0"></div>
+     <div class="sumline"><span>Prix public</span><b>${eur(T.pub)}</b></div>
+     ${T.save>0?`<div class="sumline"><span>Tarifs liés aux statuts</span><b>−${eur(T.save)}</b></div>`:''}
+     ${T.promo?`<div class="sumline"><span>Code ${S.promo}</span><b>−${eur(T.promo)}</b></div>`:''}
+     ${T.avoir?`<div class="sumline"><span>Avoir</span><b>−${eur(T.avoir)}</b></div>`:''}
+     <div class="sumtot"><span class="h3">À payer aujourd'hui</span><b>${eur(T.due)}</b></div>
+     ${!u?`<p class="mut" style="margin-top:6px">Membre ou licencié·e&nbsp;? <button class="lnk" style="font-size:12px" data-act="login">Connectez-vous</button> : le total sera recalculé.</p>`:''}
+     <button class="btn full" style="margin-top:14px" data-go="checkout">${T.due===0?'Confirmer sans paiement':'Passer au paiement'}</button>
+     <button class="btn ghost full" style="margin-top:8px" data-go="accueil">Ajouter une autre réservation</button>
+   </div>
+   <p class="note">Codes de test : AUTOMNE15 (−15 % sur green fees, cours et stages) et GOLF10 (green fees seulement). Le code s'applique après le tarif du statut. Il ne touche ni les droits de jeu des compétitions ni les carnets : à valider avec le client.</p>
+   </aside></div>`;
+};
+ACT.lineDel=a=>{S.cart=S.cart.filter(l=>l.uid!==a.dataset.u);render()};
+ACT.lineEditGf=a=>{
+  const l=S.cart.find(x=>x.uid===a.dataset.u);
+  S.cart=S.cart.filter(x=>x!==l);
+  Object.assign(S.gf,{date:l.d,t:l.h,crs:l.crs,pax:l.players.length,players:l.players,opts:l.opts,idxOk:false,editOf:l.editOf||null});
+  go('gf-joueurs');
+};
+ACT.promoGo=()=>{
+  const c=($('#promoIn').value||'').trim().toUpperCase();
+  if(PROMOS[c]){S.promo=c;S.promoErr=''}
+  else S.promoErr=c?`Le code « ${c} » n'existe pas ou a expiré.`:'Saisissez un code.';
+  render();
+};
+ACT.promoX=()=>{S.promo=null;render()};
+ACT.avoirTog=()=>{S.useAvoir=!S.useAvoir;render()};
+
+/* ═════════ Checkout ═════════ */
+R.checkout=()=>{
+  if(!S.cart.length){go('panier');return}
+  const u=me(), T=cartTotals(), co=S.co;
+  const needAcc=S.cart.some(l=>l.kind!=='gf');
+  if(needAcc&&co.mode==='guest')co.mode='login';
+  const ident=!!u||(co.guest&&!needAcc);
+  let idHtml;
+  if(u)idHtml=`<div class="between"><div class="row"><span class="av">${u.ini}</span><div><b>${u.n}</b><div class="mut">${u.email} · ${u.st.map(s=>ST[s].n).join(' · ')}</div></div></div>
+     <button class="lnk" style="font-size:12px" data-act="login">Changer de compte</button></div>`;
+  else idHtml=`<div class="tabs" style="margin-bottom:14px">
+      <button class="${co.mode==='login'?'on':''}" data-act="coMode" data-v="login">J'ai un compte</button>
+      <button class="${co.mode==='signup'?'on':''}" data-act="coMode" data-v="signup">Créer mon compte</button>
+      ${needAcc?'':`<button class="${co.mode==='guest'?'on':''}" data-act="coMode" data-v="guest">Sans compte</button>`}</div>
+    ${co.mode==='login'?`<p class="sub" style="margin-bottom:12px">Connectez-vous : le total est recalculé avec votre tarif avant le paiement.</p><button class="btn" data-act="login">Me connecter</button>`
+     :co.mode==='signup'?signupForm()+`<button class="btn" data-act="coSignup">Créer mon compte et continuer</button>`
+     :co.guest?`<div class="between"><span><b>${co.gName||'Invité·e'}</b> · ${co.gMail||''}</span><button class="lnk" style="font-size:12px" data-act="coGuestEdit">Modifier</button></div>`
+     :`<div class="grid g2" style="gap:0 12px"><label class="field"><span>Nom complet</span><input id="gName"></label><label class="field"><span>E-mail</span><input id="gMail" type="email"></label></div>
+       <label class="field"><span>Téléphone</span><input id="gTel" type="tel"></label>
+       <button class="btn sec" data-act="coGuest">Continuer sans compte</button>
+       <p class="mut" style="margin-top:8px">Sans compte, le prix public s'applique et la réservation se gère depuis le lien reçu par e-mail.</p>`}
+    ${needAcc?`<p class="note">Compte obligatoire : votre panier contient ${S.cart.filter(l=>l.kind!=='gf').map(l=>KTAG[l.kind].toLowerCase()).filter((x,i,a)=>a.indexOf(x)===i).join(', ')}. Les inscriptions et les carnets sont rattachés à une personne (licence, suivi, crédits). Le green fee seul reste possible sans compte.</p>`:''}`;
+  const zero=T.due===0;
+  $('#v-checkout').innerHTML=`
+   <button class="back" data-go="panier">← Panier</button>
+   <div class="scr-head"><div><span class="eyebrow">Dernière étape</span><h1 class="h1">${zero?'Confirmation':'<b>Paiement</b> sécurisé'}</h1><p class="sub" style="margin-top:4px">${plural(S.cart.length,'réservation')} · ${zero?'aucun paiement':eur(T.due)+' à régler'}</p></div><span class="node">Checkout</span></div>
+   ${holdHtml()}
+   <div class="two"><div>
+     <div class="sect" style="margin-top:0">1 · Vos coordonnées</div>
+     <div class="card" style="padding:16px">${idHtml}</div>
+     <div class="sect">2 · ${zero?'Garantie':'Paiement'}</div>
+     <div class="card" style="padding:16px;${ident?'':'opacity:.45;pointer-events:none'}">
+     ${zero?`<p class="sub"><b style="color:var(--ink)">Rien à régler</b> : ${T.avoir?'votre avoir couvre le total':'vos réservations sont incluses dans votre abonnement ou réglées par vos crédits'}.</p>
+       <button class="sw ${co.garantie?'on':''}" data-act="coGar" style="margin-top:8px"><span><b class="h3">Garantir mes départs par carte</b><br><span class="mut">Facultatif. Rien n'est débité ; 30 € par joueur en cas d'absence non prévenue 24 h avant.</span></span><i></i></button>
+       ${co.garantie?cardFields():''}
+       <p class="note">Arbitrage du cadrage : l'abonné réserve sans paiement et l'empreinte reste facultative. Si les absences augmentent, le club pourra la rendre obligatoire sans changer l'écran.</p>`
+     :`${cardFields()}<p class="mut" style="margin-top:4px">Paiement sécurisé 3-D Secure. ${S.cart.some(l=>l.kind==='comp'&&l.split==='each')?'La part de votre partenaire ne vous est pas débitée.':''}</p>`}
+     </div>
+     <label class="chkbox" style="margin-top:14px"><input type="checkbox" id="coCgv" ${co.cgv?'checked':''}><span>J'accepte les conditions générales de vente et les conditions d'annulation de chaque réservation.</span></label>
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="h3" style="margin-bottom:8px">Votre panier</div>
+     ${S.cart.map(l=>{const v=lineView(l);return `<div class="sumline"><span>${v.title}<br><span class="mut">${v.sub.split(' · ').slice(0,2).join(' · ')}</span></span><b>${v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div>`}).join('')}
+     ${T.save>0?`<div class="sumline"><span>Dont tarifs statut</span><b>−${eur(T.save)}</b></div>`:''}
+     ${T.avoir?`<div class="sumline"><span>Avoir</span><b>−${eur(T.avoir)}</b></div>`:''}
+     <div class="sumtot"><span class="h3">Total</span><b>${eur(T.due)}</b></div>
+     <button class="btn full" style="margin-top:14px" data-act="coPay" ${ident&&co.cgv&&!holdDead?'':'disabled'}>${zero?'Confirmer mes réservations':'Payer '+eur(T.due)}</button>
+     ${holdDead?'<p class="mut" style="margin-top:8px">Revérifiez les disponibilités avant de payer.</p>':!ident?'<p class="mut" style="margin-top:8px">Identifiez-vous pour continuer.</p>':''}
+   </div></aside></div>`;
+  $('#coCgv').onchange=e=>{co.cgv=e.target.checked;render()};
+  if(co.mode==='signup'&&!u)bindSignup();
+};
+function cardFields(){
+  return `<div class="ph" style="height:44px;border-radius:6px;margin:10px 0 8px">Champ carte sécurisé · prestataire de paiement</div>
+    <div class="grid g2" style="gap:8px"><div class="ph" style="height:44px;border-radius:6px">MM / AA</div><div class="ph" style="height:44px;border-radius:6px">CVC</div></div>`;
+}
+ACT.coMode=a=>{S.co.mode=a.dataset.v;render()};
+ACT.coGar=()=>{S.co.garantie=!S.co.garantie;render()};
+ACT.coSignup=()=>{const id=createAccount();if(id)login(id)};
+ACT.coGuest=()=>{
+  const n=$('#gName').value.trim(), m=$('#gMail').value.trim();
+  if(!n||!m){toast('Nom et e-mail sont requis.');return}
+  Object.assign(S.co,{guest:true,gName:n,gMail:m});render();
+};
+ACT.coGuestEdit=()=>{S.co.guest=false;render()};
+ACT.coPay=()=>{
+  const u=me(), T=cartTotals();
+  const ref='TQ-'+(++S.ref)+'-'+uid().slice(0,3).toUpperCase();
+  const lines=S.cart.map(l=>({l,v:lineView(l)}));
+  if(u){
+    const RS=S.res[u.id]||(S.res[u.id]=[]);
+    lines.forEach(({l,v})=>{
+      if(l.kind==='carnet'){const k=CARNETS.find(x=>x.id===l.id), c=u.credits[k.dur];
+        u.credits[k.dur]={left:(c?c.left:0)+k.q,tot:(c?c.tot:0)+k.q,end:'2027-09-17'};return}
+      if(l.kind==='ind'&&l.credit&&u.credits[l.dur])u.credits[l.dur].left--;
+      if(l.editOf){const o=RS.find(r=>r.id===l.editOf.id);if(o)o.cancelled='Remplacé par la modification du '+fdm(TODAY)}
+      const cp=l.kind==='comp'?comp(l.compId):null;
+      RS.push({id:"r"+uid(),kind:l.kind,compId:l.compId,t:v.title,sub:v.sub.split(' · ').slice(2).join(' · ')||v.sub,d:cp?cp.date:l.d,h:cp?cp.h:l.h,
+        close:cp?cp.close:null,pay:l.kind==='ind'&&l.credit?'credit':v.total===0?'incl':'card',amount:v.total-v.promo,fresh:true});
+      if(cp){cp.taken=Math.min(cp.cap,cp.taken+(l.partner?2:1))}
+    });
+    if(T.avoir)u.avoir=Math.round((u.avoir-T.avoir)*100)/100;
+  }
+  S.done={ref,lines,T,guest:!u,mail:u?u.email:S.co.gMail,garantie:S.co.garantie};
+  S.cart=[];S.promo=null;S.co.cgv=false;S.co.garantie=false;hold=HOLD;holdDead=false;
+  go('confirm');
+};
+
+/* ═════════ Confirmation ═════════ */
+R.confirm=()=>{
+  const d=S.done;if(!d){go('accueil');return}
+  $('#v-confirm').innerHTML=`
+   <div class="scr-head"><div><div class="okmark">✓</div><span class="eyebrow">${d.T.due?'Paiement accepté':'Réservation confirmée'}</span>
+     <h1 class="h1">C'est <b>réservé</b>&nbsp;! À très vite au Touquet.</h1>
+     <p class="sub" style="margin-top:4px">Référence de réservation <b style="color:var(--ink)">${d.ref}</b> · confirmation envoyée à ${d.mail||'votre adresse'}</p></div>
+     <span class="node">Confirmation</span></div>
+   <div class="two"><div class="card" style="padding:6px 18px">
+     ${d.lines.map(({l,v})=>`<div class="cline" style="grid-template-columns:${l.kind==='gf'?'92px ':''}minmax(0,1fr) auto">
+       ${l.kind==='gf'?'<div class="qr"></div>':''}
+       <div><span class="tag">${v.tag}</span><b class="h3" style="display:block;margin-top:6px">${v.title}</b><div class="mut">${v.sub}</div>
+         <p class="mut" style="margin-top:4px">${l.kind==='gf'?'QR code à présenter au starter · '+v.cancel.toLowerCase():l.kind==='carnet'?'Crédits ajoutés à votre espace':v.cancel}</p>
+         ${v.extra?`<p class="mut">${v.extra}</p>`:''}</div>
+       <div class="cl-p"><b>${v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div></div>`).join('')}
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="sumline"><span>Total réglé</span><b>${eur(d.T.due)}</b></div>
+     ${d.T.save>0?`<div class="sumline"><span>Économisé grâce à votre statut</span><b>${eur(d.T.save)}</b></div>`:''}
+     ${d.garantie?'<div class="sumline"><span>Garantie carte</span><b>enregistrée</b></div>':''}
+     ${d.guest?`<p class="sub" style="margin:10px 0">Vous avez réservé sans compte. Créez-en un pour retrouver ce départ et profiter de votre tarif la prochaine fois.</p>
+       <button class="btn full" data-act="signup">Créer mon compte</button>`
+      :`<button class="btn full" style="margin-top:12px" data-act="spaceTab" data-t="resa">Voir mes réservations</button>`}
+     <button class="btn ghost full" style="margin-top:8px" data-go="accueil">Retour au golf</button>
+   </div></aside></div>
+   <p class="note">Tout ce qui vient d'être réservé est déjà visible dans l'espace personnel (onglet Réservations), avec ses conditions d'annulation. Un carnet acheté y apparaît avec ses crédits.</p>`;
+};
+
+/* ═════════ Espace personnel ═════════ */
+const RULES={gf:{h:24,n:'jusqu\'à 24 h avant le départ'},ind:{h:48,n:'jusqu\'à 48 h avant le cours'},coll:{h:48,n:'jusqu\'à 48 h avant le cours'},
+  stage:{h:24*7,n:'jusqu\'à 7 jours avant le stage'}};
+function cancelInfo(r){
+  let dl, n;
+  if(r.kind==='comp'){dl=at(r.close,'23:59');n='jusqu\'à la clôture du '+fdm(r.close)}
+  else {const x=RULES[r.kind];dl=new Date(at(r.d,r.h).getTime()-x.h*3600e3);n=x.n}
+  return {ok:NOW<dl,n,dl};
+}
+const fdl=d=>d.getDate()+' '+MONTHS[d.getMonth()]+' à '+String(d.getHours()).padStart(2,'0')+' h '+String(d.getMinutes()).padStart(2,'0');
+R.espace=()=>{
+  const u=me();
+  if(!u){
+    $('#v-espace').innerHTML=`<div class="scr-head"><h1 class="h1">Mon espace</h1><span class="node">Espace personnel</span></div>
+     <div class="card" style="padding:30px;text-align:center;max-width:520px;margin:0 auto"><b class="h2">Connectez-vous pour accéder à votre espace</b>
+     <p class="sub" style="margin:8px 0 16px">Vos réservations, votre statut et vos tarifs, vos carnets et vos avoirs.</p>
+     <div class="row wrap" style="justify-content:center"><button class="btn" data-act="login">Me connecter</button><button class="btn ghost" data-act="signup">Créer un compte</button></div></div>`;
+    return;
+  }
+  const tab=S.space, all=(S.res[u.id]||[]);
+  const up=all.filter(r=>!r.past&&!r.cancelled), past=all.filter(r=>r.past||r.cancelled);
+  const tabs=[['resa','Réservations',up.length],['statut','Statut & tarifs'],['carnets','Carnets & avoirs'],['infos','Licence & documents']];
+  let body='';
+  if(tab==='resa'){
+    const list=(S.resTab==='avenir'?up:past).slice().sort((a,b)=>(a.d+a.h<b.d+b.h?-1:1)*(S.resTab==='avenir'?1:-1));
+    body=`<div class="chips"><button class="chip ${S.resTab==='avenir'?'on':''}" data-act="resTab" data-v="avenir">À venir · ${up.length}</button>
+      <button class="chip ${S.resTab==='passees'?'on':''}" data-act="resTab" data-v="passees">Passées &amp; annulées · ${past.length}</button></div>
+     ${list.length?list.map(r=>{const d=dobj(r.d), ci=r.past||r.cancelled?null:cancelInfo(r), wait=r.pay==='wait';
+       return `<div class="card res ${r.past||r.cancelled?'past':''}">
+         <div class="cdate"><small>${DAYS[d.getDay()].slice(0,3)}.</small><b>${d.getDate()}</b><small>${MABR[d.getMonth()]}</small></div>
+         <div><div class="row wrap" style="gap:6px"><span class="tag">${KTAG[r.kind]}</span>${wait?'<span class="tag ol">Liste d\'attente</span>':''}${r.fresh?'<span class="tag dk">Nouveau</span>':''}${r.cancelled?'<span class="tag">Annulé</span>':''}</div>
+           <b class="h3" style="display:block;margin-top:6px">${r.t}</b>
+           <div class="mut">${r.h.replace(':',' h ')} · ${r.sub}</div>
+           <div class="mut">${r.cancelled?r.cancelled:r.pay==='credit'?'Réglé avec 1 crédit carnet':r.pay==='incl'?'Inclus dans votre abonnement':wait?'Rien n\'est débité tant qu\'une place ne se libère pas':r.past?'Réglé '+eur(r.amount):'Réglé '+eur(r.amount)+' par carte'}</div>
+           ${ci&&!wait?`<div class="mut" style="margin-top:4px">${ci.ok?'Annulation gratuite '+ci.n+' ('+fdl(ci.dl)+')':'<b style="color:var(--ink)">Délai d\'annulation en ligne dépassé</b> (limite : '+fdl(ci.dl)+'). Contactez l\'accueil du golf.'}</div>`:''}
+         </div>
+         <div class="acts">${r.past||r.cancelled?(r.kind==='gf'&&r.past?`<button class="btn sm ghost" data-act="rebook" data-id="${r.id}">Réserver à nouveau</button>`:'')
+           :wait?`<button class="btn sm ghost" data-act="resCancel" data-id="${r.id}">Quitter la liste</button>`
+           :`${r.kind==='gf'?`<button class="btn sm sec" data-act="resQr" data-id="${r.id}">QR code</button>`:''}
+             <button class="btn sm ghost" data-act="resEdit" data-id="${r.id}" ${ci.ok?'':'disabled'}>Modifier</button>
+             <button class="btn sm ghost" data-act="resCancel" data-id="${r.id}" ${ci.ok?'':'disabled'}>${r.kind==='comp'?'Me désinscrire':'Annuler'}</button>`}</div>
+       </div>`}).join('')
+     :`<div class="card" style="padding:26px;text-align:center"><b class="h3">${S.resTab==='avenir'?'Aucune réservation à venir':'Rien à afficher'}</b>
+        ${S.resTab==='avenir'?'<p class="sub" style="margin:6px 0 14px">Réservez un départ, un cours ou une compétition.</p><button class="btn sm" data-go="gf">Réserver un départ</button>':''}</div>`}
+     <p class="note">Délais d'annulation proposés au cadrage : 24 h pour un green fee, 48 h pour un cours, 7 jours pour un stage, la clôture des inscriptions pour une compétition. Passé le délai, les boutons restent visibles mais désactivés, avec la date limite. Le cours de Claire demain à 10 h en est l'exemple.</p>`;
+  }
+  if(tab==='statut'){
+    const k1='2026-09-24', k2='2026-09-26';
+    const rowsT=[
+      ...CRS.map(c=>[`Green fee ${c.n}`,'en semaine',gfPrice(c,k1,u.st)]),
+      [`Green fee La Forêt`,'le week-end',gfPrice(crs('foret'),k2,u.st)],
+      ['Cours individuel 30 min','',lessonPrice(45,u.st)],['Cours individuel 1 h','',lessonPrice(80,u.st)],
+      ['Carnet 5 cours · 30 min','',lessonPrice(200,u.st)],
+      ['Compétition sur La Forêt','droit de jeu + green fee',compPrice(comp('toussaint'),u.st)]];
+    body=`<div class="grid g2" style="align-items:start">
+      <div class="mcard"><div class="between"><img data-logo src="" alt="" style="height:30px;filter:brightness(0) invert(1)"><span class="mut" style="font-size:11px">Le Touquet</span></div>
+        <div><div style="font-size:24px;font-weight:300;letter-spacing:.5px">${u.n}</div><div class="mut">${u.home}</div></div>
+        <div class="row wrap" style="gap:6px">${u.st.map(s=>`<span class="tag">${ST[s].n}</span>`).join('')}</div>
+        <div class="between" style="margin-top:auto"><span class="mut">Licence ${u.lic||'—'} · index ${fidx(u.idx)}</span><span class="qr" style="width:46px;height:46px;background-size:8px 8px;border:0"></span></div></div>
+      <div class="card" style="padding:16px"><div class="h3" style="margin-bottom:8px">Vos avantages</div>
+        ${u.st.map(s=>`<div class="ck ok"><span class="ic">✓</span><div><b>${ST[s].n}</b><small>${ST[s].s}</small></div></div>`).join('')}
+        <p class="mut" style="margin-top:8px">Quand plusieurs statuts s'appliquent, c'est toujours le tarif le plus avantageux qui est retenu. Les remises ne se cumulent pas.</p></div></div>
+     <div class="sect">Vos tarifs au Touquet</div>
+     <div class="card" style="padding:4px 8px;overflow-x:auto"><table class="ttable"><thead><tr><th>Prestation</th><th class="r">Prix public</th><th class="r">Votre prix</th><th class="hide-s">Statut appliqué</th></tr></thead>
+       <tbody>${rowsT.map(([n,s,x])=>`<tr><td><b style="font-weight:600">${n}</b>${s?`<div class="mut">${s}</div>`:''}</td><td class="r">${eur(x.pub)}</td><td class="r"><b>${x.p===0&&x.pub>0?'Inclus':eur(x.p)}</b></td><td class="hide-s mut">${x.st?ST[x.st].n:'—'}</td></tr>`).join('')}</tbody></table></div>
+     <p class="note">Ce tableau répond à la demande du client : « avoir accès à son espace personnel pour avoir les prix associés à son statut ». Il est calculé avec les mêmes règles que le moteur, et ne peut donc jamais contredire un prix affiché dans les tunnels.</p>`;
+  }
+  if(tab==='carnets'){
+    const cr=Object.entries(u.credits);
+    body=`<div class="sect" style="margin-top:0">Carnets de cours</div>
+     ${cr.length?`<div class="grid g2">${cr.map(([d,c])=>`<div class="card pack"><span class="tag" style="align-self:flex-start">Valable jusqu'au ${fdm(c.end)} ${c.end.slice(0,4)}</span>
+       <b class="h2">Cours de ${d==='30'?'30 min':'1 h'}</b>
+       <div style="font-size:28px;font-weight:700;letter-spacing:-.5px">${c.left}<span class="mut" style="font-size:13px;font-weight:500"> / ${c.tot} cours restants</span></div>
+       <div class="prog">${Array.from({length:c.tot},(_,i)=>`<i class="${i<c.left?'on':''}"></i>`).join('')}</div>
+       <div class="foot"><span class="mut">${c.tot-c.left} utilisé${c.tot-c.left>1?'s':''}</span><button class="btn sm" data-act="indOpen" data-d="${d}" ${c.left?'':'disabled'}>Réserver un cours</button></div></div>`).join('')}</div>`
+      :`<div class="card" style="padding:20px"><b class="h3">Aucun carnet en cours</b><p class="sub" style="margin:4px 0 12px">Un carnet de 5 ou 10 cours revient moins cher que les cours à l'unité.</p><button class="btn sm" data-act="xTab" data-t="carnet">Voir les carnets</button></div>`}
+     <div class="sect">Avoirs</div>
+     ${u.avoir?`<div class="card" style="padding:16px"><div class="between"><div><b class="h2">${eur(u.avoir)}</b><div class="mut">Avoir suite à l'annulation d'un départ · valable jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}</div></div>
+        <span class="tag ol">Utilisé automatiquement au panier</span></div></div>`
+      :'<div class="card" style="padding:16px"><span class="mut">Aucun avoir disponible.</span></div>'}
+     <p class="note">L'avoir est proposé par défaut au panier (interrupteur désactivable). Il vient d'une annulation remboursée en avoir plutôt que sur la carte : c'est l'un des deux choix proposés à l'annulation.</p>`;
+  }
+  if(tab==='infos'){
+    const cOk=u.cert&&u.cert>=TODAY;
+    body=`<div class="grid g2" style="align-items:start"><div class="card" style="padding:4px 16px">
+      <div class="ck ${u.lic?'ok':'ko'}"><span class="ic">${u.lic?'✓':'✕'}</span><div><b>Licence FFGolf</b><small>${u.lic?'N° '+u.lic+' · saison 2026 · synchronisée chaque nuit':'Aucune licence rattachée'}</small></div>${u.lic?'':'<button class="btn sm sec" data-act="addLic">Ajouter</button>'}</div>
+      <div class="ck ok"><span class="ic">✓</span><div><b>Index ${fidx(u.idx)}</b><small>Relevé FFGolf du 17 septembre</small></div></div>
+      <div class="ck ${cOk?'ok':'ko'}"><span class="ic">${cOk?'✓':'✕'}</span><div><b>Certificat médical</b><small>${u.cert?(cOk?'Valable jusqu\'au ':'Expiré depuis le ')+fdm(u.cert)+' '+u.cert.slice(0,4):'Non déposé'}${cOk?'':' — requis pour les compétitions'}</small></div><button class="btn sm ${cOk?'ghost':'sec'}" data-act="cert">${cOk?'Remplacer':'Déposer'}</button></div>
+      <div class="ck ok"><span class="ic">✓</span><div><b>Date de naissance</b><small>${fdm(u.dob)} ${u.dob.slice(0,4)} · ${ageAt(u.dob,TODAY)} ans</small></div></div>
+     </div>
+     <div class="card" style="padding:16px"><div class="h3" style="margin-bottom:6px">Mes partenaires de jeu</div>
+      ${u.partners.length?u.partners.map(id=>{const p=PROFILES[id];return `<div class="prow"><span class="av lt">${p.ini}</span><div class="pb"><b>${p.n}</b><span class="mut">Index ${fidx(p.idx)}</span></div></div>`}).join(''):'<p class="mut">Les joueurs que vous rattachez à vos départs apparaîtront ici.</p>'}
+      <div class="hr" style="margin:12px 0"></div>
+      <div class="h3" style="margin-bottom:6px">Coordonnées</div><p class="mut">${u.email}</p>
+      <button class="lnk" style="margin-top:12px;font-size:12px" data-act="logout">Se déconnecter</button></div></div>`;
+  }
+  $('#v-espace').innerHTML=`
+   <div class="scr-head"><div class="hello"><span class="av" style="width:58px;height:58px;font-size:17px">${u.ini}</span>
+     <div><span class="eyebrow" style="margin-bottom:4px">Mon espace</span><h1 class="h1">Bonjour <b>${u.n.split(' ')[0]}</b></h1><p class="sub">${u.st.map(s=>ST[s].n).join(' · ')}</p></div></div>
+     <span class="node">Espace personnel</span></div>
+   <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="spaceTab" data-t="${k}">${n}${c!=null?`<i>${c}</i>`:''}</button>`).join('')}</div>
+   ${body}`;
+};
+ACT.spaceTab=a=>{S.space=a.dataset.t;if(S.screen==='espace')render();else go('espace')};
+ACT.resTab=a=>{S.resTab=a.dataset.v;render()};
+const findRes=id=>(S.res[S.user]||[]).find(r=>r.id===id);
+ACT.resQr=a=>{const r=findRes(a.dataset.id);
+  sheet(shead(r.t,'QR code de départ')+`<div style="display:grid;place-items:center;margin:16px 0"><div class="qr lg"></div></div>
+   <p class="sub" style="text-align:center">${fday(r.d)} · ${r.h}<br>${r.sub}</p>
+   <p class="mut" style="text-align:center;margin-top:8px">À présenter au starter. Il fonctionne aussi hors connexion une fois affiché.</p>`)};
+ACT.resCancel=a=>{
+  const r=findRes(a.dataset.id), wait=r.pay==='wait';
+  const refund=r.pay==='card'&&r.amount>0;
+  sheet(shead(wait?'Quitter la liste d\'attente':r.kind==='comp'?'Me désinscrire':'Annuler la réservation',KTAG[r.kind])+
+   `<p class="sub" style="margin:4px 0 14px"><b style="color:var(--ink)">${r.t}</b> · ${fday(r.d)} · ${r.h}</p>
+   ${refund?`<div class="sect" style="margin-top:0">Remboursement de ${eur(r.amount)}</div><div class="radios">
+     <button class="radio on" data-act="refundPick" data-v="card"><span class="dot"></span><div><b>Sur ma carte bancaire</b><small>Sous 5 à 7 jours ouvrés</small></div></button>
+     <button class="radio" data-act="refundPick" data-v="avoir"><span class="dot"></span><div><b>En avoir, tout de suite</b><small>Utilisable 9 mois sur tout le golf</small></div></button></div>`
+    :r.pay==='credit'?'<div class="alert soft"><span class="ic">↺</span><div>Le crédit est <b>recrédité sur votre carnet</b>.</div></div>'
+    :r.pay==='incl'?'<div class="alert soft"><span class="ic">i</span><div>Départ inclus dans votre abonnement : rien à rembourser. Le créneau est libéré pour d\'autres joueurs.</div></div>':''}
+   ${r.kind==='gf'&&r.sub.includes('2 joueurs')?'<p class="mut" style="margin-top:10px">Les autres joueurs du départ sont prévenus par e-mail.</p>':''}
+   <div class="row" style="margin-top:16px"><button class="btn" data-act="resCancelGo" data-id="${r.id}">Confirmer</button><button class="btn ghost" data-act="close">Garder ma réservation</button></div>`);
+  S.refund='card';
+};
+ACT.refundPick=a=>{S.refund=a.dataset.v;$$('[data-act="refundPick"]').forEach(b=>b.classList.toggle('on',b===a))};
+ACT.resCancelGo=a=>{
+  const r=findRes(a.dataset.id), u=me();
+  let msg='Réservation annulée.';
+  if(r.pay==='wait'){msg='Vous avez quitté la liste d\'attente.'}
+  else if(r.pay==='credit'){const c=u.credits[r.kind==='ind'&&r.t.includes('1 h')?60:30];if(c)c.left++;msg='Réservation annulée, crédit recrédité.'}
+  else if(r.pay==='card'&&r.amount>0){
+    if(S.refund==='avoir'){u.avoir=(u.avoir||0)+r.amount;u.avoirEnd=u.avoirEnd||'2027-06-17';msg=`Annulée : ${eur(r.amount)} ajoutés à votre avoir.`}
+    else msg=`Annulée : ${eur(r.amount)} remboursés sur votre carte sous 5 à 7 jours.`}
+  r.cancelled=r.pay==='wait'?'Liste d\'attente quittée le '+fdm(TODAY):'Annulé le '+fdm(TODAY);
+  closeSheet();render();toast(msg);
+};
+ACT.resEdit=a=>{
+  const r=findRes(a.dataset.id);
+  if(r.kind==='gf'){Object.assign(S.gf,{date:r.d,editOf:{id:r.id,d:r.d,h:r.h},moment:'all'});go('gf');return}
+  if(r.kind==='ind'){Object.assign(S.cours,{dur:r.t.includes('1 h')?60:30,pro:'any',slot:null,wk:0,editOf:{id:r.id}});go('cours-ind');return}
+  sheet(shead('Modifier '+(r.kind==='comp'?'mes préférences':'ma réservation'),KTAG[r.kind])+
+   (r.kind==='comp'?`<p class="sub" style="margin:4px 0 12px">Les horaires sont publiés 48 h avant l'épreuve. D'ici là, vous pouvez changer vos préférences.</p>
+     <div class="chips">${['Plutôt tôt','Plutôt tard','Indifférent'].map((n,i)=>`<button class="chip ${i===0?'on':''}">${n}</button>`).join('')}</div>
+     <label class="field"><span>Message au comité</span><input></label>`
+   :`<p class="sub" style="margin:4px 0 12px">Un cours collectif ou un stage se modifie en changeant de session : annulez celle-ci (gratuit dans les délais), puis inscrivez-vous à une autre.</p>`)+
+   `<button class="btn full" data-act="close">${r.kind==='comp'?'Enregistrer':'Compris'}</button>`);
+};
+ACT.rebook=a=>{const r=findRes(a.dataset.id);Object.assign(S.gf,{date:'2026-09-24',editOf:null});go('gf')};
+
+/* ═════════ Démarrage ═════════ */
+function toggleVp(){
+  const st=$('#stage'), m=st.dataset.vp!=='mobile';
+  st.dataset.vp=m?'mobile':'desktop';
+  document.body.classList.toggle('vp-mobile',m);
+  st.scrollTop=0;window.scrollTo(0,0);
+}
+$('#vpTog').onclick=toggleVp;
+document.addEventListener('keydown',e=>{
+  if((e.key==='m'||e.key==='M')&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&!e.target.closest('input,textarea,select'))toggleVp();
+});
+S=fresh();
+go('accueil');
+
+</script>
+</body>
+</html>
