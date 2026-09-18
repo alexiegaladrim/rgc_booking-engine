@@ -337,6 +337,9 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .pill{border:1px solid var(--line);border-radius:999px;padding:8px 0;font-size:13px;font-weight:400;text-align:center;background:var(--paper);width:100%;transition:.15s}
 .pill:hover{border-color:var(--gold);background:var(--gold-soft)}
 .pill.on{background:var(--gold);color:#fff;border-color:var(--gold)}
+.pill{border-radius:14px;padding:6px 0 5px;line-height:1.2}
+.pill small{display:block;font-size:9.5px;letter-spacing:.3px;color:var(--gold-dark);font-weight:400;margin-top:1px}
+.pill.on small{color:#fff}
 .wcol .none{font-size:11px;color:var(--g400);text-align:center;padding:8px 0}
 .lesson{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:20px;padding:0;margin-bottom:14px;align-items:center;overflow:hidden}
 .lesson::before{content:"";align-self:stretch;min-height:120px;background:var(--lesson-img,linear-gradient(135deg,var(--sand),var(--gold-soft))) center/cover}
@@ -597,6 +600,14 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .cp-l button svg{color:var(--gold-dark)}
 .cp-l button:hover{background:var(--gold-soft)}
 
+.gp-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:16px}
+.gp-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-dark));transition:width .3s}
+.gp-sel{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.gchip{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border-radius:999px;padding:6px 6px 6px 14px;font-size:13px}
+.gchip small{color:var(--gold-light);font-size:11px;font-weight:300}
+.gchip button{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#c7bba8;padding:0}
+.gchip button:hover{background:rgba(255,255,255,.12);color:#fff}
+
 /* ══════════ Mobile (conteneur) ══════════ */
 @container (max-width:900px){
   .two{grid-template-columns:1fr}
@@ -802,17 +813,20 @@ const GOPTS=[
   {id:'clubs',n:'Location de clubs',d:'Série complète, droitier ou gaucher',p:40,per:'j'},
   {id:'seau',n:'Seau de practice',d:'50 balles avant le départ',p:5,pa:0,per:'j'}];
 const PROS={
-  jcm:{n:'Jean-Charles Martin',t:'Pro PGA · swing & long jeu',days:[1,2,3,4,5,6]},
-  lou:{n:'Lou Castel',t:'Pro PGA · petit jeu & jeunes',days:[0,3,4,5,6]}};
+  jcm:{n:'Jean-Charles Martin',t:'Pro PGA',days:[1,2,3,4,5,6]},
+  lou:{n:'Lou Castel',t:'Pro PGA',days:[0,3,4,5,6]}};
+/* Thématiques : portées par les cours du planning (back-office enseignement),
+   pas par les pros — même liste que dans enseignement/. */
+const THEMES=['Putting','Petit jeu','Approche','Long jeu','Obstacles'];
 const LESSON={30:45,60:80};
 const COLL=[
-  {id:'c1',n:'Atelier petit jeu',d:'2026-09-19',h:'10:00',dur:60,pro:'jcm',lvl:'Index 36 et moins',idxMax:36,cap:6,left:2,p:30},
+  {id:'c1',th:'Petit jeu',n:'Atelier petit jeu',d:'2026-09-19',h:'10:00',dur:60,pro:'jcm',lvl:'Index 36 et moins',idxMax:36,cap:6,left:2,p:30},
   {id:'c2',n:'Initiation découverte',d:'2026-09-20',h:'14:00',dur:45,pro:'lou',lvl:'Débutants · sans licence',cap:4,left:4,p:25},
   {id:'c5',n:'Cours collectif enfants',d:'2026-09-23',h:'14:00',dur:60,pro:'lou',lvl:'Enfants de 7 à 12 ans',cap:8,left:3,p:18,kid:true},
-  {id:'c3',n:'Atelier bunker',d:'2026-09-26',h:'10:00',dur:90,pro:'jcm',lvl:'Index 36 et moins',idxMax:36,cap:6,left:0,p:40},
-  {id:'c4',n:'Putting — lire les greens',d:'2026-09-27',h:'11:00',dur:60,pro:'lou',lvl:'Tous niveaux',cap:6,left:5,p:30}];
+  {id:'c3',th:'Obstacles',n:'Atelier bunker',d:'2026-09-26',h:'10:00',dur:90,pro:'jcm',lvl:'Index 36 et moins',idxMax:36,cap:6,left:0,p:40},
+  {id:'c4',th:'Putting',n:'Putting — lire les greens',d:'2026-09-27',h:'11:00',dur:60,pro:'lou',lvl:'Tous niveaux',cap:6,left:5,p:30}];
 const STAGES=[
-  {id:'s1',n:'Stage perfectionnement — petit jeu & putting',d:'2026-10-24',d2:'2026-10-25',sched:'2 jours · 9 h 30 – 12 h 30',pro:'lou',lvl:'Index 10 à 36',cap:8,left:3,p:290},
+  {id:'s1',th:'Petit jeu · Putting',n:'Stage perfectionnement — petit jeu & putting',d:'2026-10-24',d2:'2026-10-25',sched:'2 jours · 9 h 30 – 12 h 30',pro:'lou',lvl:'Index 10 à 36',cap:8,left:3,p:290},
   {id:'s2',n:'Stage Toussaint jeunes',d:'2026-10-26',d2:'2026-10-28',sched:'3 matinées · 9 h – 12 h',pro:'jcm',lvl:'De 8 à 17 ans',cap:10,left:6,p:180,kid:true},
   {id:'s3',n:'Stage « Premier parcours »',d:'2026-11-07',d2:'2026-11-08',sched:'2 jours · 10 h – 16 h, déjeuner inclus',pro:'jcm',lvl:'Débutants · carte verte à la clé',cap:6,left:6,p:390}];
 const CARNETS=[
@@ -908,9 +922,9 @@ function fresh(){
   PROFILES=JSON.parse(JSON.stringify(SEED_PROFILES));
   COMPS_SEED.forEach(x=>Object.assign(comp(x.id),{taken:x.taken,wait:x.wait}));
   return {user:null,
-    gf:{date:'2026-09-24',pax:2,moment:'all',crs:null,t:null,players:[],opts:{},idxOk:false,editOf:null},
+    gf:{date:'2026-09-24',pax:2,moment:'all',crs:null,t:null,players:[],fopts:[{}],idxOk:false,editOf:null},
     comp:{filter:'all',id:null,partner:null,split:'me',pref:'indiff',wait:false},
-    cours:{tab:'ind',pro:'any',dur:30,wk:0,slot:null,useCredit:true},
+    cours:{tab:'ind',th:'all',pro:'any',dur:30,wk:0,slot:null,useCredit:true},
     cart:[],promo:null,promoErr:'',useAvoir:true,lastAdded:null,
     co:{mode:'login',guest:false,cgv:false,garantie:false,newAcc:{}},
     space:'resa',resTab:'avenir',res:seedRes(),done:null,ref:1040};
@@ -1212,10 +1226,9 @@ R.gf=()=>{
   const days=Array.from({length:9},(_,i)=>dshift(start,i)).filter(k=>k<=DMAX);
   const G2MAX=14;
   const grp=isGroup();
-  if(grp&&(!g.flights||g.flights.length!==gfSizes().length))resetFlights();
-  const need=grp?gfSizes()[g.act]:g.pax;
+  if(grp&&!(g.flights||[]).every(Boolean))resetFlights();
   const rows=CRS.map(c=>{
-    const ok=grp?groupSlots(c,need,g.act):openSlots(c,g.date,g.pax,g.moment);
+    const ok=openSlots(c,g.date,grp?1:g.pax,g.moment);
     const blocked=!!(c.idxMax&&u&&u.idx>c.idxMax);
     return {c,ok,blocked,price:gfPrice(c,g.date,st)};
   });
@@ -1250,31 +1263,31 @@ R.gf=()=>{
    <button class="calnav" data-act="gfDay" data-n="1" ${g.date>=DMAX?'disabled':''} aria-label="Jour suivant"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button></div>
    ${grp?groupPanel():''}
    ${grp&&g.pax>=GMAX?`<p class="mut" style="margin:-6px 0 18px">Plus de 12 joueurs ? <button class="lnk" style="font-size:12.5px" data-act="gfBig">Faire une demande de groupe</button></p>`:''}
-   <div class="between" style="margin-bottom:12px"><b class="h2">${grp?`Départ ${g.act+1} · ${plural(need,'joueur')} — choisissez un créneau`:tot?`${plural(rows.filter(r=>r.ok.length&&!r.blocked).length,'parcours ouvert','parcours ouverts')} · ${plural(tot,'départ')}`:'Aucun départ pour ce groupe ce jour-là'}</b>
+   <div class="between" style="margin-bottom:12px"><b class="h2">${grp?`Cochez vos créneaux · ${placedN()} / ${g.pax} joueurs placés`:tot?`${plural(rows.filter(r=>r.ok.length&&!r.blocked).length,'parcours ouvert','parcours ouverts')} · ${plural(tot,'départ')}`:'Aucun départ pour ce groupe ce jour-là'}</b>
      <span class="mut">pour ${plural(g.pax,'joueur')}</span></div>
    ${rows.map(r=>{
      const c=r.c, shown=r.ok.slice(0,G2MAX), rest=r.ok.length-shown.length;
      const tags=`<span class="tag">${c.t}</span>${c.nine?'<span class="tag">Sans index minimum</span>':''}${c.idxMax?`<span class="tag">Index ≤ ${c.idxMax}</span>`:''}`;
      const body=r.blocked
        ?`<div class="alert"><span class="ic">!</span><div><b>Votre index (${fidx(u.idx)}) dépasse la limite de ${c.idxMax} fixée pour La Mer.</b><br>Les départs existent, mais le starter ne peut pas vous faire partir. La Forêt et Le Manoir vous sont ouverts.</div></div>`
-       :grp?groupTimes(c,r.ok,shown,rest)
+       :grp?groupTimes(c,r.ok)
        :r.ok.length?`<div class="gtimes">${shown.map(s=>`<button class="gtime" data-act="gfPick" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl. libres</i></button>`).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`
        :`<p class="mut" style="margin-top:10px">Aucun départ n'accueille ${plural(g.pax,'joueur')} ensemble ${g.moment==='all'?'ce jour-là':g.moment==='am'?'le matin':'l\'après-midi'}.</p>`;
-     return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f&&f.crs===c.id)?'':'off'}">
+     return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
        <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
          <span class="mut">Départ toutes les ${c.cad} min</span></div>
          <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}</div></div>
        ${body}</div>`}).join('')}
-   ${grp?`<div class="gbar"><div><b>${g.flights.filter(Boolean).length} / ${g.flights.length} départs choisis</b><span class="mut">${g.flights.map((f,i)=>f?crs(f.crs).n+' '+f.t:'Départ '+(i+1)+' à choisir').join(' · ')}</span></div>
-     <button class="btn" data-act="gfGroupGo" ${g.flights.every(Boolean)?'':'disabled'}>Continuer</button></div>`:''}
+   ${grp?`<div class="gbar"><div><b>${placedN()} / ${g.pax} joueurs placés · ${plural(g.flights.length,'créneau','créneaux')}</b><span class="mut">${g.flights.length?g.flights.map((f,i)=>`${crs(f.crs).n} ${f.t} (${gfSizes()[i]})`).join(' · '):'Aucun créneau sélectionné'}</span></div>
+     <button class="btn" data-act="gfGroupGo" ${placedN()>=g.pax?'':'disabled'}>Continuer</button></div>`:''}
    <p class="note">Le prix affiché en tête de parcours est celui du client connecté. Les autres joueurs sont tarifés un par un à l'étape suivante, chacun selon son propre statut : un abonné qui invite un ami voit « Inclus » ici, mais paiera la place de l'ami.</p>
    <p class="note">Senior : la remise ne vaut que du lundi au vendredi. Passez sur un samedi avec Bernard Roux pour voir le prix remonter au tarif licencié.</p>`;
 };
 /* meilleur prix du jour pour le client, tous parcours ouverts confondus */
 function dayBest(k){
   const u=me(), g=S.gf;
-  const need=isGroup()?Math.max(...gfSizes()):g.pax;
+  const need=isGroup()?1:g.pax;
   const ps=CRS.filter(c=>!(c.idxMax&&u&&u.idx>c.idxMax)&&openSlots(c,k,need,g.moment).length).map(c=>gfPrice(c,k,mySt()).p);
   return ps.length?Math.min(...ps):null;
 }
@@ -1308,7 +1321,7 @@ ACT.gfPaxG=a=>{const g=S.gf, n=+a.dataset.n;
   setPax(Math.max(4,Math.min(GMAX,g.pax+n)));
 };
 function setPax(n){const g=S.gf;g.pax=n;g.split=null;resetFlights();render()}
-function resetFlights(){const g=S.gf;g.flights=gfSizes().map(()=>null);g.act=0}
+function resetFlights(){const g=S.gf;g.flights=[];g.act=0}
 ACT.gfMom=a=>{S.gf.moment=a.dataset.v;resetFlights();render()};
 document.addEventListener('click',e=>{
   if(S&&S.gf.cal&&!e.target.closest('[data-calpop],[data-act="gfCal"],[data-act="gfCalM"]')){S.gf.cal=false;if(S.screen==='gf')render()}
@@ -1322,74 +1335,50 @@ ACT.gfEditCancel=()=>{S.gf.editOf=null;S.space='resa';go('espace')};
    de créneaux qu'il faut de départs, avec le moins de départs possible. */
 const GMAX=12;
 const isGroup=()=>S.gf.pax>4;
-function splits(n){
-  const k=Math.ceil(n/4), out=[];
-  const rec=(left,parts,max)=>{
-    if(parts.length===k){if(!left)out.push(parts.slice());return}
-    for(let x=Math.min(4,max,left);x>=1;x--){parts.push(x);rec(left-x,parts,x);parts.pop()}
-  };
-  rec(n,[],4);
-  return out.sort((a,b)=>(Math.max(...a)-Math.min(...a))-(Math.max(...b)-Math.min(...b))).slice(0,3);
+/* Groupe de 5 à 12 : le client coche librement ses créneaux (4 joueurs max.
+   par départ, parcours au choix) ; les joueurs sont répartis automatiquement. */
+const slotFree=f=>{const x=slots(crs(f.crs),S.gf.date).find(y=>y.t===f.t);return x?x.free:0};
+const capOf=f=>Math.min(4,slotFree(f));
+function distribute(fl,n){
+  const caps=fl.map(capOf), sz=fl.map(()=>0);let left=n, moved=true;
+  while(left>0&&moved){moved=false;for(let i=0;i<fl.length&&left>0;i++)if(sz[i]<caps[i]){sz[i]++;left--;moved=true}}
+  return sz;
 }
-function gfSizes(){const g=S.gf;return g.split||splits(g.pax)[0]}
-/* créneaux ouverts pour un départ d'une taille donnée, hors créneaux déjà pris par le groupe */
-function groupSlots(c,need,skip){
-  const g=S.gf, taken=(g.flights||[]).filter((f,i)=>f&&i!==skip&&f.crs===c.id).map(f=>f.t);
-  return openSlots(c,g.date,need,g.moment).filter(s=>!taken.includes(s.t));
-}
-/* proposition : k créneaux consécutifs sur un même parcours */
-function consecutive(c){
-  const g=S.gf, sz=gfSizes(), all=slots(c,g.date).filter(s=>inMoment(s.t,g.moment));
-  for(let i=0;i+sz.length<=all.length;i++){
-    if(sz.every((n,j)=>all[i+j].free>=n))return sz.map((n,j)=>({crs:c.id,t:all[i+j].t}));
-  }
-  return null;
-}
-function groupTimes(c,ok,shown,rest){
-  const g=S.gf, mine=g.flights.map((f,i)=>f&&f.crs===c.id?{t:f.t,i}:null).filter(Boolean);
-  const after=new Set(mine.map(m=>toT(toMin(m.t)+c.cad)));
-  const list=shown.map(s=>({...s,nx:after.has(s.t)})).concat(mine.map(m=>({t:m.t,mine:m.i}))).sort((a,b)=>a.t<b.t?-1:1);
-  if(!list.length)return `<p class="mut" style="margin-top:10px">Aucun créneau n'accueille ${plural(gfSizes()[g.act],'joueur')} sur ce parcours.</p>`;
-  return `<div class="gtimes">${list.map(s=>s.mine!=null
-    ?`<button class="gtime on" data-act="gfAct" data-i="${s.mine}"><b>${s.t}</b><i>Départ ${s.mine+1}</i></button>`
-    :`<button class="gtime ${s.nx?'nx':''}" data-act="gfPickG" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.nx?'à la suite':s.free+' pl. libres'}</i></button>`).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`;
-}
+function gfSizes(){const g=S.gf;return isGroup()?distribute(g.flights||[],g.pax):[g.pax]}
+const placedN=()=>Math.min(S.gf.pax,(S.gf.flights||[]).reduce((t,f)=>t+capOf(f),0));
 function groupPanel(){
-  const g=S.gf, u=me(), sz=gfSizes(), done=g.flights.filter(Boolean).length;
-  const opts=splits(g.pax);
-  const sugg=CRS.filter(c=>!(c.idxMax&&u&&u.idx>c.idxMax)).map(c=>({c,f:consecutive(c)})).filter(x=>x.f).slice(0,3);
+  const g=S.gf, p=placedN(), sz=gfSizes(), min=Math.ceil(g.pax/4);
   return `<div class="card gpanel">
     <div class="gp-h"><div><span class="eyebrow" style="margin-bottom:4px">Réservation de groupe</span>
-      <b class="h2">${g.pax} joueurs · ${sz.length} départs à choisir</b>
-      <p class="mut" style="margin-top:4px">Un départ accueille 4 joueurs au plus. Choisissez un créneau pour chaque départ, le même jour.</p></div>
-      <span class="gp-count">${done}/${sz.length}</span></div>
-    ${opts.length>1?`<div class="gp-sec"><span class="sbl">Répartition des joueurs</span><div class="seg2">${opts.map(o=>`<button class="${o.join()===sz.join()?'on':''}" data-act="gfSplit" data-v="${o.join(',')}">${o.join(' + ')}</button>`).join('')}</div></div>`:''}
-    <div class="flights">${sz.map((n,i)=>{const f=g.flights[i], c=f&&crs(f.crs);
-      return `<button class="flight ${i===g.act?'act':''} ${f?'set':''}" data-act="gfAct" data-i="${i}">
-        <span class="fl-n">${i+1}</span>
-        <span class="fl-t"><small>Départ ${i+1} · ${plural(n,'joueur')}</small><b>${f?`${c.n} · ${f.t}`:i===g.act?'Choisissez un créneau ↓':'À choisir'}</b></span>
-        ${f?`<span class="fl-x" data-act="gfUnset" data-i="${i}" title="Retirer ce créneau">✕</span>`:''}</button>`}).join('')}</div>
-    ${sugg.length&&done<sz.length?`<div class="gp-sec"><span class="sbl">Proposition · départs à la suite</span>
-      <div class="sugg">${sugg.map(x=>`<button class="sg" data-act="gfSugg" data-c="${x.c.id}"><b>${x.c.n}</b><span>${x.f.map(f=>f.t).join(' · ')}</span><i>Choisir</i></button>`).join('')}</div></div>`:''}
+      <b class="h2">${g.pax} joueurs · sélectionnez vos créneaux</b>
+      <p class="mut" style="margin-top:4px">4 joueurs au plus par départ : il vous faut au moins ${min} créneaux. Cochez-les ci-dessous, sur un ou plusieurs parcours ; vos joueurs y sont répartis automatiquement.</p></div>
+      <span class="gp-count">${p}/${g.pax}</span></div>
+    <div class="gp-bar"><i style="width:${Math.round(p/g.pax*100)}%"></i></div>
+    ${g.flights.length?`<div class="gp-sel">${g.flights.map((f,i)=>`<span class="gchip">${crs(f.crs).n} · ${f.t}<small>${plural(sz[i],'joueur')}</small><button data-act="gfTog" data-c="${f.crs}" data-t="${f.t}" aria-label="Retirer ce créneau"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"/></svg></button></span>`).join('')}</div>`:''}
   </div>`;
 }
-ACT.gfSplit=a=>{S.gf.split=a.dataset.v.split(',').map(Number);resetFlights();render()};
-ACT.gfAct=a=>{S.gf.act=+a.dataset.i;render()};
-ACT.gfUnset=a=>{const g=S.gf, i=+a.dataset.i;g.flights[i]=null;g.act=i;render()};
-ACT.gfSugg=a=>{const g=S.gf;g.flights=consecutive(crs(a.dataset.c));g.act=g.flights.length-1;render();toast('Départs à la suite sélectionnés : il ne reste qu\'à confirmer.')};
-ACT.gfPickG=a=>{
-  closeSheet();
-  const g=S.gf, i=g.act;
-  g.flights[i]={crs:a.dataset.c,t:a.dataset.t};
-  const next=g.flights.findIndex(f=>!f);
-  g.act=next<0?i:next;
-  render();
+function groupTimes(c,ok){
+  const g=S.gf, sz=gfSizes(), MAX=14;
+  const isSel=t=>g.flights.findIndex(f=>f.crs===c.id&&f.t===t);
+  const shown=ok.filter((s,i)=>i<MAX||isSel(s.t)>=0), rest=ok.length-shown.length;
+  if(!ok.length)return `<p class="mut" style="margin-top:10px">Aucun créneau libre sur ce parcours ce jour-là.</p>`;
+  return `<div class="gtimes">${shown.map(s=>{const i=isSel(s.t);
+    return `<button class="gtime ${i>=0?'on':''}" data-act="gfTog" data-c="${c.id}" data-t="${s.t}" aria-pressed="${i>=0}"><b>${s.t}</b><i>${i>=0?'✓ '+plural(sz[i],'joueur'):Math.min(4,s.free)+' pl. libres'}</i></button>`}).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`;
+}
+ACT.gfTog=a=>{
+  const g=S.gf, c=a.dataset.c, t=a.dataset.t, i=g.flights.findIndex(f=>f.crs===c&&f.t===t);
+  if(i>=0)g.flights.splice(i,1);
+  else{
+    if(placedN()>=g.pax){toast(`Vos ${g.pax} joueurs sont déjà placés : retirez un créneau pour en choisir un autre.`);return}
+    g.flights.push({crs:c,t});g.flights.sort((x,y)=>x.t<y.t?-1:x.t>y.t?1:0);
+  }
+  closeSheet();render();
 };
 ACT.gfGroupGo=()=>{
   const g=S.gf, sz=gfSizes();
   const players=[];let k=0;
   sz.forEach((n,f)=>{for(let j=0;j<n;j++){players.push(k===0?{type:'self',f}:{type:'guest',n:'',f});k++}});
-  g.players=players;applyWith();g.opts={};g.idxOk=false;
+  g.split=sz;g.players=players;applyWith();g.fopts=sz.map(()=>({}));g.idxOk=false;
   g.crs=g.flights[0].crs;g.t=g.flights[0].t;
   go('gf-joueurs');
 };
@@ -1403,10 +1392,10 @@ ACT.gfBig=()=>sheet(shead('Plus de 12 joueurs','Demande de groupe')+
 ACT.gfBigGo=()=>{closeSheet();toast('Demande envoyée : l\'équipe groupes vous recontacte sous 24 h.')};
 
 ACT.gfMore=a=>{
-  const c=crs(a.dataset.c), g=S.gf, grp=isGroup(), need=grp?gfSizes()[g.act]:g.pax;
-  const list=grp?groupSlots(c,need,g.act):openSlots(c,g.date,g.pax,g.moment);
+  const c=crs(a.dataset.c), g=S.gf, grp=isGroup();
+  const list=openSlots(c,g.date,grp?1:g.pax,g.moment);
   sheet(shead(`${c.n} — tous les départs`,fday(g.date))+
-   `<div class="gtimes">${list.map(s=>`<button class="gtime" data-act="${grp?'gfPickG':'gfPick'}" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl.</i></button>`).join('')}</div>`);
+   `<div class="gtimes">${list.map(s=>`<button class="gtime ${grp&&g.flights.some(f=>f.crs===c.id&&f.t===s.t)?'on':''}" data-act="${grp?'gfTog':'gfPick'}" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl.</i></button>`).join('')}</div>`);
 };
 ACT.gfPick=a=>{
   closeSheet();
@@ -1416,7 +1405,7 @@ ACT.gfPick=a=>{
   const players=[{type:'self',f:0}];
   for(let i=1;i<g.pax;i++)players.push({type:'guest',n:'',f:0});
   g.players=players;applyWith();
-  g.opts={};
+  g.fopts=[{}];
   go('gf-joueurs');
 };
 
@@ -1435,10 +1424,12 @@ const crsOfPlayer=(l,p)=>crs(flightsOf(l)[p.f||0].crs);
 function gfCalc(l){
   const items=[], fl=flightsOf(l), multi=fl.length>1;
   l.players.forEach((p,i)=>{const pi=playerInfo(p,i), c=crsOfPlayer(l,p);
-    items.push({n:pi.n+(pi.you?' (vous)':'')+(multi?` · départ ${(p.f||0)+1}`:''),...gfPrice(c,l.d,pi.st),grp:'gf'})});
-  const c0=crs(fl[0].crs);
-  GOPTS.forEach(o=>{const q=l.opts[o.id]||0;if(!q)return;
-    const x=optPrice(o,c0,mySt());items.push({n:`${o.n} × ${q}`,p:x.p*q,pub:x.pub*q,st:x.st,grp:'gf'})});
+    items.push({n:pi.n+(pi.you?' (vous)':'')+(multi?` · départ ${(p.f||0)+1}`:''),...gfPrice(c,l.d,pi.st),grp:'gf',f:p.f||0})});
+  /* options rattachées à un départ, au tarif du parcours de ce départ */
+  const fo=l.fopts||[l.opts||{}];
+  fl.forEach((f,k)=>{const c=crs(f.crs), o=fo[k]||{};
+    GOPTS.forEach(op=>{const q=o[op.id]||0;if(!q)return;const x=optPrice(op,c,mySt());
+      items.push({n:`${op.n}${c.nine&&op.id==='voit'?' 9 trous':''} × ${q}${multi?' · départ '+(k+1):''}`,p:x.p*q,pub:x.pub*q,st:x.st,grp:'gf',f:k,opt:true})})});
   return items;
 }
 /* index maximum : contrôlé joueur par joueur, sur le parcours de son départ */
@@ -1454,7 +1445,7 @@ R['gf-joueurs']=()=>{
   const g=S.gf, u=me();
   if(!g.flights||!g.flights[0]){go('gf');return}
   const fl=g.flights, multi=fl.length>1, c=crs(fl[0].crs);
-  const line={d:g.date,h:g.t,crs:g.crs,players:g.players,opts:g.opts,flights:fl};
+  const line={d:g.date,h:g.t,crs:g.crs,players:g.players,fopts:g.fopts,flights:fl};
   const items=gfCalc(line);
   const tot=items.reduce((t,x)=>t+x.p,0), pub=items.reduce((t,x)=>t+x.pub,0);
   const ix=gfIdxState();
@@ -1494,17 +1485,18 @@ R['gf-joueurs']=()=>{
        ${ix.unknown.length?`<label class="chkbox card" style="padding:12px 14px"><input type="checkbox" id="gfIdxOk" ${g.idxOk?'checked':''}>
          <span>Je certifie que ${ix.unknown.length>1?'les joueurs sans index connu ont':ix.unknown[0].you?'j\'ai':ix.unknown[0].n+' a'} un index inférieur ou égal à ${ix.c.idxMax}. Il sera contrôlé au départ.</span></label>`
         :ix.over.length?'':`<p class="mut">Index vérifié pour tous les joueurs rattachés ✓</p>`}`:''}
-     <div class="sect">Options${multi?' · pour tout le groupe':''}</div>
-     <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,c,mySt()), q=g.opts[o.id]||0;
-       return `<div class="optrow"><div><b class="h3">${o.n}${c.nine&&o.id==='voit'?' 9 trous':''}</b><div class="mut">${o.d}</div></div>
-         <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0?'Offert':eur(x.p)}<div class="mut">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
-         <div class="qty sm"><button data-act="gfOpt" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''}><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="gfOpt" data-o="${o.id}" data-n="1" ${q>=maxQ(o)?'disabled':''}><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>`}).join('')}</div>
+     <div class="sect">Options${multi?' · par départ':''}</div>
+     ${fl.map((f,k)=>{const fc=crs(f.crs), n=g.players.filter(p=>(p.f||0)===k).length, fo=(g.fopts&&g.fopts[k])||{};
+       return `${multi?`<div class="fhead" style="margin-top:${k?16:0}px"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fc.n} · ${f.t}</b><span class="mut">${plural(n,'joueur')}</span></div></div>`:''}
+       <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,fc,mySt()), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
+         return `<div class="optrow"><div><b class="h3">${o.n}${fc.nine&&o.id==='voit'?' 9 trous':''}</b><div class="mut">${o.d}</div></div>
+           <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0?'Offert':eur(x.p)}<div class="mut">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
+           <div class="qty sm"><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''} aria-label="Moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="1" ${q>=mx?'disabled':''} aria-label="Plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>`}).join('')}</div>`}).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Récapitulatif</div>
-     ${multi?fl.map((f,k)=>{const its=items.filter(x=>x.n.endsWith(' · départ '+(k+1)));const s=its.reduce((t,x)=>t+x.p,0);
-       return `<div class="sumline"><span>Départ ${k+1} · ${crs(f.crs).n} ${f.t}<br><span class="mut">${plural(its.length,'joueur')}</span></span><b>${s===0&&its.some(x=>x.pub)?'Inclus':eur(s)}</b></div>`}).join('')
-       +items.filter(x=>!/ · départ \d+$/.test(x.n)).map(x=>`<div class="sumline"><span>${x.n}</span><b>${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0?'Offert':eur(x.p)}</b></div>`).join('')
+     ${multi?fl.map((f,k)=>{const its=items.filter(x=>x.f===k), np=its.filter(x=>!x.opt).length, op=its.filter(x=>x.opt);const s=its.reduce((t,x)=>t+x.p,0);
+       return `<div class="sumline"><span>Départ ${k+1} · ${crs(f.crs).n} ${f.t}<br><span class="mut">${plural(np,'joueur')}${op.length?' · '+op.map(x=>x.n.replace(/ · départ \d+$/,'').toLowerCase()).join(', '):''}</span></span><b>${s===0&&its.some(x=>x.pub)?'Inclus':eur(s)}</b></div>`}).join('')
      :items.map(x=>`<div class="sumline"><span>${x.n}</span><b>${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0&&x.pub>0?'Inclus':eur(x.p)}</b></div>`).join('')}
      ${pub>tot?`<div class="sumline"><span>Économie liée aux statuts</span><b>−${eur(pub-tot)}</b></div>`:''}
      <div class="sumtot"><span class="h3">Total</span><b>${eur(tot)}</b></div>
@@ -1523,7 +1515,8 @@ function syncSplit(){
   const g=S.gf;
   g.pax=g.players.length;
   g.split=g.flights.map((f,k)=>g.players.filter(p=>(p.f||0)===k).length);
-  GOPTS.forEach(o=>{const m=o.per==='voit'?Math.ceil(g.pax/2):g.pax;if((g.opts[o.id]||0)>m)g.opts[o.id]=m});
+  g.fopts=g.flights.map((f,k)=>{const o={...((g.fopts||[])[k]||{})}, n=g.split[k];
+    GOPTS.forEach(op=>{const m=op.per==='voit'?Math.ceil(n/2):n;if((o[op.id]||0)>m)o[op.id]=m});return o});
 }
 ACT.gfAddP=a=>{
   const g=S.gf, k=+a.dataset.k;
@@ -1532,7 +1525,7 @@ ACT.gfAddP=a=>{
   g.idxOk=false;syncSplit();render();
 };
 ACT.gfDelP=a=>{S.gf.players.splice(+a.dataset.i,1);syncSplit();render()};
-ACT.gfOpt=a=>{const o=a.dataset.o;S.gf.opts[o]=Math.max(0,(S.gf.opts[o]||0)+ +a.dataset.n);render()};
+ACT.gfOpt=a=>{const g=S.gf, k=+a.dataset.f||0, o=a.dataset.o;g.fopts=g.fopts||[];const fo=g.fopts[k]=g.fopts[k]||{};fo[o]=Math.max(0,(fo[o]||0)+ +a.dataset.n);render()};
 const pcrs=i=>crsOfPlayer({crs:S.gf.crs,h:S.gf.t,flights:S.gf.flights},S.gf.players[i]||{f:0});
 ACT.gfPlayer=a=>{
   const i=+a.dataset.i, g=S.gf, u=me(), p=g.players[i];
@@ -1574,7 +1567,7 @@ ACT.gfSetP=a=>{
 ACT.gfSetGuest=a=>{S.gf.players[+a.dataset.i]={type:'guest',n:($('#pGuest').value||'').trim(),f:S.gf.players[+a.dataset.i].f||0};closeSheet();render()};
 ACT.gfAdd=()=>{
   const g=S.gf;
-  addLine({kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),opts:{...g.opts},editOf:g.editOf});
+  addLine({kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),fopts:JSON.parse(JSON.stringify(g.fopts||[{}])),editOf:g.editOf});
   g.editOf=null;
 };
 
@@ -1773,7 +1766,7 @@ function lessonSlots(pro,k,dur){
     if(m>=720&&m<840)continue;                 /* pause déjeuner du pro */
     if(hash(pro+k+t)%5<2)continue;             /* déjà réservé */
     if(S.cart.some(l=>l.kind==='ind'&&l.pro===pro&&l.d===k&&l.h===t))continue;
-    out.push(t);
+    out.push({t,th:[null,'Putting','Petit jeu','Approche','Long jeu','Obstacles',null][hash(pro+k+t+'th')%7]});
   }
   return out;
 }
@@ -1796,9 +1789,12 @@ R.cours=()=>{
         <button class="btn sm ghost" data-act="indOpen" data-d="30" data-pro="${id}">Réserver</button></div>`).join('')}</div>`;
   }
   if(tab==='coll'){
-    body=COLL.map(c=>{const x=lessonPrice(c.p,st), full=!c.left, low=u&&c.idxMax&&u.idx!=null&&u.idx>c.idxMax;
+    const cth=S.cours.cth||'all', list=COLL.filter(c=>cth==='all'||c.th===cth);
+    body=`<div class="chips">${[['all','Toutes les thématiques']].concat(THEMES.map(t=>[t,t])).map(([k,n])=>`<button class="chip ${cth===k?'on':''}" data-act="collTh" data-v="${k}">${n}</button>`).join('')}</div>`
+    +(list.length?'':`<div class="card" style="padding:24px;text-align:center"><b class="h3">Aucun cours collectif « ${cth} » programmé pour l'instant</b><p class="sub" style="margin-top:6px">Un cours individuel sur cette thématique est peut-être disponible.</p></div>`)
+    +list.map(c=>{const x=lessonPrice(c.p,st), full=!c.left, low=u&&c.idxMax&&u.idx!=null&&u.idx>c.idxMax;
       const inC=S.cart.some(l=>l.kind==='coll'&&l.id===c.id);
-      return `<div class="card lesson" style="--lesson-img:url('${({c1:IMG.acad,c2:IMG.decouverte,c5:IMG.kids,c3:IMG.links,c4:IMG.putting})[c.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">${fshort(c.d)} · ${c.h}</span><span class="tag">${c.dur} min</span><span class="tag">${c.lvl}</span></div>
+      return `<div class="card lesson" style="--lesson-img:url('${({c1:IMG.acad,c2:IMG.decouverte,c5:IMG.kids,c3:IMG.links,c4:IMG.putting})[c.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">${fshort(c.d)} · ${c.h}</span><span class="tag">${c.dur} min</span><span class="tag">${c.lvl}</span>${c.th?`<span class="tag ol">${c.th}</span>`:''}</div>
         <b class="h2" style="display:block;margin-top:8px">${c.n}</b>
         <div class="mut">${PROS[c.pro].n} · ${full?'complet':plural(c.left,'place')+' sur '+c.cap}</div>
         ${low?`<div style="margin-top:6px;font-size:12px"><b>✕ Niveau conseillé : ${c.lvl.toLowerCase()} — votre index est ${fidx(u.idx)}</b></div>`:''}</div>
@@ -1808,7 +1804,7 @@ R.cours=()=>{
   }
   if(tab==='stage'){
     body=STAGES.map(s=>{const x=stagePrice(s,st);const inC=S.cart.some(l=>l.kind==='stage'&&l.id===s.id);
-      return `<div class="card lesson" style="--lesson-img:url('${({s1:IMG.stage,s2:IMG.kids,s3:IMG.manoir})[s.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">Du ${fdm(s.d)} au ${fdm(s.d2)}</span><span class="tag">${s.lvl}</span></div>
+      return `<div class="card lesson" style="--lesson-img:url('${({s1:IMG.stage,s2:IMG.kids,s3:IMG.manoir})[s.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">Du ${fdm(s.d)} au ${fdm(s.d2)}</span><span class="tag">${s.lvl}</span>${s.th?`<span class="tag ol">${s.th}</span>`:''}</div>
         <b class="h2" style="display:block;margin-top:8px">${s.n}</b>
         <div class="mut">${s.sched} · ${PROS[s.pro].n} · ${plural(s.left,'place')} sur ${s.cap}</div></div>
         <div class="cside" style="min-width:0"><div class="price">${pr(x,{small:s.kid?'par enfant':'le stage'})}</div>
@@ -1833,6 +1829,7 @@ R.cours=()=>{
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="coursTab" data-t="${k}">${n}${c?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
 };
+ACT.collTh=a=>{S.cours.cth=a.dataset.v;render()};
 ACT.coursTab=a=>{S.cours.tab=a.dataset.t;render()};
 ACT.indOpen=a=>{Object.assign(S.cours,{dur:+a.dataset.d,pro:a.dataset.pro||'any',slot:null,wk:0});go('cours-ind')};
 R['cours-ind']=()=>{
@@ -1854,19 +1851,23 @@ R['cours-ind']=()=>{
        `<button class="radio ${sc.pro===k?'on':''}" data-act="indPro" data-v="${k}"><span class="dot"></span><div><b>${n}</b><small>${d}</small></div></button>`).join('')}</div>
      <div class="sect">Durée</div>
      <div class="chips">${[30,60].map(d=>`<button class="chip ${sc.dur===d?'on':''}" data-act="indDur" data-v="${d}">${d===30?'30 min':'1 h'} · ${eur(lessonPrice(LESSON[d],st).p)}</button>`).join('')}</div>
+     <div class="sect">Thématique</div>
+     <div class="chips">${[['all','Toutes']].concat(THEMES.map(t=>[t,t])).map(([k,n])=>`<button class="chip ${(sc.th||'all')===k?'on':''}" data-act="indTh" data-v="${k}">${n}</button>`).join('')}</div>
      <div class="between" style="margin:18px 0 10px"><div class="sect" style="margin:0">Créneaux · semaine du ${fdm(start)}</div>
        <div class="row" style="gap:6px"><button class="navd" style="height:32px" data-act="indWk" data-n="-1" ${sc.wk<=0?'disabled':''}>‹</button><button class="navd" style="height:32px" data-act="indWk" data-n="1" ${sc.wk>=5?'disabled':''}>›</button></div></div>
      <div class="week">${days.map(k=>{
-       const all=[];pros.forEach(p=>lessonSlots(p,k,sc.dur).forEach(t=>{if(!all.some(z=>z.t===t))all.push({t,pro:p})}));
+       const all=[];pros.forEach(p=>lessonSlots(p,k,sc.dur).forEach(z=>{if((sc.th==='all'||z.th===sc.th)&&!all.some(y=>y.t===z.t))all.push({...z,pro:p})}));
        all.sort((a,b)=>a.t<b.t?-1:1);
        return `<div class="wcol"><h6>${DAYS[wday(k)][0].toUpperCase()+DAYS[wday(k)].slice(1,3)}.<small>${fdm(k)}</small></h6><div class="pills">
-         ${all.length?all.map(z=>`<button class="pill ${sc.slot&&sc.slot.d===k&&sc.slot.t===z.t?'on':''}" data-act="indSlot" data-d="${k}" data-t="${z.t}" data-p="${z.pro}">${z.t}</button>`).join(''):'<div class="none">—</div>'}</div></div>`}).join('')}</div>
+         ${all.length?all.map(z=>`<button class="pill ${sc.slot&&sc.slot.d===k&&sc.slot.t===z.t?'on':''}" data-act="indSlot" data-d="${k}" data-t="${z.t}" data-p="${z.pro}" data-th="${z.th||''}">${z.t}<small>${z.th||'Libre'}</small></button>`).join(''):'<div class="none">—</div>'}</div></div>`}).join('')}</div>
+     <p class="note">La thématique vient du planning : le pro l'attache à son créneau dans le back-office enseignement. Un créneau « Libre » se travaille selon les besoins de l'élève.</p>
      <p class="note">Avec « Peu importe », le créneau est attribué au premier pro libre et son nom apparaît au récapitulatif avant l'ajout au panier : le client sait toujours avec qui il a rendez-vous.</p>
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Votre cours</div>
      ${sc.slot?`<div class="sumline"><span>Date</span><b>${fshort(sc.slot.d)} · ${sc.slot.t}</b></div>
        <div class="sumline"><span>Pro</span><b>${PROS[sc.slot.pro].n}</b></div>
+       <div class="sumline"><span>Thématique</span><b>${sc.slot.th||'Libre'}</b></div>
        <div class="sumline"><span>Durée</span><b>${sc.dur===30?'30 min':'1 h'}</b></div>`
      :'<p class="mut">Choisissez un créneau.</p>'}
      ${cr?`<div class="sect" style="margin-top:14px">Règlement</div><div class="radios">
@@ -1882,12 +1883,13 @@ R['cours-ind']=()=>{
 ACT.indPro=a=>{S.cours.pro=a.dataset.v;S.cours.slot=null;render()};
 ACT.indDur=a=>{S.cours.dur=+a.dataset.v;S.cours.slot=null;render()};
 ACT.indWk=a=>{S.cours.wk+= +a.dataset.n;render()};
-ACT.indSlot=a=>{S.cours.slot={d:a.dataset.d,t:a.dataset.t,pro:a.dataset.p};render()};
+ACT.indSlot=a=>{S.cours.slot={d:a.dataset.d,t:a.dataset.t,pro:a.dataset.p,th:a.dataset.th||null};render()};
+ACT.indTh=a=>{S.cours.th=a.dataset.v;S.cours.slot=null;render()};
 ACT.indCredit=a=>{S.cours.useCredit=a.dataset.v==='1';render()};
 ACT.indAdd=()=>{
   const sc=S.cours, u=me();
   const cr=u&&u.credits[sc.dur]&&u.credits[sc.dur].left||0;
-  addLine({kind:'ind',d:sc.slot.d,h:sc.slot.t,pro:sc.slot.pro,dur:sc.dur,credit:cr>0&&sc.useCredit,editOf:sc.editOf||null});
+  addLine({kind:'ind',d:sc.slot.d,h:sc.slot.t,pro:sc.slot.pro,th:sc.slot.th,dur:sc.dur,credit:cr>0&&sc.useCredit,editOf:sc.editOf||null});
   sc.slot=null;sc.editOf=null;
 };
 function kidFields(kid){
@@ -1902,6 +1904,7 @@ ACT.collOpen=a=>{
   const low=u&&c.idxMax&&u.idx!=null&&u.idx>c.idxMax;
   sheet(shead(c.n,'Cours collectif')+
    `<p class="sub" style="margin:4px 0 12px">${fday(c.d)} · ${c.h} · ${c.dur} min · ${PROS[c.pro].n}</p>
+    ${c.th?`<div class="sumline"><span>Thématique</span><b>${c.th}</b></div>`:''}
     <div class="sumline"><span>Niveau</span><b>${c.lvl}</b></div>
     <div class="sumline"><span>Places restantes</span><b>${c.left} sur ${c.cap}</b></div>
     <div class="sumline"><span>Prix</span><b>${c.p>x.p?`<span class="was">${eur(c.p)}</span>`:''}${eur(x.p)}</b></div>
@@ -1957,7 +1960,7 @@ function lineView(l){
     v.cancel='Désinscription remboursée jusqu\'à la clôture du '+fdm(cp.close);v.acc=true;}
   if(l.kind==='ind'){
     v.title=`Cours individuel · ${l.dur===30?'30 min':'1 h'}`;
-    v.sub=`${fday(l.d)} · ${l.h} · ${PROS[l.pro].n}`;
+    v.sub=`${fday(l.d)} · ${l.h} · ${PROS[l.pro].n}${l.th?' · '+l.th:''}`;
     const x=lessonPrice(LESSON[l.dur],st);
     v.items=[l.credit&&u&&u.credits[l.dur]?{n:'Réglé avec 1 crédit carnet',p:0,pub:0,credit:true}:{n:'Cours',...x}];
     v.cancel='Annulation gratuite jusqu\'à 48 h avant le cours';v.acc=true;}
@@ -2130,7 +2133,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')cartPop(false)});
 ACT.lineEditGf=a=>{
   const l=S.cart.find(x=>x.uid===a.dataset.u);
   S.cart=S.cart.filter(x=>x!==l);
-  const fl=flightsOf(l);Object.assign(S.gf,{date:l.d,t:l.h,crs:l.crs,pax:l.players.length,flights:fl,split:fl.map((f,k)=>l.players.filter(p=>(p.f||0)===k).length),act:0,players:l.players,opts:l.opts,idxOk:false,editOf:l.editOf||null});
+  const fl=flightsOf(l);Object.assign(S.gf,{date:l.d,t:l.h,crs:l.crs,pax:l.players.length,flights:fl,split:fl.map((f,k)=>l.players.filter(p=>(p.f||0)===k).length),act:0,players:l.players,fopts:l.fopts||[l.opts||{}],idxOk:false,editOf:l.editOf||null});
   go('gf-joueurs');
 };
 ACT.promoGo=()=>{
