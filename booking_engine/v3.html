@@ -161,6 +161,7 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .pbar.on b{color:var(--ink)}
 .pbar.on .lnk{color:var(--ink)}
 .pbar.on .av{background:var(--gold);color:#fff}
+.pb-short{display:none}
 
 /* prix */
 .price{font-size:24px;font-weight:400;letter-spacing:-.2px;text-align:right;white-space:nowrap;line-height:1.15}
@@ -216,7 +217,7 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .sb-f + .sb-f{box-shadow:-1px 0 0 var(--line)}
 .sb-f > span{display:block;font-size:10px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:6px}
 .sb-f select,.sb-f input{width:100%;height:40px;border:0;border-radius:10px;padding:0 8px;background:var(--cream);font-size:14px}
-.navd{width:36px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:16px;color:var(--ink);flex:none;background:#fff}
+.navd{display:grid;place-items:center;padding:0;text-align:center;width:36px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:16px;color:var(--ink);flex:none;background:#fff}
 .navd:hover:not(:disabled){border-color:var(--gold);color:var(--gold-dark)}
 .navd:disabled{color:var(--g300)}
 .qty{display:inline-flex;align-items:center;gap:12px;height:40px}
@@ -246,7 +247,7 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .crs > :not(.crs-h){margin:0 22px 20px}
 .crs .gtimes{margin-top:0;padding-top:16px;border-top:1px solid var(--line)}
 .gtimes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.gtime{border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;min-width:74px;background:var(--paper);transition:.15s}
+.gtime{display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;min-width:74px;background:var(--paper);transition:.15s}
 .gtime:hover{border-color:var(--gold);background:var(--gold-soft)}
 .gtime b{display:block;font-size:15px;font-weight:500}
 .gtime i{display:block;font-style:normal;font-size:10px;letter-spacing:.5px;color:var(--g500);margin-top:1px}
@@ -337,7 +338,7 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .pill{border:1px solid var(--line);border-radius:999px;padding:8px 0;font-size:13px;font-weight:400;text-align:center;background:var(--paper);width:100%;transition:.15s}
 .pill:hover{border-color:var(--gold);background:var(--gold-soft)}
 .pill.on{background:var(--gold);color:#fff;border-color:var(--gold)}
-.pill{border-radius:14px;padding:6px 0 5px;line-height:1.2}
+.pill{border-radius:14px;padding:6px 0 5px;line-height:1.2;min-height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .pill small{display:block;font-size:9.5px;letter-spacing:.3px;color:var(--gold-dark);font-weight:400;margin-top:1px}
 .pill.on small{color:#fff}
 .wcol .none{font-size:11px;color:var(--g400);text-align:center;padding:8px 0}
@@ -401,6 +402,8 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .prog i{flex:1;height:8px;border-radius:4px;background:var(--line)}
 .prog i.on{background:var(--gold)}
 .hello{display:flex;align-items:center;gap:16px}
+.logout{flex:none;align-self:center}
+.logout:hover{box-shadow:inset 0 0 0 1px var(--terra)!important;color:var(--terra)!important}
 
 /* feuille modale & toast */
 .sheet-bg{position:fixed;inset:0;background:rgba(27,21,15,.5);backdrop-filter:blur(3px);z-index:200;display:none;align-items:center;justify-content:center;padding:18px}
@@ -608,6 +611,74 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .gchip button{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#c7bba8;padding:0}
 .gchip button:hover{background:rgba(255,255,255,.12);color:#fff}
 
+/* créneaux de cours en mobile : bandeau de jours + un jour à la fois */
+.grid > *,.two > *{min-width:0}
+.wkm{display:none}
+.wkm-days{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:0 -2px}
+.wkm-days::-webkit-scrollbar{height:0}
+.wkm-d{flex:none;width:62px;border:1px solid var(--line);border-radius:14px;padding:8px 0;background:#fff;text-align:center;line-height:1.2}
+.wkm-d small{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--g500)}
+.wkm-d b{display:block;font-size:18px;font-weight:500;margin:2px 0}
+.wkm-d i{display:block;font-style:normal;font-size:9.5px;color:var(--gold-dark)}
+.wkm-d.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.wkm-d.on small{color:#c7bba8}.wkm-d.on i{color:var(--gold-light)}
+.wkm-d:disabled{opacity:.45}
+.wkm-t{font-size:14px;font-weight:500;margin:14px 0 10px}
+.wkm-pills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+
+/* mes proches sur le parcours */
+.proxbar{display:flex;align-items:center;gap:14px;margin:-4px 0 16px;padding:10px 12px 10px 18px;background:#fff;border:1px solid var(--line);border-radius:16px}
+.proxbar .sw{flex:1;padding:0;gap:14px}
+.proxbar .pb-t{flex:1;min-width:0;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.proxbar .pb-t b{font-size:14px}
+.proxbar.none{opacity:.7}
+.proxbar.on{border-color:var(--gold);background:var(--gold-soft)}
+.pb-av{display:flex}
+.pb-av .gav{position:static;margin-left:-6px;width:26px;height:26px;font-size:9.5px;box-shadow:0 0 0 2px #fff}
+.gav{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--gold-light);font-size:8.5px;font-weight:600;letter-spacing:.3px;flex:none}
+.prox{padding:18px 20px;margin-bottom:22px;border-color:var(--gold-light)}
+.prox-h{margin-bottom:6px}
+.prox-h .mut{display:block;margin-top:4px}
+.prox-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.prox-row:nth-child(2){border-top:0}
+.pr-t{flex:1;min-width:0}
+.pr-t b{display:block;font-size:14.5px}
+.pr-a{display:flex;flex-direction:column;align-items:flex-end;gap:8px;text-align:right;max-width:52%}
+.gtime.pro{position:relative;border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);padding-top:11px}
+.gtime.pro .gav{position:absolute;top:-9px;right:-7px;box-shadow:0 0 0 2px #fff}
+.gtime.pro i{color:var(--ink);font-weight:500}
+.gtime.pro.full{opacity:.55;cursor:not-allowed;box-shadow:none;border-style:dashed}
+.gtime.pro.full i{color:var(--g500);font-weight:400}
+.gtime.on.pro .gav{background:var(--gold);color:#fff}
+.day{position:relative}
+.ddot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #fff}
+.day.on .ddot{box-shadow:0 0 0 2px var(--ink)}
+.joinw{align-items:center}
+.sharec{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px;margin-bottom:18px}
+.sharec > div:first-child{flex:1;min-width:240px}
+.sharec .mut{display:block;margin-top:3px}
+
+/* recherche : 4e segment « Mes proches » (connecté) */
+.sbar.sbar4{grid-template-columns:1.1fr 1.15fr 1.2fr auto}
+.sbar.sbar4 .sbf{padding:16px 16px}
+.sbf-prox .sbv b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:11px;background:var(--gold);color:#fff;font-size:12px;padding:0 6px}
+.sbf-prox .sw{gap:12px;justify-content:flex-start}
+.sbf-prox .sw .sbv{flex:1}
+/* inscrits sur un créneau */
+.occ{display:flex;justify-content:center;margin-top:5px}
+.oc{width:16px;height:16px;border-radius:50%;background:var(--ink);color:var(--gold-light);font-size:6.5px;font-weight:600;display:grid;place-items:center;margin-left:-4px;box-shadow:0 0 0 1.5px #fff;letter-spacing:0}
+.oc:first-child{margin-left:0}
+.oc.mask{background:var(--sand);color:var(--g500)}
+.gtime.on .oc{box-shadow:0 0 0 1.5px var(--ink)}
+.occ-list{background:#fff;border:1px dashed var(--line-2);border-radius:14px;padding:12px 16px;margin-bottom:12px}
+.occ-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.occ-list .sbl + .occ-row{border-top:0}
+.occ-row .av{width:30px;height:30px;font-size:10px}
+.occ-row .av.mask{background:var(--sand);color:var(--g500)}
+.occ-row b{display:block;font-size:13.5px}
+.occ-row .mut{display:block}
+.occ-none{margin:0 0 12px}
+
 /* ══════════ Mobile (conteneur) ══════════ */
 @container (max-width:900px){
   .two{grid-template-columns:1fr}
@@ -618,6 +689,8 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .sbar{grid-template-columns:1fr 1fr}
   .sbar .sbf:first-child{grid-column:1/-1;border-radius:22px 22px 0 0;border-bottom:1px solid var(--line)}
   .sbar .sbf:nth-child(2){border-left:0}
+  .sbar.sbar4 .sbf-prox{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}
+  .sbar.sbar4{grid-template-columns:1fr 1fr}
   .quick button + button{box-shadow:0 -1px 0 var(--line)}
   .split{grid-template-columns:1fr}
 }
@@ -632,6 +705,10 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .ico .av{margin:0}
   .g2{grid-template-columns:1fr}
   .h1{font-size:28px}
+  .logout{width:42px;height:42px;padding:0!important;border-radius:50%;align-self:flex-start}
+  .logout .lo-t{display:none}
+  .hello .av{width:46px!important;height:46px!important;font-size:14px!important}
+  .hello{gap:12px}
   .hero{min-height:520px}
   .hero::before{background:linear-gradient(180deg,rgba(20,15,10,.55) 0%,rgba(20,15,10,.5) 45%,rgba(20,15,10,.88) 100%)}
   .hero .eyebrow{letter-spacing:2px}
@@ -642,6 +719,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .quick{padding:0 16px}
   .searchbar{grid-template-columns:1fr 1fr}
   .sbar{grid-template-columns:1fr}
+  .sbar.sbar4{grid-template-columns:1fr}
   .flights{grid-template-columns:1fr}
   .prow{flex-wrap:wrap;row-gap:8px}
   .prow .pb{flex:1 1 calc(100% - 52px)}
@@ -663,17 +741,53 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .crs-img{width:100%;min-height:130px}
   .crs-t{padding:16px 20px 4px;flex:1 1 100%}
   .crs-h .price{flex:1 1 100%}
-  .pbar{padding:16px}
+  .pbar{padding:10px 12px 10px 14px;border-radius:14px;gap:10px;margin-bottom:16px;flex-wrap:nowrap;font-size:12.5px}
   .pbar .av{display:none}
+  .pbar .pb-long{display:none}
+  .pbar .pb-short{display:block;flex:1;min-width:0}
+  .pbar .btn{padding:8px 12px;font-size:10px;flex:none}
+  .pbar .lnk{font-size:12px;flex:none}
+  .pbar .stl{white-space:normal}
   .crs-h .price{padding:0 20px 14px;text-align:left}
   .crs > :not(.crs-h){margin:0 20px 18px}
-  .comp{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:18px}
-  .comp .cside{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;min-width:0}
-  .comp .cside .price{text-align:left}
-  .cdate b{font-size:24px}
+  .comp{grid-template-columns:56px minmax(0,1fr);gap:12px 14px;padding:16px}
+  .comp .cside{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px;min-width:0;
+    border-top:1px solid var(--line);padding-top:14px}
+  .comp .cside .price{text-align:left;font-size:22px}
+  .comp .cside .price br{display:none}
+  .prox-row{flex-wrap:wrap}
+  .pr-t{flex:1 1 calc(100% - 60px)}
+  .pr-a{max-width:none;width:100%;align-items:flex-start;text-align:left;padding-left:56px}
+  .proxbar{flex-wrap:wrap;padding:10px 14px}
+  .proxbar .sw{flex:1 1 100%}
+  .ck{flex-wrap:wrap;row-gap:10px}
+  .ck > div{flex:1 1 calc(100% - 40px)}
+  .ck > .btn{margin-left:37px}
+  .comp .cside .price .stl{margin-top:8px}
+  .comp .cside > :last-child{justify-self:end}
+  .comp .cside .btn{padding:11px 14px}
+  .comp .h2{font-size:17px}
+  .comp .bar{max-width:none}
+  .cdate{padding:9px 2px;border-radius:12px}
+  .cdate b{font-size:22px}
+  .chips-x{flex-wrap:nowrap;overflow-x:auto;margin-right:-18px;padding-right:18px}
+  .chips-x::-webkit-scrollbar{height:0}
+  .chips-x .chip{flex:none}
   .res{grid-template-columns:60px minmax(0,1fr);padding:16px}
   .res .acts{grid-column:1/-1;flex-direction:row;justify-content:flex-start;flex-wrap:wrap}
   .lesson{grid-template-columns:1fr}
+  .lesson{gap:0}
+  .lesson > div:first-of-type{padding:16px 18px 12px}
+  .lesson .cside .price{text-align:left}
+  .lesson .cside{align-items:flex-end!important}
+  .week{display:none}
+  .wkm{display:block}
+  .tag{white-space:normal;text-align:left;line-height:1.35}
+  .pack .foot{flex-wrap:wrap;gap:12px}
+  .pack .foot .btn{flex:1}
+  .tabs button{margin-right:10px;letter-spacing:1.2px;font-size:10.5px}
+  .pro{flex-wrap:wrap}
+  .pro .btn{flex:1 1 100%}
   .lesson::before{min-height:120px}
   .lesson > div{padding:0 18px}
   .lesson > .cside{padding:0 18px 18px;flex-direction:row;align-items:center;justify-content:space-between;min-width:0}
@@ -779,9 +893,9 @@ const SEED_PROFILES={
   bernard:P({id:'bernard',n:'Bernard Roux',ini:'BR',email:'bernard.roux@email.fr',dob:'1958-02-07',st:['senior','licencie'],
     lic:'5520871',idx:31.0,cert:'2027-05-20',home:'Tarif senior · jours de semaine',partners:['sophie'],rel:{sophie:'Famille'}}),
   sophie: P({id:'sophie',n:'Sophie Marchand',ini:'SM',email:'sophie.marchand@email.fr',dob:'1988-11-23',st:['licencie'],
-    lic:'8830412',idx:12.7,cert:'2027-02-01',home:'Licenciée FFGolf · sans abonnement'}),
+    lic:'8830412',idx:12.7,cert:'2027-02-01',home:'Licenciée FFGolf · sans abonnement',share:true}),
   paul:   P({id:'paul',n:'Paul Dumas',ini:'PD',email:'paul.dumas@email.fr',dob:'1979-07-30',st:['licencie'],
-    lic:'8412338',idx:24.0,cert:'2027-01-15',home:'Licencié FFGolf',hidden:true}),
+    lic:'8412338',idx:24.0,cert:'2027-01-15',home:'Licencié FFGolf',hidden:true,share:true}),
   jules:  P({id:'jules',n:'Jules Dumas',ini:'JD',dob:'2015-03-08',st:['jeune','licencie'],lic:'9912004',idx:42.0,cert:'2027-04-10',
     home:'Profil rattaché au compte de Claire Dumas',hidden:true,dep:true})};
 const DEMO=['claire','marc','leo','bernard','sophie'];
@@ -981,12 +1095,14 @@ function fil(steps,cur){
 /* bandeau de tarif : incite à se connecter, puis confirme le statut appliqué */
 function pbar(ctx){
   const u=me();
-  if(!u)return `<div class="pbar"><div><b>Abonné, membre du réseau, licencié, jeune ou senior&nbsp;?</b>
+  if(!u)return `<div class="pbar"><div class="pb-long"><b>Abonné, membre du réseau, licencié, jeune ou senior&nbsp;?</b>
       Connectez-vous : ${ctx||'tous les prix'} se recalculent avec votre tarif, le prix public reste affiché barré.</div>
+      <div class="pb-short"><b>Membre ou licencié·e&nbsp;?</b> Vos tarifs après connexion.</div>
       <button class="btn sm" data-act="login">Me connecter</button>
-      <button class="lnk" data-act="signup">Créer un compte</button></div>`;
-  return `<div class="pbar on"><span class="av">${u.ini}</span><div><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}<br>
+      <button class="lnk pb-long" data-act="signup">Créer un compte</button></div>`;
+  return `<div class="pbar on"><span class="av">${u.ini}</span><div class="pb-long"><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}<br>
       Vos tarifs sont appliqués. Quand vous cumulez plusieurs statuts, le plus avantageux l'emporte.</div>
+      <div class="pb-short"><span class="stl" style="margin:0">Vos tarifs ${u.st.length>1?'membre':ST[u.st[0]].n} appliqués</span></div>
       <button class="lnk" data-go="espace">Mon espace</button></div>`;
 }
 
@@ -1208,12 +1324,20 @@ R.accueil=()=>{
 };
 
 /* ═════════ Green fee · 1 — date, joueurs, départs ═════════ */
+/* départs déjà réservés par des proches (démo) : ils fixent les places restantes */
+const FRES={
+  paul:[{d:'2026-09-24',crs:'foret',t:'09:21',n:2},{d:'2026-09-26',crs:'mer',t:'11:00',n:3}],
+  sophie:[{d:'2026-09-24',crs:'mer',t:'10:20',n:4},{d:'2026-09-27',crs:'foret',t:'10:24',n:3}],
+  jules:[{d:'2026-09-24',crs:'manoir',t:'14:04',n:2}]};
+const SLOT_OVR={'mer|2026-09-24|10:10':3,'mer|2026-09-24|10:30':4,'foret|2026-09-24|09:12':3,'foret|2026-09-24|09:30':4};
+Object.values(FRES).flat().forEach(r=>SLOT_OVR[r.crs+'|'+r.d+'|'+r.t]=4-r.n);
 function slots(c,k){
   const out=[];
   for(let m=toMin(c.from);m<=toMin(c.to);m+=c.cad){
     const t=toT(m), h=hash(c.id+k+t);
     let free=[4,4,3,2,0,1,4,2,0,3,4,1][h%12];
     if(isWe(k)&&h%3===0)free=0;
+    const o=SLOT_OVR[c.id+'|'+k+'|'+t];if(o!=null)free=o;
     out.push({t,free});
   }
   return out;
@@ -1241,7 +1365,7 @@ R.gf=()=>{
      <p class="sub" style="margin-top:6px">${fday(g.date)} · ${plural(g.pax,'joueur')} · ${u?'prix à votre tarif':'prix public par joueur'}</p></div>
      <span class="node">Green fee · tunnel v2</span></div>
    ${pbar('les green fees')}
-   <div class="sbar">
+   <div class="sbar ${u?'sbar4':''}">
      <button class="sbf ${g.cal?'open':''}" data-act="gfCal"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
        <span class="sbt"><span class="sbl">Date de jeu</span><span class="sbv">${cap(fday(g.date))}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></span></button>
      <div class="sbf"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5c0-3.2 2.5-5.5 5.5-5.5s5.5 2.3 5.5 5.5"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6M17.5 14.3c1.8.7 3 2.6 3 5.2"/></svg></span>
@@ -1251,16 +1375,18 @@ R.gf=()=>{
      <div class="sbf"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></span>
        <div class="sbt"><span class="sbl">Moment de la journée</span>
          <div class="seg2">${[['all','Journée'],['am','Matin'],['pm','Après-midi']].map(([k,n])=>`<button class="${g.moment===k?'on':''}" data-act="gfMom" data-v="${k}">${n}</button>`).join('')}</div></div></div>
+     ${u?proxSeg():''}
      ${g.cal?gfCalHtml():''}
    </div>
    <p class="note">Même logique que le tunnel green fee v2 validé le 10/09 : la date et le nombre de joueurs d'abord, puis les départs ouverts pour tout le groupe, parcours par parcours. Quatre joueurs maximum par départ : de 5 à 12 joueurs, le client choisit autant de créneaux qu'il faut de départs (demande du 18/09) ; au-delà de 12, demande de groupe.</p>
    <div class="daynav"><button class="calnav" data-act="gfDay" data-n="-1" ${g.date<=DMIN?'disabled':''} aria-label="Jour précédent"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
    <div class="daystrip">${days.map(k=>{
      const best=dayBest(k), has=best!=null;
-     return `<button class="day ${k===g.date?'on':''} ${has?'':'full'}" data-act="gfSetDay" data-k="${k}">
+     return `<button class="day ${k===g.date?'on':''} ${has?'':'full'}" data-act="gfSetDay" data-k="${k}">${g.prox&&proxOn(k).length?'<span class="ddot" title="Des proches jouent ce jour-là"></span>':''}
        <div class="dd">${DAYS[wday(k)].slice(0,3)}. ${+k.slice(8)}</div><div class="mut" style="font-size:10.5px">${MABR[+k.slice(5,7)-1]}</div>
        <div class="pp">${has?(best===0?'Inclus':'dès '+eur(best)):'complet'}</div></button>`}).join('')}</div>
    <button class="calnav" data-act="gfDay" data-n="1" ${g.date>=DMAX?'disabled':''} aria-label="Jour suivant"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button></div>
+   ${proxBlock()}
    ${grp?groupPanel():''}
    ${grp&&g.pax>=GMAX?`<p class="mut" style="margin:-6px 0 18px">Plus de 12 joueurs ? <button class="lnk" style="font-size:12.5px" data-act="gfBig">Faire une demande de groupe</button></p>`:''}
    <div class="between" style="margin-bottom:12px"><b class="h2">${grp?`Cochez vos créneaux · ${placedN()} / ${g.pax} joueurs placés`:tot?`${plural(rows.filter(r=>r.ok.length&&!r.blocked).length,'parcours ouvert','parcours ouverts')} · ${plural(tot,'départ')}`:'Aucun départ pour ce groupe ce jour-là'}</b>
@@ -1271,8 +1397,7 @@ R.gf=()=>{
      const body=r.blocked
        ?`<div class="alert"><span class="ic">!</span><div><b>Votre index (${fidx(u.idx)}) dépasse la limite de ${c.idxMax} fixée pour La Mer.</b><br>Les départs existent, mais le starter ne peut pas vous faire partir. La Forêt et Le Manoir vous sont ouverts.</div></div>`
        :grp?groupTimes(c,r.ok)
-       :r.ok.length?`<div class="gtimes">${shown.map(s=>`<button class="gtime" data-act="gfPick" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl. libres</i></button>`).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`
-       :`<p class="mut" style="margin-top:10px">Aucun départ n'accueille ${plural(g.pax,'joueur')} ensemble ${g.moment==='all'?'ce jour-là':g.moment==='am'?'le matin':'l\'après-midi'}.</p>`;
+       :singleTimes(c,r.ok)||`<p class="mut" style="margin-top:10px">Aucun départ n'accueille ${plural(g.pax,'joueur')} ensemble ${g.moment==='all'?'ce jour-là':g.moment==='am'?'le matin':'l\'après-midi'}.</p>`;
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
        <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
@@ -1281,8 +1406,10 @@ R.gf=()=>{
        ${body}</div>`}).join('')}
    ${grp?`<div class="gbar"><div><b>${placedN()} / ${g.pax} joueurs placés · ${plural(g.flights.length,'créneau','créneaux')}</b><span class="mut">${g.flights.length?g.flights.map((f,i)=>`${crs(f.crs).n} ${f.t} (${gfSizes()[i]})`).join(' · '):'Aucun créneau sélectionné'}</span></div>
      <button class="btn" data-act="gfGroupGo" ${placedN()>=g.pax?'':'disabled'}>Continuer</button></div>`:''}
+   <p class="note">Connecté·e, le client voit qui est déjà inscrit sur chaque créneau : le nom si le joueur l'a rendu visible, sinon « Profil masqué » et son index. Survol sur desktop, détail à l'étape suivante.</p>
    <p class="note">Le prix affiché en tête de parcours est celui du client connecté. Les autres joueurs sont tarifés un par un à l'étape suivante, chacun selon son propre statut : un abonné qui invite un ami voit « Inclus » ici, mais paiera la place de l'ami.</p>
    <p class="note">Senior : la remise ne vaut que du lundi au vendredi. Passez sur un samedi avec Bernard Roux pour voir le prix remonter au tarif licencié.</p>`;
+  decorateSlots('#v-gf');
 };
 /* meilleur prix du jour pour le client, tous parcours ouverts confondus */
 function dayBest(k){
@@ -1360,10 +1487,14 @@ function groupPanel(){
 function groupTimes(c,ok){
   const g=S.gf, sz=gfSizes(), MAX=14;
   const isSel=t=>g.flights.findIndex(f=>f.crs===c.id&&f.t===t);
-  const shown=ok.filter((s,i)=>i<MAX||isSel(s.t)>=0), rest=ok.length-shown.length;
+  const {byT,near}=proxMarks(c);
+  const shown=ok.filter((s,i)=>i<MAX||isSel(s.t)>=0||byT[s.t]||near[s.t]), rest=ok.length-shown.length;
+  Object.values(byT).forEach(rs=>{if(!shown.some(x=>x.t===rs[0].t))shown.push({t:rs[0].t,free:0,full:true})});
+  shown.sort((a,b)=>a.t<b.t?-1:1);
   if(!ok.length)return `<p class="mut" style="margin-top:10px">Aucun créneau libre sur ce parcours ce jour-là.</p>`;
-  return `<div class="gtimes">${shown.map(s=>{const i=isSel(s.t);
-    return `<button class="gtime ${i>=0?'on':''}" data-act="gfTog" data-c="${c.id}" data-t="${s.t}" aria-pressed="${i>=0}"><b>${s.t}</b><i>${i>=0?'✓ '+plural(sz[i],'joueur'):Math.min(4,s.free)+' pl. libres'}</i></button>`}).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`;
+  return `<div class="gtimes">${shown.map(s=>{const i=isSel(s.t), rs=byT[s.t];
+    if(s.full)return `<button class="gtime pro full" disabled data-c="${c.id}" data-t="${s.t}">${rs.map(gav).join('')}<b>${s.t}</b><i>complet</i></button>`;
+    return `<button class="gtime ${i>=0?'on':''} ${rs?'pro':''} ${!rs&&near[s.t]&&i<0?'nx':''}" data-act="gfTog" data-c="${c.id}" data-t="${s.t}" aria-pressed="${i>=0}">${rs?rs.map(gav).join(''):''}<b>${s.t}</b><i>${i>=0?'✓ '+plural(sz[i],'joueur'):rs?'avec '+rs[0].p.n.split(' ')[0]:near[s.t]?'à côté de '+near[s.t]:Math.min(4,s.free)+' pl. libres'}</i></button>`}).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`;
 }
 ACT.gfTog=a=>{
   const g=S.gf, c=a.dataset.c, t=a.dataset.t, i=g.flights.findIndex(f=>f.crs===c&&f.t===t);
@@ -1395,11 +1526,13 @@ ACT.gfMore=a=>{
   const c=crs(a.dataset.c), g=S.gf, grp=isGroup();
   const list=openSlots(c,g.date,grp?1:g.pax,g.moment);
   sheet(shead(`${c.n} — tous les départs`,fday(g.date))+
-   `<div class="gtimes">${list.map(s=>`<button class="gtime ${grp&&g.flights.some(f=>f.crs===c.id&&f.t===s.t)?'on':''}" data-act="${grp?'gfTog':'gfPick'}" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl.</i></button>`).join('')}</div>`);
+   `<div class="gtimes" id="moreTimes">${list.map(s=>`<button class="gtime ${grp&&g.flights.some(f=>f.crs===c.id&&f.t===s.t)?'on':''}" data-act="${grp?'gfTog':'gfPick'}" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${s.free} pl.</i></button>`).join('')}</div>`);
+  decorateSlots('#moreTimes');
 };
 ACT.gfPick=a=>{
   closeSheet();
   const g=S.gf;
+  if(!a.join)g.joinWith=null;
   g.crs=a.dataset.c;g.t=a.dataset.t;g.idxOk=false;
   g.flights=[{crs:g.crs,t:g.t}];g.split=[g.pax];
   const players=[{type:'self',f:0}];
@@ -1421,6 +1554,7 @@ function playerInfo(p,i){
 }
 const flightsOf=l=>l.flights&&l.flights.length?l.flights:[{crs:l.crs,t:l.h}];
 const crsOfPlayer=(l,p)=>crs(flightsOf(l)[p.f||0].crs);
+const joinOf=l=>{const j=l.joinWith;return j&&flightsOf(l).some(f=>f.crs===j.crs&&f.t===j.t)?j:null};
 function gfCalc(l){
   const items=[], fl=flightsOf(l), multi=fl.length>1;
   l.players.forEach((p,i)=>{const pi=playerInfo(p,i), c=crsOfPlayer(l,p);
@@ -1474,11 +1608,15 @@ R['gf-joueurs']=()=>{
      <p class="sub" style="margin-top:6px">${cap(fday(g.date))}${multi?' · '+fl.map(f=>crs(f.crs).n+' '+f.t).join(' · '):' · '+plural(g.pax,'joueur')}</p></div></div>
      <span class="node">Tarif par joueur</span>
    ${pbar('votre place et vos options')}
+   ${(()=>{const j=joinOf({...line,joinWith:g.joinWith});if(!j)return '';const pp=PROFILES[j.id], fn=pp.n.split(' ')[0];
+     return `<div class="alert soft joinw"><span class="av" style="width:34px;height:34px">${pp.ini}</span><div><b>Vous rejoignez ${pp.n} · ${crs(j.crs).n} ${j.t}</b><br>
+       ${fn} a déjà réservé sa place de son côté : vous ne réglez que la vôtre${g.pax>1?' et celles de vos joueurs':''}. ${fn} sera prévenu·e dès votre paiement.</div></div>`})()}
    <div class="two"><div>
      ${multi?fl.map((f,k)=>{const fc=crs(f.crs), ps=g.players.map((p,i)=>[p,i]).filter(([p])=>p.f===k);
        return `<div class="fhead"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fc.n} · ${f.t}</b><span class="mut">${plural(ps.length,'joueur')}${fc.idxMax?' · index ≤ '+fc.idxMax:''}</span></div></div>
+         ${u?occList(f):''}
          <div class="card" style="padding:6px 16px;margin-bottom:14px">${ps.map(([p,i])=>row(p,i)).join('')}${addRow(k)}</div>`}).join('')
-     :`<div class="card" style="padding:6px 16px">${g.players.map(row).join('')}${addRow(0)}</div>`}
+     :`${u?occList(fl[0]):''}<div class="card" style="padding:6px 16px">${g.players.map(row).join('')}${addRow(0)}</div>`}
      <p class="note">Chaque joueur est tarifé selon son propre statut${multi?', sur le parcours de son départ':''}. Rattacher un joueur (compte Resonance ou licence FFGolf) peut faire baisser sa place ; sans rattachement, il paie le prix public. Le réservant règle l'ensemble.</p>
      ${ix.need?`<div class="sect">Index maximum · ${ix.c.n}</div>
        ${ix.over.length?`<div class="alert"><span class="ic">!</span><div><b>${ix.over.map(x=>x.n).join(', ')} : index supérieur à ${ix.c.idxMax}.</b><br>Le départ ne peut pas être réservé avec ce joueur. ${multi?'Choisissez un autre parcours pour ce départ, ou rattachez un autre joueur.':'Retirez-le du départ ou choisissez La Forêt, sans limite d\'index.'}</div></div>`:''}
@@ -1567,7 +1705,7 @@ ACT.gfSetP=a=>{
 ACT.gfSetGuest=a=>{S.gf.players[+a.dataset.i]={type:'guest',n:($('#pGuest').value||'').trim(),f:S.gf.players[+a.dataset.i].f||0};closeSheet();render()};
 ACT.gfAdd=()=>{
   const g=S.gf;
-  addLine({kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),fopts:JSON.parse(JSON.stringify(g.fopts||[{}])),editOf:g.editOf});
+  addLine({kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),fopts:JSON.parse(JSON.stringify(g.fopts||[{}])),joinWith:g.joinWith||null,editOf:g.editOf});
   g.editOf=null;
 };
 
@@ -1616,7 +1754,7 @@ R.comp=()=>{
      <p class="sub" style="margin-top:6px">Licence, certificat médical et index sont vérifiés à l'inscription : pas de mauvaise surprise au départ.</p></div>
      <span class="node">Compétitions</span></div>
    ${pbar('droits de jeu et green fees')}
-   <div class="chips">${[['all','Toutes'],['ind','Individuelles'],['eq','En équipe'],['me','Ouvertes pour moi']].map(([k,n])=>
+   <div class="chips chips-x">${[['all','Toutes'],['ind','Individuelles'],['eq','En équipe'],['me','Ouvertes pour moi']].map(([k,n])=>
      `<button class="chip ${f===k?'on':''}" data-act="compFilter" data-f="${k}" ${k==='me'&&!u?'disabled title="Connectez-vous"':''}>${n}</button>`).join('')}</div>
    ${list.length?list.map(cp=>{
      const c=crs(cp.crs), x=compPrice(cp,mySt()), d=dobj(cp.date), reg=compRegistered(cp);
@@ -1682,7 +1820,7 @@ R['comp-inscr']=()=>{
             <button class="btn sm ghost" data-act="compPartnerX">Changer</button></div>
             <div style="margin-top:8px">${ckHtml(pck)}</div>`
          :`<p class="sub" style="margin-bottom:12px">Un ${cp.fmt.split(' ·')[0].toLowerCase()} se joue à deux : les conditions sont vérifiées pour chacun des deux joueurs.</p>
-           ${partners.length?`<div class="radios" style="margin-bottom:12px">${partners.map(id=>{const p=PROFILES[id];return `<button class="radio" data-act="compPartner" data-id="${id}"><span class="av lt">${p.ini}</span><div><b>${p.n}</b><small>Partenaire habituel · index ${fidx(p.idx)}</small></div></button>`}).join('')}</div>`:''}
+           ${partners.length?`<div class="radios" style="margin-bottom:12px">${partners.map(id=>{const p=PROFILES[id];return `<button class="radio" data-act="compPartner" data-id="${id}"><span class="av lt">${p.ini}</span><div><b>${p.n}</b><small>${relOf(u,id)} · index ${fidx(p.idx)}</small></div></button>`}).join('')}</div>`:''}
            <div class="codebox"><input id="cpSearch" placeholder="E-mail ou n° de licence du partenaire" style="text-transform:none" ${u?'':'disabled'}><button class="btn sm" data-act="compSearch" ${u?'':'disabled'}>Rechercher</button></div>
            <div id="cpRes" style="margin-top:8px"></div>
            <p class="note">Démo : 1234567 donne un licencié d'index 38, refusé sur un greensome limité à 36.</p>`}
@@ -1839,6 +1977,12 @@ R['cours-ind']=()=>{
   const x=lessonPrice(LESSON[sc.dur],st);
   const cr=u&&u.credits[sc.dur]&&u.credits[sc.dur].left||0;
   const useCr=cr>0&&sc.useCredit;
+  const bySlot={};days.forEach(k=>{const all=[];
+    pros.forEach(p=>lessonSlots(p,k,sc.dur).forEach(z=>{if((sc.th==='all'||z.th===sc.th)&&!all.some(y=>y.t===z.t))all.push({...z,pro:p})}));
+    bySlot[k]=all.sort((a,b)=>a.t<b.t?-1:1)});
+  /* mobile : un jour à la fois plutôt que 7 colonnes */
+  const dSel=days.includes(sc.day)&&bySlot[sc.day].length?sc.day:(days.find(k=>bySlot[k].length)||days[0]);
+  const pill=(k,z)=>`<button class="pill ${sc.slot&&sc.slot.d===k&&sc.slot.t===z.t?'on':''}" data-act="indSlot" data-d="${k}" data-t="${z.t}" data-p="${z.pro}" data-th="${z.th||''}">${z.t}${z.th?`<small>${z.th}</small>`:''}</button>`;
   $('#v-cours-ind').innerHTML=`
    ${fil(['Cours','Créneau','Panier'],1)}
    <button class="back" data-go="cours">← Cours &amp; stages</button>
@@ -1856,18 +2000,21 @@ R['cours-ind']=()=>{
      <div class="between" style="margin:18px 0 10px"><div class="sect" style="margin:0">Créneaux · semaine du ${fdm(start)}</div>
        <div class="row" style="gap:6px"><button class="navd" style="height:32px" data-act="indWk" data-n="-1" ${sc.wk<=0?'disabled':''}>‹</button><button class="navd" style="height:32px" data-act="indWk" data-n="1" ${sc.wk>=5?'disabled':''}>›</button></div></div>
      <div class="week">${days.map(k=>{
-       const all=[];pros.forEach(p=>lessonSlots(p,k,sc.dur).forEach(z=>{if((sc.th==='all'||z.th===sc.th)&&!all.some(y=>y.t===z.t))all.push({...z,pro:p})}));
-       all.sort((a,b)=>a.t<b.t?-1:1);
+       const all=bySlot[k];
        return `<div class="wcol"><h6>${DAYS[wday(k)][0].toUpperCase()+DAYS[wday(k)].slice(1,3)}.<small>${fdm(k)}</small></h6><div class="pills">
-         ${all.length?all.map(z=>`<button class="pill ${sc.slot&&sc.slot.d===k&&sc.slot.t===z.t?'on':''}" data-act="indSlot" data-d="${k}" data-t="${z.t}" data-p="${z.pro}" data-th="${z.th||''}">${z.t}<small>${z.th||'Libre'}</small></button>`).join(''):'<div class="none">—</div>'}</div></div>`}).join('')}</div>
-     <p class="note">La thématique vient du planning : le pro l'attache à son créneau dans le back-office enseignement. Un créneau « Libre » se travaille selon les besoins de l'élève.</p>
+         ${all.length?all.map(z=>pill(k,z)).join(''):'<div class="none">—</div>'}</div></div>`}).join('')}</div>
+     <div class="wkm"><div class="wkm-days">${days.map(k=>`<button class="wkm-d ${k===dSel?'on':''}" data-act="indDay" data-k="${k}" ${bySlot[k].length?'':'disabled'}>
+         <small>${DAYS[wday(k)].slice(0,3)}.</small><b>${+k.slice(8)}</b><i>${bySlot[k].length?plural(bySlot[k].length,'créneau','créneaux'):'—'}</i></button>`).join('')}</div>
+       <div class="wkm-t">${cap(fday(dSel))}</div>
+       <div class="wkm-pills">${bySlot[dSel].length?bySlot[dSel].map(z=>pill(dSel,z)).join(''):'<p class="mut">Aucun créneau ce jour-là.</p>'}</div></div>
+     <p class="note">La thématique vient du planning : le pro l'attache à son créneau dans le back-office enseignement. Un créneau sans thématique se travaille selon les besoins de l'élève.</p>
      <p class="note">Avec « Peu importe », le créneau est attribué au premier pro libre et son nom apparaît au récapitulatif avant l'ajout au panier : le client sait toujours avec qui il a rendez-vous.</p>
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Votre cours</div>
      ${sc.slot?`<div class="sumline"><span>Date</span><b>${fshort(sc.slot.d)} · ${sc.slot.t}</b></div>
        <div class="sumline"><span>Pro</span><b>${PROS[sc.slot.pro].n}</b></div>
-       <div class="sumline"><span>Thématique</span><b>${sc.slot.th||'Libre'}</b></div>
+       ${sc.slot.th?`<div class="sumline"><span>Thématique</span><b>${sc.slot.th}</b></div>`:''}
        <div class="sumline"><span>Durée</span><b>${sc.dur===30?'30 min':'1 h'}</b></div>`
      :'<p class="mut">Choisissez un créneau.</p>'}
      ${cr?`<div class="sect" style="margin-top:14px">Règlement</div><div class="radios">
@@ -1884,6 +2031,7 @@ ACT.indPro=a=>{S.cours.pro=a.dataset.v;S.cours.slot=null;render()};
 ACT.indDur=a=>{S.cours.dur=+a.dataset.v;S.cours.slot=null;render()};
 ACT.indWk=a=>{S.cours.wk+= +a.dataset.n;render()};
 ACT.indSlot=a=>{S.cours.slot={d:a.dataset.d,t:a.dataset.t,pro:a.dataset.p,th:a.dataset.th||null};render()};
+ACT.indDay=a=>{S.cours.day=a.dataset.k;render()};
 ACT.indTh=a=>{S.cours.th=a.dataset.v;S.cours.slot=null;render()};
 ACT.indCredit=a=>{S.cours.useCredit=a.dataset.v==='1';render()};
 ACT.indAdd=()=>{
@@ -1950,7 +2098,8 @@ function lineView(l){
     v.title=multi?`Green fee · groupe de ${l.players.length}`:'Green fee · '+c.n;
     v.sub=multi?`${fday(l.d)} · ${fl.length} départs : ${fl.map(f=>crs(f.crs).n+' '+f.t).join(', ')} · ${plural(l.players.length,'joueur')}`
       :`${fday(l.d)} · départ ${l.h} · ${plural(l.players.length,'joueur')}`;
-    v.items=gfCalc(l);v.cancel=`Annulation gratuite jusqu'à 24 h avant ${multi?'le premier départ':'le départ'}`;}
+    v.items=gfCalc(l);v.cancel=`Annulation gratuite jusqu'à 24 h avant ${multi?'le premier départ':'le départ'}`;
+    const j=joinOf(l);if(j){const pp=PROFILES[j.id];v.extra=`Vous jouez avec ${pp.n} (${crs(j.crs).n} ${j.t}) · ${pp.n.split(' ')[0]} sera prévenu·e.`}}
   if(l.kind==='comp'){const cp=comp(l.compId), c=crs(cp.crs), x=compPrice(cp,st), pi=partnerInfo(l.partner);
     v.title=cp.n;
     v.sub=`${fday(cp.date)} · ${c.n} · ${cp.fmt}${pi?' · avec '+pi.n:''}`;
@@ -2133,7 +2282,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')cartPop(false)});
 ACT.lineEditGf=a=>{
   const l=S.cart.find(x=>x.uid===a.dataset.u);
   S.cart=S.cart.filter(x=>x!==l);
-  const fl=flightsOf(l);Object.assign(S.gf,{date:l.d,t:l.h,crs:l.crs,pax:l.players.length,flights:fl,split:fl.map((f,k)=>l.players.filter(p=>(p.f||0)===k).length),act:0,players:l.players,fopts:l.fopts||[l.opts||{}],idxOk:false,editOf:l.editOf||null});
+  const fl=flightsOf(l);Object.assign(S.gf,{joinWith:l.joinWith||null,date:l.d,t:l.h,crs:l.crs,pax:l.players.length,flights:fl,split:fl.map((f,k)=>l.players.filter(p=>(p.f||0)===k).length),act:0,players:l.players,fopts:l.fopts||[l.opts||{}],idxOk:false,editOf:l.editOf||null});
   go('gf-joueurs');
 };
 ACT.promoGo=()=>{
@@ -2229,6 +2378,8 @@ ACT.coPay=()=>{
     if(T.avoir)u.avoir=Math.round((u.avoir-T.avoir)*100)/100;
   }
   S.done={ref,lines,T,guest:!u,mail:u?u.email:S.co.gMail,garantie:S.co.garantie};
+  const joins=lines.map(({l})=>l.kind==='gf'&&joinOf(l)).filter(Boolean);
+  if(joins.length&&u)setTimeout(()=>toast(joins.map(j=>`Notification envoyée à ${PROFILES[j.id].n.split(' ')[0]} : « ${u.n.split(' ')[0]} a rejoint votre départ de ${j.t} »`).join('<br>')),600);
   S.cart=[];S.promo=null;S.co.cgv=false;S.co.garantie=false;hold=HOLD;holdDead=false;
   go('confirm');
 };
@@ -2352,16 +2503,18 @@ R.espace=()=>{
       <div class="ck ${cOk?'ok':'ko'}"><span class="ic">${cOk?'✓':'✕'}</span><div><b>Certificat médical</b><small>${u.cert?(cOk?'Valable jusqu\'au ':'Expiré depuis le ')+fdm(u.cert)+' '+u.cert.slice(0,4):'Non déposé'}${cOk?'':' — requis pour les compétitions'}</small></div><button class="btn sm ${cOk?'ghost':'sec'}" data-act="cert">${cOk?'Remplacer':'Déposer'}</button></div>
       <div class="ck ok"><span class="ic">✓</span><div><b>Date de naissance</b><small>${fdm(u.dob)} ${u.dob.slice(0,4)} · ${ageAt(u.dob,TODAY)} ans</small></div></div>
      </div>
-     <div class="card" style="padding:16px"><div class="between"><div class="h3">Mes proches</div><button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="proches">Gérer</button></div>
-      <p class="mut" style="margin-top:4px">${u.partners.length?u.partners.map(id=>PROFILES[id].n.split(' ')[0]).join(', '):'Aucun proche pour l\'instant.'}</p>
+     <div class="card" style="padding:16px">
+      <div class="h3" style="margin-bottom:4px">Visibilité sur les départs</div>
+      <p class="mut" style="margin-bottom:10px">Ce que voient les autres joueurs inscrits sur le même créneau que vous.</p>
+      <div class="seg2" style="margin-bottom:4px"><button class="${u.pubProfile?'on':''}" data-act="pubProfile" data-v="1">Nom et index</button><button class="${u.pubProfile?'':'on'}" data-act="pubProfile" data-v="0">Profil masqué</button></div>
       <div class="hr" style="margin:12px 0"></div>
       <div class="h3" style="margin-bottom:6px">Coordonnées</div><p class="mut">${u.email}</p>
-      <button class="lnk" style="margin-top:12px;font-size:12px" data-act="logout">Se déconnecter</button></div></div>`;
+</div></div>`;
   }
   $('#v-espace').innerHTML=`
    <div class="scr-head"><div class="hello"><span class="av" style="width:58px;height:58px;font-size:17px">${u.ini}</span>
      <div><span class="eyebrow" style="margin-bottom:4px">Mon espace</span><h1 class="h1">Bonjour <b>${u.n.split(' ')[0]}</b></h1><p class="sub">${u.st.map(s=>ST[s].n).join(' · ')}</p></div></div>
-     <span class="node">Espace personnel</span></div>
+     <button class="btn ghost sm logout" data-act="logout"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5M5 12h11"/></svg><span class="lo-t">Se déconnecter</span></button></div>
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="spaceTab" data-t="${k}">${n}${c!=null?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
 };
@@ -2430,6 +2583,8 @@ function procheCard(p,u){
       <span class="tag ol">${relOf(u,p.id)}</span></div>
     <div class="row wrap" style="gap:6px">${p.st.length?p.st.map(s=>`<span class="stl" style="margin:0">Tarif ${ST[s].n}</span>`).join(''):'<span class="tag">Prix public</span>'}</div>
     <div class="mut">${p.idx!=null?'Index '+fidx(p.idx):'Pas encore d\'index'}${p.lic?' · licence '+p.lic:''}</div>
+    ${p.share?`<span class="mut" style="color:var(--green)">● Partage ses départs avec vous</span>`:''}
+    ${u.shareMode==='some'?`<button class="sw ${u.shareWith&&u.shareWith[p.id]?'on':''}" style="padding:0" data-act="shareWith" data-id="${p.id}"><span class="mut">Voit mes départs</span><i></i></button>`:''}
     <div class="pc-f"><button class="btn sm" data-act="procheBook" data-id="${p.id}">Réserver un départ avec</button>
       <button class="lnk" style="font-size:12px" data-act="procheEdit" data-id="${p.id}">Modifier</button></div>
   </div>`;
@@ -2439,6 +2594,9 @@ function prochesTab(u){
   return `<div class="between wrap" style="margin-bottom:18px;align-items:flex-end">
       <p class="sub" style="max-width:640px">Ajoutez votre famille et vos amis une seule fois. Vous les retrouvez ensuite en un clic pour réserver un départ, former une équipe en compétition ou inscrire un enfant à un cours, avec leur tarif déjà appliqué.</p>
       <button class="btn" data-act="procheAdd">＋ Ajouter un proche</button></div>
+    <div class="card sharec"><div><b class="h3">Partage de mes départs</b>
+      <span class="mut">Vos proches peuvent voir vos heures de départ pour venir jouer avec vous. Rien n'est partagé sans votre accord.</span></div>
+      <div class="seg2">${[['none','Personne'],['all','Tous mes proches'],['some','Au choix']].map(([k,n])=>`<button class="${(u.shareMode||'none')===k?'on':''}" data-act="shareMode" data-v="${k}">${n}</button>`).join('')}</div></div>
     <div class="grid g3">${list.map(p=>procheCard(p,u)).join('')}
       <button class="card pcard add" data-act="procheAdd"><span class="av" style="width:46px;height:46px;background:var(--gold);color:#fff;font-size:20px">＋</span>
         <b class="h3">Ajouter un proche</b><span class="mut">Compte, licence, enfant ou simple invitation</span></button></div>
@@ -2542,6 +2700,148 @@ function applyWith(){
 /* inscription d'un enfant : ses proches mineurs sont proposés d'emblée */
 ACT.kidPick=a=>{const p=PROFILES[a.dataset.id];$('#kidN').value=p.n.split(' ')[0];$('#kidA').value=ageAt(p.dob,TODAY);
   $$('[data-act="kidPick"]').forEach(b=>b.classList.toggle('on',b===a))};
+
+
+/* ═════════ Mes proches sur le parcours ═════════
+   Un proche n'apparaît que s'il partage ses départs (réglage de son compte,
+   désactivé par défaut). Rejoindre son départ = une réservation indépendante :
+   on ne paie que ses propres places, et le proche est prévenu. */
+function proxOn(k){
+  const u=me();if(!u)return [];
+  return u.partners.map(id=>PROFILES[id]).filter(p=>p&&p.share&&FRES[p.id])
+    .flatMap(p=>FRES[p.id].filter(r=>r.d===k).map(r=>{const x=slots(crs(r.crs),k).find(s=>s.t===r.t);return {...r,p,free:x?x.free:0}}))
+    .sort((a,b)=>a.t<b.t?-1:1);
+}
+const proxNeed=()=>isGroup()?1:S.gf.pax;
+const inGroupSel=(c,t)=>isGroup()&&S.gf.flights.some(f=>f.crs===c&&f.t===t);
+function nearSlots(c,t,need){
+  const all=slots(c,S.gf.date).filter(s=>s.free>=need&&!inGroupSel(c.id,s.t));
+  return {before:all.filter(s=>s.t<t).pop()||null,after:all.find(s=>s.t>t)||null};
+}
+/* repères de la grille : créneaux des proches et créneaux voisins */
+function proxMarks(c){
+  const g=S.gf, byT={}, near={};
+  if(!g.prox||!me())return {byT,near};
+  const P=proxOn(g.date).filter(r=>r.crs===c.id&&inMoment(r.t,g.moment));
+  P.forEach(r=>(byT[r.t]=byT[r.t]||[]).push(r));
+  const seq=slots(c,g.date).map(s=>s.t);
+  P.forEach(r=>{const i=seq.indexOf(r.t);[seq[i-1],seq[i+1]].forEach(t=>{if(t&&!byT[t])near[t]=r.p.n.split(' ')[0]})});
+  return {byT,near};
+}
+const gav=r=>`<span class="gav" title="${r.p.n}">${r.p.ini}</span>`;
+function proxSeg(){
+  const g=S.gf, on=!!g.prox, n=on?new Set(proxOn(g.date).map(r=>r.p.id)).size:0;
+  return `<div class="sbf sbf-prox"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5"/><path d="M14 14.2c.8-.4 1.6-.6 2.5-.6 2.5 0 4.5 2 4.5 4.6"/></svg></span>
+    <div class="sbt"><span class="sbl">Mes proches</span>
+      <button class="sw ${on?'on':''}" data-act="proxTog" aria-pressed="${on}" style="padding:0"><span class="sbv" style="font-size:14px">${on?(n?`<b>${n}</b> ce jour`:'Aucun ce jour'):'Afficher'}</span><i></i></button></div></div>`;
+}
+function proxBar(){
+  const u=me();if(!u)return '';
+  const g=S.gf, L=proxOn(g.date), who=[...new Map(L.map(r=>[r.p.id,r.p])).values()], on=!!g.prox;
+  return `<div class="proxbar ${on?'on':''} ${who.length?'':'none'}">
+    <button class="sw ${on?'on':''}" data-act="proxTog" aria-pressed="${on}">
+      <span class="pb-t"><b>Mes proches</b><span class="mut">${who.length?`${plural(who.length,'proche joue','proches jouent')} ${fday(g.date)}`:`Aucun proche ne joue ${fday(g.date)}`}</span></span>
+      ${who.length?`<span class="pb-av">${who.map(p=>`<span class="gav">${p.ini}</span>`).join('')}</span>`:''}<i></i></button>
+    <button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="proches">Gérer le partage</button>
+  </div>`;
+}
+function proxBlock(){
+  const g=S.gf, u=me();
+  if(!g.prox||!u)return '';
+  const L=proxOn(g.date), need=proxNeed();
+  if(!L.length)return `<div class="card prox"><div class="prox-h"><span class="eyebrow">Mes proches sur le parcours</span>
+    <b class="h3">Aucun de vos proches ne joue ${fday(g.date)}</b>
+    <span class="mut">Seuls les proches qui partagent leurs départs avec vous apparaissent ici.</span></div></div>`;
+  const pick=(c,s,lbl)=>`<button class="btn sm ghost" data-act="proxPick" data-c="${c.id}" data-t="${s.t}">${s.t} · ${lbl}</button>`;
+  return `<div class="card prox"><div class="prox-h"><span class="eyebrow">Mes proches sur le parcours</span>
+      <b class="h2">Vos proches jouent ${fday(g.date)}</b></div>
+    ${L.map(r=>{
+      const c=crs(r.crs), blocked=c.idxMax&&u.idx!=null&&u.idx>c.idxMax, fn=r.p.n.split(' ')[0];
+      const sel=inGroupSel(r.crs,r.t);
+      let act;
+      if(blocked){const alt=nearSlots(crs('foret'),r.t,need), s=alt.after||alt.before;
+        act=`<span class="mut">Votre index dépasse la limite de ${c.idxMax} fixée pour ${c.n}.</span>${s?pick(crs('foret'),s,'La Forêt'):''}`}
+      else if(sel)act=`<span class="done-t">✓ Dans votre sélection</span>`;
+      else if(r.free>=need)act=`<button class="btn sm" data-act="proxJoin" data-c="${c.id}" data-t="${r.t}" data-id="${r.p.id}">${isGroup()?'Ajouter ce départ':'Rejoindre ce départ'}</button>`;
+      else{const n=nearSlots(c,r.t,need);
+        act=`<span class="mut">${r.free?`Plus que ${plural(r.free,'place')} : pas assez pour ${plural(need,'joueur')}.`:'Départ complet.'} Au plus près :</span>
+          <span class="row wrap" style="gap:6px">${n.before?pick(c,n.before,'juste avant'):''}${n.after?pick(c,n.after,'juste après'):''}</span>`}
+      return `<div class="prox-row"><span class="av" style="width:42px;height:42px">${r.p.ini}</span>
+        <div class="pr-t"><b>${r.p.n} · ${c.n} · ${r.t}</b>
+          <span class="mut">${relOf(u,r.p.id)} · ${plural(r.n,'joueur')} · ${r.free?plural(r.free,'place libre','places libres'):'complet'}</span></div>
+        <div class="pr-a">${act}</div></div>`}).join('')}
+    </div>`;
+}
+ACT.proxTog=()=>{S.gf.prox=!S.gf.prox;render()};
+ACT.proxJoin=a=>{
+  const g=S.gf, d=a.dataset;
+  g.joinWith={id:d.id,crs:d.c,t:d.t};
+  if(isGroup()){if(!inGroupSel(d.c,d.t))ACT.gfTog({dataset:{c:d.c,t:d.t}});return}
+  ACT.gfPick({dataset:{c:d.c,t:d.t},join:true});
+};
+ACT.proxPick=a=>{
+  const d=a.dataset;
+  if(isGroup())ACT.gfTog({dataset:{c:d.c,t:d.t}}); else ACT.gfPick({dataset:{c:d.c,t:d.t}});
+};
+/* liste des créneaux d'un parcours (réservation 1 à 4 joueurs), proches compris */
+function singleTimes(c,ok){
+  const g=S.gf, {byT,near}=proxMarks(c), MAX=14;
+  const extra=Object.keys(byT).concat(Object.keys(near));
+  const list=ok.filter((s,i)=>i<MAX||extra.includes(s.t));
+  Object.values(byT).forEach(rs=>{if(!list.some(s=>s.t===rs[0].t))list.push({t:rs[0].t,free:rs[0].free,prox:true})});
+  list.sort((a,b)=>a.t<b.t?-1:1);
+  const rest=ok.length-list.filter(s=>!s.prox).length;
+  if(!list.length)return '';
+  return `<div class="gtimes">${list.map(s=>{
+    const rs=byT[s.t], can=s.free>=g.pax;
+    if(rs)return `<button class="gtime pro ${can?'':'full'}" ${can?`data-act="proxJoin" data-id="${rs[0].p.id}"`:'disabled'} data-c="${c.id}" data-t="${s.t}">${rs.map(gav).join('')}<b>${s.t}</b><i>${can?'avec '+rs[0].p.n.split(' ')[0]:'complet'}</i></button>`;
+    return `<button class="gtime ${near[s.t]?'nx':''}" data-act="gfPick" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${near[s.t]?'à côté de '+near[s.t]:s.free+' pl. libres'}</i></button>`}).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`;
+}
+/* réglage « mes départs visibles par mes proches » (espace perso) */
+ACT.shareMode=a=>{const u=me();u.shareMode=a.dataset.v;render();
+  toast(a.dataset.v==='none'?'Vos départs ne sont plus visibles par vos proches.':a.dataset.v==='all'?'Tous vos proches peuvent voir vos départs.':'Choisissez les proches qui voient vos départs.')};
+ACT.shareWith=a=>{const u=me();u.shareWith=u.shareWith||{};u.shareWith[a.dataset.id]=!u.shareWith[a.dataset.id];render()};
+
+
+/* ═════════ Joueurs déjà inscrits sur un créneau ═════════
+   Visible une fois connecté·e : le nom si le joueur a choisi « nom visible »,
+   sinon « Profil masqué » avec son index seulement. */
+const POOL=[{n:'Hélène Bruneau',idx:16.8,pub:true},{n:null,idx:18.4},{n:'Antoine Vasseur',idx:9.1,pub:true},{n:null,idx:27.0},
+  {n:'Camille Bernard',idx:18.4,pub:true},{n:null,idx:11.2},{n:'Thomas Leroy',idx:26.1,pub:true},{n:null,idx:32.5},
+  {n:'Nadia Sultan',idx:19.2,pub:true},{n:null,idx:14.9},{n:'Kevin Blanc',idx:16.8,pub:true},{n:null,idx:21.7}];
+function occupants(cid,k,t){
+  const u=me();if(!u)return [];
+  const c=crs(cid), s=slots(c,k).find(x=>x.t===t), taken=Math.max(0,4-(s?s.free:4));
+  if(!taken)return [];
+  const out=[];
+  Object.entries(FRES).forEach(([id,rs])=>rs.forEach(r=>{if(r.crs===cid&&r.d===k&&r.t===t){const p=PROFILES[id];
+    out.push({n:p.n,idx:p.idx,pub:!!p.share,proche:u.partners.includes(id)});
+    for(let i=1;i<r.n;i++)out.push({...POOL[hash(cid+k+t+i)%POOL.length]})}}));
+  let i=0;
+  while(out.length<taken&&i<40){const q=POOL[hash(cid+k+t+'o'+i)%POOL.length];i++;if(q.n&&out.some(o=>o.n===q.n))continue;out.push({...q})}
+  return out.slice(0,taken).map(o=>({...o,vis:!!(o.pub&&o.n),ini:o.n?o.n.split(' ').map(w=>w[0]).join('').slice(0,2):''}));
+}
+const occLbl=o=>o.vis?`${o.n} · index ${fidx(o.idx)}`:`Profil masqué · index ${fidx(o.idx)}`;
+function occDots(cid,t){
+  const L=occupants(cid,S.gf.date,t);if(!L.length)return '';
+  return `<span class="occ">${L.map(o=>`<span class="oc ${o.vis?'':'mask'}">${o.vis?o.ini:'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'}</span>`).join('')}</span>`;
+}
+function occList(f){
+  const L=occupants(f.crs,S.gf.date,f.t);
+  if(!L.length)return `<p class="mut occ-none">Personne n'est encore inscrit sur ce départ.</p>`;
+  return `<div class="occ-list"><span class="sbl">Déjà inscrits sur ce départ</span>${L.map(o=>`<div class="occ-row"><span class="av ${o.vis?'lt':'mask'}">${o.vis?o.ini:'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'}</span>
+    <div><b>${o.vis?o.n:'Profil masqué'}</b><span class="mut">Index ${fidx(o.idx)}${o.proche&&o.vis?' · votre proche':''}</span></div></div>`).join('')}</div>`;
+}
+/* ajoute les inscrits sur chaque créneau affiché (liste, sélection de groupe, « + autres ») */
+function decorateSlots(root){
+  if(!me())return;
+  $$(root+' .gtime[data-c][data-t]').forEach(b=>{if(b.querySelector('.occ'))return;
+    const L=occupants(b.dataset.c,S.gf.date,b.dataset.t);if(!L.length)return;
+    b.insertAdjacentHTML('beforeend',occDots(b.dataset.c,b.dataset.t));
+    b.title='Déjà inscrits :\n'+L.map(occLbl).join('\n');
+  });
+}
+ACT.pubProfile=a=>{me().pubProfile=a.dataset.v==='1';render();toast(me().pubProfile?'Votre nom et votre index sont visibles des autres joueurs sur vos départs.':'Votre profil est masqué : seuls vos proches autorisés vous voient.')};
 
 /* ═════════ Démarrage ═════════ */
 function toggleVp(){
