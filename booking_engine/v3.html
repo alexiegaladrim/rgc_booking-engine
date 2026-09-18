@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Réserver — Le Touquet Golf Resort</title>
-<link rel="icon" href="../favicon.png">
+<link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -39,15 +39,16 @@ ul{list-style:none}
 /* ══════════ Scène ══════════ */
 .stagewrap{display:flex;justify-content:center;padding:0}
 .stage{width:100%;background:var(--cream);container-type:inline-size;position:relative}
-.stage[data-vp="desktop"]{min-height:calc(100vh - 0px)}
-.stagewrap:has(.stage[data-vp="mobile"]){padding:22px 14px 40px;background:radial-gradient(900px 500px at 50% -10%,rgba(190,155,69,.18),transparent 60%),linear-gradient(160deg,#2A2118,#1B150F);min-height:calc(100vh - 0px)}
+.stage[data-vp="desktop"]{min-height:100vh}
+.stagewrap:has(.stage[data-vp="mobile"]){padding:20px 14px;overflow:hidden;background:radial-gradient(900px 500px at 50% -10%,rgba(190,155,69,.18),transparent 60%),linear-gradient(160deg,#2A2118,#1B150F);min-height:calc(100vh - 0px)}
 .stage[data-vp="mobile"]{height:100%;overflow-y:auto}
 .stage[data-vp="mobile"]::-webkit-scrollbar{width:0}
 /* cadre : en mobile, il contient la modale et le toast (le transform en fait
    le repère des éléments en position fixe) */
 .frame{width:100%;display:flex;justify-content:center}
-.frame:has(> .stage[data-vp="mobile"]){width:390px;max-width:100%;height:calc(100vh - 0px - 62px);
-  overflow:hidden;transform:translateZ(0);box-shadow:var(--shadow-lg),0 0 0 9px #0d0a07,0 0 0 11px #2a2118;border-radius:38px}
+/* format iPhone 17 : 402 × 874 pt, réduit à l'échelle si la fenêtre est plus petite */
+.frame:has(> .stage[data-vp="mobile"]){width:402px;height:874px;flex:none;transform-origin:top center;transform:scale(var(--vps,1));
+  overflow:hidden;box-shadow:var(--shadow-lg),0 0 0 9px #0d0a07,0 0 0 11px #2a2118;border-radius:38px}
 .frame:has(> .stage[data-vp="mobile"]) .sheet-bg{align-items:flex-end;padding:0}
 .frame:has(> .stage[data-vp="mobile"]) .sheet{width:100%;max-height:88%;border-radius:22px 22px 0 0}
 .frame:has(> .stage[data-vp="mobile"]) .toast{bottom:18px;max-width:calc(100% - 28px)}
@@ -375,7 +376,7 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .sw.on i::after{transform:translateX(18px)}
 .qr{width:92px;height:92px;flex:none;border-radius:12px;padding:8px;background:#fff;border:1px solid var(--line);position:relative;
   background-image:repeating-conic-gradient(var(--ink) 0 25%,#fff 0 50%);background-size:12px 12px;background-origin:content-box;background-clip:content-box}
-.qr::after{content:"";position:absolute;inset:36%;background:#fff url(../favicon.png) center/70% no-repeat;border-radius:4px}
+.qr::after{content:"";position:absolute;inset:36%;background:#fff url(favicon.png) center/70% no-repeat;border-radius:4px}
 .qr.lg{width:200px;height:200px;background-size:18px 18px;padding:14px}
 
 /* espace perso */
@@ -1952,7 +1953,16 @@ function toggleVp(){
   st.dataset.vp=m?'mobile':'desktop';
   document.body.classList.toggle('vp-mobile',m);
   st.scrollTop=0;window.scrollTo(0,0);
+  fitPhone();
 }
+/* le cadre garde 402 × 874 ; on le réduit seulement si la fenêtre ne le contient pas */
+function fitPhone(){
+  const m=$('#stage').dataset.vp==='mobile', f=$('#frame'), w=$('.stagewrap');
+  const k=m?Math.min(1,(innerHeight-40)/874,(innerWidth-28)/402):1;
+  f.style.setProperty('--vps',k);
+  w.style.height=m?Math.max(innerHeight,874*k+40)+'px':'';
+}
+addEventListener('resize',fitPhone);
 $('#vpTog').onclick=toggleVp;
 document.addEventListener('keydown',e=>{
   if((e.key==='m'||e.key==='M')&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&!e.target.closest('input,textarea,select'))toggleVp();
