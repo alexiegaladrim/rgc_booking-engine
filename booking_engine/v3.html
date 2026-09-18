@@ -583,6 +583,20 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .pcard.add{border:1.5px dashed var(--gold);background:var(--gold-soft);box-shadow:none;align-items:center;justify-content:center;text-align:center;min-height:210px;gap:8px;transition:.15s}
 .pcard.add:hover{background:var(--gold-light)}
 
+/* fenêtre « panier vide » sous l'icône */
+.appbar-in{position:relative}
+.cartpop{position:absolute;top:calc(100% + 8px);right:32px;width:340px;max-width:calc(100% - 24px);background:#fff;border:1px solid var(--line);
+  border-radius:20px;box-shadow:var(--shadow-lg);padding:18px;z-index:40;animation:fade .2s ease}
+.cartpop::before{content:"";position:absolute;top:-7px;right:16px;width:12px;height:12px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.cp-h{display:flex;gap:14px;align-items:flex-start}
+.cp-h b{display:block;font-size:16px}
+.cp-h .mut{display:block;margin-top:3px}
+.cp-ic{width:42px;height:42px;border-radius:14px;background:var(--gold-light);color:var(--gold-dark);display:grid;place-items:center;flex:none}
+.cp-l{display:grid;gap:4px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.cp-l button{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;font-size:14px;text-align:left;color:var(--ink);transition:.15s}
+.cp-l button svg{color:var(--gold-dark)}
+.cp-l button:hover{background:var(--gold-soft)}
+
 /* ══════════ Mobile (conteneur) ══════════ */
 @container (max-width:900px){
   .two{grid-template-columns:1fr}
@@ -599,6 +613,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 @container (max-width:560px){
   .pad{padding:20px 18px 48px}
   .appbar-in{padding:10px 16px;gap:8px}
+  .cartpop{right:12px}
   .wordmark img{height:30px}
   .wordmark .wm-t{display:none}
   .ico{padding:0 11px}
@@ -673,9 +688,10 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
         <span class="lbl">Le Touquet</span></button>
       <button class="ico" id="accBtn" data-act="account"></button>
-      <button class="ico cartbtn" id="cartBtn" data-go="panier" title="Panier">
+      <button class="ico cartbtn" id="cartBtn" data-act="cart" title="Panier" aria-haspopup="dialog">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16l-1.4 12H5.4L4 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>
         <b id="cartCount">0</b></button>
+      <div class="cartpop" id="cartPop" role="dialog" aria-label="Panier" hidden></div>
     </div>
   </header>
 
@@ -2045,6 +2061,7 @@ ACT.xCarnet=()=>addLine({kind:'carnet',id:'k5-30'});
 
 /* ═════════ Panier ═════════ */
 R.panier=()=>{
+  if(!S.cart.length){setTimeout(()=>{go('accueil');setTimeout(()=>cartPop(true))});return}
   const u=me(), T=cartTotals();
   if(!S.cart.length){
     $('#v-panier').innerHTML=`<div class="scr-head"><h1 class="h1">Votre panier</h1><span class="node">Panier commun</span></div>
@@ -2088,7 +2105,28 @@ R.panier=()=>{
    <p class="note">Codes de test : AUTOMNE15 (−15 % sur green fees, cours et stages) et GOLF10 (green fees seulement). Le code s'applique après le tarif du statut. Il ne touche ni les droits de jeu des compétitions ni les carnets : à valider avec le client.</p>
    </aside></div>`;
 };
-ACT.lineDel=a=>{S.cart=S.cart.filter(l=>l.uid!==a.dataset.u);render()};
+ACT.lineDel=a=>{S.cart=S.cart.filter(l=>l.uid!==a.dataset.u);if(S.cart.length)render();else{go('accueil');setTimeout(()=>cartPop(true))}};
+/* panier vide : simple fenêtre sous l'icône, pas de page */
+function cartPopHtml(){
+  const ic=(d)=>`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  return `<div class="cp-h"><span class="cp-ic">${ic('<path d="M4 7h16l-1.4 12H5.4L4 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/>')}</span>
+    <div><b>Votre panier est vide</b><span class="mut">Un départ, une compétition ou un cours : tout se règle en un seul paiement.</span></div></div>
+    <div class="cp-l">
+      <button data-act="cartGo" data-v="gf">${ic('<path d="M6 21V3l10 4-10 4"/><path d="M3 21h14"/>')}<span>Réserver un départ</span></button>
+      <button data-act="cartGo" data-v="comp">${ic('<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/>')}<span>S'inscrire à une compétition</span></button>
+      <button data-act="cartGo" data-v="cours">${ic('<circle cx="12" cy="6" r="3"/><path d="M6 21v-4a6 6 0 0 1 12 0v4"/>')}<span>Prendre un cours</span></button>
+    </div>`;
+}
+function cartPop(open){
+  const el=$('#cartPop');
+  if(open)el.innerHTML=cartPopHtml();
+  el.hidden=!open;$('#cartBtn').setAttribute('aria-expanded',open?'true':'false');
+}
+ACT.cart=()=>{if(S.cart.length){cartPop(false);go('panier')}else cartPop($('#cartPop').hidden)};
+ACT.cartGo=a=>{cartPop(false);go(a.dataset.v)};
+document.addEventListener('click',e=>{const el=$('#cartPop');if(!el.hidden&&!e.target.closest('#cartPop,#cartBtn'))cartPop(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')cartPop(false)});
+
 ACT.lineEditGf=a=>{
   const l=S.cart.find(x=>x.uid===a.dataset.u);
   S.cart=S.cart.filter(x=>x!==l);
@@ -2106,7 +2144,7 @@ ACT.avoirTog=()=>{S.useAvoir=!S.useAvoir;render()};
 
 /* ═════════ Checkout ═════════ */
 R.checkout=()=>{
-  if(!S.cart.length){go('panier');return}
+  if(!S.cart.length){go('accueil');setTimeout(()=>cartPop(true));return}
   const u=me(), T=cartTotals(), co=S.co;
   const needAcc=S.cart.some(l=>l.kind!=='gf');
   if(needAcc&&co.mode==='guest')co.mode='login';
