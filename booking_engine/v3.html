@@ -1247,7 +1247,7 @@ R.gf=()=>{
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f&&f.crs===c.id)?'':'off'}">
        <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
-         <span class="mut">Départ toutes les ${c.cad} min${c.id==='manoir'?' · décalé de 5 min sur La Forêt (starter commun)':''}</span></div>
+         <span class="mut">Départ toutes les ${c.cad} min</span></div>
          <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}</div></div>
        ${body}</div>`}).join('')}
    ${grp?`<div class="gbar"><div><b>${g.flights.filter(Boolean).length} / ${g.flights.length} départs choisis</b><span class="mut">${g.flights.map((f,i)=>f?crs(f.crs).n+' '+f.t:'Départ '+(i+1)+' à choisir').join(' · ')}</span></div>
