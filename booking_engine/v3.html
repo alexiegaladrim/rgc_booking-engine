@@ -1934,7 +1934,9 @@ R.cours=()=>{
       const inC=S.cart.some(l=>l.kind==='coll'&&l.id===c.id);
       return `<div class="card lesson" style="--lesson-img:url('${({c1:IMG.acad,c2:IMG.decouverte,c5:IMG.kids,c3:IMG.links,c4:IMG.putting})[c.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">${fshort(c.d)} · ${c.h}</span><span class="tag">${c.dur} min</span><span class="tag">${c.lvl}</span>${c.th?`<span class="tag ol">${c.th}</span>`:''}</div>
         <b class="h2" style="display:block;margin-top:8px">${c.n}</b>
-        <div class="mut">${PROS[c.pro].n} · ${full?'complet':plural(c.left,'place')+' sur '+c.cap}</div>
+        <div class="mut">${PROS[c.pro].n}</div>
+        <div class="bar"><i style="width:${Math.round((c.cap-c.left)/c.cap*100)}%"></i></div>
+        <div class="mut" style="margin-top:5px">${full?'Complet':`${plural(c.left,'place libre','places libres')} sur ${c.cap}`}</div>
         ${low?`<div style="margin-top:6px;font-size:12px"><b>✕ Niveau conseillé : ${c.lvl.toLowerCase()} — votre index est ${fidx(u.idx)}</b></div>`:''}</div>
         <div class="cside" style="min-width:0"><div class="price">${pr(x,{small:c.kid?'par enfant':'par personne'})}</div>
         ${inC?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>':`<button class="btn sm" data-act="collOpen" data-id="${c.id}" ${full?'disabled':''}>${full?'Complet':'S\'inscrire'}</button>`}</div></div>`}).join('')
@@ -1944,7 +1946,9 @@ R.cours=()=>{
     body=STAGES.map(s=>{const x=stagePrice(s,st);const inC=S.cart.some(l=>l.kind==='stage'&&l.id===s.id);
       return `<div class="card lesson" style="--lesson-img:url('${({s1:IMG.stage,s2:IMG.kids,s3:IMG.manoir})[s.id]}')"><div><div class="row wrap" style="gap:6px"><span class="tag">Du ${fdm(s.d)} au ${fdm(s.d2)}</span><span class="tag">${s.lvl}</span>${s.th?`<span class="tag ol">${s.th}</span>`:''}</div>
         <b class="h2" style="display:block;margin-top:8px">${s.n}</b>
-        <div class="mut">${s.sched} · ${PROS[s.pro].n} · ${plural(s.left,'place')} sur ${s.cap}</div></div>
+        <div class="mut">${s.sched} · ${PROS[s.pro].n}</div>
+        <div class="bar"><i style="width:${Math.round((s.cap-s.left)/s.cap*100)}%"></i></div>
+        <div class="mut" style="margin-top:5px">${s.left?`${plural(s.left,'place libre','places libres')} sur ${s.cap}`:'Complet'}</div></div>
         <div class="cside" style="min-width:0"><div class="price">${pr(x,{small:s.kid?'par enfant':'le stage'})}</div>
         ${inC?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>':`<button class="btn sm" data-act="stageOpen" data-id="${s.id}">S'inscrire</button>`}</div></div>`}).join('')
       +`<p class="note">Les dates d'un stage sont fixées par l'académie : on s'inscrit au programme entier, sans choisir de créneau. Désinscription gratuite jusqu'à 7 jours avant le premier jour.</p>`;
