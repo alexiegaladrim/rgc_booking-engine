@@ -239,15 +239,22 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .sect{display:flex;align-items:center;gap:10px;font-size:10.5px;font-weight:500;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold-dark);margin:30px 0 14px}
 .sect::after{content:"";flex:1;height:1px;background:var(--line)}
 
-/* bandeau de tarif */
-.pbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-radius:18px;padding:18px 22px;margin-bottom:22px;
-  background:radial-gradient(500px 200px at 0% 0%,rgba(190,155,69,.28),transparent 70%),linear-gradient(135deg,#2A2118,#1B150F);
-  color:rgba(243,234,213,.78);font-size:13.5px;line-height:1.55;font-weight:300}
+/* bandeau de tarif : c'est la promesse du cadrage, il doit accrocher l'œil */
+.pbar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-radius:18px;padding:20px 24px;margin-bottom:22px;
+  background:radial-gradient(520px 220px at 0% 0%,rgba(190,155,69,.34),transparent 70%),linear-gradient(135deg,#2A2118,#1B150F);
+  border:1px solid rgba(190,155,69,.45);box-shadow:0 16px 38px rgba(34,28,21,.16);
+  color:rgba(243,234,213,.88);font-size:13.5px;line-height:1.55;font-weight:300}
 .pbar > div{flex:1;min-width:220px}
 .pbar b{color:#fff;font-weight:500}
 .pbar .btn{background:var(--gold);color:#fff}
 .pbar .btn:hover{background:#fff;color:var(--ink)}
 .pbar .lnk{color:#F3EAD5}
+.pbar .pb-long b{display:block;font-size:16.5px;margin-bottom:2px}
+.pb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pb-chips span{font-size:10px;font-weight:500;letter-spacing:1.1px;text-transform:uppercase;color:var(--gold-light);
+  background:rgba(243,234,213,.09);border:1px solid rgba(243,234,213,.2);border-radius:999px;padding:5px 10px}
+.pbar > .pb-a{display:flex;flex-direction:column;align-items:stretch;gap:9px;flex:none;min-width:0}
+.pbar > .pb-a .lnk{text-align:center}
 .pbar.on{background:var(--gold-soft);color:var(--g700);border:1px solid var(--gold-light)}
 .pbar.on b{color:var(--ink)}
 .pbar.on .lnk{color:var(--ink)}
@@ -858,7 +865,8 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   /* sans libellé, les boutons de la barre redeviennent des ronds parfaits */
   .ico .av{margin:0;width:30px;height:30px;font-size:11px}
   #accBtn{width:40px;padding:0}
-  .langbtn{padding:0 9px}
+  .langbtn{padding:0 10px;gap:5px}
+  .langbtn > svg:first-child{display:none}   /* le globe ne sert à rien à côté de « FR » */
   .langpop{width:172px}
   .g2{grid-template-columns:1fr}
   .h1{font-size:28px}
@@ -900,6 +908,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .crs-h .price{flex:1 1 100%}
   .pbar{padding:10px 12px 10px 14px;border-radius:14px;gap:10px;margin-bottom:16px;flex-wrap:nowrap;font-size:12.5px}
   .pbar .av{display:none}
+  .pbar{padding:14px 16px;gap:12px}
   .pbar .pb-long{display:none}
   .pbar .pb-short{display:block;flex:1;min-width:0}
   .pbar .btn{padding:8px 12px;font-size:10px;flex:none}
@@ -1053,7 +1062,7 @@ const ST={
   reseau:  {n:'Membre réseau RGC',s:'−40 % sur les green fees · cours −10 %'},
   jeune:   {n:'Jeune −26 ans',s:'−50 % sur les green fees · cours −30 %'},
   senior:  {n:'Senior 65 ans +',s:'−35 % sur les green fees du lundi au vendredi'},
-  licencie:{n:'Licencié FFGolf',s:'−20 % sur les green fees'}};
+  licencie:{n:'Licencié FFGolf',s:'−30 % sur les green fees'}};
 const P=(o)=>Object.assign({partners:[],credits:{},avoir:0,avoirEnd:null},o);
 const SEED_PROFILES={
   claire: P({id:'claire',n:'Claire Dumas',ini:'CD',email:'claire.dumas@email.fr',dob:'1982-04-11',st:['abonne','licencie'],
@@ -1146,7 +1155,7 @@ function gfPrice(c,k,sts){
     else if(s==='reseau')p=base*.6;
     else if(s==='jeune')p=base*.5;
     else if(s==='senior')p=isWe(k)?base:base*.65;
-    else if(s==='licencie')p=base*.8;
+    else if(s==='licencie')p=base*.7;
     p=Math.round(p);
     if(p<best.p)best={p,st:s};
   });
@@ -1272,13 +1281,15 @@ function fil(steps,cur){
   return `<div class="fil">${steps.map((s,i)=>`<span class="${i===cur?'on':i<cur?'done':''}">${i+1}. ${s}</span>`).join('')}</div>`;
 }
 /* bandeau de tarif : incite à se connecter, puis confirme le statut appliqué */
-function pbar(ctx){
+function pbar(ctx,chips){
   const u=me();
-  if(!u)return `<div class="pbar"><div class="pb-long"><b>Abonné, membre du réseau, licencié, jeune ou senior&nbsp;?</b>
-      Connectez-vous : ${ctx||'tous les prix'} se recalculent avec votre tarif, le prix public reste affiché barré.</div>
-      <div class="pb-short"><b>Membre ou licencié·e&nbsp;?</b> Vos tarifs après connexion.</div>
-      <button class="btn sm" data-act="login">Me connecter</button>
-      <button class="lnk pb-long" data-act="signup">Créer un compte</button></div>`;
+  if(!u)return `<div class="pbar">
+      <div class="pb-long"><b>Vos avantages ne sont pas encore appliqués</b>
+      Abonné, membre du réseau Resonance, licencié FFGolf, jeune ou senior : connectez-vous et ${ctx||'tous les prix'} se recalculent à votre tarif, prix public barré.
+      ${(chips||[]).length?`<div class="pb-chips">${chips.map(c=>`<span>${c}</span>`).join('')}</div>`:''}</div>
+      <div class="pb-short"><b>Un meilleur prix vous attend</b> Connectez-vous pour voir votre tarif.</div>
+      <div class="pb-a"><button class="btn sm" data-act="login">Me connecter</button>
+      <button class="lnk pb-long" data-act="signup">Créer un compte</button></div></div>`;
   return `<div class="pbar on"><span class="av">${u.ini}</span><div class="pb-long"><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}<br>
       Vos tarifs sont appliqués. Quand vous cumulez plusieurs statuts, le plus avantageux l'emporte.</div>
       <div class="pb-short"><span class="stl" style="margin:0">Vos tarifs ${u.st.length>1?'membre':ST[u.st[0]].n} appliqués</span></div>
@@ -1589,7 +1600,7 @@ R.pass=()=>{
   $('#v-pass').innerHTML=`
    <div class="band" style="${bg(IMG.links)}"><div><span class="eyebrow">Cartes &amp; Pass</span><h1 class="h1">Jouer <b>plus souvent</b></h1>
      <p class="sub" style="margin-top:6px">Cartes du réseau, carnets de green-fees, voiturettes et carnets de cours : tout ce qui s'achète une fois et se consomme au fil de l'année.</p></div></div>
-   ${pbar('les cartes, pass et carnets')}
+   ${pbar('les cartes, pass et carnets',['Abonné · −20 % sur les carnets de cours','Réseau Resonance · tarif membre'])}
    <div class="sect">Cartes de la Collection</div>${grp('Carte du réseau')}
    <div class="sect">Cartes et carnets du Touquet</div>${grp('Carte du site')}${grp('Carnet du site')}
    <div class="sect">Carnets de cours</div>
@@ -1647,7 +1658,7 @@ R.gf=()=>{
    <div class="scr-head"><div><span class="eyebrow">Green fee · Le Touquet</span><h1 class="h1">Quand souhaitez-vous <b>jouer</b>&nbsp;?</h1>
      <p class="sub" style="margin-top:6px">${fday(g.date)} · ${plural(g.pax,'joueur')} · ${u?'prix à votre tarif':'prix public par joueur'}</p></div>
      <span class="node">Green fee · tunnel v2</span></div>
-   ${pbar('les green fees')}
+   ${pbar('les green fees',['Abonné · Forêt &amp; Manoir inclus','Réseau Resonance · −40 %','Jeune −26 ans · −50 %','Licencié FFGolf · −30 %'])}
    <div class="sbar ${u?'sbar4':''}">
      <button class="sbf ${g.cal?'open':''}" data-act="gfCal"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
        <span class="sbt"><span class="sbl">Date de jeu</span><span class="sbv">${cap(fday(g.date))}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></span></button>
@@ -2040,7 +2051,7 @@ R.comp=()=>{
    <div class="scr-head"><div><span class="eyebrow">Saison 2026</span><h1 class="h1">Calendrier des <b>compétitions</b></h1>
      <p class="sub" style="margin-top:6px">Licence, certificat médical et index sont vérifiés à l'inscription : pas de mauvaise surprise au départ.</p></div>
      <span class="node">Compétitions</span></div>
-   ${pbar('droits de jeu et green fees')}
+   ${pbar('droits de jeu et green fees',['Abonné · droit de jeu seul','Licencié FFGolf · green fee −30 %','Jeune −26 ans · green fee −50 %'])}
    <div class="chips chips-x">${[['all','Toutes'],['ind','Individuelles'],['eq','En équipe'],['me','Ouvertes pour moi']].map(([k,n])=>
      `<button class="chip ${f===k?'on':''}" data-act="compFilter" data-f="${k}" ${k==='me'&&!u?'disabled title="Connectez-vous"':''}>${n}</button>`).join('')}</div>
    ${list.length?list.map(cp=>{
@@ -2245,7 +2256,7 @@ R.cours=()=>{
    ${fil(['Cours','Créneau','Panier'],0)}
    <div class="band" style="${bg(IMG.acad)}"><div><span class="eyebrow">Académie du Touquet</span><h1 class="h1">Cours &amp; <b>stages</b></h1>
      <p class="sub" style="margin-top:6px">Deux pros PGA, un practice couvert et une zone de petit jeu.</p></div></div>
-   ${pbar('les cours et les stages')}
+   ${pbar('les cours et les stages',['Abonné · −20 %','Jeune −26 ans · −30 %','Réseau Resonance · −10 %'])}
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="coursTab" data-t="${k}">${n}${c?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
 };
