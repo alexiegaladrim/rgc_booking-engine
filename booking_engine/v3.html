@@ -115,14 +115,33 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 /* ══════════ En-tête ══════════ */
 .appbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .appbar-in{display:flex;align-items:center;gap:18px;padding:12px 32px;max-width:1280px;margin:0 auto}
-.wordmark{display:flex;align-items:center;gap:14px;cursor:pointer;line-height:1.15}
+.wordmark{display:flex;align-items:center;gap:14px;line-height:1.15}
 .wordmark img{height:40px;display:block}
-.wordmark .wm-t{white-space:nowrap;border-left:1px solid var(--line-2);padding-left:14px;font-size:11px;font-weight:500;letter-spacing:2.6px;text-transform:uppercase}
+.wordmark .wm-l{display:block;border-radius:8px;transition:opacity .15s}
+.wordmark .wm-l:hover{opacity:.62}
+.wordmark .wm-t{white-space:nowrap;border-left:1px solid var(--line-2);padding-left:14px;font-size:11px;font-weight:500;letter-spacing:2.6px;text-transform:uppercase;text-align:left;transition:color .15s}
+.wordmark .wm-t:hover{color:var(--gold-dark)}
 .wordmark .wm-t small{display:block;font-size:8.5px;letter-spacing:3px;color:var(--gold-dark);margin-top:3px}
 .ico{height:40px;min-width:40px;border:1px solid var(--line);border-radius:999px;display:inline-flex;align-items:center;
   justify-content:center;gap:8px;color:var(--ink);padding:0 14px;font-size:11px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap;background:#fff;transition:.15s}
 .ico:hover{border-color:var(--gold);color:var(--gold-dark)}
 .ico .av{width:26px;height:26px;font-size:10px;margin-left:-8px}
+.ico.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.ico.gold:hover{background:var(--gold-dark);border-color:var(--gold-dark);color:#fff}
+.ico.gold .av{background:rgba(255,255,255,.22);color:#fff}
+/* sélecteur de langue : illustratif dans le proto */
+.langwrap{position:relative}
+.langbtn .lg{font-size:11px;font-weight:500;letter-spacing:1.4px}
+.langpop{position:absolute;top:calc(100% + 8px);right:0;width:186px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;box-shadow:var(--shadow-lg);padding:6px;z-index:40;animation:fade .2s ease}
+.langpop::before{content:"";position:absolute;top:-7px;right:18px;width:12px;height:12px;background:#fff;
+  border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.langpop button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:9px 12px;
+  border-radius:11px;font-size:13.5px;text-align:left;color:var(--ink);transition:.15s}
+.langpop button:hover{background:var(--gold-soft)}
+.langpop button i{font-style:normal;font-size:10px;font-weight:500;letter-spacing:1.4px;color:var(--g400)}
+.langpop button.on{background:var(--ink);color:var(--gold-light)}
+.langpop button.on i{color:var(--gold-light)}
 .cartbtn{position:relative;padding:0 12px}
 .cartbtn b{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;border-radius:10px;background:var(--gold);
   color:#fff;font-size:10.5px;font-weight:500;display:none;place-items:center;padding:0 5px;letter-spacing:0;border:2px solid #fff}
@@ -130,6 +149,78 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .av{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--gold-light);display:inline-grid;place-items:center;
   font-size:12px;font-weight:500;flex:none;letter-spacing:1px}
 .av.lt{background:var(--sand);color:var(--g700)}
+
+/* bloc liste d'attente green fee */
+.wl{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px;padding:15px 18px;
+  border:1px dashed var(--line-2);border-radius:14px;background:var(--gold-soft)}
+.wl > div:first-child{flex:1;min-width:220px}
+.wl b{display:block;font-size:14px;margin-bottom:2px}
+.wl .mut{font-size:12.5px;line-height:1.5}
+.card.wlc{padding:4px 18px 18px;margin-bottom:22px}
+.card.wlc .wl{border:0;background:transparent;padding:14px 0 0}
+
+/* ══════════ Navigation du moteur (4 portes) ══════════ */
+.enav{border-top:1px solid var(--line);background:rgba(255,255,255,.94)}
+.enav-in{display:flex;gap:30px;padding:0 32px;max-width:1280px;margin:0 auto;overflow-x:auto}
+.enav-in::-webkit-scrollbar{height:0}
+.enav button{padding:14px 2px 12px;font-size:11px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--g600);border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+.enav button:hover{color:var(--ink)}
+.enav button.on{color:var(--ink);border-bottom-color:var(--gold)}
+
+/* ══════════ Site vitrine resonance.golf (hors périmètre du moteur) ══════════ */
+.stage[data-scr="site"] .appbar,.stage[data-scr="site"] .enav,.stage[data-scr="site"] .appfoot{display:none}
+.rsn{--rg:#D6A745;--rink:#18110D;background:#fff;color:var(--rink)}
+.rsn-top{display:flex;align-items:center;gap:16px;background:var(--rink);color:#fff;height:36px;padding:0 24px;font-size:11.5px}
+.rsn-top .sp{flex:1}
+.rsn-top span{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.rsn-acc{background:rgba(255,255,255,.1);padding:7px 14px}
+.rsn-head{text-align:center;padding:18px 24px 0}
+.rsn-head img{height:56px}
+.rsn-nav{display:flex;align-items:center;gap:26px;padding:16px 24px;border-bottom:1px solid #EDEAE4;flex-wrap:wrap}
+.rsn-nav span{font-size:11.5px;font-weight:500;letter-spacing:.9px;text-transform:uppercase;white-space:nowrap}
+.rsn-cta{margin-left:auto;display:inline-flex;align-items:center;gap:9px;background:var(--rg);color:var(--rink);
+  padding:14px 20px;font-size:11.5px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;white-space:nowrap;transition:.15s}
+.rsn-cta:hover{background:#C99A38}
+.rsn-hero{position:relative;min-height:460px;display:grid;place-items:center;text-align:center;background:#1d1d1d center/cover;padding:70px 24px 120px}
+.rsn-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 260px at 50% 55%,rgba(0,0,0,.42),transparent 70%),linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.14) 45%,rgba(0,0,0,.38))}
+.rsn-hero h1{position:relative;color:#fff;font-weight:200;font-size:44px;line-height:1.28;letter-spacing:1.4px;max-width:720px;text-shadow:0 2px 20px rgba(0,0,0,.45)}
+.rsn-search{display:flex;align-items:stretch;background:#fff;box-shadow:0 18px 48px rgba(24,17,13,.16);max-width:1000px;margin:-58px auto 0;position:relative;z-index:1}
+.rs-l,.rs-m{padding:14px 18px}
+.rs-l{border-right:1px solid #EDEAE4}
+.rs-m{flex:1;background:#F6F5F2;display:flex;flex-direction:column;justify-content:center}
+.rs-lbl{display:block;text-align:center;font-size:11.5px;color:#6B6257;margin-bottom:10px}
+.rs-tiles{display:flex;gap:8px}
+.rs-tile{width:76px;padding:9px 4px;border:1px solid #EDEAE4;text-align:center;font-size:9.5px;letter-spacing:.4px;text-transform:uppercase;color:#8C8377;background:#fff}
+.rs-tile.on{border-color:var(--rg);color:var(--rink)}
+.rs-tile .dot{display:block;width:14px;height:14px;border-radius:50%;background:#E8E2D6;margin:0 auto 7px}
+.rs-tile.on .dot{background:var(--rg)}
+.rs-in{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #EDEAE4;padding:13px 14px;color:#B3AA9C;font-size:13.5px;font-style:italic}
+.rs-go{background:var(--rg);color:var(--rink);padding:0 34px;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap}
+.rsn-p{max-width:660px;margin:0 auto;padding:44px 24px 54px;text-align:center;color:#5A5147;font-size:15px;line-height:1.7;font-weight:300}
+.rsn-sel{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 14px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+@container (max-width:900px){
+  .rsn-hero{min-height:360px;padding:52px 20px 92px}
+  .rsn-hero h1{font-size:34px}
+  .rsn-search{flex-wrap:wrap;margin:-34px 16px 0}
+  .rs-l{flex:1 1 100%;border-right:0;border-bottom:1px solid #EDEAE4}
+  .rs-tiles{justify-content:center;flex-wrap:wrap}
+  .rs-m{flex:1 1 58%}
+  .rs-go{flex:1 1 30%;padding:16px}
+}
+@container (max-width:560px){
+  .rsn-top{padding:0 14px;gap:10px;font-size:10.5px}
+  .rsn-head img{height:46px}
+  .rsn-nav{gap:14px;padding:12px 14px;justify-content:center}
+  .rsn-nav span{font-size:10px;letter-spacing:.5px}
+  .rsn-cta{margin:8px 0 0;width:100%;justify-content:center}
+  .rsn-hero{min-height:300px;padding:40px 16px 80px}
+  .rsn-hero h1{font-size:25px;letter-spacing:.5px}
+  .rsn-hero::before{background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.3) 45%,rgba(0,0,0,.5))}
+  .rsn-p{padding:30px 18px 38px;font-size:14px}
+  .enav-in{gap:18px;padding:0 18px}
+  .enav button{font-size:10px;letter-spacing:1.2px}
+}
 
 /* ══════════ Mise en page ══════════ */
 .pad{padding:30px 32px 64px;max-width:1244px;margin:0 auto}
@@ -417,6 +508,68 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
   padding:12px 22px;font-size:13.5px;z-index:300;opacity:0;pointer-events:none;transition:.25s;max-width:calc(100vw - 32px);box-shadow:var(--shadow-lg);font-weight:300}
 .toast b{color:var(--gold)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+/* ══════════ Tiroir panier (cart drawer) ══════════
+   Il s'ouvre tout seul au premier ajout, avec la ligne ajoutée, le total en
+   cours et les deux sorties. Aux ajouts suivants, on se contente du toast et
+   du rappel permanent (icône en haut à droite, bandeau fixe en mobile) pour
+   ne pas couper le parcours à chaque clic. */
+.dw-bg{position:fixed;inset:0;background:rgba(27,21,15,.42);backdrop-filter:blur(2px);z-index:240;opacity:0;pointer-events:none;transition:opacity .25s}
+.dw-bg.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:250;background:var(--cream);display:flex;flex-direction:column;
+  box-shadow:var(--shadow-lg);transform:translateX(102%);visibility:hidden;transition:transform .32s cubic-bezier(.22,.7,.25,1),visibility .32s}
+.drawer.on{transform:none;visibility:visible}
+.dw-h{flex:none;display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border-bottom:1px solid var(--line)}
+.dw-h .h2{flex:1;font-size:21px;font-weight:300}
+.dw-h .h2 b{font-weight:500}
+.dw-h .x{display:grid;place-items:center;padding:0;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);color:var(--g600);flex:none}
+.dw-h .x:hover{border-color:var(--gold);color:var(--gold-dark)}
+.dw-b{flex:1;overflow-y:auto;padding:18px 20px 22px}
+.dw-b::-webkit-scrollbar{width:0}
+.dw-b .hold{margin-bottom:16px;font-size:12.5px;padding:10px 14px;gap:10px}
+.dw-b .hold span:nth-child(2){min-width:0}
+.dw-b .hold .btn.sm{padding:8px 12px;font-size:9.5px}
+.dw-f{flex:none;background:#fff;border-top:1px solid var(--line);padding:14px 20px 18px}
+.dw-f .sumtot{margin-top:6px;padding-top:12px}
+.dw-btn{display:grid;gap:8px;margin-top:14px}
+.dw-ok{display:flex;align-items:center;gap:12px;background:var(--gold-soft);border:1px solid var(--gold-light);border-radius:14px;padding:11px 14px;margin-bottom:16px}
+.dw-ok i{width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-style:normal;font-size:13px;flex:none}
+.dw-ok b{display:block;font-size:13.5px}
+.dw-ok small{display:block;font-size:11.5px;color:var(--g600);font-weight:300;margin-top:1px}
+.dwl{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.dwl:first-of-type{border-top:0;padding-top:0}
+.dwl > div:first-child{flex:1;min-width:0}
+.dwl b.h3{display:block;margin:7px 0 2px}
+.dwl .mut{display:block}
+.dwl .lnk{font-size:11.5px;margin-top:7px;display:inline-block}
+.dwl-p{text-align:right;white-space:nowrap;font-size:16px;font-weight:400}
+.dwl.new{background:#fff;border:1px solid var(--gold-light);border-radius:16px;padding:14px 16px;box-shadow:0 8px 22px rgba(34,28,21,.07)}
+.dwl.new + .dwl{border-top:0;padding-top:16px}
+.dw-sug{display:inline-block;margin-top:18px;font-size:12.5px}
+.dw-empty{text-align:center;padding:26px 0}
+.dw-empty .cp-ic{margin:0 auto 12px}
+
+/* rappel permanent : icône panier chiffrée (desktop) */
+.cartbtn.has{padding-right:15px;border-color:var(--gold-light);background:var(--gold-soft)}
+.cartbtn .amt{font-size:11px;font-weight:500;letter-spacing:1.2px;white-space:nowrap}
+.cartbtn:not(.has) .amt{display:none}
+@keyframes cbump{30%{transform:scale(1.13)}62%{transform:scale(.97)}}
+.bump{animation:cbump .5s ease}
+
+/* rappel permanent : bandeau fixe en bas d'écran (mobile) */
+.cartbar{position:fixed;left:0;right:0;bottom:0;z-index:180;display:none;align-items:center;gap:12px;padding:11px 16px 13px;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line-2);box-shadow:0 -6px 26px rgba(34,28,21,.13)}
+.cartbar > div{flex:1;min-width:0;line-height:1.2}
+.cartbar b{display:block;font-size:17px;font-weight:500}
+.cartbar small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--g500);margin-top:3px}
+.cartbar .btn{flex:none}
+.frame:has(> .stage[data-vp="mobile"]) .cartbar.on{display:flex}
+.frame:has(> .stage[data-vp="mobile"]) .drawer{width:100%}
+body.cbar .frame:has(> .stage[data-vp="mobile"]) .appfoot{padding-bottom:88px}
+@media (max-width:640px){
+  .cartbar.on{display:flex}
+  body.cbar .appfoot{padding-bottom:88px}
+}
+
 .appfoot{background:var(--ink);color:#bfb3a1;padding:40px 32px;font-size:12.5px;font-weight:300;margin-top:40px}
 .appfoot .inner{display:flex;gap:28px;flex-wrap:wrap;align-items:center}
 .appfoot img{height:34px;filter:brightness(0) invert(1);opacity:.85}
@@ -702,7 +855,11 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .wordmark .wm-t{display:none}
   .ico{padding:0 11px}
   .ico .lbl{display:none}
-  .ico .av{margin:0}
+  /* sans libellé, les boutons de la barre redeviennent des ronds parfaits */
+  .ico .av{margin:0;width:30px;height:30px;font-size:11px}
+  #accBtn{width:40px;padding:0}
+  .langbtn{padding:0 9px}
+  .langpop{width:172px}
   .g2{grid-template-columns:1fr}
   .h1{font-size:28px}
   .logout{width:42px;height:42px;padding:0!important;border-radius:50%;align-self:flex-start}
@@ -811,25 +968,35 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 
   <header class="appbar">
     <div class="appbar-in">
-      <div class="wordmark" data-go="accueil"><img data-logo src="" alt="Resonance Golf Collection"><span class="wm-t">Le Touquet<small>Golf Resort</small></span></div>
+      <div class="wordmark">
+        <button class="wm-l" data-go="site" title="Retour à resonance.golf"><img data-logo src="" alt="Resonance Golf Collection"></button>
+        <button class="wm-t" data-go="gf" title="Réserver au Touquet">Le Touquet<small>Golf Resort</small></button></div>
       <div style="flex:1"></div>
       <button class="ico" data-act="site" title="Changer de golf">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
         <span class="lbl">Le Touquet</span></button>
-      <button class="ico" id="accBtn" data-act="account"></button>
+      <div class="langwrap">
+        <button class="ico langbtn" id="langBtn" data-act="langOpen" aria-haspopup="menu" aria-expanded="false" title="Langue du site">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg>
+          <span class="lg" id="langCur">FR</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="langpop" id="langPop" role="menu" hidden></div></div>
+      <button class="ico gold" id="accBtn" data-act="account"></button>
       <button class="ico cartbtn" id="cartBtn" data-act="cart" title="Panier" aria-haspopup="dialog">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16l-1.4 12H5.4L4 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg>
-        <b id="cartCount">0</b></button>
+        <b id="cartCount">0</b><span class="lbl amt" id="cartAmt"></span></button>
       <div class="cartpop" id="cartPop" role="dialog" aria-label="Panier" hidden></div>
     </div>
+    <nav class="enav" id="enav"></nav>
   </header>
 
-  <section class="screen" id="sc-accueil" data-title="Portail du golf · 3 portes"><div id="v-accueil"></div></section>
+  <section class="screen" id="sc-site" data-title="resonance.golf — site vitrine (hors moteur)"><div id="v-site"></div></section>
   <section class="screen" id="sc-gf" data-title="Green fee · 1 — Date, joueurs & départs"><div class="pad" id="v-gf"></div></section>
   <section class="screen" id="sc-gf-joueurs" data-title="Green fee · 2 — Joueurs, tarifs & options"><div class="pad" id="v-gf-joueurs"></div></section>
   <section class="screen" id="sc-comp" data-title="Compétitions · 1 — Calendrier"><div class="pad" id="v-comp"></div></section>
   <section class="screen" id="sc-comp-inscr" data-title="Compétitions · 2 — Inscription & éligibilité"><div class="pad" id="v-comp-inscr"></div></section>
   <section class="screen" id="sc-cours" data-title="Cours · 1 — Catalogue (individuel, collectif, stages, carnets)"><div class="pad" id="v-cours"></div></section>
+  <section class="screen" id="sc-pass" data-title="Cartes &amp; Pass — cartes réseau, carnets et voiturettes"><div class="pad" id="v-pass"></div></section>
   <section class="screen" id="sc-cours-ind" data-title="Cours · 2 — Cours individuel : pro & créneau"><div class="pad" id="v-cours-ind"></div></section>
   <section class="screen" id="sc-cross" data-title="Ajouté au panier · suggestions"><div class="pad" id="v-cross"></div></section>
   <section class="screen" id="sc-panier" data-title="Panier commun"><div class="pad" id="v-panier"></div></section>
@@ -841,6 +1008,9 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 </div>
 <div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
+<div class="dw-bg" id="dwBg"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Synthèse de votre panier" aria-hidden="true"></aside>
+<div class="cartbar" id="cartBar"></div>
 </div>
 </div>
 
@@ -914,7 +1084,7 @@ const IMG={hero:IMGB+'2023/03/le-touquet-golf-resort.jpg',mer:IMGB+'2021/03/golf
   decouverte:IMGB+'2021/02/Golf-du-Touquet-Practice-Driving-range.jpg'};
 const CRSIMG={mer:IMG.mer2,foret:IMG.foret,manoir:IMG.manoir};
 const COMPIMG={automne:IMG.links,seniors:IMG.foret,proam:IMG.comp,jeunes:IMG.manoir,toussaint:IMG.links,noel:IMG.foret};
-const TAGIMG={'Green fee':IMG.links,'Compétition':IMG.comp,'Cours':IMG.acad,'Cours collectif':IMG.putting,'Carnet':IMG.range,'Stage':IMG.stage};
+const TAGIMG={'Green fee':IMG.links,'Compétition':IMG.comp,'Cours':IMG.acad,'Cours collectif':IMG.putting,'Carnet':IMG.range,'Stage':IMG.stage,'Carte & Pass':IMG.mer2};
 const cap=x=>x[0].toUpperCase()+x.slice(1);
 const bg=u=>`background-image:url('${u}')`;
 /* ═════════ Référentiel du site ═════════ */
@@ -1056,6 +1226,7 @@ const R={};
 function go(id){
   closeSheet();
   $$('.screen').forEach(s=>s.classList.toggle('on',s.id==='sc-'+id));
+  $('#stage').dataset.scr=id;
   S.screen=id;
   render();
   const st=$('#stage');
@@ -1070,7 +1241,11 @@ function render(){
     :`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg><span class="lbl">Se connecter</span>`;
   const n=S.cart.length;
   $('#cartCount').textContent=n;
+  $('#cartAmt').textContent=n?eur(cartTotals().due):'';
   $('#cartBtn').classList.toggle('has',n>0);
+  paintNav();
+  paintCartBar();
+  paintDrawer();
   paintHold();
   $$('img[data-logo]').forEach(i=>{if(!i.getAttribute('src'))i.src=LOGO});
 }
@@ -1145,7 +1320,7 @@ function login(id){
       :`Connecté·e en tant que ${PROFILES[id].n}. Vos tarifs sont appliqués.`);
   }
 }
-ACT.logout=()=>{login(null);if(S.screen==='espace')go('accueil');toast('Vous êtes déconnecté·e. Les prix publics sont rétablis.')};
+ACT.logout=()=>{login(null);if(S.screen==='espace')go('gf');toast('Vous êtes déconnecté·e. Les prix publics sont rétablis.')};
 ACT.signup=()=>{
   sheet(shead('Créer mon compte','Espace personnel')+signupForm()+
    `<button class="btn full" style="margin-top:6px" data-act="signupGo">Créer mon compte</button>`);
@@ -1201,20 +1376,21 @@ const MAPIMG='data:image/webp;base64,UklGRrTXAABXRUJQVlA4WAoAAAAgAAAATQcAzwcASUN
    Coordonnées des pastilles en pixels de la carte (1870 × 2000). Cleydael,
    en Belgique, n'est pas sur la carte : il reste dans la liste. */
 const MAPW=1870, MAPH=2000;
-const REGIONS=['Côte d\'Opale','Île-de-France','Côte Landaise','Provence – Côte d\'Azur','Belgique'];
+/* Provence et Riviera sont deux régions distinctes (demande client du 21/09/2026) */
+const REGIONS=['Côte d\'Opale','Île-de-France','Côte Landaise','Provence','Riviera — Côte d\'Azur','Belgique'];
 const GOLFS=[
   {id:'touquet',reg:0,n:'Le Touquet Golf Resort',v:'Le Touquet-Paris-Plage (62)',d:'3 parcours · 45 trous',x:840,y:387,live:true},
   {id:'hardelot',reg:0,n:'Golf d\'Hardelot',v:'Neufchâtel-Hardelot (62)',d:'2 parcours · 36 trous',x:847,y:350},
   {id:'yvelines',reg:1,n:'Domaine de la Couharde',v:'La Queue-lez-Yvelines (78)',d:'2 parcours · 27 trous',x:816,y:590},
   {id:'moliets',reg:2,n:'Golf de Moliets',v:'Moliets-et-Maa (40)',d:'2 parcours · 27 trous',x:447,y:1380},
   {id:'seignosse',reg:2,n:'Golf de Seignosse',v:'Seignosse (40)',d:'18 trous',x:441,y:1416},
-  {id:'servanes',reg:3,n:'Golf de Servanes',v:'Mouriès (13)',d:'18 trous',x:1150,y:1492},
+  {id:'servanes',reg:3,n:'Golf de Servanes',v:'Mouriès (13) · Alpilles',d:'18 trous',x:1150,y:1492},
+  {id:'saintebaume',reg:3,n:'Golf Sainte Baume',v:'Nans-les-Pins (83) · Sainte-Baume',d:'18 trous',x:1291,y:1537},
   {id:'salette',reg:3,n:'Golf Bastide de la Salette',v:'Marseille (13)',d:'18 trous',x:1213,y:1546},
-  {id:'saintebaume',reg:3,n:'Golf Sainte Baume',v:'Nans-les-Pins (83)',d:'18 trous',x:1291,y:1537},
-  {id:'roquebrune',reg:3,n:'Golf de Roquebrune',v:'Roquebrune-sur-Argens (83)',d:'18 trous',x:1410,y:1530},
-  {id:'grandebastide',reg:3,n:'Golf de la Grande Bastide',v:'Châteauneuf-Grasse (06)',d:'18 trous',x:1433,y:1497},
-  {id:'opio',reg:3,n:'Opio-Valbonne Golf Resort',v:'Opio (06) · Le Mas de la Bégude',d:'18 trous · hôtel & spa',x:1444,y:1471},
-  {id:'cleydael',reg:4,n:'Cleydael Golf & Country Club',v:'Aartselaar · Anvers',d:'18 trous'}];
+  {id:'opio',reg:4,n:'Opio-Valbonne Golf Resort',v:'Opio (06) · Le Mas de la Bégude',d:'18 trous · hôtel & spa',x:1444,y:1471},
+  {id:'roquebrune',reg:4,n:'Golf de Roquebrune',v:'Roquebrune-sur-Argens (83)',d:'18 trous',x:1410,y:1530},
+  {id:'grandebastide',reg:4,n:'Golf de la Grande Bastide',v:'Châteauneuf-Grasse (06)',d:'18 trous',x:1433,y:1497},
+  {id:'cleydael',reg:5,n:'Cleydael Golf & Country Club',v:'Aartselaar · Anvers',d:'18 trous'}];
 const golf=id=>GOLFS.find(x=>x.id===id);
 function siteSheet(){
   const sel=S.siteSel||'touquet', q=(S.siteQ||'').trim().toLowerCase();
@@ -1269,63 +1445,163 @@ ACT.siteGo=()=>{
 };
 
 /* ═════════ Portail du golf ═════════ */
-R.accueil=()=>{
-  const u=me(), st=mySt(), k='2026-09-24';
-  const gfFrom=Math.min(...CRS.map(c=>gfPrice(c,k,st).p));
-  const cmin=COMPS.filter(c=>c.taken<c.cap).length;
-  const lp=lessonPrice(LESSON[30],st);
-  const nxt=COMPS.find(c=>c.taken<c.cap);
-  const ic={gf:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V3l10 4-10 4"/><path d="M3 21h14"/></svg>',
-    comp:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a3 3 0 0 1-3 4M7 5H4a3 3 0 0 0 3 4"/></svg>',
-    cours:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M6 21v-4a6 6 0 0 1 12 0v4"/></svg>'};
-  const arrow='<svg class="go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-  $('#v-accueil').innerHTML=`
-  <div class="oob"><span class="node">Hors moteur</span><div><b>Portail du golf — site vitrine</b>
-    Le booking engine commence aux trois portes (cadrage du 17/09/2026). Hôtel, spa et restaurant restent dans la v1.</div></div>
-  <section class="hero" style="background-image:url('${IMG.hero}')"><div class="hero-in">
-    <span class="eyebrow">Resonance Golf Collection · Côte d'Opale</span>
-    <h1>Entre mer et forêt, <b>réservez votre golf</b></h1>
-    <p>Trois parcours dont La Mer, élu meilleur links de France, une académie et un calendrier de compétitions toute l'année.</p>
-    <div class="badges"><span>Top 100 des resorts du monde</span><span>45 trous</span><span>2 h 30 de Paris</span></div>
-  </div></section>
-  <div class="quick"><div class="card">
-    <button data-go="gf"><span class="qi">${ic.gf}</span><span><b>Réserver un départ</b><small>${gfFrom===0?'Inclus dans votre abonnement':'dès '+eur(gfFrom)+(u?' à votre tarif':' par joueur')}</small></span>${arrow}</button>
-    <button data-go="comp"><span class="qi">${ic.comp}</span><span><b>S'inscrire à une compétition</b><small>${cmin} inscriptions ouvertes</small></span>${arrow}</button>
-    <button data-go="cours"><span class="qi">${ic.cours}</span><span><b>Prendre un cours</b><small>dès ${eur(lp.p)} les 30 min</small></span>${arrow}</button>
-  </div></div>
-  <div class="pad" style="padding-top:44px">
-    ${pbar()}
-    <div class="scr-head"><div><span class="eyebrow">Réserver en ligne</span><h2 class="h1">Que souhaitez-vous <b>réserver</b>&nbsp;?</h2></div>
-      <span class="node">Entrée · 3 portes</span></div>
-    <div class="grid g3">
-      <div class="card door" data-go="gf"><div class="ph img" style="background-image:url('${IMG.mer2}')"></div>
-        <span class="tag">3 parcours · 45 trous</span><b>Green fee</b>
-        <span class="sub">La Mer, La Forêt et Le Manoir : choisissez votre parcours entre dunes et pinède, et réservez votre départ en quelques clics.</span>
-        <div class="foot"><div class="price" style="text-align:left">${gfFrom===0?'Inclus':'dès '+eur(gfFrom)}<small>${u?'à votre tarif':'par joueur'}</small></div>
-          <span class="btn sm">Réserver</span></div></div>
-      <div class="card door" data-go="comp"><div class="ph img" style="background-image:url('${IMG.comp}')"></div>
-        <span class="tag">${cmin} inscriptions ouvertes</span><b>Compétitions</b>
-        <span class="sub">Prochaine : ${nxt.n}, ${fday(nxt.date)}. Inscrivez-vous en ligne en quelques instants.</span>
-        <div class="foot"><div class="price" style="text-align:left">${plural(COMPS.length,'date')}<small>d'ici décembre</small></div>
-          <span class="btn sm">Calendrier</span></div></div>
-      <div class="card door" data-go="cours"><div class="ph img" style="background-image:url('${IMG.acad}')"></div>
-        <span class="tag">2 pros PGA</span><b>Cours &amp; stages</b>
-        <span class="sub">Cours individuels, ateliers collectifs, stages et carnets de cours.</span>
-        <div class="foot"><div class="price" style="text-align:left">dès ${eur(lp.p)}<small>le cours de 30 min</small></div>
-          <span class="btn sm">Réserver</span></div></div>
+/* ═════════ resonance.golf — site vitrine (hors périmètre du moteur) ═════════
+   Le client n'arrive plus sur une page d'accueil de golf : il part du site
+   actuel, ouvre le menu « Réserver un green-fee », choisit son golf et entre
+   directement dans le tunnel de ce golf. */
+const RSN_NAV=['Notre univers','Jouer','S\'évader','Se relaxer','Nos offres','Vos événements','Écologie','L\'actu'];
+const RSN_HERO='https://www.resonance.golf/wp-content/uploads/2020/07/golf_hardelot_les_dunes_trou_18-1920x1080.jpg';
+const rsnList=()=>GOLFS.filter(g=>g.id!=='cleydael').slice().sort((a,b)=>a.n.localeCompare(b.n,'fr'));
+R.site=()=>{
+  const cal='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>';
+  $('#v-site').innerHTML=`
+  <div class="oob"><span class="node">Hors moteur</span><div><b>resonance.golf — site vitrine</b>
+    Navigation, hero et menu « Réserver un green-fee » repris du site actuel. Le moteur commence au choix du golf : le golf sélectionné ouvre directement son tunnel de green fee, sans page d'accueil intermédiaire.</div></div>
+  <div class="rsn">
+    <div class="rsn-top"><span>Contact</span><span class="sp"></span><span>English</span><span class="rsn-acc">Accès client</span></div>
+    <div class="rsn-head"><img data-logo src="" alt="Resonance Golf Collection"></div>
+    <nav class="rsn-nav">${RSN_NAV.map(n=>`<span>${n}</span>`).join('')}
+      <button class="rsn-cta" data-act="rsnBook">${cal} Réserver un green-fee</button></nav>
+    <section class="rsn-hero" style="background-image:url('${RSN_HERO}')">
+      <h1>Le golf et au-delà dans une collection de golfs d'exception</h1></section>
+    <div class="rsn-search">
+      <div class="rs-l"><span class="rs-lbl">Que recherchez-vous&nbsp;?</span>
+        <div class="rs-tiles">${[['Golfs',1],['Hôtels'],['Golf Pass'],['Chèques cadeaux']].map(([n,on])=>`<span class="rs-tile ${on?'on':''}"><span class="dot"></span>${n}</span>`).join('')}</div></div>
+      <div class="rs-m"><span class="rs-lbl">Où aimeriez-vous jouer&nbsp;?</span>
+        <div class="rs-in">Région, département, ville…</div></div>
+      <button class="rs-go" data-act="rsnBook">Rechercher</button>
     </div>
-    <p class="note">Les trois portes affichent déjà le prix du statut quand le client est connecté (« Inclus » pour un abonné). C'est la promesse du cadrage : le bon prix dès le premier écran.</p>
-    <div class="split">
-      <div class="ph img" style="background-image:url('${IMG.foret}')"></div>
-      <div><span class="eyebrow" style="color:var(--gold)">Espace personnel</span>
-        <h2 class="h1">Vos avantages, <b>appliqués partout</b></h2>
-        <p class="sub" style="margin-top:12px">Abonné, membre du réseau Resonance, licencié, jeune ou senior : connectez-vous une fois, chaque prix du site tient compte de votre statut.</p>
-        <ul><li>Vos tarifs affichés dès la recherche</li><li>Vos réservations, QR codes et annulations</li><li>Vos carnets de cours et vos avoirs</li></ul>
-        ${u?`<button class="btn gold" data-go="espace">Mon espace</button>`:`<div class="row wrap"><button class="btn gold" data-act="login">Me connecter</button><button class="btn sec" style="color:#fff;box-shadow:inset 0 0 0 1.5px rgba(243,234,213,.5)" data-act="signup">Créer un compte</button></div>`}
-      </div>
-    </div>
+    <p class="rsn-p">Resonance Golf Collection offre bien plus que du golf&nbsp;; émotions et bien-être au travers d'une collection de golfs d'exception.</p>
   </div>`;
 };
+/* sélecteur de langue : les traductions ne sont pas maquettées dans le proto */
+const LANGS=[['fr','Français'],['en','English'],['de','Deutsch'],['es','Español'],['nl','Nederlands']];
+function langPop(open){
+  const el=$('#langPop');
+  if(open)el.innerHTML=LANGS.map(([k,n])=>`<button role="menuitem" class="${k==='fr'?'on':''}" data-act="lang" data-v="${k}">${n}<i>${k.toUpperCase()}</i></button>`).join('');
+  el.hidden=!open;$('#langBtn').setAttribute('aria-expanded',open?'true':'false');
+}
+ACT.langOpen=()=>langPop($('#langPop').hidden);
+ACT.lang=a=>{
+  const [k,n]=LANGS.find(l=>l[0]===a.dataset.v);
+  langPop(false);
+  if(k==='fr')return;
+  toast(`Prototype : la version <b>${n}</b> n'est pas maquettée. Le moteur est prévu en cinq langues — français, anglais, allemand, espagnol et néerlandais.`);
+};
+ACT.rsnBook=()=>{
+  sheet(shead('Où souhaitez-vous jouer ?','Menu du site actuel')+
+   `<p class="sub" style="margin:2px 0 14px">Le golf choisi ouvre son propre moteur de réservation.</p>
+    <select class="rsn-sel" id="rsnSel"><option value="">Sélectionner un golf collection</option>
+      ${rsnList().map(g=>`<option value="${g.id}">${g.n}</option>`).join('')}</select>
+    <button class="btn full" style="margin-top:14px" data-act="rsnGo">Réserver</button>
+    <p class="note">Sur resonance.golf, cette liste pointe vers <b>booking.resonance.golf/fr/&lt;golf&gt;/?origin=OGC_WEBSITE</b>. Dans le proto, Le Touquet entre directement dans le tunnel green fee ; les onze autres golfs ouvriraient le même parcours. Cleydael n'est pas dans le menu du site actuel.</p>`);
+};
+ACT.rsnGo=()=>{
+  const v=$('#rsnSel').value;
+  if(!v){toast('Choisissez un golf dans la liste pour continuer.');return}
+  const g=golf(v);
+  if(!g.live){toast(`Prototype : seul Le Touquet est maquetté. ${g.n} ouvrirait le même tunnel de réservation.`);return}
+  S.site=g.id;closeSheet();go('gf');
+};
+
+/* ═════════ Liste d'attente green fee ═════════
+   Un parcours complet ne doit pas être un cul-de-sac : le joueur connecté se
+   fait prévenir dès qu'une place se libère sur ce parcours et ce jour-là.
+   Rien n'est réservé ni débité : c'est une alerte, pas une option. */
+const MOMLBL={all:'ce jour-là',am:'le matin',pm:'l\'après-midi'};
+const MOMLBL2={all:'toute la journée',am:'le matin',pm:'l\'après-midi'};
+const gfWaits=()=>{const u=me();return u?(S.res[u.id]||[]).filter(r=>r.pay==='wait'&&r.kind==='gf'&&!r.cancelled):[]};
+const waitOf=(k,cid)=>gfWaits().find(r=>r.waitGf&&r.waitGf.d===k&&r.waitGf.crs===cid);
+const waitCount=(cid,k)=>2+hash(cid+k+'w')%5;      /* démo : joueurs déjà en attente */
+function gfWaitBox(c){
+  const u=me(), g=S.gf, id=c?c.id:'all';
+  const w=waitOf(g.date,id), n=waitCount(id,g.date);
+  return `<div class="wl">
+    <div><b>${c?`Aucun départ pour ${plural(g.pax,'joueur')} ${MOMLBL[g.moment]}`:`Les trois parcours sont complets ${MOMLBL[g.moment]}`}</b>
+      <span class="mut">${plural(n,'joueur suit','joueurs suivent')} ${c?'ce parcours':'cette journée'} · les annulations sont fréquentes jusqu'à la veille.</span></div>
+    ${w?`<div class="row" style="gap:12px"><span class="done-t">✓ Vous êtes en liste d'attente</span><button class="lnk" data-act="resCancel" data-id="${w.id}">Quitter</button></div>`
+      :u?`<button class="btn sm" data-act="gfWait" data-c="${id}">Me prévenir si une place se libère</button>`
+        :`<button class="btn sm sec" data-act="login">Me connecter pour être prévenu·e</button>`}</div>`;
+}
+ACT.gfWait=a=>{
+  if(!me()){ACT.login();return}
+  const g=S.gf;
+  S.wait={crs:a.dataset.c,d:g.date,pax:g.pax,moment:g.moment};
+  waitSheet();
+};
+function waitSheet(){
+  const w=S.wait, nm=w.crs==='all'?'Les trois parcours':crs(w.crs).n;
+  sheet(shead('Être prévenu si une place se libère','Liste d\'attente')+
+   `<p class="sub" style="margin:4px 0 14px">${cap(fday(w.d))} · ${nm} · ${plural(w.pax,'joueur')}</p>
+    <div class="sect" style="margin-top:0">Moment qui vous intéresse</div>
+    <div class="seg2" style="width:100%">${[['all','Toute la journée'],['am','Matin'],['pm','Après-midi']].map(([k,n])=>`<button class="${w.moment===k?'on':''}" data-act="gfWaitMom" data-v="${k}" style="flex:1">${n}</button>`).join('')}</div>
+    <div class="alert soft" style="margin-top:14px"><span class="ic">i</span><div>Vous serez prévenu·e par e-mail et par SMS dès qu'un départ se libère. <b>La place n'est pas réservée</b> et rien n'est débité : il faudra confirmer depuis l'alerte.</div></div>
+    <button class="btn full" style="margin-top:14px" data-act="gfWaitGo">M'inscrire à la liste d'attente</button>
+    <p class="note">Deux règles restent à trancher avec le client : prévient-on tous les inscrits en même temps (premier arrivé, premier servi) ou donne-t-on une fenêtre de priorité au premier de la liste ? Et jusqu'à quand l'alerte reste-t-elle active — la veille au soir, ou jusqu'au départ ?</p>`);
+}
+ACT.gfWaitMom=a=>{S.wait.moment=a.dataset.v;waitSheet()};
+ACT.gfWaitGo=()=>{
+  const u=me(), w=S.wait, all=w.crs==='all', nm=all?'les trois parcours':crs(w.crs).n;
+  (S.res[u.id]=S.res[u.id]||[]).push({id:'r'+uid(),kind:'gf',t:'Green fee · '+(all?'Le Touquet · tous parcours':crs(w.crs).n),
+    sub:`Liste d'attente · ${plural(w.pax,'joueur')} · ${MOMLBL2[w.moment]}`,
+    d:w.d,h:'',pay:'wait',amount:0,waitGf:{...w},fresh:true});
+  closeSheet();render();
+  toast(`✓ Vous êtes en liste d'attente pour <b>${nm}</b>, ${fday(w.d)}. Nous vous prévenons dès qu'une place se libère.`);
+};
+
+/* ═════════ Navigation du moteur : les 4 portes de février 2027 ═════════ */
+const ENAV=[['gf','Green-fee'],['comp','Compétitions'],['cours','Cours & stages'],['pass','Cartes & Pass']];
+const NAVOF={gf:'gf','gf-joueurs':'gf',comp:'comp','comp-inscr':'comp',cours:'cours','cours-ind':'cours',pass:'pass'};
+function paintNav(){
+  const cur=NAVOF[S.screen]||'';
+  $('#enav').innerHTML=`<div class="enav-in">${ENAV.map(([k,n])=>`<button class="${cur===k?'on':''}" data-go="${k}">${n}</button>`).join('')}</div>`;
+}
+
+/* ═════════ Cartes & Pass ═════════
+   Quatrième porte du périmètre de février 2027 : cartes du réseau, carnets de
+   green-fees, voiturettes et carnets de cours. Les tarifs sont à valider. */
+const PASSES=[
+  {id:'evasion',cat:'Carte du réseau',n:'Carte Évasion',t:'12 mois',img:IMG.mer2,
+   sub:'Le tarif préférentiel sur les douze golfs de la Collection toute l\'année, et l\'accès aux compétitions ouvertes.',p:190,d:'−30 % sur les green fees des 12 golfs'},
+  {id:'passrgc',cat:'Carte du réseau',n:'Pass Resonance · 5 green fees',t:'12 mois',img:IMG.foret,
+   sub:'Cinq green fees à jouer où vous voulez dans la Collection, sans date imposée et transmissibles à vos invités.',p:320,d:'64 € le green fee, au lieu de 90 € en moyenne'},
+  {id:'passeport',cat:'Carte du site',n:'Passeport Le Touquet · 3 parcours',t:'3 jours',img:IMG.manoir,
+   sub:'La Mer, La Forêt et Le Manoir sur trois jours consécutifs, voiturette comprise la troisième journée.',p:210,d:'Les 45 trous du resort en un seul achat'},
+  {id:'b10fm',cat:'Carnet du site',n:'Carnet 10 green fees · La Forêt & Le Manoir',t:'12 mois',img:IMG.links,
+   sub:'Dix parcours à utiliser quand vous voulez, en semaine comme le week-end, nominatifs ou partagés.',p:390,d:'39 € le green fee, au lieu de 52 €'},
+  {id:'b10mer',cat:'Carnet du site',n:'Carnet 10 green fees · La Mer',t:'12 mois',img:IMG.mer,
+   sub:'Le links élu meilleur parcours de France, dix fois dans l\'année.',p:640,d:'64 € le green fee, au lieu de 80 €'},
+  {id:'b10voit',cat:'Carnet du site',n:'Carnet 10 voiturettes',t:'12 mois',img:IMG.acad,
+   sub:'Dix voiturettes 18 trous, à décompter au moment de réserver votre départ.',p:280,d:'28 € la voiturette, au lieu de 35 €'}];
+const pass=id=>PASSES.find(x=>x.id===id);
+R.pass=()=>{
+  const u=me(), st=mySt();
+  const card=x=>{const inC=S.cart.some(l=>l.kind==='pass'&&l.id===x.id);
+    return `<div class="card lesson" style="--lesson-img:url('${x.img}')"><div>
+      <div class="row wrap" style="gap:6px"><span class="tag">${x.cat}</span><span class="tag">${x.t}</span></div>
+      <b class="h2" style="display:block;margin-top:8px">${x.n}</b>
+      <span class="sub" style="display:block;margin-top:4px">${x.sub}</span>
+      <div class="mut" style="margin-top:8px">${x.d}</div></div>
+      <div class="cside" style="min-width:0"><div class="price">${eur(x.p)}<small>à l'achat</small></div>
+      ${inC?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>'
+           :`<button class="btn sm" data-act="passAdd" data-id="${x.id}">Ajouter</button>`}</div></div>`};
+  const grp=c=>PASSES.filter(x=>x.cat===c).map(card).join('');
+  $('#v-pass').innerHTML=`
+   <div class="band" style="${bg(IMG.links)}"><div><span class="eyebrow">Cartes &amp; Pass</span><h1 class="h1">Jouer <b>plus souvent</b></h1>
+     <p class="sub" style="margin-top:6px">Cartes du réseau, carnets de green-fees, voiturettes et carnets de cours : tout ce qui s'achète une fois et se consomme au fil de l'année.</p></div></div>
+   ${pbar('les cartes, pass et carnets')}
+   <div class="sect">Cartes de la Collection</div>${grp('Carte du réseau')}
+   <div class="sect">Cartes et carnets du Touquet</div>${grp('Carte du site')}${grp('Carnet du site')}
+   <div class="sect">Carnets de cours</div>
+   <div class="grid g3">${CARNETS.map(k=>{const x=lessonPrice(k.p,st), unit=LESSON[k.dur]*k.q, inC=S.cart.some(l=>l.kind==='carnet'&&l.id===k.id);
+     return `<div class="card pack"><span class="tag">Valable 12 mois</span><b class="h2">${k.n}</b>
+       <span class="sub">Soit ${eur(Math.round(x.p/k.q*100)/100)} le cours au lieu de ${eur(LESSON[k.dur])} à l'unité — ${eur(unit-k.p)} d'économie au prix public.</span>
+       <div class="foot"><div class="price" style="text-align:left">${pr(x)}</div>
+         <button class="btn sm" data-act="carnetAdd" data-id="${k.id}" ${inC?'disabled':''}>${inC?'Dans le panier':'Ajouter'}</button></div></div>`}).join('')}</div>
+   ${u&&Object.keys(u.credits).length?`<div class="alert soft"><span class="ic">i</span><div>${Object.entries(u.credits).map(([d,c])=>`<b>${c.left} cours de ${d==='30'?'30 min':'1 h'}</b> restants sur votre carnet (valable jusqu'au ${fdm(c.end)} ${c.end.slice(0,4)})`).join('<br>')}. Ils s'utilisent directement au moment de réserver un cours.</div><button class="lnk" data-act="spaceTab" data-t="carnets">Voir mes carnets</button></div>`:''}
+   <p class="note">Quatrième porte demandée au périmètre de février 2027 (« Acheter : carnets et pass »). Les produits et les tarifs sont des hypothèses : carte Évasion, Pass Resonance, passeport du site, carnets de green-fees, carnet de voiturettes. À valider avec le client, ainsi que deux règles : un carnet est-il nominatif ou partageable, et une carte réseau réécrit-elle les prix immédiatement après l'achat ?</p>`;
+};
+ACT.passAdd=a=>addLine({kind:'pass',id:a.dataset.id});
 
 /* ═════════ Green fee · 1 — date, joueurs, départs ═════════ */
 /* départs déjà réservés par des proches (démo) : ils fixent les places restantes */
@@ -1333,6 +1609,9 @@ const FRES={
   paul:[{d:'2026-09-24',crs:'foret',t:'09:21',n:2},{d:'2026-09-26',crs:'mer',t:'11:00',n:3}],
   sophie:[{d:'2026-09-24',crs:'mer',t:'10:20',n:4},{d:'2026-09-27',crs:'foret',t:'10:24',n:3}],
   jules:[{d:'2026-09-24',crs:'manoir',t:'14:04',n:2}]};
+/* démo : le dimanche 27 septembre, La Mer est complète toute la journée et
+   La Forêt l'est le matin — c'est le cas d'usage de la liste d'attente. */
+const FULL_OVR={'mer|2026-09-27':'all','foret|2026-09-27':'am'};
 const SLOT_OVR={'mer|2026-09-24|10:10':3,'mer|2026-09-24|10:30':4,'foret|2026-09-24|09:12':3,'foret|2026-09-24|09:30':4};
 Object.values(FRES).flat().forEach(r=>SLOT_OVR[r.crs+'|'+r.d+'|'+r.t]=4-r.n);
 function slots(c,k){
@@ -1341,7 +1620,8 @@ function slots(c,k){
     const t=toT(m), h=hash(c.id+k+t);
     let free=[4,4,3,2,0,1,4,2,0,3,4,1][h%12];
     if(isWe(k)&&h%3===0)free=0;
-    const o=SLOT_OVR[c.id+'|'+k+'|'+t];if(o!=null)free=o;
+    const f=FULL_OVR[c.id+'|'+k];if(f&&(f==='all'||(f==='am')===(toMin(t)<720)))free=0;
+    const o=SLOT_OVR[c.id+'|'+k+'|'+t];if(o!=null)free=o;   /* un proche garde son départ */
     out.push({t,free});
   }
   return out;
@@ -1364,7 +1644,6 @@ R.gf=()=>{
   $('#v-gf').innerHTML=`
    ${g.editOf?`<div class="alert soft"><span class="ic">↺</span><div><b>Modification de votre départ du ${fday(g.editOf.d)} à ${g.editOf.h}</b><br>Votre départ actuel reste réservé tant que le nouveau n'est pas confirmé.</div><button class="lnk" data-act="gfEditCancel">Abandonner</button></div>`:''}
    ${fil(['Départ','Joueurs & options','Panier'],0)}
-   <button class="back" data-go="accueil">← Le Touquet Golf Resort</button>
    <div class="scr-head"><div><span class="eyebrow">Green fee · Le Touquet</span><h1 class="h1">Quand souhaitez-vous <b>jouer</b>&nbsp;?</h1>
      <p class="sub" style="margin-top:6px">${fday(g.date)} · ${plural(g.pax,'joueur')} · ${u?'prix à votre tarif':'prix public par joueur'}</p></div>
      <span class="node">Green fee · tunnel v2</span></div>
@@ -1391,6 +1670,9 @@ R.gf=()=>{
        <div class="pp">${has?(best===0?'Inclus':'dès '+eur(best)):'complet'}</div></button>`}).join('')}</div>
    <button class="calnav" data-act="gfDay" data-n="1" ${g.date>=DMAX?'disabled':''} aria-label="Jour suivant"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button></div>
    ${proxBlock()}
+   ${!grp&&!tot&&!rows.every(r=>r.blocked)?`<div class="card wlc"><div class="crs-h" style="padding:16px 0 0"><div class="crs-t"><span class="eyebrow">Journée complète</span>
+     <b class="h2" style="display:block;margin-top:4px">${cap(fday(g.date))} affiche complet pour ${plural(g.pax,'joueur')}</b>
+     <span class="mut">Essayez un autre jour dans le bandeau ci-dessus, ou faites-vous prévenir pour celui-ci.</span></div></div>${gfWaitBox(null)}</div>`:''}
    ${grp?groupPanel():''}
    ${grp&&g.pax>=GMAX?`<p class="mut" style="margin:-6px 0 18px">Plus de 12 joueurs ? <button class="lnk" style="font-size:12.5px" data-act="gfBig">Faire une demande de groupe</button></p>`:''}
    <div class="between" style="margin-bottom:12px"><b class="h2">${grp?`Cochez vos créneaux · ${placedN()} / ${g.pax} joueurs placés`:tot?`${plural(rows.filter(r=>r.ok.length&&!r.blocked).length,'parcours ouvert','parcours ouverts')} · ${plural(tot,'départ')}`:'Aucun départ pour ce groupe ce jour-là'}</b>
@@ -1401,7 +1683,7 @@ R.gf=()=>{
      const body=r.blocked
        ?`<div class="alert"><span class="ic">!</span><div><b>Votre index (${fidx(u.idx)}) dépasse la limite de ${c.idxMax} fixée pour La Mer.</b><br>Les départs existent, mais le starter ne peut pas vous faire partir. La Forêt et Le Manoir vous sont ouverts.</div></div>`
        :grp?groupTimes(c,r.ok)
-       :singleTimes(c,r.ok)||`<p class="mut" style="margin-top:10px">Aucun départ n'accueille ${plural(g.pax,'joueur')} ensemble ${g.moment==='all'?'ce jour-là':g.moment==='am'?'le matin':'l\'après-midi'}.</p>`;
+       :singleTimes(c,r.ok)||gfWaitBox(c);
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
        <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
@@ -1709,8 +1991,10 @@ ACT.gfSetP=a=>{
 ACT.gfSetGuest=a=>{S.gf.players[+a.dataset.i]={type:'guest',n:($('#pGuest').value||'').trim(),f:S.gf.players[+a.dataset.i].f||0};closeSheet();render()};
 ACT.gfAdd=()=>{
   const g=S.gf;
-  addLine({kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),fopts:JSON.parse(JSON.stringify(g.fopts||[{}])),joinWith:g.joinWith||null,editOf:g.editOf});
-  g.editOf=null;
+  const l={kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),fopts:JSON.parse(JSON.stringify(g.fopts||[{}])),joinWith:g.joinWith||null,editOf:g.editOf};
+  Object.assign(g,{t:null,crs:null,players:[],fopts:[{}],idxOk:false,editOf:null,joinWith:null,split:null});
+  resetFlights();
+  addLine(l);
 };
 
 /* ═════════ Compétitions ═════════ */
@@ -1753,7 +2037,6 @@ R.comp=()=>{
   let list=COMPS.filter(cp=>f==='all'||(f==='ind'&&!cp.team)||(f==='eq'&&cp.team)||(f==='me'&&u&&eligOk(eligibility(cp,u,'you'))));
   $('#v-comp').innerHTML=`
    ${fil(['Compétition','Inscription','Panier'],0)}
-   <button class="back" data-go="accueil">← Le Touquet Golf Resort</button>
    <div class="scr-head"><div><span class="eyebrow">Saison 2026</span><h1 class="h1">Calendrier des <b>compétitions</b></h1>
      <p class="sub" style="margin-top:6px">Licence, certificat médical et index sont vérifiés à l'inscription : pas de mauvaise surprise au départ.</p></div>
      <span class="node">Compétitions</span></div>
@@ -1915,7 +2198,7 @@ function lessonSlots(pro,k,dur){
 const lessonKey=(l)=>l.kind==='ind'?'ind'+l.dur:l.kind;
 R.cours=()=>{
   const u=me(), st=mySt(), tab=S.cours.tab;
-  const tabs=[['ind','Cours individuels'],['coll','Cours collectifs',COLL.length],['stage','Stages',STAGES.length],['carnet','Carnets de cours']];
+  const tabs=[['ind','Cours individuels'],['coll','Cours collectifs',COLL.length],['stage','Stages',STAGES.length]];
   let body='';
   if(tab==='ind'){
     body=`<div class="grid g2">${[30,60].map(d=>{const x=lessonPrice(LESSON[d],st);const cr=u&&u.credits[d]&&u.credits[d].left;
@@ -1925,6 +2208,7 @@ R.cours=()=>{
         ${cr?`<span class="tag ol" style="align-self:flex-start">${plural(cr,'crédit')} carnet disponible${cr>1?'s':''}</span>`:''}
         <div class="foot"><div class="price" style="text-align:left">${pr(x,{small:'le cours'})}</div>
           <button class="btn sm" data-act="indOpen" data-d="${d}">Choisir un créneau</button></div></div>`}).join('')}</div>
+      <p class="note" style="margin-top:14px">Les carnets de cours ont rejoint la porte <b>Cartes &amp; Pass</b>, avec les cartes du réseau et les carnets de green-fees.</p>
       <div class="sect">Nos pros</div>
       <div class="grid g2">${Object.entries(PROS).map(([id,p])=>`<div class="card pro" style="padding:16px"><div class="ph">${p.n.split(' ').map(w=>w[0]).join('')}</div>
         <div style="flex:1"><b class="h3">${p.n}</b><div class="mut">${p.t}</div><div class="mut">Présent ${p.days.map(d=>DAYS[d].slice(0,3)+'.').join(' ')}</div></div>
@@ -1957,21 +2241,11 @@ R.cours=()=>{
         ${inC?'<button class="btn sm sec" data-go="panier">Dans votre panier</button>':`<button class="btn sm" data-act="stageOpen" data-id="${s.id}">S'inscrire</button>`}</div></div>`}).join('')
       +`<p class="note">Les dates d'un stage sont fixées par l'académie : on s'inscrit au programme entier, sans choisir de créneau. Désinscription gratuite jusqu'à 7 jours avant le premier jour.</p>`;
   }
-  if(tab==='carnet'){
-    body=`<div class="grid g3">${CARNETS.map(k=>{const x=lessonPrice(k.p,st), unit=LESSON[k.dur]*k.q;
-      return `<div class="card pack"><span class="tag">Valable 12 mois</span><b class="h2">${k.n}</b>
-        <span class="sub">Soit ${eur(Math.round(x.p/k.q*100)/100)} le cours au lieu de ${eur(LESSON[k.dur])} à l'unité — ${eur(unit-k.p)} d'économie au prix public.</span>
-        <div class="foot"><div class="price" style="text-align:left">${pr(x)}</div>
-          <button class="btn sm" data-act="carnetAdd" data-id="${k.id}" ${S.cart.some(l=>l.kind==='carnet'&&l.id===k.id)?'disabled':''}>${S.cart.some(l=>l.kind==='carnet'&&l.id===k.id)?'Dans le panier':'Ajouter'}</button></div></div>`}).join('')}</div>
-      ${u&&Object.keys(u.credits).length?`<div class="alert soft"><span class="ic">i</span><div>${Object.entries(u.credits).map(([d,c])=>`<b>${c.left} cours de ${d==='30'?'30 min':'1 h'}</b> restants sur votre carnet (valable jusqu'au ${fdm(c.end)} ${c.end.slice(0,4)})`).join('<br>')}. Ils s'utilisent directement au moment de réserver un cours.</div><button class="lnk" data-act="spaceTab" data-t="carnets">Voir mes carnets</button></div>`:''}
-      <p class="note">Le carnet est un produit comme un autre dans le panier : il est payé, puis ses crédits apparaissent dans l'espace personnel. Ils ne sont pas utilisables dans le même panier que leur achat — à confirmer avec le client, c'est une simplification.</p>`;
-  }
   $('#v-cours').innerHTML=`
    ${fil(['Cours','Créneau','Panier'],0)}
-   <button class="back" data-go="accueil">← Le Touquet Golf Resort</button>
    <div class="band" style="${bg(IMG.acad)}"><div><span class="eyebrow">Académie du Touquet</span><h1 class="h1">Cours &amp; <b>stages</b></h1>
      <p class="sub" style="margin-top:6px">Deux pros PGA, un practice couvert et une zone de petit jeu.</p></div></div>
-   ${pbar('les cours, stages et carnets')}
+   ${pbar('les cours et les stages')}
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="coursTab" data-t="${k}">${n}${c?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
 };
@@ -2045,8 +2319,9 @@ ACT.indCredit=a=>{S.cours.useCredit=a.dataset.v==='1';render()};
 ACT.indAdd=()=>{
   const sc=S.cours, u=me();
   const cr=u&&u.credits[sc.dur]&&u.credits[sc.dur].left||0;
-  addLine({kind:'ind',d:sc.slot.d,h:sc.slot.t,pro:sc.slot.pro,th:sc.slot.th,dur:sc.dur,credit:cr>0&&sc.useCredit,editOf:sc.editOf||null});
+  const l={kind:'ind',d:sc.slot.d,h:sc.slot.t,pro:sc.slot.pro,th:sc.slot.th,dur:sc.dur,credit:cr>0&&sc.useCredit,editOf:sc.editOf||null};
   sc.slot=null;sc.editOf=null;
+  addLine(l);
 };
 function kidFields(kid){
   const u=me(), kids=u?u.partners.map(id=>PROFILES[id]).filter(p=>p&&p.dob&&ageAt(p.dob,TODAY)<18):[];
@@ -2098,7 +2373,7 @@ ACT.carnetAdd=a=>addLine({kind:'carnet',id:a.dataset.id});
 /* ═════════ Panier commun ═════════
    Une ligne garde ses paramètres, pas son prix : le prix est recalculé à
    chaque affichage, ce qui permet de réécrire le panier à la connexion. */
-const KTAG={gf:'Green fee',comp:'Compétition',ind:'Cours',coll:'Cours collectif',stage:'Stage',carnet:'Carnet'};
+const KTAG={gf:'Green fee',comp:'Compétition',ind:'Cours',coll:'Cours collectif',stage:'Stage',carnet:'Carnet',pass:'Carte & Pass'};
 function lineView(l){
   const u=me(), st=mySt();
   let v={tag:KTAG[l.kind],items:[],sub:'',title:''};
@@ -2129,6 +2404,9 @@ function lineView(l){
     v.title=s.n;v.sub=`Du ${fdm(s.d)} au ${fdm(s.d2)} · ${s.sched}${l.kid?' · pour '+l.kid.n:''}`;
     v.items=[{n:'Stage complet',...stagePrice(s,st)}];
     v.cancel='Désinscription gratuite jusqu\'à 7 jours avant le stage';v.acc=true;}
+  if(l.kind==='pass'){const k=pass(l.id);
+    v.title=k.n;v.sub=`${k.cat} · ${k.d} · valable ${k.t} à partir de l'achat`;
+    v.items=[{n:'Achat',p:k.p,pub:k.p,st:null}];v.cancel='Utilisable dès le paiement confirmé';v.acc=true;}
   if(l.kind==='carnet'){const k=CARNETS.find(x=>x.id===l.id);
     v.title=k.n;v.sub=`${k.q} cours de ${k.dur===30?'30 min':'1 h'} · valable 12 mois à partir de l'achat`;
     v.items=[{n:'Carnet',...lessonPrice(k.p,st)}];v.cancel='Crédits utilisables dès le paiement confirmé';v.acc=true;}
@@ -2147,12 +2425,19 @@ function cartTotals(){
   const avoir=u&&u.avoir&&S.useAvoir?Math.min(u.avoir,after):0;
   return {pub,sub,save:pub-sub,promo,avoir,due:Math.max(0,Math.round((after-avoir)*100)/100)};
 }
+/* Retour à la porte d'entrée du parcours concerné : on continue à chercher
+   là où l'on était, sans risquer d'ajouter deux fois la même ligne. */
+const BACKTO={gf:'gf',comp:'comp',ind:'cours',coll:'cours',stage:'cours',carnet:'pass',pass:'pass'};
 function addLine(l){
   l.uid=uid();
-  if(!S.cart.length){hold=HOLD;holdDead=false}
+  const first=!S.cart.length;
+  if(first){hold=HOLD;holdDead=false}
   S.cart.push(l);
   S.lastAdded=l;
-  go('cross');
+  if(BACKTO[l.kind]==='cours')S.cours.tab=l.kind;   /* onglet d'origine : ind / coll / stage */
+  go(BACKTO[l.kind]||'gf');
+  if(first||DW.on)openDrawer(l);
+  else{bump();toast(`✓ <b>${lineView(l).title}</b> ajouté à votre panier · total <b>${eur(cartTotals().due)}</b>`)}
 }
 
 /* maintien des places — 10 min dès le premier ajout */
@@ -2205,7 +2490,7 @@ R.cross=()=>{
      <h1 class="h1" style="margin-top:12px">${v.title}</h1><p class="sub" style="margin-top:4px">${v.sub} · ${v.total===0&&v.pub>0?'inclus':eur(v.total)}</p></div>
      <span class="node">Suggestions</span></div>
    <div class="row wrap" style="margin-bottom:22px"><button class="btn" data-go="panier">Voir mon panier (${S.cart.length})</button>
-     <button class="btn ghost" data-go="accueil">Continuer mes réservations</button></div>
+     <button class="btn ghost" data-go="gf">Continuer mes réservations</button></div>
    <div class="sect">${l.kind==='gf'?'Pour compléter votre partie':l.kind==='comp'?'Pour préparer la compétition':'Pour aller plus loin'}</div>
    <div class="grid g3">${sug.map(s=>{const inC=s.dup;
      return `<div class="card xsell"><div class="ph img" style="${bg(TAGIMG[s.tag]||IMG.mer)}"></div>
@@ -2219,9 +2504,81 @@ ACT.xGf=a=>{Object.assign(S.gf,{date:a.dataset.d,moment:'all'});go('gf')};
 ACT.xTab=a=>{S.cours.tab=a.dataset.t;go('cours')};
 ACT.xCarnet=()=>addLine({kind:'carnet',id:'k5-30'});
 
+
+/* ═════════ Tiroir panier & rappel permanent ═════════
+   Un seul rendu sert les trois points d'entrée : ouverture automatique au
+   premier ajout, icône du bandeau (desktop) et bandeau fixe (mobile).
+   DW.hi = uid de la ligne qui vient d'être ajoutée, mise en avant. */
+const DW={on:false,hi:null};
+const XICO='<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"/></svg>';
+function dwHtml(){
+  const head=`<div class="dw-h"><div class="h2">Votre <b>panier</b></div>${
+    S.cart.length?`<span class="tag">${plural(S.cart.length,'réservation')}</span>`:''}
+    <button class="x" data-act="dwClose" aria-label="Fermer">${XICO}</button></div>`;
+  if(!S.cart.length)return head+`<div class="dw-b"><div class="dw-empty">
+    <span class="cp-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16l-1.4 12H5.4L4 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg></span>
+    <b class="h2">Votre panier est vide</b>
+    <p class="sub" style="margin:6px 0 4px">Un départ, une compétition ou un cours : tout se règle en un seul paiement.</p>
+    <div class="dw-btn"><button class="btn sm" data-act="cartGo" data-v="gf">Réserver un départ</button>
+      <button class="btn sm ghost" data-act="cartGo" data-v="comp">S'inscrire à une compétition</button>
+      <button class="btn sm ghost" data-act="cartGo" data-v="cours">Prendre un cours</button>
+      <button class="btn sm ghost" data-act="cartGo" data-v="pass">Cartes &amp; Pass</button></div></div></div>`;
+  const T=cartTotals(), hi=DW.hi;
+  return head+`
+   <div class="dw-b">
+     ${hi?`<div class="dw-ok"><i>✓</i><div><b>Ajouté à votre panier</b><small>Rien n'est confirmé tant que le paiement n'est pas fait.</small></div></div>`:''}
+     ${holdHtml()}
+     ${S.cart.map(l=>{const v=lineView(l);return `<div class="dwl${l.uid===hi?' new':''}">
+       <div><span class="tag">${v.tag}</span><b class="h3">${v.title}</b><span class="mut">${v.sub}</span>
+         <button class="lnk" data-act="lineDel" data-u="${l.uid}">Retirer</button></div>
+       <div class="dwl-p">${v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div>`}).join('')}
+     ${hi&&S.lastAdded?`<button class="lnk dw-sug" data-act="dwSug">Voir les suggestions pour compléter →</button>`:''}
+     <p class="note" style="margin-bottom:0">Le tiroir ne s'ouvre seul qu'au premier ajout. Ensuite, l'ajout est simplement confirmé : le panier reste accessible en haut à droite (bandeau fixe en bas d'écran en mobile).</p>
+   </div>
+   <div class="dw-f">
+     ${T.save>0?`<div class="sumline"><span>Tarifs liés aux statuts</span><b>−${eur(T.save)}</b></div>`:''}
+     ${T.promo?`<div class="sumline"><span>Code ${S.promo}</span><b>−${eur(T.promo)}</b></div>`:''}
+     ${T.avoir?`<div class="sumline"><span>Avoir</span><b>−${eur(T.avoir)}</b></div>`:''}
+     <div class="sumtot"><span class="h3">À payer aujourd'hui</span><b class="price" style="font-size:23px">${eur(T.due)}</b></div>
+     <div class="dw-btn"><button class="btn" data-act="dwSee">Voir mon panier</button>
+       <button class="btn ghost" data-act="dwClose">Continuer mon panier</button></div>
+   </div>`;
+}
+function openDrawer(l){
+  cartPop(false);
+  DW.on=true;DW.hi=l?l.uid:null;
+  const el=$('#drawer');
+  el.innerHTML=dwHtml();
+  el.classList.add('on');el.setAttribute('aria-hidden','false');
+  $('#dwBg').classList.add('on');
+  bump();
+}
+function closeDrawer(){
+  DW.on=false;DW.hi=null;
+  const el=$('#drawer');
+  el.classList.remove('on');el.setAttribute('aria-hidden','true');
+  $('#dwBg').classList.remove('on');
+}
+function paintDrawer(){if(DW.on)$('#drawer').innerHTML=dwHtml()}
+ACT.dwClose=closeDrawer;
+ACT.dwSee=()=>{closeDrawer();go('panier')};
+ACT.dwSug=()=>{closeDrawer();go('cross')};
+$('#dwBg').addEventListener('click',closeDrawer);
+
+/* bandeau fixe en bas d'écran : même rôle que l'icône, sans masquer la page
+   (le pied de page gagne la hauteur du bandeau quand il est affiché) */
+function paintCartBar(){
+  const n=S.cart.length, el=$('#cartBar');
+  el.classList.toggle('on',n>0);
+  document.body.classList.toggle('cbar',n>0);
+  if(n)el.innerHTML=`<div><b>${eur(cartTotals().due)}</b><small>${plural(n,'réservation')}</small></div>
+    <button class="btn sm" data-act="cart">Voir mon panier</button>`;
+}
+function bump(){['#cartBtn','#cartBar'].forEach(q=>{const e=$(q);e.classList.remove('bump');void e.offsetWidth;e.classList.add('bump')})}
+
 /* ═════════ Panier ═════════ */
 R.panier=()=>{
-  if(!S.cart.length){setTimeout(()=>{go('accueil');setTimeout(()=>cartPop(true))});return}
+  if(!S.cart.length){setTimeout(()=>{go('gf');setTimeout(()=>cartPop(true))});return}
   const u=me(), T=cartTotals();
   if(!S.cart.length){
     $('#v-panier').innerHTML=`<div class="scr-head"><h1 class="h1">Votre panier</h1><span class="node">Panier commun</span></div>
@@ -2260,12 +2617,17 @@ R.panier=()=>{
      <div class="sumtot"><span class="h3">À payer aujourd'hui</span><b>${eur(T.due)}</b></div>
      ${!u?`<p class="mut" style="margin-top:6px">Membre ou licencié·e&nbsp;? <button class="lnk" style="font-size:12px" data-act="login">Connectez-vous</button> : le total sera recalculé.</p>`:''}
      <button class="btn full" style="margin-top:14px" data-go="checkout">${T.due===0?'Confirmer sans paiement':'Passer au paiement'}</button>
-     <button class="btn ghost full" style="margin-top:8px" data-go="accueil">Ajouter une autre réservation</button>
+     <button class="btn ghost full" style="margin-top:8px" data-go="gf">Ajouter une autre réservation</button>
    </div>
    <p class="note">Codes de test : AUTOMNE15 (−15 % sur green fees, cours et stages) et GOLF10 (green fees seulement). Le code s'applique après le tarif du statut. Il ne touche ni les droits de jeu des compétitions ni les carnets : à valider avec le client.</p>
    </aside></div>`;
 };
-ACT.lineDel=a=>{S.cart=S.cart.filter(l=>l.uid!==a.dataset.u);if(S.cart.length)render();else{go('accueil');setTimeout(()=>cartPop(true))}};
+ACT.lineDel=a=>{
+  S.cart=S.cart.filter(l=>l.uid!==a.dataset.u);
+  if(DW.hi===a.dataset.u)DW.hi=null;
+  if(S.cart.length||DW.on){render();return}
+  go('gf');setTimeout(()=>cartPop(true));
+};
 /* panier vide : simple fenêtre sous l'icône, pas de page */
 function cartPopHtml(){
   const ic=(d)=>`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
@@ -2275,17 +2637,20 @@ function cartPopHtml(){
       <button data-act="cartGo" data-v="gf">${ic('<path d="M6 21V3l10 4-10 4"/><path d="M3 21h14"/>')}<span>Réserver un départ</span></button>
       <button data-act="cartGo" data-v="comp">${ic('<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/>')}<span>S'inscrire à une compétition</span></button>
       <button data-act="cartGo" data-v="cours">${ic('<circle cx="12" cy="6" r="3"/><path d="M6 21v-4a6 6 0 0 1 12 0v4"/>')}<span>Prendre un cours</span></button>
+      <button data-act="cartGo" data-v="pass">${ic('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 14h4"/>')}<span>Acheter une carte ou un carnet</span></button>
     </div>`;
 }
 function cartPop(open){
+  if(open&&DW.on)return;                            /* le tiroir prime */
   const el=$('#cartPop');
   if(open)el.innerHTML=cartPopHtml();
   el.hidden=!open;$('#cartBtn').setAttribute('aria-expanded',open?'true':'false');
 }
-ACT.cart=()=>{if(S.cart.length){cartPop(false);go('panier')}else cartPop($('#cartPop').hidden)};
-ACT.cartGo=a=>{cartPop(false);go(a.dataset.v)};
-document.addEventListener('click',e=>{const el=$('#cartPop');if(!el.hidden&&!e.target.closest('#cartPop,#cartBtn'))cartPop(false)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')cartPop(false)});
+ACT.cart=()=>{if(DW.on){closeDrawer();return}if(S.cart.length)openDrawer(null);else cartPop($('#cartPop').hidden)};
+ACT.cartGo=a=>{cartPop(false);closeDrawer();go(a.dataset.v)};
+document.addEventListener('click',e=>{const el=$('#cartPop');if(!el.hidden&&!e.target.closest('#cartPop,#cartBtn'))cartPop(false);
+  const lp=$('#langPop');if(!lp.hidden&&!e.target.closest('#langPop,#langBtn'))langPop(false)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){cartPop(false);langPop(false);closeDrawer()}});
 
 ACT.lineEditGf=a=>{
   const l=S.cart.find(x=>x.uid===a.dataset.u);
@@ -2304,7 +2669,7 @@ ACT.avoirTog=()=>{S.useAvoir=!S.useAvoir;render()};
 
 /* ═════════ Checkout ═════════ */
 R.checkout=()=>{
-  if(!S.cart.length){go('accueil');setTimeout(()=>cartPop(true));return}
+  if(!S.cart.length){go('gf');setTimeout(()=>cartPop(true));return}
   const u=me(), T=cartTotals(), co=S.co;
   const needAcc=S.cart.some(l=>l.kind!=='gf');
   if(needAcc&&co.mode==='guest')co.mode='login';
@@ -2374,6 +2739,7 @@ ACT.coPay=()=>{
   if(u){
     const RS=S.res[u.id]||(S.res[u.id]=[]);
     lines.forEach(({l,v})=>{
+      if(l.kind==='pass'){(u.passes=u.passes||[]).push({id:l.id,d:TODAY});return}
       if(l.kind==='carnet'){const k=CARNETS.find(x=>x.id===l.id), c=u.credits[k.dur];
         u.credits[k.dur]={left:(c?c.left:0)+k.q,tot:(c?c.tot:0)+k.q,end:'2027-09-17'};return}
       if(l.kind==='ind'&&l.credit&&u.credits[l.dur])u.credits[l.dur].left--;
@@ -2394,7 +2760,7 @@ ACT.coPay=()=>{
 
 /* ═════════ Confirmation ═════════ */
 R.confirm=()=>{
-  const d=S.done;if(!d){go('accueil');return}
+  const d=S.done;if(!d){go('gf');return}
   $('#v-confirm').innerHTML=`
    <div class="scr-head"><div><div class="okmark">✓</div><span class="eyebrow">${d.T.due?'Paiement accepté':'Réservation confirmée'}</span>
      <h1 class="h1">C'est <b>réservé</b>&nbsp;! À très vite au Touquet.</h1>
@@ -2404,7 +2770,7 @@ R.confirm=()=>{
      ${d.lines.map(({l,v})=>`<div class="cline" style="grid-template-columns:${l.kind==='gf'?'92px ':''}minmax(0,1fr) auto">
        ${l.kind==='gf'?'<div class="qr"></div>':''}
        <div><span class="tag">${v.tag}</span><b class="h3" style="display:block;margin-top:6px">${v.title}</b><div class="mut">${v.sub}</div>
-         <p class="mut" style="margin-top:4px">${l.kind==='gf'?'QR code à présenter au starter · '+v.cancel.toLowerCase():l.kind==='carnet'?'Crédits ajoutés à votre espace':v.cancel}</p>
+         <p class="mut" style="margin-top:4px">${l.kind==='gf'?'QR code à présenter au starter · '+v.cancel.toLowerCase():l.kind==='carnet'?'Crédits ajoutés à votre espace':l.kind==='pass'?'Carte ajoutée à votre espace':v.cancel}</p>
          ${v.extra?`<p class="mut">${v.extra}</p>`:''}</div>
        <div class="cl-p"><b>${v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div></div>`).join('')}
    </div>
@@ -2415,7 +2781,7 @@ R.confirm=()=>{
      ${d.guest?`<p class="sub" style="margin:10px 0">Vous avez réservé sans compte. Créez-en un pour retrouver ce départ et profiter de votre tarif la prochaine fois.</p>
        <button class="btn full" data-act="signup">Créer mon compte</button>`
       :`<button class="btn full" style="margin-top:12px" data-act="spaceTab" data-t="resa">Voir mes réservations</button>`}
-     <button class="btn ghost full" style="margin-top:8px" data-go="accueil">Retour au golf</button>
+     <button class="btn ghost full" style="margin-top:8px" data-go="gf">Retour au golf</button>
    </div></aside></div>
    <p class="note">Tout ce qui vient d'être réservé est déjà visible dans l'espace personnel (onglet Réservations), avec ses conditions d'annulation. Un carnet acheté y apparaît avec ses crédits.</p>`;
 };
@@ -2452,7 +2818,7 @@ R.espace=()=>{
          <div class="cdate"><small>${DAYS[d.getDay()].slice(0,3)}.</small><b>${d.getDate()}</b><small>${MABR[d.getMonth()]}</small></div>
          <div><div class="row wrap" style="gap:6px"><span class="tag">${KTAG[r.kind]}</span>${wait?'<span class="tag ol">Liste d\'attente</span>':''}${r.fresh?'<span class="tag dk">Nouveau</span>':''}${r.cancelled?'<span class="tag">Annulé</span>':''}</div>
            <b class="h3" style="display:block;margin-top:6px">${r.t}</b>
-           <div class="mut">${r.h.replace(':',' h ')} · ${r.sub}</div>
+           <div class="mut">${r.h?r.h.replace(':',' h ')+' · ':''}${r.sub}</div>
            <div class="mut">${r.cancelled?r.cancelled:r.pay==='credit'?'Réglé avec 1 crédit carnet':r.pay==='incl'?'Inclus dans votre abonnement':wait?'Rien n\'est débité tant qu\'une place ne se libère pas':r.past?'Réglé '+eur(r.amount):'Réglé '+eur(r.amount)+' par carte'}</div>
            ${ci&&!wait?`<div class="mut" style="margin-top:4px">${ci.ok?'Annulation gratuite '+ci.n+' ('+fdl(ci.dl)+')':'<b style="color:var(--ink)">Délai d\'annulation en ligne dépassé</b> (limite : '+fdl(ci.dl)+'). Contactez l\'accueil du golf.'}</div>`:''}
          </div>
@@ -2495,7 +2861,12 @@ R.espace=()=>{
        <div style="font-size:28px;font-weight:700;letter-spacing:-.5px">${c.left}<span class="mut" style="font-size:13px;font-weight:500"> / ${c.tot} cours restants</span></div>
        <div class="prog">${Array.from({length:c.tot},(_,i)=>`<i class="${i<c.left?'on':''}"></i>`).join('')}</div>
        <div class="foot"><span class="mut">${c.tot-c.left} utilisé${c.tot-c.left>1?'s':''}</span><button class="btn sm" data-act="indOpen" data-d="${d}" ${c.left?'':'disabled'}>Réserver un cours</button></div></div>`).join('')}</div>`
-      :`<div class="card" style="padding:20px"><b class="h3">Aucun carnet en cours</b><p class="sub" style="margin:4px 0 12px">Un carnet de 5 ou 10 cours revient moins cher que les cours à l'unité.</p><button class="btn sm" data-act="xTab" data-t="carnet">Voir les carnets</button></div>`}
+      :`<div class="card" style="padding:20px"><b class="h3">Aucun carnet en cours</b><p class="sub" style="margin:4px 0 12px">Un carnet de 5 ou 10 cours revient moins cher que les cours à l'unité.</p><button class="btn sm" data-go="pass">Voir les carnets</button></div>`}
+     ${(u.passes||[]).length?`<div class="sect">Cartes &amp; pass</div>
+     <div class="grid g2">${u.passes.map(x=>{const k=pass(x.id);
+       return `<div class="card pack"><span class="tag" style="align-self:flex-start">${k.cat} · acheté le ${fdm(x.d)}</span>
+         <b class="h2">${k.n}</b><span class="sub">${k.d}</span>
+         <div class="foot"><span class="mut">Valable ${k.t}</span><button class="btn sm ghost" data-go="gf">Réserver un départ</button></div></div>`}).join('')}</div>`:''}
      <div class="sect">Avoirs</div>
      ${u.avoir?`<div class="card" style="padding:16px"><div class="between"><div><b class="h2">${eur(u.avoir)}</b><div class="mut">Avoir suite à l'annulation d'un départ · valable jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}</div></div>
         <span class="tag ol">Utilisé automatiquement au panier</span></div></div>`
@@ -2537,7 +2908,7 @@ ACT.resCancel=a=>{
   const r=findRes(a.dataset.id), wait=r.pay==='wait';
   const refund=r.pay==='card'&&r.amount>0;
   sheet(shead(wait?'Quitter la liste d\'attente':r.kind==='comp'?'Me désinscrire':'Annuler la réservation',KTAG[r.kind])+
-   `<p class="sub" style="margin:4px 0 14px"><b style="color:var(--ink)">${r.t}</b> · ${fday(r.d)} · ${r.h}</p>
+   `<p class="sub" style="margin:4px 0 14px"><b style="color:var(--ink)">${r.t}</b> · ${fday(r.d)}${r.h?' · '+r.h:''}</p>
    ${refund?`<div class="sect" style="margin-top:0">Remboursement de ${eur(r.amount)}</div><div class="radios">
      <button class="radio on" data-act="refundPick" data-v="card"><span class="dot"></span><div><b>Sur ma carte bancaire</b><small>Sous 5 à 7 jours ouvrés</small></div></button>
      <button class="radio" data-act="refundPick" data-v="avoir"><span class="dot"></span><div><b>En avoir, tout de suite</b><small>Utilisable 9 mois sur tout le golf</small></div></button></div>`
@@ -2872,7 +3243,7 @@ document.addEventListener('keydown',e=>{
   if((e.key==='m'||e.key==='M')&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&!e.target.closest('input,textarea,select'))toggleVp();
 });
 S=fresh();
-go('accueil');
+go('site');
 
 </script>
 </body>
