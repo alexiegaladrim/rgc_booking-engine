@@ -388,6 +388,9 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .tabs button:hover{color:var(--ink)}
 .tabs button.on{color:var(--ink);border-color:var(--gold)}
 .tabs button i{font-style:normal;font-size:10px;color:#fff;background:var(--gold);border-radius:10px;padding:1px 7px;margin-left:7px;letter-spacing:0}
+/* onglet qui renvoie vers une autre porte du moteur */
+.tabs .tab-go{display:inline-flex;align-items:center;gap:6px;color:var(--gold-dark)}
+.tabs .tab-go:hover{color:var(--ink)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .chip{border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;font-size:12.5px;color:var(--ink);background:var(--paper);transition:.15s;white-space:nowrap}
 .chip:hover{border-color:var(--gold)}
@@ -1561,7 +1564,7 @@ ACT.gfWaitGo=()=>{
 };
 
 /* ═════════ Navigation du moteur : les 4 portes de février 2027 ═════════ */
-const ENAV=[['gf','Green-fee'],['comp','Compétitions'],['cours','Cours & stages'],['pass','Cartes & Pass']];
+const ENAV=[['gf','Green-fee'],['pass','Cartes & Pass'],['cours','Cours & stages'],['comp','Compétitions']];
 const NAVOF={gf:'gf','gf-joueurs':'gf',comp:'comp','comp-inscr':'comp',cours:'cours','cours-ind':'cours',pass:'pass'};
 function paintNav(){
   const cur=NAVOF[S.screen]||'';
@@ -2219,7 +2222,6 @@ R.cours=()=>{
         ${cr?`<span class="tag ol" style="align-self:flex-start">${plural(cr,'crédit')} carnet disponible${cr>1?'s':''}</span>`:''}
         <div class="foot"><div class="price" style="text-align:left">${pr(x,{small:'le cours'})}</div>
           <button class="btn sm" data-act="indOpen" data-d="${d}">Choisir un créneau</button></div></div>`}).join('')}</div>
-      <p class="note" style="margin-top:14px">Les carnets de cours ont rejoint la porte <b>Cartes &amp; Pass</b>, avec les cartes du réseau et les carnets de green-fees.</p>
       <div class="sect">Nos pros</div>
       <div class="grid g2">${Object.entries(PROS).map(([id,p])=>`<div class="card pro" style="padding:16px"><div class="ph">${p.n.split(' ').map(w=>w[0]).join('')}</div>
         <div style="flex:1"><b class="h3">${p.n}</b><div class="mut">${p.t}</div><div class="mut">Présent ${p.days.map(d=>DAYS[d].slice(0,3)+'.').join(' ')}</div></div>
@@ -2257,7 +2259,9 @@ R.cours=()=>{
    <div class="band" style="${bg(IMG.acad)}"><div><span class="eyebrow">Académie du Touquet</span><h1 class="h1">Cours &amp; <b>stages</b></h1>
      <p class="sub" style="margin-top:6px">Deux pros PGA, un practice couvert et une zone de petit jeu.</p></div></div>
    ${pbar('les cours et les stages',['Abonné · −20 %','Jeune −26 ans · −30 %','Réseau Resonance · −10 %'])}
-   <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="coursTab" data-t="${k}">${n}${c?`<i>${c}</i>`:''}</button>`).join('')}</div>
+   <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="coursTab" data-t="${k}">${n}${c?`<i>${c}</i>`:''}</button>`).join('')}
+     <button class="tab-go" data-go="pass">Carnets de cours<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button></div>
+   <p class="mut" style="margin:-14px 0 20px">Les carnets de cours sont désormais vendus dans <button class="lnk" data-go="pass">Cartes &amp; Pass</button>, avec les cartes du réseau et les carnets de green-fees.</p>
    ${body}`;
 };
 ACT.collTh=a=>{S.cours.cth=a.dataset.v;render()};
