@@ -160,13 +160,18 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .card.wlc .wl{border:0;background:transparent;padding:14px 0 0}
 
 /* ══════════ Navigation du moteur (4 portes) ══════════ */
-.enav{border-top:1px solid var(--line);background:rgba(255,255,255,.94)}
-.enav-in{display:flex;gap:30px;padding:0 32px;max-width:1280px;margin:0 auto;overflow-x:auto}
+.enav{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.96)}
+.enav-in{display:flex;gap:6px;padding:0 24px;max-width:1280px;margin:0 auto;overflow-x:auto}
 .enav-in::-webkit-scrollbar{height:0}
-.enav button{padding:14px 2px 12px;font-size:11px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;
-  color:var(--g600);border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+.enav button{position:relative;display:flex;align-items:center;gap:9px;padding:17px 16px;font-size:15px;font-weight:500;letter-spacing:.1px;
+  color:var(--g600);white-space:nowrap;transition:color .15s}
+.enav button::after{content:"";position:absolute;left:16px;right:16px;bottom:-1px;height:2px;border-radius:2px;background:var(--ink);transform:scaleX(0);transition:transform .2s}
+.enav .en-ic{display:grid;place-items:center;color:var(--g500);transition:color .15s}
 .enav button:hover{color:var(--ink)}
-.enav button.on{color:var(--ink);border-bottom-color:var(--gold)}
+.enav button:hover .en-ic{color:var(--gold-dark)}
+.enav button.on{color:var(--ink);font-weight:600}
+.enav button.on::after{transform:scaleX(1)}
+.enav button.on .en-ic{color:var(--gold-dark)}
 
 /* ══════════ Site vitrine resonance.golf (hors périmètre du moteur) ══════════ */
 .stage[data-scr="site"] .appbar,.stage[data-scr="site"] .enav,.stage[data-scr="site"] .appfoot{display:none}
@@ -218,8 +223,9 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
   .rsn-hero h1{font-size:25px;letter-spacing:.5px}
   .rsn-hero::before{background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.3) 45%,rgba(0,0,0,.5))}
   .rsn-p{padding:30px 18px 38px;font-size:14px}
-  .enav-in{gap:18px;padding:0 18px}
-  .enav button{font-size:10px;letter-spacing:1.2px}
+  .enav-in{gap:0;padding:0 8px}
+  .enav button{flex:none;padding:13px 10px;font-size:13.5px;gap:7px}
+  .enav button::after{left:10px;right:10px}
 }
 
 /* ══════════ Mise en page ══════════ */
@@ -260,6 +266,15 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .pbar.on .lnk{color:var(--ink)}
 .pbar.on .av{background:var(--gold);color:#fff}
 .pb-short{display:none}
+.pbar.lite{background:var(--cream);border:1px solid var(--line);box-shadow:none;color:var(--g700);padding:12px 16px 12px 20px;gap:14px;font-size:13px}
+.pbar.lite b{color:var(--ink)}
+.pbar.lite .pb-long b{display:inline;font-size:13.5px;margin:0}
+.pbar.lite .pb-st{display:block;margin-top:2px;font-size:12px;color:var(--g500);cursor:default;user-select:text}
+.pbar.lite .pb-st i{font-style:normal;margin:0 7px;color:var(--g400)}
+.pbar.lite > .pb-a{flex-direction:row;align-items:center;gap:14px}
+.pbar.lite .btn{background:var(--ink);color:#fff}
+.pbar.lite .btn:hover{background:var(--gold)}
+.pbar.lite .lnk{color:var(--ink)}
 
 /* prix */
 .price{font-size:24px;font-weight:400;letter-spacing:-.2px;text-align:right;white-space:nowrap;line-height:1.15}
@@ -342,6 +357,12 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .crs-img{width:210px;flex:none;background:var(--sand) center/cover;min-height:150px}
 .crs-t{flex:1;min-width:0;padding:20px 0}
 .crs-h .price{padding:20px 22px 0 0}
+.crs-h .price .hsel{margin:12px 0 0 auto}
+.crs-img{position:relative}
+.crs-holes{position:absolute;left:12px;top:12px;display:flex;align-items:baseline;gap:5px;padding:6px 11px;border-radius:10px;background:rgba(27,21,15,.82);color:#fff;
+  font-size:10.5px;font-weight:500;letter-spacing:1.3px;text-transform:uppercase;backdrop-filter:blur(4px)}
+.crs-holes b{font-size:20px;font-weight:600;letter-spacing:0}
+.crs-hn{font-size:15px;font-weight:400;color:var(--g600);letter-spacing:0;white-space:nowrap}
 .crs > :not(.crs-h){margin:0 22px 20px}
 .crs .gtimes{margin-top:0;padding-top:16px;border-top:1px solid var(--line)}
 .gtimes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
@@ -659,6 +680,17 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .cartbar{position:fixed;left:0;right:0;bottom:0;z-index:180;display:none;align-items:center;gap:12px;padding:11px 16px 13px;
   background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line-2);box-shadow:0 -6px 26px rgba(34,28,21,.13)}
 .cartbar > div{flex:1;min-width:0;line-height:1.2}
+.morehint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:170;display:none;padding:9px 16px;border-radius:999px;background:var(--ink);color:#fff;
+  font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;box-shadow:0 10px 24px rgba(34,28,21,.25)}
+.morehint span{margin-left:4px}
+.morehint.on{display:block;animation:mh 1.6s ease-in-out infinite}
+body.cbar .morehint{bottom:84px}
+@keyframes mh{50%{transform:translate(-50%,4px)}}
+.optsum{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:14px 16px;text-align:left;cursor:pointer}
+.optsum > span:first-child{display:flex;flex-direction:column;gap:2px;min-width:0}
+.optsum .chev{flex:none;font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-dark)}
+.optsum:hover{border-color:var(--gold)}
+.optclose{display:block;margin:10px 0 0 auto;font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--g600)}
 .cartbar b{display:block;font-size:17px;font-weight:500}
 .cartbar small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--g500);margin-top:3px}
 .cartbar .btn{flex:none}
@@ -688,7 +720,7 @@ body.vp-mobile .vptog .i-desk{display:block}
 body.vp-mobile .vptog .i-mob{display:none}
 
 /* barre de recherche green fee : trois segments à icône, calendrier maison */
-.sbar{display:grid;grid-template-columns:1.25fr 1fr 1.3fr;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);margin-bottom:16px;position:relative}
+.sbar{display:grid;grid-template-columns:minmax(0,1.25fr) max-content minmax(0,1.3fr);background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);margin-bottom:16px;position:relative}
 .sbf{display:flex;gap:14px;align-items:center;padding:16px 20px;min-width:0;text-align:left}
 .sbf + .sbf{border-left:1px solid var(--line)}
 button.sbf{border-radius:22px 0 0 22px;transition:background .15s}
@@ -919,8 +951,15 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .sharec .mut{display:block;margin-top:3px}
 
 /* recherche : 4e segment « Mes proches » (connecté) */
-.sbar.sbar4{grid-template-columns:1.1fr 1.15fr 1.2fr auto}
+.sbar.sbar4{grid-template-columns:minmax(0,1.1fr) max-content minmax(0,1.2fr) auto}
 .sbar.sbar4 .sbf{padding:16px 16px}
+/* connecté : 4 segments ne tiennent plus sur une ligne sous ~1180 px → 2 × 2 */
+@media (max-width:1180px) and (min-width:641px){
+  .sbar.sbar4{grid-template-columns:minmax(0,1fr) max-content}
+  .sbar.sbar4 .sbf:nth-child(n+3){border-top:1px solid var(--line)}
+  .sbar.sbar4 .sbf:nth-child(3){border-left:0}
+  .sbar.sbar4 button.sbf:first-child{border-radius:22px 0 0 0}
+}
 .sbf-prox .sbv b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:11px;background:var(--gold);color:#fff;font-size:12px;padding:0 6px}
 .sbf-prox .sw{gap:12px;justify-content:flex-start}
 .sbf-prox .sw .sbv{flex:1}
@@ -1015,6 +1054,8 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .pbar .lnk{font-size:12px;flex:none}
   .pbar .stl{white-space:normal}
   .crs-h .price{padding:0 20px 14px;text-align:left}
+  .crs-h .price .hsel{margin:10px 0 0}
+  .crs-hn{display:block;margin-top:2px}
   .crs > :not(.crs-h){margin:0 20px 18px}
   .comp{grid-template-columns:56px minmax(0,1fr);gap:12px 14px;padding:16px}
   .comp .cside{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px;min-width:0;
@@ -1121,6 +1162,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 <div class="dw-bg" id="dwBg"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Synthèse de votre panier" aria-hidden="true"></aside>
 <div class="cartbar" id="cartBar"></div>
+<button class="morehint" id="moreHint" aria-label="Voir la suite de la page">Voir la suite <span aria-hidden="true">↓</span></button>
 </div>
 </div>
 
@@ -1196,16 +1238,16 @@ const CRSIMG={mer:IMG.mer2,foret:IMG.foret,manoir:IMG.manoir,
   dunes:'https://www.resonance.golf/wp-content/uploads/2020/07/golf_hardelot_les_dunes_trou_18-1920x1080.jpg',
   pins:'https://www.resonance.golf/wp-content/uploads/2020/07/golf_hardelot_les_dunes_trou_18-1920x1080.jpg'};
 const COMPIMG={automne:IMG.links,seniors:IMG.foret,proam:IMG.comp,jeunes:IMG.manoir,toussaint:IMG.links,noel:IMG.foret};
-const TAGIMG={'Green fee':IMG.links,'Compétition':IMG.comp,'Cours':IMG.acad,'Cours collectif':IMG.putting,'Carnet':IMG.range,'Stage':IMG.stage,'Carte & Pass':IMG.mer2};
+const TAGIMG={'Restaurant':IMG.hero,'Green fee':IMG.links,'Compétition':IMG.comp,'Cours':IMG.acad,'Cours collectif':IMG.putting,'Carnet':IMG.range,'Stage':IMG.stage,'Carte & Pass':IMG.mer2};
 const cap=x=>x[0].toUpperCase()+x.slice(1);
 const bg=u=>`background-image:url('${u}')`;
 /* ═════════ Référentiel du site ═════════ */
 /* Cadences du planning v2 : La Mer toutes les 10 min, La Forêt et Le Manoir
    toutes les 9 min, Le Manoir décalé de −5 min (starter commun). */
 const CRS=[
-  {id:'mer',n:'La Mer',t:'18 trous · par 72 · links',p:120,we:20,p9:70,we9:10,cad:10,from:'08:00',to:'16:00',idxMax:30},
-  {id:'foret',n:'La Forêt',t:'18 trous · par 71',p:85,we:10,p9:50,we9:5,cad:9,from:'08:00',to:'16:06'},
-  {id:'manoir',n:'Le Manoir',t:'9 trous · par 32',p:38,we:0,cad:9,from:'07:55',to:'17:01',nine:true}];
+  {id:'mer',n:'La Mer',par:72,t:'18 trous · par 72 · links',p:120,we:20,p9:70,we9:10,cad:10,from:'08:00',to:'16:00',idxMax:30},
+  {id:'foret',n:'La Forêt',par:71,t:'18 trous · par 71 · forestier',p:85,we:10,p9:50,we9:5,cad:9,from:'08:00',to:'16:06'},
+  {id:'manoir',n:'Le Manoir',par:32,t:'9 trous · par 32',p:38,we:0,cad:9,from:'07:55',to:'17:01',nine:true}];
 /* Golf d'Hardelot (Collection, à 20 min) : proposé quand Le Touquet n'a
    pas le créneau cherché (retour du 24/09). Même panier, même paiement. */
 const HCRS=[
@@ -1337,16 +1379,16 @@ function seedRes(){
   return {
     claire:[
       {id:'r1',kind:'ind',t:'Cours individuel · 30 min',sub:'Jean-Charles Martin · practice',d:'2026-09-18',h:'10:00',pay:'credit',amount:0},
-      {id:'r2',kind:'gf',t:'Green fee · La Forêt',sub:'2 joueurs · Claire Dumas, Paul Dumas · 1 voiturette (abonnement)',d:'2026-09-21',h:'08:18',pay:'card',amount:59,
+      {id:'r2',kind:'gf',t:'Green fee · La Forêt · 18 trous',sub:'2 joueurs · Claire Dumas, Paul Dumas · 1 voiturette (abonnement)',d:'2026-09-21',h:'08:18',pay:'card',amount:59,
        crs:'foret',players:[{type:'self',paid:0},{type:'acc',id:'paul',paid:59}],opts:'1 voiturette (abonnement)'},
       {id:'r3',kind:'comp',t:'Coupe d\'Automne',sub:'Série dames · départ souhaité : tôt',d:'2026-10-04',h:'08:00',close:'2026-10-01',pay:'card',amount:25},
-      {id:'r4',kind:'gf',t:'Green fee · La Mer',sub:'1 joueur · Claire Dumas',d:'2026-09-06',h:'09:40',pay:'card',amount:60,past:true},
+      {id:'r4',kind:'gf',t:'Green fee · La Mer · 18 trous',sub:'1 joueur · Claire Dumas',d:'2026-09-06',h:'09:40',pay:'card',amount:60,past:true},
       {id:'r5',kind:'ind',t:'Cours individuel · 30 min',sub:'Jean-Charles Martin',d:'2026-09-02',h:'11:00',pay:'credit',amount:0,past:true}],
     marc:[
-      {id:'r6',kind:'gf',t:'Green fee · La Mer',sub:'2 joueurs · Marc Lefèvre, Claire Dumas',d:'2026-09-26',h:'10:20',pay:'card',amount:144,
+      {id:'r6',kind:'gf',t:'Green fee · La Mer · 18 trous',sub:'2 joueurs · Marc Lefèvre, Claire Dumas',d:'2026-09-26',h:'10:20',pay:'card',amount:144,
        crs:'mer',players:[{type:'self',paid:84},{type:'acc',id:'claire',paid:60}]},
       {id:'r7',kind:'comp',t:'Pro-Am de la Collection',sub:'Liste d\'attente · position 2',d:'2026-10-17',h:'09:00',close:'2026-10-10',pay:'wait',amount:0,wait:2}],
-    leo:[{id:'r8',kind:'gf',t:'Green fee · La Mer',sub:'1 joueur',d:'2026-08-29',h:'15:10',pay:'card',amount:70,past:true}],
+    leo:[{id:'r8',kind:'gf',t:'Green fee · La Mer · 18 trous',sub:'1 joueur',d:'2026-08-29',h:'15:10',pay:'card',amount:70,past:true}],
     bernard:[{id:'r9',kind:'coll',t:'Atelier petit jeu',sub:'Jean-Charles Martin · 1 h',d:'2026-09-19',h:'10:00',pay:'card',amount:30}],
     sophie:[]};
 }
@@ -1391,6 +1433,7 @@ function render(){
   paintCartBar();
   paintDrawer();
   paintHold();
+  if(typeof paintHint==='function')setTimeout(paintHint,50);
   $$('img[data-logo]').forEach(i=>{if(!i.getAttribute('src'))i.src=LOGO});
 }
 document.addEventListener('click',e=>{
@@ -1418,10 +1461,11 @@ function fil(steps,cur){
 /* bandeau de tarif : incite à se connecter, puis confirme le statut appliqué */
 function pbar(ctx,chips){
   const u=me();
-  if(!u)return `<div class="pbar">
-      <div class="pb-long"><b>Vos avantages ne sont pas encore appliqués</b>
-      Abonné, membre du réseau Resonance, licencié FFGolf, jeune ou senior : connectez-vous et ${ctx||'tous les prix'} se recalculent à votre tarif, prix public barré.
-      ${(chips||[]).length?`<div class="pb-chips">${chips.map(c=>`<span>${c}</span>`).join('')}</div>`:''}</div>
+  /* retour test du 24/09 : bandeau réduit à une ligne claire ; les statuts
+     sont du texte simple (non cliquable), seul « Me connecter » est un bouton */
+  if(!u)return `<div class="pbar lite">
+      <div class="pb-long"><b>Abonné, licencié, jeune ou senior&nbsp;?</b> Connectez-vous : ${ctx||'tous les prix'} se recalculent à votre tarif.
+      ${(chips||[]).length?`<span class="pb-st">${chips.map(c=>c.replace(' · ',' : ')).join('<i>·</i>')}</span>`:''}</div>
       <div class="pb-short"><b>Un meilleur prix vous attend</b> Connectez-vous pour voir votre tarif.</div>
       <div class="pb-a"><button class="btn sm" data-act="login">Me connecter</button>
       <button class="lnk pb-long" data-act="signup">Créer un compte</button></div></div>`;
@@ -1753,10 +1797,16 @@ ACT.gfWaitGo=()=>{
 
 /* ═════════ Navigation du moteur : les 4 portes de février 2027 ═════════ */
 const ENAV=[['gf','Green-fee'],['pass','Cartes & Pass'],['cours','Cours & stages'],['comp','Compétitions']];
+/* icônes des 4 rubriques (retour test utilisateur du 24/09 : les onglets passaient inaperçus) */
+const ENAVIC={
+  gf:'<path d="M7 21V3.5l10 4-10 4"/><path d="M4 21h9"/>',
+  pass:'<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/>',
+  cours:'<path d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z"/><path d="M7 11.5V16c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.5"/>',
+  comp:'<path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/>'};
 const NAVOF={gf:'gf','gf-joueurs':'gf',comp:'comp','comp-inscr':'comp',cours:'cours','cours-ind':'cours',pass:'pass'};
 function paintNav(){
   const cur=NAVOF[S.screen]||'';
-  $('#enav').innerHTML=`<div class="enav-in">${ENAV.map(([k,n])=>`<button class="${cur===k?'on':''}" data-go="${k}">${n}</button>`).join('')}</div>`;
+  $('#enav').innerHTML=`<div class="enav-in">${ENAV.map(([k,n])=>`<button class="${cur===k?'on':''}" data-go="${k}"><span class="en-ic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ENAVIC[k]}</svg></span>${n}</button>`).join('')}</div>`;
 }
 
 /* ═════════ Cartes & Pass ═════════
@@ -1883,17 +1933,18 @@ R.gf=()=>{
      <span class="mut">pour ${plural(g.pax,'joueur')}</span></div>
    ${rows.map(r=>{
      const c=r.c, shown=r.ok.slice(0,G2MAX), rest=r.ok.length-shown.length;
-     const tags=`<span class="tag">${c.t}</span>${c.nine?'<span class="tag">Sans index minimum</span>':''}${c.idxMax?`<span class="tag">Index ≤ ${c.idxMax}</span>`:''}`;
+     const desc=c.t.replace(/^(18|9) trous · par \d+( · )?/,'');
+     const tags=`${desc?`<span class="tag">${desc}</span>`:''}${c.nine?'<span class="tag">Sans index minimum</span>':''}${c.idxMax?`<span class="tag">Index ≤ ${c.idxMax}</span>`:''}`;
      const body=r.blocked
        ?`<div class="alert"><span class="ic">!</span><div><b>Votre index (${fidx(u.idx)}) dépasse la limite de ${c.idxMax} fixée pour La Mer.</b><br>Les départs existent, mais le starter ne peut pas vous faire partir. La Forêt et Le Manoir vous sont ouverts.</div></div>`
        :grp?groupTimes(c,r.ok)
        :singleTimes(c,r.ok)||gfWaitBox(c);
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
-       <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
-         <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
-         <span class="mut">Départ toutes les ${c.cad} min</span>
-         ${c.p9?`<div class="seg2 hsel" role="group" aria-label="Formule">${[['18','18 trous'],['9','9 trous']].map(([v,n])=>`<button class="${((g.h9||{})[c.id]?'9':'18')===v?'on':''}" data-act="gfHoles" data-c="${c.id}" data-v="${v}">${n}</button>`).join('')}</div>`:''}</div>
-         <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}</div></div>
+       <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"><span class="crs-holes"><b>${c.nine?9:18}</b>trous</span></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
+         <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n} <span class="crs-hn">· ${c.nine?'9 trous':'18 trous'} · par ${c.par}</span></b>
+         <span class="mut">Départ toutes les ${c.cad} min${c.p9?' · aussi jouable en 9 trous':''}</span></div>
+         <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}
+           ${c.p9?`<div class="seg2 hsel" role="group" aria-label="Formule">${[['18','18 trous'],['9','9 trous']].map(([v,n])=>`<button class="${((g.h9||{})[c.id]?'9':'18')===v?'on':''}" data-act="gfHoles" data-c="${c.id}" data-v="${v}">${n}</button>`).join('')}</div>`:''}</div></div>
        ${body}</div>`}).join('')}
    ${tot?hdlBlock(rows,tot):''}
    ${grp?`<div class="gbar"><div><b>${placedN()} / ${g.pax} joueurs placés · ${plural(g.flights.length,'créneau','créneaux')}</b><span class="mut">${g.flights.length?g.flights.map((f,i)=>`${fN(f)} ${f.t} (${gfSizes()[i]})`).join(' · '):'Aucun créneau sélectionné'}</span></div>
@@ -2160,7 +2211,9 @@ R['gf-joueurs']=()=>{
      <div class="sect">Options${multi?' · par départ':''}</div>
      ${fl.map((f,k)=>{const fc=crsV(f.crs,f.h9), n=g.players.filter(p=>(p.f||0)===k).length, fo=(g.fopts&&g.fopts[k])||{};
        return `${multi?`<div class="fhead" style="margin-top:${k?16:0}px"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fN(f)} · ${f.t}</b><span class="mut">${plural(n,'joueur')}</span></div></div>`:''}
-       <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,fc,[]), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
+       ${!(g.optOpen||{})[k]?`<button class="card optsum" data-act="gfOptTog" data-k="${k}"><span><b class="h3">${GOPTS.some(o=>fo[o.id])?GOPTS.filter(o=>fo[o.id]).map(o=>o.n.toLowerCase().replace(/^./,m=>m.toUpperCase())+(fo[o.id]>1?' × '+fo[o.id]:'')).join(' · '):'Aucune option'}</b>
+         <span class="mut">${GOPTS.some(o=>fo[o.id])?'Modifier ou ajouter une option':'Voiturette, chariot électrique, location de clubs, seau de practice'}</span></span><span class="chev">${GOPTS.some(o=>fo[o.id])?'Modifier':'Ajouter'} ▾</span></button>`
+       :`<div class="card" style="padding:4px 16px"><button class="optclose" data-act="gfOptTog" data-k="${k}">Replier ▴</button>${GOPTS.map(o=>{const x=optPrice(o,fc,[]), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
          const pk=g.players.map((p,i)=>({p,i,pi:playerInfo(p,i)})).filter(y=>(y.p.f||0)===k).map(y=>({...y,x:optPrice(o,fc,y.pi.st)})).filter(y=>y.x.p<y.x.pub);
          const me1=y=>y.pi.you&&!y.pi.anon, fn=y=>me1(y)?'Vous':y.pi.n.split(' ')[0];
          const perkTxt=!pk.length?'':o.per==='voit'
@@ -2170,7 +2223,7 @@ R['gf-joueurs']=()=>{
            <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${eur(x.pub)}<div class="mut">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
            <div class="qty sm"><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''} aria-label="Moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="1" ${q>=mx?'disabled':''} aria-label="Plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>
            ${o.id==='clubs'&&q?`<div class="clubcfg">${clubCfg(fo,q).map((cf,j)=>`<div class="cc-row"><span class="mut">Série ${j+1}</span>
-             ${[['h',CLUBH],['g',CLUBG]].map(([key,L])=>`<div class="seg2">${L.map(([v,n])=>`<button class="${cf[key]===v?'on':''}" data-act="gfClub" data-f="${k}" data-j="${j}" data-k="${key}" data-v="${v}">${n}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}`}).join('')}</div>`}).join('')}
+             ${[['h',CLUBH],['g',CLUBG]].map(([key,L])=>`<div class="seg2">${L.map(([v,n])=>`<button class="${cf[key]===v?'on':''}" data-act="gfClub" data-f="${k}" data-j="${j}" data-k="${key}" data-v="${v}">${n}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}`}).join('')}</div>`}`}).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Récapitulatif</div>
@@ -2199,6 +2252,7 @@ function syncSplit(){
   g.fopts=g.flights.map((f,k)=>{const o={...((g.fopts||[])[k]||{})}, n=g.split[k];
     GOPTS.forEach(op=>{const m=op.per==='voit'?Math.ceil(n/2):n;if((o[op.id]||0)>m)o[op.id]=m});return o});
 }
+ACT.gfOptTog=a=>{const g=S.gf;g.optOpen={...(g.optOpen||{}),[a.dataset.k]:!(g.optOpen||{})[a.dataset.k]};render()};
 ACT.gfAddP=a=>{
   const g=S.gf, k=+a.dataset.k;
   let at=-1;g.players.forEach((p,i)=>{if((p.f||0)===k)at=i});
@@ -2688,17 +2742,17 @@ ACT.carnetAdd=a=>addLine({kind:'carnet',id:a.dataset.id});
 /* ═════════ Panier commun ═════════
    Une ligne garde ses paramètres, pas son prix : le prix est recalculé à
    chaque affichage, ce qui permet de réécrire le panier à la connexion. */
-const KTAG={gf:'Green fee',comp:'Compétition',ind:'Cours',coll:'Cours collectif',stage:'Stage',carnet:'Carnet',pass:'Carte & Pass'};
+const KTAG={resto:'Restaurant',gf:'Green fee',comp:'Compétition',ind:'Cours',coll:'Cours collectif',stage:'Stage',carnet:'Carnet',pass:'Carte & Pass'};
 function lineView(l){
   const u=me(), st=mySt();
   let v={tag:KTAG[l.kind],items:[],sub:'',title:''};
   if(l.kind==='gf'){const c=crs(l.crs), fl=flightsOf(l), multi=fl.length>1;
-    v.title=multi?`Green fee · groupe de ${l.players.length}`:'Green fee · '+c.n+(fl[0].h9?' · 9 trous':'')+(c.site?' · Golf d\'Hardelot':'');
+    v.title=multi?`Green fee · groupe de ${l.players.length}`:'Green fee · '+c.n+(fl[0].h9||c.nine?' · 9 trous':' · 18 trous')+(c.site?' · Golf d\'Hardelot':'');
     v.sub=multi?`${fday(l.d)} · ${fl.length} départs : ${fl.map(f=>fN(f)+' '+f.t).join(', ')} · ${plural(l.players.length,'joueur')}`
       :`${fday(l.d)} · départ ${l.h} · ${plural(l.players.length,'joueur')}`;
     v.items=gfCalc(l);v.cancel=`Annulation gratuite jusqu'à 24 h avant ${multi?'le premier départ':'le départ'}`;
     if(l.editOf&&l.editOf.paid){v.items.push({n:`Déjà réglé · départ du ${fdm(l.editOf.d)} à ${l.editOf.h}`,p:-l.editOf.paid,pub:-l.editOf.paid,paid:true});
-      v.title='Changement de départ · '+c.n+(fl[0].h9?' · 9 trous':'');v.extra='Vous ne réglez que la différence avec votre départ actuel, qui reste réservé jusqu\'au paiement.'}
+      v.title='Changement de départ · '+c.n+(fl[0].h9||c.nine?' · 9 trous':' · 18 trous');v.extra='Vous ne réglez que la différence avec votre départ actuel, qui reste réservé jusqu\'au paiement.'}
     const j=joinOf(l);if(j){const pp=PROFILES[j.id];v.extra=`Vous jouez avec ${pp.n} (${crs(j.crs).n} ${j.t}) · ${pp.n.split(' ')[0]} sera prévenu·e.`}}
   if(l.kind==='comp'){const cp=comp(l.compId), c=crs(cp.crs), x=compPrice(cp,st), pi=partnerInfo(l.partner);
     v.title=cp.n;
@@ -2729,6 +2783,8 @@ function lineView(l){
   if(l.kind==='carnet'){const k=CARNETS.find(x=>x.id===l.id);
     v.title=k.n;v.sub=`${k.q} cours de ${k.dur===30?'30 min':'1 h'} · valable 12 mois à partir de l'achat`;
     v.items=[{n:'Carnet',...lessonPrice(k.p,st)}];v.cancel='Crédits utilisables dès le paiement confirmé';v.acc=true;}
+  if(l.kind==='resto'){v.title='Table · '+RESTO;v.sub=`${fday(l.d)} · ${l.h} · ${plural(l.n,'couvert')}${l.note?' · '+l.note:''}`;
+    v.items=[{n:'Réservation de table · réglée sur place',p:0,pub:0,free:true}];v.free=true;v.cancel='Annulation libre jusqu\'à 2 h avant';}
   v.total=v.items.reduce((t,i)=>t+i.p,0);
   v.pub=v.items.reduce((t,i)=>t+(i.credit?0:i.pub),0);
   const pm=S.promo&&PROMOS[S.promo];
@@ -2816,6 +2872,50 @@ ACT.holdSim=()=>{hold=1};
 ACT.holdRecheck=()=>{hold=HOLD;holdDead=false;paintHold();toast('Disponibilités revérifiées : toutes vos lignes sont encore disponibles.')};
 
 /* ═════════ Ajouté au panier · suggestions ═════════ */
+/* ═════════ Restaurant (retour test du 24/09) ═════════
+   Réserver une table depuis « Continuer mes achats » : jour, heure et
+   couverts pré-remplis d'après la réservation qui vient d'être ajoutée.
+   La table rejoint le panier à 0 € et se règle sur place. */
+const RESTO='Restaurant du club-house';
+const RSVC={dej:['12:00','12:30','13:00','13:30','14:00'],din:['19:00','19:30','20:00','20:30','21:00']};
+function restoWhen(l){
+  if(l.kind==='carnet'||l.kind==='pass'||l.kind==='resto')return null;
+  const d=l.kind==='comp'?comp(l.compId).date:l.kind==='coll'?COLL.find(x=>x.id===l.id).d:l.kind==='stage'?STAGES.find(x=>x.id===l.id).d:l.d;
+  const h=l.kind==='comp'?comp(l.compId).h:l.kind==='coll'?COLL.find(x=>x.id===l.id).h:l.h||'09:00';
+  const nine=l.kind==='gf'&&(flightsOf(l)[0].h9||crs(l.crs).nine);
+  const dur=l.kind==='gf'||l.kind==='comp'?(nine?150:270):l.kind==='ind'?l.dur:90;
+  let m=Math.ceil((toMin(h)+dur)/30)*30;
+  const svc=m<=14*60?'dej':'din';
+  m=svc==='dej'?Math.max(12*60,m):Math.max(19*60+30,m);
+  const t=toT(Math.min(m,svc==='dej'?14*60:21*60));
+  const n=l.kind==='gf'?l.players.length:l.kind==='comp'&&l.partner?2:1;
+  return {d,svc,t,n};
+}
+function restoSug(l){const w=restoWhen(l);if(!w)return null;
+  return {k:'resto',tag:'Restaurant',d0:w.d,t:'Réserver une table au club-house',d:`${cap(fday(w.d))} · ${w.svc==='dej'?'déjeuner':'dîner'} vers ${w.t.replace(':',' h ')} · ${plural(w.n,'couvert')}`,
+    p:{p:0,pub:0},free:true,act:'xResto',data:`data-d="${w.d}" data-h="${w.t}" data-n="${w.n}"`,d:`${cap(fday(w.d))} · ${w.svc==='dej'?'déjeuner':'dîner'} vers ${w.t.replace(':',' h ')} · ${plural(w.n,'couvert')}`}}
+ACT.xResto=a=>{S.rs={d:a.dataset.d,t:a.dataset.h,n:+a.dataset.n||2,note:''};restoSheet()};
+function restoSheet(){const r=S.rs, svc=toMin(r.t)<16*60?'dej':'din';
+  sheet(shead('Réserver une table',RESTO)+`<p class="sub" style="margin:4px 0 14px">${RESTO} · vue sur le parcours. La table est gardée 15 min après l'heure réservée.</p>
+    <label class="field"><span>Date</span><input type="date" id="rsD" value="${r.d}" min="${DMIN}"></label>
+    <div class="sect" style="margin:6px 0 8px">Service</div>
+    <div class="seg2" style="margin-bottom:12px">${[['dej','Déjeuner'],['din','Dîner']].map(([k,n])=>`<button class="${svc===k?'on':''}" data-act="rsSvc" data-v="${k}">${n}</button>`).join('')}</div>
+    <div class="gtimes" style="margin:0 0 14px">${RSVC[svc].map(t=>`<button class="gtime ${r.t===t?'on':''}" data-act="rsT" data-t="${t}"><b>${t}</b></button>`).join('')}</div>
+    <div class="between" style="margin-bottom:14px"><b class="h3">Couverts</b>
+      <div class="qty sm"><button data-act="rsN" data-n="-1" ${r.n<=1?'disabled':''} aria-label="Moins">−</button><b>${r.n}</b><button data-act="rsN" data-n="1" ${r.n>=12?'disabled':''} aria-label="Plus">+</button></div></div>
+    <label class="field"><span>Précisions <i style="font-style:normal;text-transform:none;letter-spacing:0;color:var(--g500)">— facultatif</i></span><input id="rsNote" value="${r.note}" placeholder="Allergie, chaise haute, table en terrasse…"></label>
+    <button class="btn full" data-act="rsAdd">${r.edit?'Enregistrer':'Ajouter la table au panier · réglée sur place'}</button>
+    <p class="mut" style="margin-top:8px;font-size:12px">Rien à payer maintenant. Annulation libre jusqu'à 2 h avant, depuis Mon espace.</p>`);
+  $('#rsD').onchange=e=>{r.d=e.target.value};$('#rsNote').oninput=e=>{r.note=e.target.value};
+}
+ACT.rsSvc=a=>{S.rs.t=a.dataset.v==='dej'?'12:30':'19:30';restoSheet()};
+ACT.rsT=a=>{S.rs.t=a.dataset.t;restoSheet()};
+ACT.rsN=a=>{S.rs.n=Math.max(1,Math.min(12,S.rs.n+ +a.dataset.n));restoSheet()};
+ACT.rsAdd=()=>{const r=S.rs;closeSheet();
+  if(r.edit){const o=findRes(r.edit);Object.assign(o,{d:r.d,h:r.t,n:r.n,sub:plural(r.n,'couvert')+(r.note?' · '+r.note:'')});render();toast('Table modifiée.');return}
+  if(!S.cart.length){hold=HOLD;holdDead=false}
+  const l={kind:'resto',d:r.d,h:r.t,n:r.n,note:r.note,uid:uid()};S.cart.push(l);
+  render();openDrawer(l);toast('Table ajoutée à votre panier.')};
 function sugFor(l){
   const has=k=>S.cart.some(x=>x.kind===k);
   const sug=[];
@@ -2836,8 +2936,10 @@ function sugFor(l){
     else sug.push({k:'ind',tag:'Cours',t:'Réserver votre premier cours',d:'Les crédits seront disponibles dès le paiement confirmé.',p:lessonPrice(45,mySt()),act:'xInd',data:''});
     sug.push({k:'comp',tag:'Compétition',t:nextComp.n,d:`${fday(nextComp.date)} · ${nextComp.fmt}`,p:compPrice(nextComp,mySt()),act:'compOpen',data:`data-id="${nextComp.id}"`});
   }
+  const rs=restoSug(l);if(rs)sug.splice(1,0,rs);
   sug.forEach(s=>{const d=(s.data||'').match(/data-d="([^"]+)"/), id=(s.data||'').match(/data-id="([^"]+)"/);
     s.dup=s.k==='gf'?S.cart.some(x=>x.kind==='gf'&&d&&x.d===d[1])
+      :s.k==='resto'?S.cart.some(x=>x.kind==='resto'&&x.d===s.d0)
       :s.k==='comp'?!!(id&&(S.cart.some(x=>x.kind==='comp'&&x.compId===id[1])||compRegistered(comp(id[1]))))
       :has(s.k)});
   return sug;
@@ -2856,7 +2958,7 @@ R.cross=()=>{
    <div class="grid g3">${sug.map(s=>{const inC=s.dup;
      return `<div class="card xsell"><div class="ph img" style="${bg(TAGIMG[s.tag]||IMG.mer)}"></div>
        <span class="tag" style="align-self:flex-start">${s.tag}</span><b class="h3">${s.t}</b><span class="mut">${s.d}</span>
-       <div class="foot"><b>${s.p.p===0&&s.p.pub>0?'Inclus':(s.p.p<s.p.pub?`<span class="was">${eur(s.p.pub)}</span>`:'')+eur(s.p.p)}</b>
+       <div class="foot"><b>${s.free?'Réglée sur place':s.p.p===0&&s.p.pub>0?'Inclus':(s.p.p<s.p.pub?`<span class="was">${eur(s.p.pub)}</span>`:'')+eur(s.p.p)}</b>
        ${inC?'<span class="done-t">Déjà dans votre panier</span>':`<button class="btn sm sec" data-act="${s.act}" ${s.data||''}>Ajouter</button>`}</div></div>`}).join('')}</div>
    <p class="note">Les suggestions croisent les trois activités du périmètre et reprennent la date de la ligne ajoutée. Un service déjà au panier est marqué « Déjà dans votre panier » et ne peut pas être ajouté une seconde fois (règle du 17/09).</p>`;
 };
@@ -2892,11 +2994,11 @@ function dwHtml(){
      ${S.cart.map(l=>{const v=lineView(l);return `<div class="dwl${l.uid===hi?' new':''}">
        <div><span class="tag">${v.tag}</span><b class="h3">${v.title}</b><span class="mut">${v.sub}</span>
          <button class="lnk" data-act="lineDel" data-u="${l.uid}">Retirer</button></div>
-       <div class="dwl-p">${v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div>`}).join('')}
+       <div class="dwl-p">${v.free?'Sur place':v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div>`}).join('')}
      ${hi&&S.lastAdded?(()=>{const sg=sugFor(S.lastAdded).filter(x=>!x.dup).slice(0,2);if(!sg.length)return '';
        return `<div class="dws"><div class="dws-h"><b class="h3">Pour compléter</b><button class="lnk" data-act="dwSug">Voir davantage de suggestions →</button></div>
          ${sg.map(x=>`<div class="dws-c"><span class="dws-i" style="${bg(TAGIMG[x.tag]||IMG.mer)}"></span>
-           <div><span class="tag">${x.tag}</span><b>${x.t}</b><span class="mut">${x.p.p===0&&x.p.pub>0?'Inclus':(x.p.p<x.p.pub?`<span class="was">${eur(x.p.pub)}</span>`:'')+eur(x.p.p)}</span></div>
+           <div><span class="tag">${x.tag}</span><b>${x.t}</b><span class="mut">${x.free?'Réglée sur place':x.p.p===0&&x.p.pub>0?'Inclus':(x.p.p<x.p.pub?`<span class="was">${eur(x.p.pub)}</span>`:'')+eur(x.p.p)}</span></div>
            <button class="btn sm sec" data-act="dwSugGo" data-a="${x.act}" ${x.data||''}>Ajouter</button></div>`).join('')}</div>`})():''}
      ${T.save+T.promo+T.avoir>0?savingsHtml(T):''}
      <p class="note" style="margin-bottom:0">Le tiroir ne s'ouvre seul qu'au premier ajout. Ensuite, l'ajout est simplement confirmé : le panier reste accessible en haut à droite (bandeau fixe en bas d'écran en mobile).</p>
@@ -2961,12 +3063,12 @@ R.panier=()=>{
      ${S.cart.map(l=>{const v=lineView(l);return `<div class="cline"><div>
        <div class="row wrap" style="gap:6px"><span class="tag">${v.tag}</span>${v.total===0&&v.pub>0?'<span class="tag ol">Sans paiement</span>':''}${l.editOf?'<span class="tag ol">Modification</span>':''}</div>
        <b class="h3" style="display:block;margin-top:7px">${v.title}</b><div class="mut">${v.sub}</div>
-       <ul>${v.items.map(i=>`<li><span>${i.n}${i.st?` · <i style="font-style:normal">tarif ${ST[i.st].n}</i>`:''}</span><b>${i.p<i.pub?`<span class="was">${eur(i.pub)}</span>`:''}${i.credit?'1 crédit':i.p===0&&i.pub>0?'Inclus':eur(i.p)}</b></li>`).join('')}
+       <ul>${v.items.map(i=>`<li><span>${i.n}${i.st?` · <i style="font-style:normal">tarif ${ST[i.st].n}</i>`:''}</span><b>${i.p<i.pub?`<span class="was">${eur(i.pub)}</span>`:''}${i.free?'—':i.credit?'1 crédit':i.p===0&&i.pub>0?'Inclus':eur(i.p)}</b></li>`).join('')}
          ${v.promo?`<li><span>${pm.n}</span><b>−${eur(v.promo)}</b></li>`:''}</ul>
        ${v.extra?`<p class="mut" style="margin-top:6px">${v.extra}</p>`:''}
        <p class="mut" style="margin-top:6px">${v.cancel}</p>
        <div class="row" style="margin-top:8px;gap:14px">${l.kind==='gf'?`<button class="lnk" style="font-size:12px" data-act="lineSlotGf" data-u="${l.uid}">Changer de jour ou d'horaire</button><button class="lnk" style="font-size:12px" data-act="lineEditGf" data-u="${l.uid}">Modifier joueurs &amp; options</button>`:''}<button class="lnk" style="font-size:12px" data-act="lineDel" data-u="${l.uid}">Retirer</button></div></div>
-       <div class="cl-p"><div class="price">${v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div></div>`}).join('')}
+       <div class="cl-p"><div class="price">${v.free?'<small style="font-size:14px">Sur place</small>':v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div></div>`}).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:10px">Code promo</div>
@@ -3067,9 +3169,10 @@ R.checkout=()=>{
       ${needAcc?'':`<button class="${co.mode==='guest'?'on':''}" data-act="coMode" data-v="guest">Sans compte</button>`}</div>
     ${co.mode==='login'?`<p class="sub" style="margin-bottom:12px">Connectez-vous : le total est recalculé avec votre tarif avant le paiement.</p><button class="btn" data-act="login">Me connecter</button>`
      :co.mode==='signup'?signupForm()+`<button class="btn" data-act="coSignup">Créer mon compte et continuer</button>`
-     :co.guest?`<div class="between"><span><b>${co.gName||'Invité·e'}</b> · ${co.gMail||''}</span><button class="lnk" style="font-size:12px" data-act="coGuestEdit">Modifier</button></div>`
-     :`<div class="grid g2" style="gap:0 12px"><label class="field"><span>Nom complet</span><input id="gName"></label><label class="field"><span>E-mail</span><input id="gMail" type="email"></label></div>
-       <label class="field"><span>Téléphone</span><input id="gTel" type="tel"></label>
+     :co.guest?`<div class="between"><span><b>${co.gName||'Invité·e'}</b> · ${co.gMail||''} · ${co.gTel||''}</span><button class="lnk" style="font-size:12px" data-act="coGuestEdit">Modifier</button></div>`
+     :`<p class="mut" style="margin:0 0 12px;font-size:12px">${REQ} Champs obligatoires</p>
+       <div class="grid g2" style="gap:0 12px"><label class="field"><span>Nom complet ${REQ}</span><input id="gName" value="${co.gName||''}"></label><label class="field"><span>E-mail ${REQ}</span><input id="gMail" type="email" value="${co.gMail||''}" placeholder="vous@exemple.fr"></label></div>
+       <label class="field"><span>Téléphone ${REQ}</span><input id="gTel" type="tel" value="${co.gTel||''}" placeholder="06 12 34 56 78"><small class="mut" style="display:block;margin-top:6px;font-size:12px">Pour le rappel par SMS 48 h avant. La confirmation arrive par e-mail.</small></label>
        <button class="btn sec" data-act="coGuest">Continuer sans compte</button>
        <p class="mut" style="margin-top:8px">Sans compte, le prix public s'applique et la réservation se gère depuis le lien reçu par e-mail.</p>`}
     ${needAcc?`<p class="note">Compte obligatoire : votre panier contient ${S.cart.filter(l=>l.kind!=='gf').map(l=>KTAG[l.kind].toLowerCase()).filter((x,i,a)=>a.indexOf(x)===i).join(', ')}. Les inscriptions et les carnets sont rattachés à une personne (licence, suivi, crédits). Le green fee seul reste possible sans compte.</p>`:''}`;
@@ -3090,7 +3193,7 @@ R.checkout=()=>{
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Votre panier</div>
-     ${S.cart.map(l=>{const v=lineView(l);return `<div class="sumline"><span>${v.title}<br><span class="mut">${v.sub.split(' · ').slice(0,2).join(' · ')}</span></span><b>${v.items[0]&&v.items[0].credit?'1 crédit':eur(v.pub)}</b></div>`}).join('')}
+     ${S.cart.map(l=>{const v=lineView(l);return `<div class="sumline"><span>${v.title}<br><span class="mut">${v.sub.split(' · ').slice(0,2).join(' · ')}</span></span><b>${v.free?'Sur place':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.pub)}</b></div>`}).join('')}
      <div class="hr" style="margin:6px 0"></div>
      ${savingsHtml(T)}
      <div class="sumtot"><span class="h3">Total</span><b>${eur(T.due)}</b></div>
@@ -3178,9 +3281,9 @@ ACT.coMode=a=>{S.co.mode=a.dataset.v;render()};
 ACT.coGar=()=>{S.co.garantie=!S.co.garantie;render()};
 ACT.coSignup=()=>{const id=createAccount();if(id)login(id)};
 ACT.coGuest=()=>{
-  const n=$('#gName').value.trim(), m=$('#gMail').value.trim();
-  if(!n||!m){toast('Nom et e-mail sont requis.');return}
-  Object.assign(S.co,{guest:true,gName:n,gMail:m});render();
+  const n=$('#gName').value.trim(), m=$('#gMail').value.trim(), t=$('#gTel').value.trim();
+  if(!n||!mailOk(m)||!telOk(t)){toast(!n?'Indiquez votre nom.':!mailOk(m)?'Indiquez une adresse e-mail valide.':'Indiquez un numéro de téléphone valide (rappel SMS).');return}
+  Object.assign(S.co,{guest:true,gName:n,gMail:m,gTel:t});render();
 };
 ACT.coGuestEdit=()=>{S.co.guest=false;render()};
 ACT.coPay=()=>{
@@ -3198,13 +3301,13 @@ ACT.coPay=()=>{
       const cp=l.kind==='comp'?comp(l.compId):null;
       const gfx=l.kind==='gf'?{crs:l.crs,h9:!!flightsOf(l)[0].h9,players:l.players.map((p,i)=>({...p,paid:(gfCalc(l)[i]||{p:0}).p}))}:{};
       RS.push({id:"r"+uid(),kind:l.kind,compId:l.compId,t:l.editOf&&l.kind==='gf'?v.title.replace('Changement de départ','Green fee'):v.title,sub:v.sub.split(' · ').slice(2).join(' · ')||v.sub,d:cp?cp.date:l.d,h:cp?cp.h:l.h,
-        close:cp?cp.close:null,pay:l.kind==='ind'&&(l.credit||l.viaCarnet)?'credit':v.total===0?'incl':'card',amount:v.total-v.promo+(l.editOf&&l.editOf.paid||0),fresh:true,...gfx});
+        close:cp?cp.close:null,pay:l.kind==='resto'?'place':l.kind==='ind'&&(l.credit||l.viaCarnet)?'credit':v.total===0?'incl':'card',amount:v.total-v.promo+(l.editOf&&l.editOf.paid||0),fresh:true,...gfx,...(l.kind==='resto'?{n:l.n}:{})});
       if(cp){cp.taken=Math.min(cp.cap,cp.taken+(l.partner?2:1))}
     });
     if(T.avoir)u.avoir=Math.round((u.avoir-T.avoir)*100)/100;
   }
   const X=payRest(T,u);if(u&&X.w)u.wallet=Math.round((u.wallet-X.w)*100)/100;
-  S.done={ref,lines,T,sav,guest:!u,mail:u?u.email:S.co.gMail,garantie:S.co.garantie,pay:S.co.pay,X,gift:S.co.gift,
+  S.done={ref,lines,T,sav,guest:!u,mail:u?u.email:S.co.gMail,tel:u?(u.smsOff?null:u.tel):S.co.gTel,garantie:S.co.garantie,pay:S.co.pay,X,gift:S.co.gift,
     link:S.co.pay==='link'?'resonance-golf.fr/p/'+ref.toLowerCase():null};
   Object.assign(S.co,{pay:'all',wallet:false,gift:null,giftErr:''});S.newSt=null;
   const joins=lines.map(({l})=>l.kind==='gf'&&joinOf(l)).filter(Boolean);
@@ -3214,6 +3317,11 @@ ACT.coPay=()=>{
 };
 
 /* ═════════ Confirmation ═════════ */
+/* rappel SMS 48 h avant (retour test du 24/09) : le délai laisse encore
+   le temps d'annuler gratuitement (24 h). Tout le reste passe par e-mail. */
+const RAPPEL={gf:'votre départ',ind:'votre cours',coll:'votre cours',stage:'votre stage',comp:'votre compétition',resto:'votre table'};
+function rappelWhat(ls){const w=[...new Set(ls.map(l=>RAPPEL[l.kind]).filter(Boolean))];
+  return w.length>1?'chaque réservation':w[0]}
 R.confirm=()=>{
   const d=S.done;if(!d){go('gf');return}
   $('#v-confirm').innerHTML=`
@@ -3221,7 +3329,9 @@ R.confirm=()=>{
      <h1 class="h1">C'est <b>réservé</b>&nbsp;! À très vite au Touquet.</h1>
      <p class="sub" style="margin-top:4px">Référence de réservation <b style="color:var(--ink)">${d.ref}</b></p>
      <div class="mailok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
-       <span>Un e-mail de confirmation de votre réservation vous sera envoyé sous peu${d.mail?' à <b>'+d.mail+'</b>':''}.</span></div></div>
+       <span>Un e-mail de confirmation de votre réservation vous sera envoyé sous peu${d.mail?' à <b>'+d.mail+'</b>':''}.</span></div>
+     ${d.lines.some(({l})=>RAPPEL[l.kind])&&d.tel?`<div class="mailok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
+       <span>Rappel par SMS <b>48 h avant</b> ${rappelWhat(d.lines.map(({l})=>l))}, au <b>${d.tel}</b>. Modifications et annulations vous sont confirmées par e-mail.</span></div>`:''}</div>
      <span class="node">Confirmation</span></div>
    ${d.link?`<div class="card plink"><span class="eyebrow">Lien de paiement du groupe</span>
      <b class="h2" style="display:block;margin:4px 0 6px">Partagez ce lien avec vos joueurs</b>
@@ -3238,7 +3348,7 @@ R.confirm=()=>{
        <div><span class="tag">${v.tag}</span><b class="h3" style="display:block;margin-top:6px">${v.title}</b><div class="mut">${v.sub}</div>
          <p class="mut" style="margin-top:4px">${l.kind==='gf'?'QR code à présenter au starter · '+v.cancel.toLowerCase():l.kind==='carnet'?'Crédits ajoutés à votre espace':l.kind==='pass'?'Carte ajoutée à votre espace':v.cancel}</p>
          ${v.extra?`<p class="mut">${v.extra}</p>`:''}</div>
-       <div class="cl-p"><b>${v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div></div>`).join('')}
+       <div class="cl-p"><b>${v.free?'Sur place':v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div></div>`).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Détail du règlement</div>
@@ -3258,7 +3368,7 @@ R.confirm=()=>{
 
 /* ═════════ Espace personnel ═════════ */
 const RULES={gf:{h:24,n:'jusqu\'à 24 h avant le départ'},ind:{h:24,n:'jusqu\'à 24 h avant le cours'},coll:{h:24,n:'jusqu\'à 24 h avant le cours'},
-  stage:{h:24*7,n:'jusqu\'à 7 jours avant le stage'}};
+  stage:{h:24*7,n:'jusqu\'à 7 jours avant le stage'},resto:{h:2,n:'jusqu\'à 2 h avant'}};
 function cancelInfo(r){
   let dl, n;
   if(r.kind==='comp'){dl=at(r.close,'23:59');n='jusqu\'à la clôture du '+fdm(r.close)}
@@ -3300,6 +3410,7 @@ R.espace=()=>{
       <div class="card" style="padding:4px 18px;margin-bottom:22px">${waits.map(r=>`<div class="wrow"><span class="tag">${KTAG[r.kind]}</span>
         <div><b>${r.t}</b><span class="mut">${cap(fday(r.d))}${r.h?' · '+r.h.replace(':',' h '):''} · ${r.sub.replace(/^Liste d'attente · /,'')}</span></div>
         <button class="btn sm ghost" data-act="waitQuit" data-id="${r.id}">Me désinscrire</button></div>`).join('')}</div>`:''}
+     <p class="mut" style="margin:0 0 12px;font-size:12.5px">${u.smsOff||!u.tel?'Rappel SMS désactivé':'Rappel par SMS 48 h avant chaque départ, cours ou compétition'} · confirmations et modifications par e-mail. <button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="infos">Réglages</button></p>
      <div class="chips"><button class="chip ${S.resTab==='avenir'?'on':''}" data-act="resTab" data-v="avenir">À venir · ${up.filter(r=>r.pay!=='wait').length}</button>
       <button class="chip ${S.resTab==='passees'?'on':''}" data-act="resTab" data-v="passees">Passées &amp; annulées · ${past.length}</button></div>
      ${list.length?list.map(r=>{const d=dobj(r.d), ci=r.past||r.cancelled?null:cancelInfo(r), wait=r.pay==='wait';
@@ -3308,7 +3419,7 @@ R.espace=()=>{
          <div><div class="row wrap" style="gap:6px"><span class="tag">${KTAG[r.kind]}</span>${wait?'<span class="tag ol">Liste d\'attente</span>':''}${r.fresh?'<span class="tag dk">Nouveau</span>':''}${r.cancelled?'<span class="tag">Annulé</span>':''}</div>
            <b class="h3" style="display:block;margin-top:6px">${r.t}</b>
            <div class="mut">${r.h?r.h.replace(':',' h ')+' · ':''}${r.sub}</div>
-           <div class="mut">${r.cancelled?r.cancelled:r.pay==='credit'?'Réglé avec 1 crédit carnet':r.pay==='incl'?'Inclus dans votre abonnement':wait?'Rien n\'est débité tant qu\'une place ne se libère pas':r.past?'Réglé '+eur(r.amount):'Réglé '+eur(r.amount)+' par carte'}</div>
+           <div class="mut">${r.cancelled?r.cancelled:r.pay==='place'?'À régler sur place':r.pay==='credit'?'Réglé avec 1 crédit carnet':r.pay==='incl'?'Inclus dans votre abonnement':wait?'Rien n\'est débité tant qu\'une place ne se libère pas':r.past?'Réglé '+eur(r.amount):'Réglé '+eur(r.amount)+' par carte'}</div>
            ${ci&&!wait?`<div class="mut" style="margin-top:4px">${ci.ok?'Annulation gratuite '+ci.n+' ('+fdl(ci.dl)+')':'<b style="color:var(--ink)">Délai d\'annulation en ligne dépassé</b> (limite : '+fdl(ci.dl)+'). Contactez l\'accueil du golf.'}</div>`:''}
          </div>
          <div class="acts">${r.past||r.cancelled?(r.kind==='gf'&&r.past?`<button class="btn sm ghost" data-act="rebook" data-id="${r.id}">Réserver à nouveau</button>`:'')
@@ -3394,6 +3505,11 @@ R.espace=()=>{
        ${u.lic?`<div class="ck ok"><span class="ic">✓</span><div><b>Attestation de licence 2026</b><small>Fournie par la FFGolf · PDF</small></div><button class="btn sm ghost" data-act="docDl">Télécharger</button></div>`:''}
       </div>
       <div class="card" style="padding:16px 18px">
+       <div class="h3" style="margin-bottom:8px">Notifications</div>
+       <label class="chkbox"><input type="checkbox" data-smsrem ${u.smsOff?'':'checked'} ${u.tel?'':'disabled'}><span><b style="color:var(--ink);font-weight:500">Rappel par SMS 48 h avant</b><br>${u.tel?'Chaque départ, cours, stage ou compétition, au '+u.tel+'.':'Ajoutez un numéro de téléphone dans vos coordonnées.'}</span></label>
+       <p class="mut" style="margin-top:8px;font-size:12px">Confirmations, modifications et annulations : toujours par e-mail, à ${u.email}.</p>
+      </div>
+      <div class="card" style="padding:16px 18px">
        <div class="h3" style="margin-bottom:4px">Visibilité sur les départs</div>
        <p class="mut" style="margin-bottom:10px">Ce que voient les joueurs inscrits sur le même créneau que vous.</p>
        <div class="seg2" style="margin-bottom:12px"><button class="${pub?'on':''}" data-act="pubProfile" data-v="1">Nom et index</button><button class="${pub?'':'on'}" data-act="pubProfile" data-v="0">Profil masqué</button></div>
@@ -3413,6 +3529,8 @@ R.espace=()=>{
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="spaceTab" data-t="${k}">${n}${c!=null?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
 };
+document.addEventListener('change',e=>{const el=e.target.closest('[data-smsrem]');if(!el)return;
+  me().smsOff=!el.checked;render();toast(el.checked?'Rappel SMS activé : 48 h avant chaque réservation.':'Rappel SMS désactivé. Vous gardez les e-mails de confirmation.')});
 document.addEventListener('change',e=>{const el=e.target.closest('[data-avoirauto]');if(!el)return;
   const u=me();u.avoirAuto=el.checked;S.useAvoir=el.checked;render();
   toast(el.checked?'Vos avoirs seront déduits automatiquement au panier.':'Vos avoirs ne seront plus déduits automatiquement.')});
@@ -3465,6 +3583,7 @@ ACT.resCancelGo=a=>{
 ACT.resEdit=a=>{
   const r=findRes(a.dataset.id);
   if(r.kind==='gf'){mvOpen(r);return}
+  if(r.kind==='resto'){S.rs={d:r.d,t:r.h,n:r.n||2,note:'',edit:r.id};restoSheet();return}
   if(r.kind==='ind'){Object.assign(S.cours,{dur:r.t.includes('1 h')?60:30,pro:'any',slot:null,wk:0,editOf:{id:r.id}});go('cours-ind');return}
   sheet(shead('Modifier '+(r.kind==='comp'?'mes préférences':'ma réservation'),KTAG[r.kind])+
    (r.kind==='comp'?`<p class="sub" style="margin:4px 0 12px">Les horaires sont publiés 48 h avant l'épreuve. D'ici là, vous pouvez changer vos préférences.</p>
@@ -3572,7 +3691,7 @@ ACT.mvGo=()=>{
   if(X.diff<0){u.avoir=Math.round(((u.avoir||0)-X.diff)*100)/100;u.avoirEnd=u.avoirEnd&&u.avoirEnd>'2027-09-17'?u.avoirEnd:'2027-09-17'}
   const np=players.map((p,k)=>({...p,paid:X.news[k].x.p}));
   mvOut(r,sel);
-  RS.push({id:'r'+uid(),kind:'gf',t:'Green fee · '+crs(tc).n+(h9?' · 9 trous':''),sub:plural(np.length,'joueur')+' · '+np.map((p,i)=>mvWho(p,i).n.replace(' (vous)','')).join(', ')+(r.opts?' · '+r.opts:''),
+  RS.push({id:'r'+uid(),kind:'gf',t:'Green fee · '+crs(tc).n+(h9||crs(tc).nine?' · 9 trous':' · 18 trous'),sub:plural(np.length,'joueur')+' · '+np.map((p,i)=>mvWho(p,i).n.replace(' (vous)','')).join(', ')+(r.opts?' · '+r.opts:''),
     d:m.date,h:m.t,pay:X.nw===0?'incl':'card',amount:X.nw,crs:tc,h9,players:np,opts:r.opts,fresh:true});
   S.mv=null;S.space='resa';S.resTab='avenir';go('espace');
   toast(`Départ déplacé au ${fday(m.date)} à ${m.t}.${X.diff<0?' '+eur(-X.diff)+' ajoutés à votre avoir.':''}`);
@@ -3802,7 +3921,7 @@ ACT.proxPick=a=>{
 };
 /* liste des créneaux d'un parcours (réservation 1 à 4 joueurs), proches compris */
 function singleTimes(c,ok){
-  const g=S.gf, {byT,near}=proxMarks(c), MAX=14;
+  const g=S.gf, {byT,near}=proxMarks(c), MAX=8;   /* une ligne par parcours (retour test du 24/09) */
   const extra=Object.keys(byT).concat(Object.keys(near));
   const list=ok.filter((s,i)=>i<MAX||extra.includes(s.t));
   Object.values(byT).forEach(rs=>{if(!list.some(s=>s.t===rs[0].t))list.push({t:rs[0].t,free:rs[0].free,prox:true})});
@@ -3877,6 +3996,15 @@ function fitPhone(){
   w.style.height=m?Math.max(innerHeight,874*k+40)+'px':'';
 }
 addEventListener('resize',fitPhone);
+/* « Voir la suite » : sur mobile, tant que la page continue loin sous l'écran
+   et qu'on n'a pas encore fait défiler */
+function paintHint(){
+  const st=$('#stage'), mob=st.dataset.vp==='mobile'||innerWidth<=640, sc=st.dataset.vp==='mobile'?st:document.scrollingElement;
+  const left=sc.scrollHeight-sc.scrollTop-sc.clientHeight;
+  $('#moreHint').classList.toggle('on',mob&&S&&S.screen!=='site'&&sc.scrollTop<60&&left>500);
+}
+$('#stage').addEventListener('scroll',paintHint,{passive:true});addEventListener('scroll',paintHint,{passive:true});addEventListener('resize',paintHint);
+$('#moreHint').onclick=()=>{const st=$('#stage'), sc=st.dataset.vp==='mobile'?st:window;sc.scrollBy({top:(st.dataset.vp==='mobile'?st.clientHeight:innerHeight)*.7,behavior:'smooth'})};
 $('#vpTog').onclick=toggleVp;
 document.addEventListener('keydown',e=>{
   if((e.key==='m'||e.key==='M')&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&!e.target.closest('input,textarea,select'))toggleVp();
