@@ -369,6 +369,66 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .optrow{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
 .optrow:first-child{border-top:0}
 .optrow > div:first-child{flex:1;min-width:0}
+.disc{margin:8px 0 2px;padding:10px 12px;background:var(--cream);border-radius:12px}
+.disc .sbl{display:block;margin-bottom:4px}
+.dsc{padding:7px 0;border-top:1px solid var(--line)}
+.disc .sbl + .dsc{border-top:0}
+.dsc-h{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:300;color:var(--g700)}
+.dsc-h b{font-weight:500;color:var(--ink);white-space:nowrap}
+.dsc ul{margin-top:3px;display:grid;gap:1px}
+.dsc li{font-size:11.5px;color:var(--g600);font-weight:300;line-height:1.45;padding-left:10px;position:relative;display:flex;justify-content:space-between;gap:10px}
+.dsc li small{font-size:11px;color:var(--g500)}
+.dsc li > b{font-weight:500;color:var(--g700);white-space:nowrap}
+.dsc.new{margin:4px -8px;padding:9px 8px;border:1px solid var(--gold);border-radius:10px;background:var(--paper)}
+.dsc.new + .dsc{border-top:0}
+.dsc-new{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-dark);margin-bottom:4px}
+.lic-gain .lg-h{display:flex;justify-content:space-between;gap:10px;margin-top:10px;padding-top:8px;border-top:1px solid rgba(0,0,0,.08);font-weight:500;color:var(--ink)}
+.lic-gain .lg-h b{font-size:16px}
+.lic-gain .lg-l{list-style:none;margin:6px 0;padding:0;display:grid;gap:4px}
+.lic-gain .lg-l li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px}
+.lic-gain .lg-l i{font-style:normal;color:var(--g600)}
+.lic-gain .lg-l small{color:var(--g600)}
+.lic-gain .lg-l b{white-space:nowrap}
+.lic-gain .lg-t{display:block;font-size:12.5px;margin-top:4px}
+.dsc li::before{content:"";position:absolute;left:0;top:.62em;width:4px;height:1px;background:var(--g500)}
+.dsc-t{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line-2);margin-top:4px;padding-top:8px;font-size:13px}
+.dsc-t b{font-weight:500}
+.plink{padding:20px;margin-bottom:18px;border-color:var(--gold-light)}
+.pl-l{display:grid;border-top:1px solid var(--line)}
+.pl-l li{display:grid;grid-template-columns:minmax(0,1fr) auto 76px;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:300}
+.pl-l b{font-weight:500}
+.pl-l em{font-style:normal;font-size:11px;text-align:right;color:var(--terra)}
+.pl-l em.ok{color:var(--g500)}
+.steps{display:grid;gap:2px}
+.dws{margin:16px 0 4px}
+.dws-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.dws-h .lnk{font-size:12.5px}
+.dws-c{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:8px}
+.dws-i{width:64px;height:64px;border-radius:10px;flex:none;background:var(--sand) center/cover}
+.dws-c > div{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.dws-c .tag{align-self:flex-start;font-size:9px;padding:3px 8px}
+.dws-c b{font-size:13.5px;font-weight:500;line-height:1.3}
+.dws-c .mut{font-size:12.5px}
+.dws-c .btn{flex:none}
+.hdl{padding:0;overflow:hidden;margin-bottom:22px;border-color:var(--gold-light)}
+.hdl-h{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding:26px 20px 18px;background:center/cover;color:#fff;min-height:140px}
+.hdl-h::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,12,.15),rgba(20,16,12,.72))}
+.hdl-h > *{position:relative}
+.hdl-h .eyebrow{color:var(--gold-light)}
+.hdl-h b{display:block;margin:4px 0;color:#fff;font-weight:300}
+.hdl-h span:last-child{font-size:12.5px;opacity:.9;font-weight:300}
+.hdl-h .lnk{color:#fff;text-decoration-color:#fff;font-size:12px}
+.hdl-c{padding:16px 20px;border-top:1px solid var(--line)}
+.hdl-c:first-of-type{border-top:0}
+.hdl-l{display:flex;align-items:center;gap:14px;width:100%;padding:12px 16px 12px 12px;margin-bottom:22px;text-align:left}
+.hdl-l .hdl-i{width:64px;height:48px;border-radius:10px;flex:none;background:center/cover}
+.hdl-l > span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hdl-l > .lnk{flex:none;font-size:12.5px}
+.perk-ck{margin:2px 0 4px;font-size:12.5px;color:var(--ink)}
+.perk{margin-top:5px;font-size:12px;line-height:1.45;color:var(--gold-dark);font-weight:400}
+.clubcfg{display:grid;gap:8px;margin:-4px 0 14px;padding:10px 12px;background:var(--cream);border-radius:12px}
+.cc-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cc-row > .mut{min-width:56px;font-size:12.5px}
 .sumline{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:6px 0;color:var(--g700);font-weight:300}
 .sumline b{color:var(--ink);white-space:nowrap;font-weight:500}
 .sumtot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line);margin-top:12px;padding-top:14px}
@@ -451,15 +511,43 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .pack .foot{margin-top:auto;padding-top:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;border-top:1px solid var(--line)}
 
 /* panier & maintien */
-.hold{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid #EAD9AD;background:#FBF3DF;border-radius:14px;
-  padding:11px 16px;font-size:13px;color:#5C4A28;margin-bottom:20px;line-height:1.5;font-weight:300}
-.hold::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(190,155,69,.2);flex:none;animation:pulse 1.6s infinite}
+.hold{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1.5px solid var(--gold);background:#F8EBC8;border-radius:14px;
+  padding:14px 18px;font-size:14px;color:var(--ink);margin-bottom:20px;line-height:1.5;font-weight:400;box-shadow:0 4px 16px rgba(190,155,69,.22)}
+.hold::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(190,155,69,.25);flex:none;animation:pulse 1.6s infinite}
+.hold .holdTimer{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:1px 10px;font-weight:600;letter-spacing:.5px}
 @keyframes pulse{50%{box-shadow:0 0 0 8px rgba(190,155,69,0)}}
 .hold span:nth-child(2){flex:1;min-width:200px}
 .hold b{color:var(--ink);font-weight:500}
 .hold .holdTimer{font-variant-numeric:tabular-nums}
-.hold.dead{border-color:#EBCDBB;background:var(--terra-soft)}
-.hold.dead::before{background:var(--terra);animation:none;box-shadow:none}
+.hold.dead{border-color:var(--terra);background:#F6D9CB;color:#4b2914;box-shadow:0 4px 16px rgba(176,90,50,.22)}
+.hold.dead::before{content:"!";width:26px;height:26px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;background:var(--terra);animation:none;box-shadow:none}
+.hold.dead b{color:#4b2914;font-weight:600}
+.mvp{align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.mvp:first-child{border-top:0}
+.req{color:var(--terra);font-weight:600;margin-left:2px}
+.field.bad input{border-color:var(--terra)}
+.ferr{display:block;color:var(--terra);font-size:12px;margin-top:6px}
+.pwr{list-style:none;display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;padding:0;font-size:12px;color:var(--g500)}
+.pwr li::before{content:'○';margin-right:5px}
+.pwr li.ok{color:var(--green)}
+.pwr li.ok::before{content:'✓'}
+.ktip{display:flex;flex-direction:column;gap:4px;align-items:flex-start;margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--gold-soft);font-size:12.5px;line-height:1.5;color:var(--g700)}
+.ktip b{color:var(--ink);font-weight:500;font-size:13px}
+.lic-soon .ic{background:var(--terra-soft);color:var(--terra)}
+.infos .col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.kv{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.kv:first-of-type{border-top:0}
+.kv b{font-weight:500;overflow-wrap:anywhere}
+.vis{display:flex;flex-direction:column;gap:10px;background:var(--cream);border-radius:12px;padding:12px 14px}
+.vis-r{display:flex;gap:11px;align-items:flex-start;font-size:13.5px}
+.vis-r small{display:block;color:var(--g600);font-size:12.5px;margin-top:1px}
+.vis-r .ic{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:var(--line);color:var(--g600)}
+.vis-r .ic.ok{background:var(--green);color:#fff}
+.wrow{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+.wrow:first-child{border-top:0}
+.wrow > div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.wrow .btn{flex:none}
+@media (max-width:640px){.wrow{flex-wrap:wrap}.wrow > .tag{order:0}.wrow .btn{width:100%}}
 .cline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
 .cline:first-child{border-top:0;padding-top:6px}
 .cline .cl-p{text-align:right}
@@ -541,6 +629,8 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .dw-f{flex:none;background:#fff;border-top:1px solid var(--line);padding:14px 20px 18px}
 .dw-f .sumtot{margin-top:6px;padding-top:12px}
 .dw-btn{display:grid;gap:8px;margin-top:14px}
+.dw-f .dw-btn{grid-template-columns:1fr 1fr;margin-top:12px}
+.dw-f .dw-btn .btn{padding:13px 8px;font-size:10.5px;letter-spacing:1.1px}
 .dw-ok{display:flex;align-items:center;gap:12px;background:var(--gold-soft);border:1px solid var(--gold-light);border-radius:14px;padding:11px 14px;margin-bottom:16px}
 .dw-ok i{width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-style:normal;font-size:13px;flex:none}
 .dw-ok b{display:block;font-size:13.5px}
@@ -584,6 +674,9 @@ body.cbar .frame:has(> .stage[data-vp="mobile"]) .appfoot{padding-bottom:88px}
 .appfoot .inner{display:flex;gap:28px;flex-wrap:wrap;align-items:center}
 .appfoot img{height:34px;filter:brightness(0) invert(1);opacity:.85}
 .appfoot span:first-of-type{margin-right:auto}
+.mailok{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 14px;border-radius:12px;background:var(--gold-soft);color:var(--ink);font-size:13.5px;font-weight:300}
+.mailok svg{flex:none;color:var(--gold-dark)}
+.mailok b{font-weight:500}
 .okmark{width:64px;height:64px;border-radius:50%;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:28px;margin-bottom:14px}
 
 /* bouton discret de présentation : bascule desktop / cadre mobile */
@@ -614,6 +707,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .seg2{display:inline-flex;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%}
 .seg2 button{flex:none;padding:7px 12px;border-radius:999px;font-size:12.5px;color:var(--g700);white-space:nowrap;transition:.15s}
 .seg2 button:hover{color:var(--ink)}
+.seg2.hsel{display:flex;width:max-content;margin-top:10px}
 .seg2 button.on{background:#fff;color:var(--ink);font-weight:500;box-shadow:0 1px 4px rgba(34,28,21,.14)}
 .calpop{position:absolute;top:calc(100% + 10px);left:0;z-index:30;width:380px;max-width:100%;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);padding:18px;animation:fade .2s ease}
 .calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -636,6 +730,9 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .daynav .calnav{flex:none}
 
 /* réservation de groupe (5 à 12 joueurs) */
+.alert.bigg{align-items:center;margin:-4px 0 20px}
+.alert.bigg .btn{flex:none}
+@media (max-width:640px){.alert.bigg{flex-wrap:wrap}.alert.bigg .btn{width:100%}}
 .pxg{display:flex;align-items:center;height:36px;border:1.5px solid var(--line);border-radius:999px;background:#fff;flex:none;overflow:hidden}
 .pxg .pxg-open{padding:0 13px;height:100%;font-size:12.5px;font-weight:500;white-space:nowrap}
 .pxg .pxg-open:hover{color:var(--gold-dark)}
@@ -1015,6 +1112,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   <section class="screen" id="sc-checkout" data-title="Checkout — compte & paiement"><div class="pad" id="v-checkout"></div></section>
   <section class="screen" id="sc-confirm" data-title="Confirmation"><div class="pad" id="v-confirm"></div></section>
   <section class="screen" id="sc-espace" data-title="Espace personnel"><div class="pad" id="v-espace"></div></section>
+  <section class="screen" id="sc-gf-move" data-title="Espace personnel — déplacer un départ"><div class="pad" id="v-gf-move"></div></section>
 
   <footer class="appfoot"><div class="inner"><img data-logo src="" alt=""><span>Le Touquet Golf Resort · Avenue du Golf, 62520 Le Touquet-Paris-Plage · 03 21 06 28 00</span><span>CGV</span><span>Mentions légales</span><span>Contact</span></div></footer>
 </div>
@@ -1061,28 +1159,28 @@ const fidx=v=>v==null?'—':v.toFixed(1).replace('.',',');
 /* ═════════ Statuts & comptes de démonstration ═════════ */
 const ST={
   visiteur:{n:'Prix public',s:'Aucun statut'},
-  abonne:  {n:'Abonné Le Touquet',s:'Forêt & Manoir inclus · La Mer à 60 € · cours −20 %'},
+  abonne:  {n:'Abonné Le Touquet',s:'Forêt & Manoir inclus · La Mer à 60 € · voiturette et seau inclus · cours −20 %'},
   reseau:  {n:'Membre réseau RGC',s:'−40 % sur les green fees · cours −10 %'},
   jeune:   {n:'Jeune −26 ans',s:'−50 % sur les green fees · cours −30 %'},
   senior:  {n:'Senior 65 ans +',s:'−35 % sur les green fees du lundi au vendredi'},
   licencie:{n:'Licencié FFGolf',s:'−30 % sur les green fees'}};
-const P=(o)=>Object.assign({partners:[],credits:{},avoir:0,avoirEnd:null},o);
+const P=(o)=>Object.assign({partners:[],credits:{},avoir:0,avoirEnd:null,wallet:0},o);
 const SEED_PROFILES={
   claire: P({id:'claire',n:'Claire Dumas',ini:'CD',email:'claire.dumas@email.fr',dob:'1982-04-11',st:['abonne','licencie'],
-    lic:'8412337',idx:14.2,cert:'2027-03-02',home:'Abonnement 7 j/7 · Le Touquet Golf Resort · 2026',
-    credits:{30:{left:3,tot:5,end:'2027-02-14'}},avoir:25,avoirEnd:'2027-06-30',partners:['paul','jules','sophie'],
+    lic:'108412337',licEnd:'2026-12-31',idx:14.2,cert:'2027-03-02',tel:'06 12 48 90 37',addr:'14 avenue du Général de Gaulle, 62520 Le Touquet-Paris-Plage',club:'Le Touquet Golf Resort',home:'Abonnement 7 j/7 · Le Touquet Golf Resort · 2026',
+    credits:{30:{left:3,tot:5,end:'2027-02-14'}},avoir:25,avoirEnd:'2027-06-30',wallet:60,partners:['paul','jules','sophie'],
     rel:{paul:'Conjoint·e',jules:'Enfant',sophie:'Ami·e'}}),
   marc:   P({id:'marc',n:'Marc Lefèvre',ini:'ML',email:'marc.lefevre@email.fr',dob:'1975-09-02',st:['reseau','licencie'],
-    lic:'7203318',idx:22.5,cert:'2026-08-30',home:'Abonné du Golf d\'Hardelot · réciprocité Collection',partners:['claire'],rel:{claire:'Ami·e'}}),
+    lic:'107203318',licEnd:'2026-10-31',idx:22.5,cert:'2026-08-30',tel:'06 71 22 05 64',addr:'3 rue Saint-Jean, 62200 Boulogne-sur-Mer',club:'Golf d\'Hardelot',home:'Abonné du Golf d\'Hardelot · réciprocité Collection',partners:['claire'],rel:{claire:'Ami·e'}}),
   leo:    P({id:'leo',n:'Léo Garnier',ini:'LG',email:'leo.garnier@email.fr',dob:'2007-05-19',st:['jeune','licencie'],
-    lic:'9931045',idx:8.4,cert:'2027-01-10',home:'Tarif jeune jusqu\'au 19/05/2033'}),
+    lic:'109931045',licEnd:'2026-12-31',idx:8.4,cert:'2027-01-10',tel:'07 58 13 44 90',addr:'27 rue de Metz, 62520 Le Touquet-Paris-Plage',club:'Le Touquet Golf Resort',home:'Tarif jeune jusqu\'au 19/05/2033'}),
   bernard:P({id:'bernard',n:'Bernard Roux',ini:'BR',email:'bernard.roux@email.fr',dob:'1958-02-07',st:['senior','licencie'],
-    lic:'5520871',idx:31.0,cert:'2027-05-20',home:'Tarif senior · jours de semaine',partners:['sophie'],rel:{sophie:'Famille'}}),
+    lic:'105520871',licEnd:'2026-12-31',idx:31.0,cert:'2027-05-20',tel:'06 09 87 31 12',addr:'8 allée des Pins, 62780 Cucq',club:'Golf de Belle Dune',home:'Tarif senior · jours de semaine',partners:['sophie'],rel:{sophie:'Famille'}}),
   sophie: P({id:'sophie',n:'Sophie Marchand',ini:'SM',email:'sophie.marchand@email.fr',dob:'1988-11-23',st:['licencie'],
-    lic:'8830412',idx:12.7,cert:'2027-02-01',home:'Licenciée FFGolf · sans abonnement',share:true}),
+    lic:'108830412',licEnd:'2026-12-31',idx:12.7,cert:'2027-02-01',tel:'06 44 70 18 25',addr:'52 rue Nationale, 59000 Lille',club:'Golf de Brigode',home:'Licenciée FFGolf · sans abonnement',share:true}),
   paul:   P({id:'paul',n:'Paul Dumas',ini:'PD',email:'paul.dumas@email.fr',dob:'1979-07-30',st:['licencie'],
-    lic:'8412338',idx:24.0,cert:'2027-01-15',home:'Licencié FFGolf',hidden:true,share:true}),
-  jules:  P({id:'jules',n:'Jules Dumas',ini:'JD',dob:'2015-03-08',st:['jeune','licencie'],lic:'9912004',idx:42.0,cert:'2027-04-10',
+    lic:'108412338',idx:24.0,cert:'2027-01-15',home:'Licencié FFGolf',hidden:true,share:true}),
+  jules:  P({id:'jules',n:'Jules Dumas',ini:'JD',dob:'2015-03-08',st:['jeune','licencie'],lic:'109912004',idx:42.0,cert:'2027-04-10',
     home:'Profil rattaché au compte de Claire Dumas',hidden:true,dep:true})};
 const DEMO=['claire','marc','leo','bernard','sophie'];
 
@@ -1094,7 +1192,9 @@ const IMG={hero:IMGB+'2023/03/le-touquet-golf-resort.jpg',mer:IMGB+'2021/03/golf
   range:IMGB+'2025/12/Practice-Trackman-LTQ-4.jpg',putting:IMGB+'2022/12/putting-green-le-touquet-golf-modifiee.png',
   comp:IMGB+'2026/09/Photo-Background-Cleanup.png',links:IMGB+'2023/07/parcours-18-trous-touquet.jpg',
   decouverte:IMGB+'2021/02/Golf-du-Touquet-Practice-Driving-range.jpg'};
-const CRSIMG={mer:IMG.mer2,foret:IMG.foret,manoir:IMG.manoir};
+const CRSIMG={mer:IMG.mer2,foret:IMG.foret,manoir:IMG.manoir,
+  dunes:'https://www.resonance.golf/wp-content/uploads/2020/07/golf_hardelot_les_dunes_trou_18-1920x1080.jpg',
+  pins:'https://www.resonance.golf/wp-content/uploads/2020/07/golf_hardelot_les_dunes_trou_18-1920x1080.jpg'};
 const COMPIMG={automne:IMG.links,seniors:IMG.foret,proam:IMG.comp,jeunes:IMG.manoir,toussaint:IMG.links,noel:IMG.foret};
 const TAGIMG={'Green fee':IMG.links,'Compétition':IMG.comp,'Cours':IMG.acad,'Cours collectif':IMG.putting,'Carnet':IMG.range,'Stage':IMG.stage,'Carte & Pass':IMG.mer2};
 const cap=x=>x[0].toUpperCase()+x.slice(1);
@@ -1103,15 +1203,28 @@ const bg=u=>`background-image:url('${u}')`;
 /* Cadences du planning v2 : La Mer toutes les 10 min, La Forêt et Le Manoir
    toutes les 9 min, Le Manoir décalé de −5 min (starter commun). */
 const CRS=[
-  {id:'mer',n:'La Mer',t:'18 trous · par 72 · links',p:120,we:20,cad:10,from:'08:00',to:'16:00',idxMax:30},
-  {id:'foret',n:'La Forêt',t:'18 trous · par 71',p:85,we:10,cad:9,from:'08:00',to:'16:06'},
+  {id:'mer',n:'La Mer',t:'18 trous · par 72 · links',p:120,we:20,p9:70,we9:10,cad:10,from:'08:00',to:'16:00',idxMax:30},
+  {id:'foret',n:'La Forêt',t:'18 trous · par 71',p:85,we:10,p9:50,we9:5,cad:9,from:'08:00',to:'16:06'},
   {id:'manoir',n:'Le Manoir',t:'9 trous · par 32',p:38,we:0,cad:9,from:'07:55',to:'17:01',nine:true}];
-const crs=id=>CRS.find(c=>c.id===id);
+/* Golf d'Hardelot (Collection, à 20 min) : proposé quand Le Touquet n'a
+   pas le créneau cherché (retour du 24/09). Même panier, même paiement. */
+const HCRS=[
+  {id:'dunes',site:'hardelot',n:'Les Dunes',t:'Golf d\'Hardelot · 18 trous',p:110,we:15,cad:10,from:'08:00',to:'16:00'},
+  {id:'pins',site:'hardelot',n:'Les Pins',t:'Golf d\'Hardelot · 18 trous',p:95,we:15,cad:10,from:'08:05',to:'16:05'}];
+const crs=id=>CRS.find(c=>c.id===id)||HCRS.find(c=>c.id===id);
+/* La Mer et La Forêt se réservent aussi en 9 trous (retour du 24/09) :
+   même grille de départs, tarif 9 trous. Le Manoir reste un 9 trous. */
+const crsV=(id,h9)=>{const c=crs(id);return h9&&c.p9?{...c,p:c.p9,we:c.we9,nine:true,h9:true,t:'9 trous · '+c.n}:c};
+const fN=f=>crs(f.crs).n+(f.h9?' 9 T':'')+(crs(f.crs).site?' (Hardelot)':'');
 const GOPTS=[
-  {id:'voit',n:'Voiturette',d:'2 places · GPS de parcours',p:45,p9:25,pa:30,per:'voit'},
+  {id:'voit',n:'Voiturette',d:'2 places · GPS de parcours',p:45,p9:25,pa:0,per:'voit'},
   {id:'chariot',n:'Chariot électrique',d:'Batterie chargée, à retirer au starter',p:15,pa:10,per:'j'},
-  {id:'clubs',n:'Location de clubs',d:'Série complète, droitier ou gaucher',p:40,per:'j'},
+  {id:'clubs',n:'Location de clubs',d:'Série complète · droitier ou gaucher, homme ou femme',p:40,per:'j'},
   {id:'seau',n:'Seau de practice',d:'50 balles avant le départ',p:5,pa:0,per:'j'}];
+/* location de clubs : chaque série se configure (main, modèle) */
+const CLUBH=[['D','Droitier'],['G','Gaucher']], CLUBG=[['H','Homme'],['F','Femme']];
+const clubCfg=(fo,q)=>{const a=(fo.clubsCfg||[]).slice(0,q);while(a.length<q)a.push({h:'D',g:'H'});return a};
+const clubTxt=c=>(c.h==='D'?'droitier':'gaucher')+' '+(c.g==='H'?'homme':'femme');
 const PROS={
   jcm:{n:'Jean-Charles Martin',t:'Pro PGA',days:[1,2,3,4,5,6]},
   lou:{n:'Lou Castel',t:'Pro PGA',days:[0,3,4,5,6]}};
@@ -1154,7 +1267,7 @@ function gfPrice(c,k,sts){
   const base=gfPub(c,k);let best={p:base,st:null};
   (sts||[]).forEach(s=>{
     let p=base;
-    if(s==='abonne')p=c.id==='mer'?60:0;
+    if(s==='abonne')p=c.site?base*.6:c.id==='mer'?(c.h9?30:60):0;
     else if(s==='reseau')p=base*.6;
     else if(s==='jeune')p=base*.5;
     else if(s==='senior')p=isWe(k)?base:base*.65;
@@ -1176,10 +1289,27 @@ function stagePrice(s,sts){
   (sts||[]).forEach(x=>{if(k[x]){const p=Math.round(s.p*k[x]);if(p<best.p)best={p,st:x}}});
   return {...best,pub:s.p};
 }
+/* options : tarif d'UN joueur selon SON statut. Abonné Le Touquet :
+   voiturette (sa place) et seau inclus dans la cotisation, chariot à 10 €. */
 function optPrice(o,c,sts){
   const base=c&&c.nine&&o.p9!=null?o.p9:o.p;
-  if((sts||[]).includes('abonne')&&o.pa!=null)return {p:c&&c.nine&&o.id==='voit'?15:o.pa,pub:base,st:'abonne'};
+  if((sts||[]).includes('abonne')&&o.pa!=null&&!(c&&c.site))return {p:o.pa,pub:base,st:'abonne'};
   return {p:base,pub:base,st:null};
+}
+/* Répartit les options d'un départ entre ses joueurs : ceux pour qui
+   l'option est incluse ou remisée la reçoivent d'abord, les autres paient
+   le prix public. Voiturette : pas de notion de place — elle se paie
+   entière, sauf si un abonné choisit de la prendre avec son abonnement
+   (une voiturette par abonné, case à décocher dans les options). */
+function optSplit(op,c,ps,q,o){
+  const L=ps.map(x=>({...x,x:optPrice(op,c,x.pi.st)})), perk=L.filter(x=>x.x.p<x.x.pub);
+  const order=[...perk,...L.filter(x=>!(x.x.p<x.x.pub))], units=[];
+  if(op.per==='voit'){
+    const pub=optPrice(op,c,[]).pub, off=(o&&o.noAbo)||{}, H=perk.filter(x=>!off[x.i]);
+    for(let v=0;v<q;v++){const h=H[v];
+      units.push(h?{who:h.pi.n,you:h.pi.you&&!h.pi.anon,p:h.x.p,pub,st:h.x.st}:{who:null,p:pub,pub,st:null})}
+  } else order.slice(0,q).forEach(x=>units.push({who:x.pi.n,you:x.pi.you&&!x.pi.anon,p:x.x.p,pub:x.x.pub,st:x.x.p<x.x.pub?x.x.st:null}));
+  return units;
 }
 /* compétition : droit de jeu + green fee du jour ; l'abonné ne paie que le droit de jeu */
 function compPrice(cp,sts){
@@ -1207,12 +1337,14 @@ function seedRes(){
   return {
     claire:[
       {id:'r1',kind:'ind',t:'Cours individuel · 30 min',sub:'Jean-Charles Martin · practice',d:'2026-09-18',h:'10:00',pay:'credit',amount:0},
-      {id:'r2',kind:'gf',t:'Green fee · La Forêt',sub:'2 joueurs · Claire Dumas, Paul Dumas · 1 voiturette',d:'2026-09-21',h:'08:18',pay:'card',amount:98},
+      {id:'r2',kind:'gf',t:'Green fee · La Forêt',sub:'2 joueurs · Claire Dumas, Paul Dumas · 1 voiturette (abonnement)',d:'2026-09-21',h:'08:18',pay:'card',amount:59,
+       crs:'foret',players:[{type:'self',paid:0},{type:'acc',id:'paul',paid:59}],opts:'1 voiturette (abonnement)'},
       {id:'r3',kind:'comp',t:'Coupe d\'Automne',sub:'Série dames · départ souhaité : tôt',d:'2026-10-04',h:'08:00',close:'2026-10-01',pay:'card',amount:25},
       {id:'r4',kind:'gf',t:'Green fee · La Mer',sub:'1 joueur · Claire Dumas',d:'2026-09-06',h:'09:40',pay:'card',amount:60,past:true},
       {id:'r5',kind:'ind',t:'Cours individuel · 30 min',sub:'Jean-Charles Martin',d:'2026-09-02',h:'11:00',pay:'credit',amount:0,past:true}],
     marc:[
-      {id:'r6',kind:'gf',t:'Green fee · La Mer',sub:'2 joueurs · Marc Lefèvre, Claire Dumas',d:'2026-09-26',h:'10:20',pay:'card',amount:144},
+      {id:'r6',kind:'gf',t:'Green fee · La Mer',sub:'2 joueurs · Marc Lefèvre, Claire Dumas',d:'2026-09-26',h:'10:20',pay:'card',amount:144,
+       crs:'mer',players:[{type:'self',paid:84},{type:'acc',id:'claire',paid:60}]},
       {id:'r7',kind:'comp',t:'Pro-Am de la Collection',sub:'Liste d\'attente · position 2',d:'2026-10-17',h:'09:00',close:'2026-10-10',pay:'wait',amount:0,wait:2}],
     leo:[{id:'r8',kind:'gf',t:'Green fee · La Mer',sub:'1 joueur',d:'2026-08-29',h:'15:10',pay:'card',amount:70,past:true}],
     bernard:[{id:'r9',kind:'coll',t:'Atelier petit jeu',sub:'Jean-Charles Martin · 1 h',d:'2026-09-19',h:'10:00',pay:'card',amount:30}],
@@ -1222,11 +1354,11 @@ function fresh(){
   PROFILES=JSON.parse(JSON.stringify(SEED_PROFILES));
   COMPS_SEED.forEach(x=>Object.assign(comp(x.id),{taken:x.taken,wait:x.wait}));
   return {user:null,
-    gf:{date:'2026-09-24',pax:2,moment:'all',crs:null,t:null,players:[],fopts:[{}],idxOk:false,editOf:null},
+    gf:{date:'2026-09-24',pax:2,h9:{},moment:'all',crs:null,t:null,players:[],fopts:[{}],idxOk:false,editOf:null},
     comp:{filter:'all',id:null,partner:null,split:'me',pref:'indiff',wait:false},
     cours:{tab:'ind',th:'all',pro:'any',dur:30,wk:0,slot:null,useCredit:true},
     cart:[],promo:null,promoErr:'',useAvoir:true,lastAdded:null,
-    co:{mode:'login',guest:false,cgv:false,garantie:false,newAcc:{}},
+    co:{mode:'login',guest:false,cgv:false,garantie:false,newAcc:{},pay:'all',wallet:false,gift:null,giftErr:''},
     space:'resa',resTab:'avenir',res:seedRes(),done:null,ref:1040};
 }
 const me=()=>S.user?PROFILES[S.user]:null;
@@ -1294,7 +1426,7 @@ function pbar(ctx,chips){
       <div class="pb-a"><button class="btn sm" data-act="login">Me connecter</button>
       <button class="lnk pb-long" data-act="signup">Créer un compte</button></div></div>`;
   return `<div class="pbar on"><span class="av">${u.ini}</span><div class="pb-long"><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}<br>
-      Vos tarifs sont appliqués. Quand vous cumulez plusieurs statuts, le plus avantageux l'emporte.</div>
+      Vos tarifs sont appliqués. Quand vous cumulez plusieurs statuts, le tarif le plus avantageux est appliqué.</div>
       <div class="pb-short"><span class="stl" style="margin:0">Vos tarifs ${u.st.length>1?'membre':ST[u.st[0]].n} appliqués</span></div>
       <button class="lnk" data-go="espace">Mon espace</button></div>`;
 }
@@ -1324,6 +1456,7 @@ ACT.loginAs=a=>{closeSheet();login(a.dataset.id)};
 function login(id){
   const before=cartTotals().due;
   S.user=id||null;
+  if(id)S.useAvoir=PROFILES[id].avoirAuto!==false;
   S.gf.players.forEach(p=>{if(p.type==='acc'&&p.id===id)p.type='self'});
   S.co.guest=false;
   const after=cartTotals().due;
@@ -1340,46 +1473,101 @@ ACT.signup=()=>{
    `<button class="btn full" style="margin-top:6px" data-act="signupGo">Créer mon compte</button>`);
   bindSignup();
 };
+const REQ='<b class="req" aria-hidden="true">*</b>';
+const mailOk=m=>/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test((m||'').trim());
+const telOk=t=>/^(\+33\s?|0)[1-9](\s?\d{2}){4}$/.test((t||'').trim())||/^\+\d[\d\s]{7,16}$/.test((t||'').trim());
+const PWR=[['len','12 caractères minimum',p=>p.length>=12],['up','Une majuscule',p=>/[A-Z]/.test(p)],['low','Une minuscule',p=>/[a-z]/.test(p)],['dig','Un chiffre',p=>/\d/.test(p)]];
+const pwOk=p=>PWR.every(r=>r[2](p||''));
+function pwRules(p){return PWR.map(([k,n,f])=>`<li class="${f(p||'')?'ok':''}">${n}</li>`).join('')}
 function signupForm(){
-  const a=S.co.newAcc;
-  return `<p class="sub" style="margin:4px 0 14px">Deux informations suffisent à calculer votre tarif : votre date de naissance (tarifs jeune et senior) et votre numéro de licence FFGolf.</p>
+  const a=S.co.newAcc, e=a.err||{};
+  const er=k=>e[k]?`<small class="ferr">${e[k]}</small>`:'';
+  return `<p class="sub" style="margin:4px 0 6px">Deux informations suffisent à calculer votre tarif : votre date de naissance (tarifs jeune et senior) et votre numéro de licence FFGolf.</p>
+   <p class="mut" style="margin:0 0 14px;font-size:12px">${REQ} Champs obligatoires</p>
    <div class="grid g2" style="gap:0 12px">
-     <label class="field"><span>Prénom</span><input id="suFn" value="${a.fn||''}"></label>
-     <label class="field"><span>Nom</span><input id="suLn" value="${a.ln||''}"></label></div>
-   <label class="field"><span>E-mail</span><input id="suMail" type="email" value="${a.mail||''}"></label>
-   <label class="field"><span>Date de naissance</span><input id="suDob" type="date" value="${a.dob||''}"></label>
+     <label class="field ${e.fn?'bad':''}"><span>Prénom ${REQ}</span><input id="suFn" value="${a.fn||''}" autocomplete="given-name">${er('fn')}</label>
+     <label class="field ${e.ln?'bad':''}"><span>Nom ${REQ}</span><input id="suLn" value="${a.ln||''}" autocomplete="family-name">${er('ln')}</label></div>
+   <div class="grid g2" style="gap:0 12px">
+     <label class="field ${e.mail?'bad':''}"><span>E-mail ${REQ}</span><input id="suMail" type="email" value="${a.mail||''}" placeholder="vous@exemple.fr" autocomplete="email">${er('mail')}</label>
+     <label class="field ${e.tel?'bad':''}"><span>Téléphone ${REQ}</span><input id="suTel" type="tel" value="${a.tel||''}" placeholder="06 12 34 56 78" autocomplete="tel">${er('tel')}</label></div>
+   <label class="field ${e.dob?'bad':''}"><span>Date de naissance ${REQ}</span><input id="suDob" type="date" value="${a.dob||''}">${er('dob')}</label>
    <label class="field"><span>N° de licence FFGolf <i style="font-style:normal;font-weight:400;color:var(--g500)">— facultatif</i></span>
-     <div class="row"><input id="suLic" inputmode="numeric" placeholder="7 à 8 chiffres" value="${a.lic||''}" style="flex:1">
+     <div class="row"><input id="suLic" inputmode="numeric" placeholder="9 chiffres" value="${a.lic||''}" style="flex:1">
        <button class="btn sm sec" data-act="suCheck" type="button">Vérifier</button></div></label>
    <div id="suLicRes">${a.licOk?licCard(a):''}</div>
-   <label class="field"><span>Mot de passe</span><input type="password" placeholder="8 caractères minimum"></label>
-   <p class="note">La vérification interroge l'espace licencié FFGolf : elle rapporte l'index et la validité du certificat médical, utiles plus tard pour les compétitions. Démo : tout numéro de 7 ou 8 chiffres est reconnu.</p>`;
+   <label class="field ${e.pw?'bad':''}"><span>Mot de passe ${REQ}</span><input id="suPw" type="password" value="${a.pw||''}" autocomplete="new-password">
+     <ul class="pwr" id="suPwR">${pwRules(a.pw)}</ul>${er('pw')}</label>
+   <div class="field ${e.rgpd?'bad':''}"><span>Consentement aux communications du groupe Resonance ${REQ}</span>
+     <p class="mut" style="margin:-2px 0 8px;font-size:12.5px">Acceptez-vous de recevoir les actualités, offres et invitations aux compétitions des golfs Resonance par e-mail et SMS&nbsp;? Modifiable à tout moment depuis votre espace.</p>
+     <div class="seg2"><button type="button" class="${a.rgpd===true?'on':''}" data-act="suRgpd" data-v="1">Oui</button><button type="button" class="${a.rgpd===false?'on':''}" data-act="suRgpd" data-v="0">Non</button></div>
+     ${er('rgpd')}
+     <p class="mut" style="margin-top:8px;font-size:12px">Vos données sont traitées par Resonance Golf Collection pour gérer vos réservations. <button type="button" class="lnk" style="font-size:12px" data-act="rgpdInfo">Politique de confidentialité</button></p></div>
+   <p class="note">Retour du 24/09 : astérisque sur les champs obligatoires, e-mail au bon format, téléphone ajouté, mot de passe obligatoire (12 caractères, une majuscule, une minuscule, un chiffre) et consentement RGPD oui/non comme sur le planning. Les erreurs s'affichent sous chaque champ au moment de valider.</p>
+   <p class="note">La vérification interroge l'espace licencié FFGolf : elle rapporte l'index et la validité du certificat médical, utiles plus tard pour les compétitions.</p>`;
+}
+/* statuts qu'aura le futur compte (licence vérifiée + âge si la date est saisie) */
+function newSt(a){
+  const st=[];
+  if(a.dob){const age=ageAt(a.dob,TODAY);if(age<26)st.push('jeune');if(age>=65)st.push('senior')}
+  if(a.licOk)st.push('licencie');
+  return st;
+}
+/* rejoue le panier avec un profil fictif pour chiffrer le gain avant même
+   la création du compte */
+function simCart(st){
+  const bak=S.user;PROFILES.__sim=P({id:'__sim',n:'Vous',st,partners:[]});S.user='__sim';
+  try{return {T:cartTotals(),D:discounts()}}finally{S.user=bak;delete PROFILES.__sim}
 }
 function licCard(a){
-  return `<div class="alert soft" style="margin-top:-4px"><span class="ic">✓</span><div><b>Licence ${a.lic} reconnue</b> · index ${fidx(a.idx)} · certificat médical valable jusqu'au ${fdm(a.cert)} 2027.<br>Le tarif Licencié FFGolf vous sera appliqué.</div></div>`;
+  const head=`<b>Licence ${a.lic} reconnue</b> · index ${fidx(a.idx)} · certificat médical valable jusqu'au ${fdm(a.cert)} 2027.`;
+  if(!S.cart.length||me())return `<div class="alert soft" style="margin-top:-4px"><span class="ic">✓</span><div>${head}<br>Le tarif Licencié FFGolf vous sera appliqué dès la création de votre compte.</div></div>`;
+  const before=cartTotals(), X=simCart(newSt(a)), gain=Math.round((before.sub-before.promo-(X.T.sub-X.T.promo))*100)/100;
+  const mine=X.D.st.filter(g=>g.who==='Vous (vous)'||g.who==='Vous');
+  return `<div class="alert soft lic-gain" style="margin-top:-4px"><span class="ic">✓</span><div>${head}
+    ${gain>0?`<div class="lg-h"><span>Sur votre panier actuel</span><b>−${eur(gain)}</b></div>
+      <ul class="lg-l">${mine.flatMap(g=>g.items.map(r=>`<li><span>${r.lbl} <i>· tarif ${ST[g.st].n}</i><br><small>${r.p===0?'inclus':eur(r.p)+' au lieu de '+eur(r.pub)}</small></span><b>−${eur(r.pub-r.p)}</b></li>`)).join('')}</ul>
+      <span class="lg-t">Votre panier passera de ${eur(before.sub-before.promo)} à <b>${eur(X.T.sub-X.T.promo)}</b> dès la création de votre compte.</span>`
+    :'<br>Le tarif Licencié FFGolf vous sera appliqué. Il ne change rien aux prestations de votre panier actuel.'}</div></div>`;
 }
 function bindSignup(){
   const a=S.co.newAcc;
-  [['suFn','fn'],['suLn','ln'],['suMail','mail'],['suDob','dob'],['suLic','lic']].forEach(([i,k])=>{
-    const el=$('#'+i);if(el)el.oninput=()=>{a[k]=el.value;if(k==='lic'){a.licOk=false;$('#suLicRes').innerHTML=''}}});
+  [['suFn','fn'],['suLn','ln'],['suMail','mail'],['suTel','tel'],['suDob','dob'],['suLic','lic'],['suPw','pw']].forEach(([i,k])=>{
+    const el=$('#'+i);if(el)el.oninput=()=>{a[k]=el.value;if(k==='lic'){a.licOk=false;$('#suLicRes').innerHTML=''}
+      if(k==='pw')$('#suPwR').innerHTML=pwRules(el.value);
+      if(k==='dob'&&a.licOk)$('#suLicRes').innerHTML=licCard(a)}});
 }
+/* ré-affiche le formulaire là où il se trouve (fenêtre ou checkout) */
+function suRepaint(){if($('#sheetBg').classList.contains('on')&&$('#suFn')){ACT.signup()}else render()}
+ACT.suRgpd=b=>{const a=S.co.newAcc;a.rgpd=b.dataset.v==='1';if(a.err)delete a.err.rgpd;
+  $$('[data-act="suRgpd"]').forEach(x=>x.classList.toggle('on',x===b))};
+ACT.rgpdInfo=()=>toast('La politique de confidentialité s\'ouvre dans un nouvel onglet.');
 ACT.suCheck=()=>{
   const a=S.co.newAcc;
-  if(!/^\d{7,8}$/.test((a.lic||'').trim())){$('#suLicRes').innerHTML='<p class="mut" style="margin:-6px 0 12px">Numéro introuvable : il compte 7 ou 8 chiffres.</p>';return}
+  if(!/^\d{9}$/.test((a.lic||'').trim())){$('#suLicRes').innerHTML='<p class="mut" style="margin:-6px 0 12px">Numéro introuvable : il compte 9 chiffres.</p>';return}
   Object.assign(a,{licOk:true,idx:18.0,cert:'2027-04-01'});
   $('#suLicRes').innerHTML=licCard(a);
 };
 function createAccount(){
   const a=S.co.newAcc;
-  if(!a.fn||!a.ln||!a.mail||!a.dob){toast('Prénom, nom, e-mail et date de naissance sont requis.');return null}
+  const e={};
+  if(!(a.fn||'').trim())e.fn='Indiquez votre prénom.';
+  if(!(a.ln||'').trim())e.ln='Indiquez votre nom.';
+  if(!mailOk(a.mail))e.mail=a.mail?'Cette adresse e-mail n\'est pas valide (ex. vous@exemple.fr).':'Indiquez votre adresse e-mail.';
+  if(!telOk(a.tel))e.tel=a.tel?'Ce numéro n\'est pas valide (ex. 06 12 34 56 78).':'Indiquez votre numéro de téléphone.';
+  if(!a.dob)e.dob='Indiquez votre date de naissance.';
+  if(!pwOk(a.pw))e.pw=a.pw?'Le mot de passe ne respecte pas encore toutes les règles.':'Choisissez un mot de passe.';
+  if(a.rgpd==null)e.rgpd='Répondez oui ou non.';
+  a.err=e;
+  if(Object.keys(e).length){suRepaint();toast('Certains champs sont à compléter.');return null}
   const age=ageAt(a.dob,TODAY), st=[];
   if(age<26)st.push('jeune');
   if(age>=65)st.push('senior');
   if(a.licOk)st.push('licencie');
   const id='new'+uid();
   PROFILES[id]=P({id,n:a.fn+' '+a.ln,ini:(a.fn[0]+a.ln[0]).toUpperCase(),email:a.mail,dob:a.dob,st,
-    lic:a.licOk?a.lic:null,idx:a.licOk?a.idx:null,cert:a.licOk?a.cert:null,home:'Compte créé le 17/09/2026'});
+    rgpd:a.rgpd,lic:a.licOk?a.lic:null,licEnd:a.licOk?'2026-12-31':null,idx:a.licOk?a.idx:null,tel:a.tel,cert:a.licOk?a.cert:null,home:'Compte créé le 17/09/2026'});
   S.res[id]=[];
+  if(S.cart.length&&st.length)S.newSt={id,st:st.slice()};
   S.co.newAcc={};
   return id;
 }
@@ -1533,7 +1721,7 @@ function gfWaitBox(c){
   return `<div class="wl">
     <div><b>${c?`Aucun départ pour ${plural(g.pax,'joueur')} ${MOMLBL[g.moment]}`:`Les trois parcours sont complets ${MOMLBL[g.moment]}`}</b>
       <span class="mut">${plural(n,'joueur suit','joueurs suivent')} ${c?'ce parcours':'cette journée'} · les annulations sont fréquentes jusqu'à la veille.</span></div>
-    ${w?`<div class="row" style="gap:12px"><span class="done-t">✓ Vous êtes en liste d'attente</span><button class="lnk" data-act="resCancel" data-id="${w.id}">Quitter</button></div>`
+    ${w?`<div class="row" style="gap:12px"><span class="done-t">✓ Vous êtes en liste d'attente</span><button class="lnk" data-act="waitQuit" data-id="${w.id}">Me désinscrire</button></div>`
       :u?`<button class="btn sm" data-act="gfWait" data-c="${id}">Me prévenir si une place se libère</button>`
         :`<button class="btn sm sec" data-act="login">Me connecter pour être prévenu·e</button>`}</div>`;
 }
@@ -1560,7 +1748,7 @@ ACT.gfWaitGo=()=>{
     sub:`Liste d'attente · ${plural(w.pax,'joueur')} · ${MOMLBL2[w.moment]}`,
     d:w.d,h:'',pay:'wait',amount:0,waitGf:{...w},fresh:true});
   closeSheet();render();
-  toast(`✓ Vous êtes en liste d'attente pour <b>${nm}</b>, ${fday(w.d)}. Nous vous prévenons dès qu'une place se libère.`);
+  toast(`✓ Vous êtes en liste d'attente pour <b>${nm}</b>, ${fday(w.d)}. Retrouvez-la dans Mon espace, où vous pouvez vous désinscrire à tout moment.`);
 };
 
 /* ═════════ Navigation du moteur : les 4 portes de février 2027 ═════════ */
@@ -1652,11 +1840,12 @@ R.gf=()=>{
   const rows=CRS.map(c=>{
     const ok=openSlots(c,g.date,grp?1:g.pax,g.moment);
     const blocked=!!(c.idxMax&&u&&u.idx>c.idxMax);
-    return {c,ok,blocked,price:gfPrice(c,g.date,st)};
+    return {c,ok,blocked,price:gfPrice(crsV(c.id,(g.h9||{})[c.id]),g.date,st)};
   });
   const tot=rows.reduce((t,r)=>t+(r.blocked?0:r.ok.length),0);
   $('#v-gf').innerHTML=`
-   ${g.editOf?`<div class="alert soft"><span class="ic">↺</span><div><b>Modification de votre départ du ${fday(g.editOf.d)} à ${g.editOf.h}</b><br>Votre départ actuel reste réservé tant que le nouveau n'est pas confirmé.</div><button class="lnk" data-act="gfEditCancel">Abandonner</button></div>`:''}
+   ${g.swap?`<div class="alert soft"><span class="ic">↺</span><div><b>Vous changez le jour ou l'horaire de votre green fee · ${crs(g.swap.crs).n}, ${fday(g.swap.d)} à ${g.swap.h}</b><br>Vos ${plural(g.swap.players.length,'joueur')} et vos options sont conservés : choisissez simplement un nouveau départ. La ligne actuelle reste dans votre panier tant que vous n'en avez pas choisi un autre.</div><button class="lnk" data-act="gfSwapCancel">Revenir au panier</button></div>`
+   :g.editOf?`<div class="alert soft"><span class="ic">↺</span><div><b>Modification de votre départ du ${fday(g.editOf.d)} à ${g.editOf.h}</b><br>Votre départ actuel reste réservé tant que le nouveau n'est pas confirmé.</div><button class="lnk" data-act="gfEditCancel">Abandonner</button></div>`:''}
    ${fil(['Départ','Joueurs & options','Panier'],0)}
    <div class="scr-head"><div><span class="eyebrow">Green fee · Le Touquet</span><h1 class="h1">Quand souhaitez-vous <b>jouer</b>&nbsp;?</h1>
      <p class="sub" style="margin-top:6px">${fday(g.date)} · ${plural(g.pax,'joueur')} · ${u?'prix à votre tarif':'prix public par joueur'}</p></div>
@@ -1668,7 +1857,7 @@ R.gf=()=>{
      <div class="sbf"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5c0-3.2 2.5-5.5 5.5-5.5s5.5 2.3 5.5 5.5"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6M17.5 14.3c1.8.7 3 2.6 3 5.2"/></svg></span>
        <div class="sbt"><span class="sbl">Joueurs · jusqu'à 12</span>
          <div class="pxs">${[1,2,3,4].map(n=>`<button class="px ${g.pax===n?'on':''}" data-act="gfPaxSet" data-n="${n}" aria-label="${plural(n,'joueur')}">${n}</button>`).join('')}
-           <div class="pxg ${grp?'on':''}">${grp?`<button data-act="gfPaxG" data-n="-1" aria-label="Un joueur de moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${g.pax}</b><button data-act="gfPaxG" data-n="1" ${g.pax>=GMAX?'disabled':''} aria-label="Un joueur de plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button>`:`<button class="pxg-open" data-act="gfPaxG" data-n="1">5 et +</button>`}</div></div></div></div>
+           <div class="pxg ${grp?'on':''}">${grp?`<button data-act="gfPaxG" data-n="-1" aria-label="Un joueur de moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${g.pax}</b><button data-act="${g.pax>=GMAX?'gfBig':'gfPaxG'}" data-n="1" aria-label="${g.pax>=GMAX?'Plus de 12 joueurs : demande de groupe':'Un joueur de plus'}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button>`:`<button class="pxg-open" data-act="gfPaxG" data-n="1">5 et +</button>`}</div></div></div></div>
      <div class="sbf"><span class="sbi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></span>
        <div class="sbt"><span class="sbl">Moment de la journée</span>
          <div class="seg2">${[['all','Journée'],['am','Matin'],['pm','Après-midi']].map(([k,n])=>`<button class="${g.moment===k?'on':''}" data-act="gfMom" data-v="${k}">${n}</button>`).join('')}</div></div></div>
@@ -1687,8 +1876,9 @@ R.gf=()=>{
    ${!grp&&!tot&&!rows.every(r=>r.blocked)?`<div class="card wlc"><div class="crs-h" style="padding:16px 0 0"><div class="crs-t"><span class="eyebrow">Journée complète</span>
      <b class="h2" style="display:block;margin-top:4px">${cap(fday(g.date))} affiche complet pour ${plural(g.pax,'joueur')}</b>
      <span class="mut">Essayez un autre jour dans le bandeau ci-dessus, ou faites-vous prévenir pour celui-ci.</span></div></div>${gfWaitBox(null)}</div>`:''}
+   ${tot?'':hdlBlock(rows,tot)}
    ${grp?groupPanel():''}
-   ${grp&&g.pax>=GMAX?`<p class="mut" style="margin:-6px 0 18px">Plus de 12 joueurs ? <button class="lnk" style="font-size:12.5px" data-act="gfBig">Faire une demande de groupe</button></p>`:''}
+   ${grp&&g.pax>=GMAX?bigBox():''}
    <div class="between" style="margin-bottom:12px"><b class="h2">${grp?`Cochez vos créneaux · ${placedN()} / ${g.pax} joueurs placés`:tot?`${plural(rows.filter(r=>r.ok.length&&!r.blocked).length,'parcours ouvert','parcours ouverts')} · ${plural(tot,'départ')}`:'Aucun départ pour ce groupe ce jour-là'}</b>
      <span class="mut">pour ${plural(g.pax,'joueur')}</span></div>
    ${rows.map(r=>{
@@ -1701,16 +1891,41 @@ R.gf=()=>{
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
        <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n}</b>
-         <span class="mut">Départ toutes les ${c.cad} min</span></div>
+         <span class="mut">Départ toutes les ${c.cad} min</span>
+         ${c.p9?`<div class="seg2 hsel" role="group" aria-label="Formule">${[['18','18 trous'],['9','9 trous']].map(([v,n])=>`<button class="${((g.h9||{})[c.id]?'9':'18')===v?'on':''}" data-act="gfHoles" data-c="${c.id}" data-v="${v}">${n}</button>`).join('')}</div>`:''}</div>
          <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}</div></div>
        ${body}</div>`}).join('')}
-   ${grp?`<div class="gbar"><div><b>${placedN()} / ${g.pax} joueurs placés · ${plural(g.flights.length,'créneau','créneaux')}</b><span class="mut">${g.flights.length?g.flights.map((f,i)=>`${crs(f.crs).n} ${f.t} (${gfSizes()[i]})`).join(' · '):'Aucun créneau sélectionné'}</span></div>
+   ${tot?hdlBlock(rows,tot):''}
+   ${grp?`<div class="gbar"><div><b>${placedN()} / ${g.pax} joueurs placés · ${plural(g.flights.length,'créneau','créneaux')}</b><span class="mut">${g.flights.length?g.flights.map((f,i)=>`${fN(f)} ${f.t} (${gfSizes()[i]})`).join(' · '):'Aucun créneau sélectionné'}</span></div>
      <button class="btn" data-act="gfGroupGo" ${placedN()>=g.pax?'':'disabled'}>Continuer</button></div>`:''}
    <p class="note">Connecté·e, le client voit qui est déjà inscrit sur chaque créneau : le nom si le joueur l'a rendu visible, sinon « Profil masqué » et son index. Survol sur desktop, détail à l'étape suivante.</p>
    <p class="note">Le prix affiché en tête de parcours est celui du client connecté. Les autres joueurs sont tarifés un par un à l'étape suivante, chacun selon son propre statut : un abonné qui invite un ami voit « Inclus » ici, mais paiera la place de l'ami.</p>
+   <p class="note">La Mer et La Forêt se réservent en 18 ou en 9 trous (retour du 24/09) : le choix se fait parcours par parcours et recalcule le prix. Hypothèse de la maquette : les départs 9 trous partent du trou 1 sur la même grille ; le planning peut les limiter à certaines plages (colonne 18T | 9T du planning v3).</p>
    <p class="note">Senior : la remise ne vaut que du lundi au vendredi. Passez sur un samedi avec Bernard Roux pour voir le prix remonter au tarif licencié.</p>`;
   decorateSlots('#v-gf');
 };
+/* Hardelot : déplié d'office quand Le Touquet n'a plus rien (ou un parcours
+   complet), sinon simple lien repliable en fin de liste. */
+function hdlBlock(rows,tot){
+  const g=S.gf, st=mySt(), grp=isGroup();
+  const strong=!tot||rows.some(r=>r.blocked||!r.ok.length), open=strong||g.hdl;
+  const H=HCRS.map(c=>({c,ok:openSlots(c,g.date,grp?1:g.pax,g.moment),price:gfPrice(c,g.date,st)})).filter(x=>x.ok.length);
+  if(!H.length)return '';
+  const from=Math.min(...H.map(x=>x.price.p));
+  if(!open)return `<button class="card hdl-l" data-act="gfHdl"><span class="hdl-i" style="${bg(CRSIMG.dunes)}"></span>
+    <span><b class="h3">Pas trouvé votre créneau&nbsp;? Voir aussi le Golf d'Hardelot</b><span class="mut">À 20 min du Touquet · ${plural(H.reduce((t,x)=>t+x.ok.length,0),'départ libre','départs libres')} ${fday(g.date)} · dès ${eur(from)}</span></span>
+    <span class="lnk">Afficher</span></button>`;
+  return `<div class="card hdl">
+    <div class="hdl-h" style="${bg(CRSIMG.dunes)}"><div><span class="eyebrow">Golf d'Hardelot · à 20 min</span>
+      <b class="h2">${strong?`${!tot?'Plus de départ':'Un parcours complet'} au Touquet&nbsp;? Hardelot a de la place ${fday(g.date)}`:`Le Golf d'Hardelot ${fday(g.date)}`}</b>
+      <span>Même panier, même paiement · ${me()?'votre tarif Collection s\'applique':'tarifs membres après connexion'}</span></div>
+      ${strong?'':'<button class="lnk" data-act="gfHdl">Masquer</button>'}</div>
+    ${H.map(x=>`<div class="hdl-c"><div class="between"><div><b class="h3">${x.c.n}</b> <span class="mut">· 18 trous · départ toutes les ${x.c.cad} min</span></div>
+      <div class="price">${pr(x.price,{small:'par joueur'})}</div></div>
+      ${grp?groupTimes(x.c,x.ok):singleTimes(x.c,x.ok)}</div>`).join('')}
+  </div>`;
+}
+ACT.gfHdl=()=>{S.gf.hdl=!S.gf.hdl;render()};
 /* meilleur prix du jour pour le client, tous parcours ouverts confondus */
 function dayBest(k){
   const u=me(), g=S.gf;
@@ -1749,6 +1964,8 @@ ACT.gfPaxG=a=>{const g=S.gf, n=+a.dataset.n;
 };
 function setPax(n){const g=S.gf;g.pax=n;g.split=null;resetFlights();render()}
 function resetFlights(){const g=S.gf;g.flights=[];g.act=0}
+ACT.gfHoles=a=>{const g=S.gf, id=a.dataset.c, on=a.dataset.v==='9';g.h9={...(g.h9||{}),[id]:on};
+  (g.flights||[]).forEach(f=>{if(f.crs===id)f.h9=on});render()};
 ACT.gfMom=a=>{S.gf.moment=a.dataset.v;resetFlights();render()};
 document.addEventListener('click',e=>{
   if(S&&S.gf.cal&&!e.target.closest('[data-calpop],[data-act="gfCal"],[data-act="gfCalM"]')){S.gf.cal=false;if(S.screen==='gf')render()}
@@ -1773,6 +1990,9 @@ function distribute(fl,n){
 }
 function gfSizes(){const g=S.gf;return isGroup()?distribute(g.flights||[],g.pax):[g.pax]}
 const placedN=()=>Math.min(S.gf.pax,(S.gf.flights||[]).reduce((t,f)=>t+capOf(f),0));
+/* au-delà de 12 : encart bien visible, juste sous le panneau de groupe */
+const bigBox=()=>`<div class="alert soft bigg"><span class="ic">+</span><div><b>Vous êtes plus de 12 joueurs&nbsp;?</b><br>La réservation en ligne s'arrête à 12. Au-delà, notre équipe groupes organise votre venue (départs à la suite ou en shotgun, repas, voiturettes) et vous répond sous 24 h ouvrées.</div>
+  <button class="btn sm" data-act="gfBig">Faire une demande de groupe</button></div>`;
 function groupPanel(){
   const g=S.gf, p=placedN(), sz=gfSizes(), min=Math.ceil(g.pax/4);
   return `<div class="card gpanel">
@@ -1781,7 +2001,7 @@ function groupPanel(){
       <p class="mut" style="margin-top:4px">4 joueurs au plus par départ : il vous faut au moins ${min} créneaux. Cochez-les ci-dessous, sur un ou plusieurs parcours ; vos joueurs y sont répartis automatiquement.</p></div>
       <span class="gp-count">${p}/${g.pax}</span></div>
     <div class="gp-bar"><i style="width:${Math.round(p/g.pax*100)}%"></i></div>
-    ${g.flights.length?`<div class="gp-sel">${g.flights.map((f,i)=>`<span class="gchip">${crs(f.crs).n} · ${f.t}<small>${plural(sz[i],'joueur')}</small><button data-act="gfTog" data-c="${f.crs}" data-t="${f.t}" aria-label="Retirer ce créneau"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"/></svg></button></span>`).join('')}</div>`:''}
+    ${g.flights.length?`<div class="gp-sel">${g.flights.map((f,i)=>`<span class="gchip">${fN(f)} · ${f.t}<small>${plural(sz[i],'joueur')}</small><button data-act="gfTog" data-c="${f.crs}" data-t="${f.t}" aria-label="Retirer ce créneau"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"/></svg></button></span>`).join('')}</div>`:''}
   </div>`;
 }
 function groupTimes(c,ok){
@@ -1801,7 +2021,7 @@ ACT.gfTog=a=>{
   if(i>=0)g.flights.splice(i,1);
   else{
     if(placedN()>=g.pax){toast(`Vos ${g.pax} joueurs sont déjà placés : retirez un créneau pour en choisir un autre.`);return}
-    g.flights.push({crs:c,t});g.flights.sort((x,y)=>x.t<y.t?-1:x.t>y.t?1:0);
+    g.flights.push({crs:c,t,h9:!!(g.h9||{})[c]});g.flights.sort((x,y)=>x.t<y.t?-1:x.t>y.t?1:0);
   }
   closeSheet();render();
 };
@@ -1810,6 +2030,7 @@ ACT.gfGroupGo=()=>{
   const players=[];let k=0;
   sz.forEach((n,f)=>{for(let j=0;j<n;j++){players.push(k===0?{type:'self',f}:{type:'guest',n:'',f});k++}});
   g.split=sz;g.players=players;applyWith();g.fopts=sz.map(()=>({}));g.idxOk=false;
+  if(swapIn(sz))toast('Nouveaux départs choisis : vos joueurs et vos options sont conservés.');
   g.crs=g.flights[0].crs;g.t=g.flights[0].t;
   go('gf-joueurs');
 };
@@ -1834,11 +2055,12 @@ ACT.gfPick=a=>{
   const g=S.gf;
   if(!a.join)g.joinWith=null;
   g.crs=a.dataset.c;g.t=a.dataset.t;g.idxOk=false;
-  g.flights=[{crs:g.crs,t:g.t}];g.split=[g.pax];
+  g.flights=[{crs:g.crs,t:g.t,h9:!!(g.h9||{})[g.crs]}];g.split=[g.pax];
   const players=[{type:'self',f:0}];
   for(let i=1;i<g.pax;i++)players.push({type:'guest',n:'',f:0});
   g.players=players;applyWith();
   g.fopts=[{}];
+  if(swapIn([g.pax]))toast('Nouveau départ choisi : vos joueurs et vos options sont conservés.');
   go('gf-joueurs');
 };
 
@@ -1853,17 +2075,28 @@ function playerInfo(p,i){
   return {n:p.n||'Joueur '+(i+1),st:[],idx:null,sub:'Invité·e sans compte · prix public',guest:true};
 }
 const flightsOf=l=>l.flights&&l.flights.length?l.flights:[{crs:l.crs,t:l.h}];
-const crsOfPlayer=(l,p)=>crs(flightsOf(l)[p.f||0].crs);
+const crsOfPlayer=(l,p)=>{const f=flightsOf(l)[p.f||0];return crsV(f.crs,f.h9)};
 const joinOf=l=>{const j=l.joinWith;return j&&flightsOf(l).some(f=>f.crs===j.crs&&f.t===j.t)?j:null};
 function gfCalc(l){
   const items=[], fl=flightsOf(l), multi=fl.length>1;
   l.players.forEach((p,i)=>{const pi=playerInfo(p,i), c=crsOfPlayer(l,p);
-    items.push({n:pi.n+(pi.you?' (vous)':'')+(multi?` · départ ${(p.f||0)+1}`:''),...gfPrice(c,l.d,pi.st),grp:'gf',f:p.f||0})});
+    items.push({n:pi.n+(pi.you?' (vous)':'')+(multi?` · départ ${(p.f||0)+1}`:''),...gfPrice(c,l.d,pi.st),grp:'gf',f:p.f||0,
+      who:pi.n+(pi.you&&!pi.anon?' (vous)':''),lbl:'Green fee '+c.n+(c.h9?' 9 trous':'')+(c.site?' · Golf d\'Hardelot':'')})});
   /* options rattachées à un départ, au tarif du parcours de ce départ */
   const fo=l.fopts||[l.opts||{}];
-  fl.forEach((f,k)=>{const c=crs(f.crs), o=fo[k]||{};
-    GOPTS.forEach(op=>{const q=o[op.id]||0;if(!q)return;const x=optPrice(op,c,mySt());
-      items.push({n:`${op.n}${c.nine&&op.id==='voit'?' 9 trous':''} × ${q}${multi?' · départ '+(k+1):''}`,p:x.p*q,pub:x.pub*q,st:x.st,grp:'gf',f:k,opt:true})})});
+  fl.forEach((f,k)=>{const c=crsV(f.crs,f.h9), o=fo[k]||{};
+    const ps=l.players.map((p,i)=>({p,i,pi:playerInfo(p,i)})).filter(x=>(x.p.f||0)===k), sfx=multi?' · départ '+(k+1):'';
+    GOPTS.forEach(op=>{const q=o[op.id]||0;if(!q)return;
+      const nm=op.n+(c.nine&&op.id==='voit'?' 9 trous':''), U=optSplit(op,c,ps,q,o);
+      const perk=U.filter(u=>u.st), pay=U.filter(u=>!u.st), cfg=op.id==='clubs'?' ('+clubCfg(o,q).map(clubTxt).join(', ')+')':'';
+      perk.forEach(u=>items.push({n:`${nm} · ${op.per==='voit'?'abonnement de ':''}${u.who}${sfx}`,p:u.p,pub:u.pub,st:u.st,who:u.who+(u.you?' (vous)':''),lbl:op.per==='voit'?nm+' prise avec l\'abonnement':nm,grp:'gf',f:k,opt:true}));
+      if(!pay.length)return;
+      const P=pay.reduce((t,u)=>t+u.p,0), names=pay.map(u=>u.who).filter(Boolean);
+      items.push({n:perk.length
+          ?(op.per==='voit'?`${nm} × ${pay.length}${sfx}`:`${nm} · ${names.join(', ')}${cfg}${sfx}`)
+          :`${nm} × ${q}${cfg}${sfx}`,
+        p:Math.round(P*100)/100,pub:Math.round(pay.reduce((t,u)=>t+u.pub,0)*100)/100,st:null,grp:'gf',f:k,opt:true});
+    })});
   return items;
 }
 /* index maximum : contrôlé joueur par joueur, sur le parcours de son départ */
@@ -1878,7 +2111,7 @@ function gfIdxState(){
 R['gf-joueurs']=()=>{
   const g=S.gf, u=me();
   if(!g.flights||!g.flights[0]){go('gf');return}
-  const fl=g.flights, multi=fl.length>1, c=crs(fl[0].crs);
+  const fl=g.flights, multi=fl.length>1, c=crsV(fl[0].crs,fl[0].h9);
   const line={d:g.date,h:g.t,crs:g.crs,players:g.players,fopts:g.fopts,flights:fl};
   const items=gfCalc(line);
   const tot=items.reduce((t,x)=>t+x.p,0), pub=items.reduce((t,x)=>t+x.pub,0);
@@ -1890,7 +2123,8 @@ R['gf-joueurs']=()=>{
       <span class="av ${pi.you&&!pi.anon?'':'lt'}">${pi.anon||pi.guest?(i+1):pi.n.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
       <div class="pb"><b>${pi.n}${pi.you&&!pi.anon?' <span class="mut">(vous)</span>':''}</b>
         <span class="mut">${pi.sub}${pi.idx!=null?' · index '+fidx(pi.idx):''}</span>
-        ${pi.anon?`<div style="margin-top:4px"><button class="lnk" style="font-size:12px" data-act="login">Me connecter pour appliquer mon tarif</button></div>`:''}</div>
+        ${pi.anon?`<div style="margin-top:4px"><button class="lnk" style="font-size:12px" data-act="login">Me connecter pour appliquer mon tarif</button></div>`:''}
+        ${pi.guest&&!(p.fn&&p.ln)?`<div style="margin-top:4px"><button class="lnk" style="font-size:12px" data-act="gfPlayer" data-i="${i}">${p.n?'Compléter son nom':'Renseigner son nom'}</button></div>`:''}</div>
       <div class="pp">${pr(x)}</div>
       ${pi.you?'':`<button class="btn sm ghost" data-act="gfPlayer" data-i="${i}">${p.type==='guest'?'Rattacher':'Changer'}</button>`}
       ${pi.you||g.players.filter(q=>(q.f||0)===(p.f||0)).length<2?'':`<button class="rm" data-act="gfDelP" data-i="${i}" title="Retirer ce joueur" aria-label="Retirer ce joueur">✕</button>`}
@@ -1905,15 +2139,15 @@ R['gf-joueurs']=()=>{
    <button class="back" data-go="gf">← ${multi?'Changer les départs':'Changer de départ'}</button>
    <div class="band" style="${bg(CRSIMG[c.id])}"><div><span class="eyebrow">${multi?'Réservation de groupe':c.t}</span>
      <h1 class="h1">${multi?`<b>${g.pax} joueurs</b> · ${fl.length} départs`:`${c.n} · <b>${g.t.replace(':',' h ')}</b>`}</h1>
-     <p class="sub" style="margin-top:6px">${cap(fday(g.date))}${multi?' · '+fl.map(f=>crs(f.crs).n+' '+f.t).join(' · '):' · '+plural(g.pax,'joueur')}</p></div></div>
+     <p class="sub" style="margin-top:6px">${cap(fday(g.date))}${multi?' · '+fl.map(f=>fN(f)+' '+f.t).join(' · '):' · '+plural(g.pax,'joueur')}</p></div></div>
      <span class="node">Tarif par joueur</span>
    ${pbar('votre place et vos options')}
    ${(()=>{const j=joinOf({...line,joinWith:g.joinWith});if(!j)return '';const pp=PROFILES[j.id], fn=pp.n.split(' ')[0];
      return `<div class="alert soft joinw"><span class="av" style="width:34px;height:34px">${pp.ini}</span><div><b>Vous rejoignez ${pp.n} · ${crs(j.crs).n} ${j.t}</b><br>
        ${fn} a déjà réservé sa place de son côté : vous ne réglez que la vôtre${g.pax>1?' et celles de vos joueurs':''}. ${fn} sera prévenu·e dès votre paiement.</div></div>`})()}
    <div class="two"><div>
-     ${multi?fl.map((f,k)=>{const fc=crs(f.crs), ps=g.players.map((p,i)=>[p,i]).filter(([p])=>p.f===k);
-       return `<div class="fhead"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fc.n} · ${f.t}</b><span class="mut">${plural(ps.length,'joueur')}${fc.idxMax?' · index ≤ '+fc.idxMax:''}</span></div></div>
+     ${multi?fl.map((f,k)=>{const fc=crsV(f.crs,f.h9), ps=g.players.map((p,i)=>[p,i]).filter(([p])=>p.f===k);
+       return `<div class="fhead"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fN(f)} · ${f.t}</b><span class="mut">${plural(ps.length,'joueur')}${fc.idxMax?' · index ≤ '+fc.idxMax:''}</span></div></div>
          ${u?occList(f):''}
          <div class="card" style="padding:6px 16px;margin-bottom:14px">${ps.map(([p,i])=>row(p,i)).join('')}${addRow(k)}</div>`}).join('')
      :`${u?occList(fl[0]):''}<div class="card" style="padding:6px 16px">${g.players.map(row).join('')}${addRow(0)}</div>`}
@@ -1924,25 +2158,34 @@ R['gf-joueurs']=()=>{
          <span>Je certifie que ${ix.unknown.length>1?'les joueurs sans index connu ont':ix.unknown[0].you?'j\'ai':ix.unknown[0].n+' a'} un index inférieur ou égal à ${ix.c.idxMax}. Il sera contrôlé au départ.</span></label>`
         :ix.over.length?'':`<p class="mut">Index vérifié pour tous les joueurs rattachés ✓</p>`}`:''}
      <div class="sect">Options${multi?' · par départ':''}</div>
-     ${fl.map((f,k)=>{const fc=crs(f.crs), n=g.players.filter(p=>(p.f||0)===k).length, fo=(g.fopts&&g.fopts[k])||{};
-       return `${multi?`<div class="fhead" style="margin-top:${k?16:0}px"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fc.n} · ${f.t}</b><span class="mut">${plural(n,'joueur')}</span></div></div>`:''}
-       <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,fc,mySt()), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
-         return `<div class="optrow"><div><b class="h3">${o.n}${fc.nine&&o.id==='voit'?' 9 trous':''}</b><div class="mut">${o.d}</div></div>
-           <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0?'Offert':eur(x.p)}<div class="mut">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
-           <div class="qty sm"><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''} aria-label="Moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="1" ${q>=mx?'disabled':''} aria-label="Plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>`}).join('')}</div>`}).join('')}
+     ${fl.map((f,k)=>{const fc=crsV(f.crs,f.h9), n=g.players.filter(p=>(p.f||0)===k).length, fo=(g.fopts&&g.fopts[k])||{};
+       return `${multi?`<div class="fhead" style="margin-top:${k?16:0}px"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fN(f)} · ${f.t}</b><span class="mut">${plural(n,'joueur')}</span></div></div>`:''}
+       <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,fc,[]), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
+         const pk=g.players.map((p,i)=>({p,i,pi:playerInfo(p,i)})).filter(y=>(y.p.f||0)===k).map(y=>({...y,x:optPrice(o,fc,y.pi.st)})).filter(y=>y.x.p<y.x.pub);
+         const me1=y=>y.pi.you&&!y.pi.anon, fn=y=>me1(y)?'Vous':y.pi.n.split(' ')[0];
+         const perkTxt=!pk.length?'':o.per==='voit'
+           ?`${pk.map(y=>`<label class="chkbox perk-ck"><input type="checkbox" data-voitabo="${k}|${y.i}" ${(fo.noAbo||{})[y.i]?'':'checked'}><span>${me1(y)?'Prendre avec mon abonnement':'Prendre avec l\'abonnement de '+fn(y)} · voiturette incluse</span></label>`).join('')}Une voiturette par abonné ; toute autre voiturette se paie entière, ${eur(x.pub)}.`
+           :`${pk.map(fn).join(', ')} : ${pk[0].x.p===0?'inclus dans l\'abonnement':eur(pk[0].x.p)+' au tarif abonné'}. Les autres joueurs paient ${eur(x.pub)}.`;
+         return `<div class="optrow"><div><b class="h3">${o.n}${fc.nine&&o.id==='voit'?' 9 trous':''}</b><div class="mut">${o.d}</div>${perkTxt?`<div class="perk">${perkTxt}</div>`:''}</div>
+           <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${eur(x.pub)}<div class="mut">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
+           <div class="qty sm"><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''} aria-label="Moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="1" ${q>=mx?'disabled':''} aria-label="Plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>
+           ${o.id==='clubs'&&q?`<div class="clubcfg">${clubCfg(fo,q).map((cf,j)=>`<div class="cc-row"><span class="mut">Série ${j+1}</span>
+             ${[['h',CLUBH],['g',CLUBG]].map(([key,L])=>`<div class="seg2">${L.map(([v,n])=>`<button class="${cf[key]===v?'on':''}" data-act="gfClub" data-f="${k}" data-j="${j}" data-k="${key}" data-v="${v}">${n}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}`}).join('')}</div>`}).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Récapitulatif</div>
      ${multi?fl.map((f,k)=>{const its=items.filter(x=>x.f===k), np=its.filter(x=>!x.opt).length, op=its.filter(x=>x.opt);const s=its.reduce((t,x)=>t+x.p,0);
-       return `<div class="sumline"><span>Départ ${k+1} · ${crs(f.crs).n} ${f.t}<br><span class="mut">${plural(np,'joueur')}${op.length?' · '+op.map(x=>x.n.replace(/ · départ \d+$/,'').toLowerCase()).join(', '):''}</span></span><b>${s===0&&its.some(x=>x.pub)?'Inclus':eur(s)}</b></div>`}).join('')
+       return `<div class="sumline"><span>Départ ${k+1} · ${fN(f)} ${f.t}<br><span class="mut">${plural(np,'joueur')}${op.length?' · '+op.map(x=>x.n.replace(/ · départ \d+$/,'').toLowerCase()).join(', '):''}</span></span><b>${s===0&&its.some(x=>x.pub)?'Inclus':eur(s)}</b></div>`}).join('')
      :items.map(x=>`<div class="sumline"><span>${x.n}</span><b>${x.p<x.pub?`<span class="was">${eur(x.pub)}</span>`:''}${x.p===0&&x.pub>0?'Inclus':eur(x.p)}</b></div>`).join('')}
-     ${pub>tot?`<div class="sumline"><span>Économie liée aux statuts</span><b>−${eur(pub-tot)}</b></div>`:''}
+     ${pub>tot?`<div class="sumline"><span>Total des réductions <span class="mut">· détail ligne à ligne ci-dessus</span></span><b>−${eur(pub-tot)}</b></div>`:''}
      <div class="sumtot"><span class="h3">Total</span><b>${eur(tot)}</b></div>
      <p class="mut" style="margin:8px 0 14px">${tot===0?'Aucun paiement : départ inclus dans votre abonnement.':`Annulation gratuite jusqu'à 24 h avant ${multi?'le premier départ':'le départ'}.`}</p>
      <button class="btn full" data-act="gfAdd" ${ix.need&&!ix.ok?'disabled':''}>Ajouter au panier</button>
      ${ix.need&&!ix.ok?`<p class="mut" style="margin-top:8px">${ix.over.length?'Un joueur dépasse l\'index maximum.':'Cochez la déclaration d\'index pour continuer.'}</p>`:''}
    </div></aside></div>`;
   const cb=$('#gfIdxOk');if(cb)cb.onchange=e=>{g.idxOk=e.target.checked;render()};
+  $$('[data-voitabo]').forEach(el=>el.onchange=()=>{const [k,i]=el.dataset.voitabo.split('|').map(Number), fo=g.fopts[k]=g.fopts[k]||{};
+    fo.noAbo={...(fo.noAbo||{}),[i]:!el.checked};render()});
 };
 
 function flightCap(k){
@@ -1963,6 +2206,8 @@ ACT.gfAddP=a=>{
   g.idxOk=false;syncSplit();render();
 };
 ACT.gfDelP=a=>{S.gf.players.splice(+a.dataset.i,1);syncSplit();render()};
+ACT.gfClub=a=>{const g=S.gf, k=+a.dataset.f||0, fo=g.fopts[k], cfg=clubCfg(fo,fo.clubs||0);
+  cfg[+a.dataset.j][a.dataset.k]=a.dataset.v;fo.clubsCfg=cfg;render()};
 ACT.gfOpt=a=>{const g=S.gf, k=+a.dataset.f||0, o=a.dataset.o;g.fopts=g.fopts||[];const fo=g.fopts[k]=g.fopts[k]||{};fo[o]=Math.max(0,(fo[o]||0)+ +a.dataset.n);render()};
 const pcrs=i=>crsOfPlayer({crs:S.gf.crs,h:S.gf.t,flights:S.gf.flights},S.gf.players[i]||{f:0});
 ACT.gfPlayer=a=>{
@@ -1971,26 +2216,30 @@ ACT.gfPlayer=a=>{
   const partners=u?u.partners.filter(id=>!used.includes(id)):[];
   sheet(shead(`Joueur ${i+1}`,'Rattacher un joueur')+
    `<p class="sub" style="margin:4px 0 14px">Rattachez ce joueur à son compte ou à sa licence : son tarif s'applique à sa place.</p>
-   ${partners.length?`<div class="sect" style="margin-top:0">Mes proches</div><div class="radios">${partners.map(id=>{const x=PROFILES[id];
+   ${partners.length?`<div class="sect" style="margin-top:0">Depuis ma liste d'amis</div><div class="radios">${partners.map(id=>{const x=PROFILES[id];
      return `<button class="radio" data-act="gfSetP" data-i="${i}" data-type="acc" data-id="${id}"><span class="av lt">${x.ini}</span><div><b>${x.n}</b><small>${relOf(u,id)} · ${x.st.map(s=>ST[s].n).join(' · ')||'prix public'}${x.idx!=null?' · index '+fidx(x.idx):''}</small></div><b>${pr(gfPrice(pcrs(i),g.date,x.st),{nost:true})}</b></button>`}).join('')}</div>`:''}
-   <div class="sect">Rechercher un compte ou une licence</div>
-   <div class="codebox"><input id="pSearch" placeholder="E-mail ou n° de licence FFGolf" style="text-transform:none"><button class="btn sm" data-act="gfSearch" data-i="${i}">Rechercher</button></div>
+   <div class="sect">Rechercher par licence FFGolf</div>
+   <div class="codebox"><input id="pSearch" placeholder="N° de licence FFGolf (9 chiffres)" inputmode="numeric" style="text-transform:none"><button class="btn sm" data-act="gfSearch" data-i="${i}">Rechercher</button></div>
    <div id="pRes" style="margin-top:10px"></div>
-   <div class="sect">Ou sans compte</div>
-   <div class="codebox"><input id="pGuest" placeholder="Prénom et nom (facultatif)" value="${p.type==='guest'?p.n||'':''}" style="text-transform:none"><button class="btn sm sec" data-act="gfSetGuest" data-i="${i}">Invité·e au prix public</button></div>
-   <p class="note">Démo : essayez sophie.marchand@email.fr, 5520871 (Bernard Roux, index 31 — bloqué sur La Mer) ou n'importe quel numéro à 7 chiffres.</p>`);
+   <div class="sect">Ou en invité·e, sans licence</div>
+   <p class="mut" style="margin:-2px 0 10px">Indiquez son prénom et son nom : le starter l'appelle par son nom au départ et il figure sur la carte de score. Vous pourrez aussi le compléter plus tard.</p>
+   <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom</span><input id="pGuestFn" value="${p.type==='guest'?p.fn||'':''}" autocomplete="off"></label>
+   <label class="field"><span>Nom</span><input id="pGuestLn" value="${p.type==='guest'?p.ln||'':''}" autocomplete="off"></label></div>
+   <div id="pGuestWarn"></div>
+   <button class="btn sec full" data-act="gfSetGuest" data-i="${i}">Ajouter l'invité·e · prix public</button>
+   <p class="note">Démo : essayez 108830412 (Sophie Marchand), 105520871 (Bernard Roux, index 31 — bloqué sur La Mer) ou n'importe quel numéro à 9 chiffres. Pas de recherche par e-mail (retour du 24/09) : deux personnes peuvent partager une adresse, on risquerait de rattacher la mauvaise.</p>`);
 };
 const saveBox=id=>me()&&!me().partners.includes(id)?`<label class="chkbox" style="margin-top:10px"><input type="checkbox" id="saveProche" checked><span>Ajouter aussi à mes proches, pour le retrouver en un clic</span></label>`:'';
 ACT.gfSearch=a=>{
   const i=+a.dataset.i, q=($('#pSearch').value||'').trim().toLowerCase(), g=S.gf;
-  const acc=Object.values(PROFILES).find(x=>x.email===q||x.lic===q);
+  const acc=Object.values(PROFILES).find(x=>x.lic===q);
   let html;
   if(acc&&acc.id===S.user)html='<p class="mut">C\'est votre propre compte : vous êtes déjà le joueur 1.</p>';
   else if(acc)html=`<button class="radio" data-act="gfSetP" data-i="${i}" data-type="acc" data-id="${acc.id}"><span class="av lt">${acc.ini}</span><div><b>${acc.n}</b><small>${acc.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(acc.idx)}</small></div><b>${pr(gfPrice(pcrs(i),g.date,acc.st),{nost:true})}</b></button>
     <p class="mut" style="margin-top:6px">Seuls le nom, le statut et l'index sont visibles : l'e-mail et le téléphone restent privés.</p>${saveBox(acc.id)}`;
-  else if(/^\d{7,8}$/.test(q)){const idx=q==='1234567'?38:20;
+  else if(/^\d{9}$/.test(q)){const idx=q==='123456789'?38:20;
     html=`<button class="radio" data-act="gfSetP" data-i="${i}" data-type="lic" data-lic="${q}" data-idx="${idx}"><span class="av lt">FF</span><div><b>Licencié·e FFGolf n° ${q}</b><small>Pas de compte Resonance · index ${fidx(idx)} · tarif Licencié FFGolf</small></div><b>${pr(gfPrice(pcrs(i),g.date,['licencie']),{nost:true})}</b></button>${saveBox('lic'+q)}`}
-  else html='<p class="mut">Aucun compte ni licence trouvés. Ajoutez ce joueur comme invité·e.</p>';
+  else html='<p class="mut">Aucune licence trouvée avec ce numéro. Ajoutez ce joueur comme invité·e.</p>';
   $('#pRes').innerHTML=html;
 };
 ACT.gfSetP=a=>{
@@ -2002,16 +2251,37 @@ ACT.gfSetP=a=>{
   if(save)toast('Ajouté·e à vos proches.');
   closeSheet();render();
 };
-ACT.gfSetGuest=a=>{S.gf.players[+a.dataset.i]={type:'guest',n:($('#pGuest').value||'').trim(),f:S.gf.players[+a.dataset.i].f||0};closeSheet();render()};
+/* invité·e : prénom et nom fortement suggérés, jamais bloquants —
+   sans nom, un avertissement demande une confirmation, puis on passe. */
+ACT.gfSetGuest=a=>{
+  const i=+a.dataset.i, fn=($('#pGuestFn').value||'').trim(), ln=($('#pGuestLn').value||'').trim();
+  if((!fn||!ln)&&!a.dataset.force){
+    $('#pGuestWarn').innerHTML=`<div class="alert soft" style="margin:0 0 12px"><span class="ic">i</span><div><b>${!fn&&!ln?'Son prénom et son nom manquent':!fn?'Son prénom manque':'Son nom manque'}.</b><br>Sans nom, il apparaîtra comme « Joueur ${i+1} » sur la réservation et devra se présenter à l'accueil avant de partir.
+      <div style="margin-top:6px"><button class="lnk" style="font-size:12.5px" data-act="gfSetGuest" data-i="${i}" data-force="1">Ajouter quand même</button></div></div></div>`;
+    $(!fn?'#pGuestFn':'#pGuestLn').focus();return}
+  S.gf.players[i]={type:'guest',fn,ln,n:[fn,ln].filter(Boolean).join(' '),f:S.gf.players[i].f||0};closeSheet();render();
+};
 ACT.gfAdd=()=>{
   const g=S.gf;
   const l={kind:'gf',d:g.date,h:g.t,crs:g.crs,flights:JSON.parse(JSON.stringify(g.flights)),players:JSON.parse(JSON.stringify(g.players)),fopts:JSON.parse(JSON.stringify(g.fopts||[{}])),joinWith:g.joinWith||null,editOf:g.editOf};
-  Object.assign(g,{t:null,crs:null,players:[],fopts:[{}],idxOk:false,editOf:null,joinWith:null,split:null});
+  if(g.swap){const at=S.cart.findIndex(x=>x.uid===g.swap.uid);if(at>=0)S.cart.splice(at,1)}
+  Object.assign(g,{t:null,crs:null,players:[],fopts:[{}],idxOk:false,editOf:null,joinWith:null,split:null,swap:null});
   resetFlights();
   addLine(l);
 };
 
 /* ═════════ Compétitions ═════════ */
+/* Options d'une compétition, reprises du catalogue du proto competitions/ :
+   matériel et restauration du jour. Quantité par personne (2 quand on règle
+   aussi la part du partenaire) ; une voiturette par équipe. */
+const COPTS=[
+  {id:'voit',n:'Voiturette 18 trous',d:'Selon le parc disponible, attribuée au départ',p:35,team:true},
+  {id:'chariot',n:'Chariot électrique',d:'Batterie 18 trous, à retirer au starter',p:12},
+  {id:'seau',n:'Seau de balles practice',d:'Pour s\'échauffer avant le départ',p:5},
+  {id:'petitdej',n:'Plateau petit-déjeuner',d:'Servi à l\'accueil avant les premiers départs',p:9.5},
+  {id:'dej',n:'Déjeuner club-house',d:'Menu du jour après la partie',p:24},
+  {id:'cocktail',n:'Cocktail de remise des prix',d:'Au club-house, à l\'annonce des résultats',p:12}];
+const compOptItems=(opts)=>COPTS.filter(o=>(opts||{})[o.id]).map(o=>({n:o.n+((opts[o.id]>1)?' × '+opts[o.id]:''),p:o.p*opts[o.id],pub:o.p*opts[o.id],opt:true}));
 function partnerInfo(p){
   if(!p)return null;
   if(p.type==='acc'){const x=PROFILES[p.id];return {n:x.n,st:x.st,idx:x.idx,lic:x.lic,cert:x.cert,dob:x.dob,ini:x.ini}}
@@ -2084,7 +2354,7 @@ R.comp=()=>{
 };
 ACT.compFilter=a=>{S.comp.filter=a.dataset.f;render()};
 ACT.compOpen=a=>{
-  Object.assign(S.comp,{id:a.dataset.id,partner:null,split:'me',pref:'indiff'});
+  Object.assign(S.comp,{id:a.dataset.id,partner:null,split:'me',pref:'indiff',solo:false,opts:{}});
   go('comp-inscr');
 };
 R['comp-inscr']=()=>{
@@ -2092,11 +2362,13 @@ R['comp-inscr']=()=>{
   const u=me(), c=crs(cp.crs), sc=S.comp, full=isFull(cp);
   const ck=eligibility(cp,u,'you');
   const pi=partnerInfo(sc.partner), pck=pi?eligibility(cp,pi,'partner'):null;
-  const okYou=eligOk(ck), okPart=!cp.team||(pi&&eligOk(pck));
+  const okYou=eligOk(ck), okPart=!cp.team||sc.solo||(pi&&eligOk(pck));
   const reg=compRegistered(cp);
   const x=compPrice(cp,mySt()), xp=pi?compPrice(cp,pi.st):null;
   const items=[{n:'Droit de jeu'+(cp.team?' — vous':''),p:x.dj,pub:cp.dj},{n:'Green fee '+c.n+(cp.team?' — vous':''),p:x.gf,pub:x.gfPub}];
   if(cp.team&&xp&&sc.split==='me')items.push({n:'Droit de jeu — '+pi.n,p:xp.dj,pub:cp.dj},{n:'Green fee — '+pi.n,p:xp.gf,pub:xp.gfPub});
+  items.push(...compOptItems(sc.opts));
+  const oMax=o=>o.team?1:(cp.team&&pi&&sc.split==='me'?2:1);
   const tot=items.reduce((t,i)=>t+i.p,0), pub=items.reduce((t,i)=>t+i.pub,0);
   const partners=u?u.partners:[];
   const ckHtml=list=>`<div class="checks">${list.map(k=>`<div class="ck ${k.ok?'ok':'ko'}"><span class="ic">${k.ok?'✓':'✕'}</span>
@@ -2117,21 +2389,29 @@ R['comp-inscr']=()=>{
      ${!okYou&&u?`<p class="mut" style="margin-top:8px">L'inscription reste bloquée tant qu'une condition n'est pas remplie. Le message dit toujours pourquoi, et comment la débloquer quand c'est possible.</p>`:''}
      ${cp.team?`<div class="sect">2 · Votre partenaire</div>
        <div class="card" style="padding:14px 16px">
-       ${pi?`<div class="between"><div class="row"><span class="av lt">${pi.ini}</span><div><b>${pi.n}</b><div class="mut">${pi.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(pi.idx)}</div></div></div>
+       ${pi?'':`<div class="seg2" style="display:flex;margin-bottom:14px">${[[0,'J\'ai un·e partenaire'],[1,'Je m\'inscris seul·e']].map(([v,n])=>`<button class="${!!sc.solo===!!v?'on':''}" style="flex:1" data-act="compSolo" data-v="${v}">${n}</button>`).join('')}</div>`}
+       ${sc.solo?`<div class="alert soft" style="margin:0"><span class="ic">i</span><div><b>Les organisateurs vous attribuent un·e partenaire.</b><br>Le comité de compétition forme les équipes des joueurs inscrits seuls, en tenant compte des index. Vous êtes prévenu·e par e-mail avant la publication des départs. Vous ne réglez que votre inscription.</div></div>`
+       :pi?`<div class="between"><div class="row"><span class="av lt">${pi.ini}</span><div><b>${pi.n}</b><div class="mut">${pi.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(pi.idx)}</div></div></div>
             <button class="btn sm ghost" data-act="compPartnerX">Changer</button></div>
             <div style="margin-top:8px">${ckHtml(pck)}</div>`
          :`<p class="sub" style="margin-bottom:12px">Un ${cp.fmt.split(' ·')[0].toLowerCase()} se joue à deux : les conditions sont vérifiées pour chacun des deux joueurs.</p>
            ${partners.length?`<div class="radios" style="margin-bottom:12px">${partners.map(id=>{const p=PROFILES[id];return `<button class="radio" data-act="compPartner" data-id="${id}"><span class="av lt">${p.ini}</span><div><b>${p.n}</b><small>${relOf(u,id)} · index ${fidx(p.idx)}</small></div></button>`}).join('')}</div>`:''}
-           <div class="codebox"><input id="cpSearch" placeholder="E-mail ou n° de licence du partenaire" style="text-transform:none" ${u?'':'disabled'}><button class="btn sm" data-act="compSearch" ${u?'':'disabled'}>Rechercher</button></div>
+           <div class="codebox"><input id="cpSearch" placeholder="N° de licence du partenaire (9 chiffres)" inputmode="numeric" style="text-transform:none" ${u?'':'disabled'}><button class="btn sm" data-act="compSearch" ${u?'':'disabled'}>Rechercher</button></div>
            <div id="cpRes" style="margin-top:8px"></div>
-           <p class="note">Démo : 1234567 donne un licencié d'index 38, refusé sur un greensome limité à 36.</p>`}
+           <p class="note">Démo : 123456789 donne un licencié d'index 38, refusé sur un greensome limité à 36.</p>`}
        ${pi?`<div class="sect" style="margin-top:14px">Qui règle l'inscription du partenaire&nbsp;?</div>
          <div class="radios">
            <button class="radio ${sc.split==='me'?'on':''}" data-act="compSplit" data-v="me"><span class="dot"></span><div><b>Je règle les deux inscriptions</b><small>Le tarif de ${pi.n.split(' ')[0]} s'applique à sa part.</small></div></button>
            <button class="radio ${sc.split==='each'?'on':''}" data-act="compSplit" data-v="each"><span class="dot"></span><div><b>Chacun règle sa part</b><small>${pi.n.split(' ')[0]} reçoit un lien de paiement. L'équipe est tenue 48 h ; sans paiement, l'inscription de l'équipe est annulée.</small></div></button>
          </div>`:''}
        </div>`:''}
-     <div class="sect">${cp.team?3:2} · Vos préférences</div>
+     <div class="sect">${cp.team?3:2} · Options du jour</div>
+     <div class="card" style="padding:4px 16px">${COPTS.map(o=>{const q=(sc.opts||{})[o.id]||0, mx=oMax(o);
+       return `<div class="optrow"><div><b class="h3">${o.n}</b><div class="mut">${o.d}${o.team&&cp.team?' · une par équipe':''}</div></div>
+         <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${eur(o.p)}<div class="mut">${o.team?'par voiturette':'par personne'}</div></div>
+         <div class="qty sm"><button data-act="compOpt" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''} aria-label="Moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="compOpt" data-o="${o.id}" data-n="1" data-max="${mx}" ${q>=mx?'disabled':''} aria-label="Plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>`}).join('')}</div>
+     ${full?'<p class="mut" style="margin-top:8px">Vos options sont gardées avec votre place en liste d\'attente et réglées avec l\'inscription si une place se libère.</p>':''}
+     <div class="sect">${cp.team?4:3} · Vos préférences</div>
      <div class="card" style="padding:14px 16px">
        <div class="h3" style="margin-bottom:8px">Heure de départ souhaitée</div>
        <div class="chips">${[['tot','Plutôt tôt'],['tard','Plutôt tard'],['indiff','Indifférent']].map(([k,n])=>`<button class="chip ${sc.pref===k?'on':''}" data-act="compPref" data-v="${k}">${n}</button>`).join('')}</div>
@@ -2143,23 +2423,25 @@ R['comp-inscr']=()=>{
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">${full?'Liste d\'attente':'Récapitulatif'}</div>
      ${items.map(i=>`<div class="sumline"><span>${i.n}</span><b>${i.p<i.pub?`<span class="was">${eur(i.pub)}</span>`:''}${i.p===0&&i.pub>0?'Inclus':eur(i.p)}</b></div>`).join('')}
-     ${pub>tot?`<div class="sumline"><span>Économie liée aux statuts</span><b>−${eur(pub-tot)}</b></div>`:''}
+     ${pub>tot?`<div class="sumline"><span>Total des réductions <span class="mut">· détail ligne à ligne ci-dessus</span></span><b>−${eur(pub-tot)}</b></div>`:''}
      <div class="sumtot"><span class="h3">${full?'À régler si une place se libère':'Total'}</span><b>${eur(tot)}</b></div>
      <p class="mut" style="margin:8px 0 14px">${full?'Rien n\'est débité aujourd\'hui.':'Paiement en ligne à l\'inscription. Désinscription remboursée jusqu\'à la clôture du '+fdm(cp.close)+'.'}</p>
      <button class="btn full" data-act="${full?'compWait':'compAdd'}" ${okYou&&okPart&&!reg?'':'disabled'}>${full?'Rejoindre la liste d\'attente':'Ajouter au panier'}</button>
-     ${!u?'<p class="mut" style="margin-top:8px">Connectez-vous pour vérifier vos conditions.</p>':cp.team&&!pi?'<p class="mut" style="margin-top:8px">Choisissez votre partenaire.</p>':''}
+     ${!u?'<p class="mut" style="margin-top:8px">Connectez-vous pour vérifier vos conditions.</p>':cp.team&&!pi&&!sc.solo?'<p class="mut" style="margin-top:8px">Choisissez votre partenaire, ou inscrivez-vous seul·e.</p>':''}
    </div></aside></div>`;
 };
 ACT.compPref=a=>{S.comp.pref=a.dataset.v;render()};
+ACT.compSolo=a=>{S.comp.solo=a.dataset.v==='1';if(S.comp.solo)S.comp.partner=null;render()};
+ACT.compOpt=a=>{const o=S.comp.opts=S.comp.opts||{}, k=a.dataset.o;o[k]=Math.max(0,Math.min(+(a.dataset.max||9),(o[k]||0)+ +a.dataset.n));render()};
 ACT.compSplit=a=>{S.comp.split=a.dataset.v;render()};
-ACT.compPartner=a=>{S.comp.partner={type:'acc',id:a.dataset.id};render()};
+ACT.compPartner=a=>{S.comp.partner={type:'acc',id:a.dataset.id};S.comp.solo=false;render()};
 ACT.compPartnerX=()=>{S.comp.partner=null;render()};
 ACT.compSearch=()=>{
   const q=($('#cpSearch').value||'').trim().toLowerCase();
-  const acc=Object.values(PROFILES).find(x=>x.email===q||x.lic===q);
+  const acc=Object.values(PROFILES).find(x=>x.lic===q);
   if(acc&&acc.id!==S.user){S.comp.partner={type:'acc',id:acc.id};render();return}
-  if(/^\d{7,8}$/.test(q)){S.comp.partner={type:'lic',lic:q,idx:q==='1234567'?38:20,n:q==='1234567'?'Julien Morel':'Licencié·e n° '+q};render();return}
-  $('#cpRes').innerHTML='<p class="mut">Aucun licencié trouvé avec cet e-mail ou ce numéro.</p>';
+  if(/^\d{9}$/.test(q)){S.comp.partner={type:'lic',lic:q,idx:q==='123456789'?38:20,n:q==='123456789'?'Julien Morel':'Licencié·e n° '+q};render();return}
+  $('#cpRes').innerHTML='<p class="mut">Aucun licencié trouvé avec ce numéro. Une licence compte 9 chiffres.</p>';
 };
 ACT.cert=()=>sheet(shead('Déposer un certificat médical','Mes documents')+
   `<p class="sub" style="margin:4px 0 14px">Pour un adulte, le certificat de non contre-indication à la pratique du golf en compétition est valable un an. Il est transmis à la FFGolf avec votre licence.</p>
@@ -2169,16 +2451,16 @@ ACT.cert=()=>sheet(shead('Déposer un certificat médical','Mes documents')+
    <p class="note">Démo : le certificat est accepté immédiatement. Dans le vrai flux, il passe « en cours de validation » à la FFGolf (24 à 48 h) : l'inscription pourrait-elle être acceptée sous réserve pendant ce délai&nbsp;? Arbitrage à rendre.</p>`);
 ACT.certGo=()=>{me().cert='2027-09-15';closeSheet();render();toast('Certificat enregistré : valable jusqu\'au 15 septembre 2027.')};
 ACT.addLic=()=>sheet(shead('Ajouter ma licence FFGolf','Mes documents')+
-  `<label class="field"><span>N° de licence</span><input id="alLic" inputmode="numeric" placeholder="7 à 8 chiffres"></label>
+  `<label class="field"><span>N° de licence</span><input id="alLic" inputmode="numeric" placeholder="9 chiffres"></label>
    <button class="btn full" data-act="addLicGo">Vérifier et rattacher</button>`);
 ACT.addLicGo=()=>{
-  const v=($('#alLic').value||'').trim();if(!/^\d{7,8}$/.test(v)){toast('Le numéro compte 7 ou 8 chiffres.');return}
+  const v=($('#alLic').value||'').trim();if(!/^\d{9}$/.test(v)){toast('Le numéro compte 9 chiffres.');return}
   const u=me();Object.assign(u,{lic:v,idx:18.0,cert:'2027-04-01'});if(!u.st.includes('licencie'))u.st.push('licencie');
   closeSheet();render();toast('Licence rattachée : tarif Licencié FFGolf appliqué.');
 };
 ACT.compAdd=()=>{
   const sc=S.comp;
-  addLine({kind:'comp',compId:sc.id,partner:sc.partner?{...sc.partner}:null,split:sc.split,pref:sc.pref});
+  addLine({kind:'comp',compId:sc.id,partner:sc.partner?{...sc.partner}:null,split:sc.split,pref:sc.pref,solo:!!sc.solo,opts:{...(sc.opts||{})}});
 };
 ACT.compWait=()=>{
   const cp=comp(S.comp.id), u=me(), pos=cp.wait+1;
@@ -2319,10 +2601,28 @@ R['cours-ind']=()=>{
        <button class="radio ${useCr?'':'on'}" data-act="indCredit" data-v="0"><span class="dot"></span><div><b>Payer le cours</b><small>${eur(x.p)}</small></div></button></div>`
      :u?'':`<p class="mut" style="margin-top:10px">Connectez-vous pour appliquer votre tarif ou utiliser un carnet.</p>`}
      <div class="sumtot"><span class="h3">Total</span><b>${useCr?'0 €':eur(x.p)}</b></div>
+     ${!cr&&sc.slot?carnetTip(sc.dur,st):''}
      ${!useCr&&x.p<x.pub?`<p class="mut" style="margin-top:4px"><span class="was">${eur(x.pub)}</span>Tarif ${ST[x.st].n}</p>`:''}
-     <p class="mut" style="margin:8px 0 14px">Annulation ou modification gratuite jusqu'à 48 h avant le cours.</p>
+     <p class="mut" style="margin:8px 0 14px">Annulation ou modification gratuite jusqu'à 24 h avant le cours.</p>
      <button class="btn full" data-act="indAdd" ${sc.slot?'':'disabled'}>Ajouter au panier</button>
    </div></aside></div>`;
+};
+/* pas de carnet à débiter : l'idée est soumise, jamais imposée. Le bouton
+   principal reste « Ajouter au panier » pour le cours à l'unité. */
+function carnetTip(dur,st){
+  const k=CARNETS.find(c=>c.dur===dur&&c.q===5)||CARNETS.find(c=>c.dur===dur);if(!k)return '';
+  const x=lessonPrice(k.p,st), one=lessonPrice(LESSON[dur],st).p, per=Math.round(x.p/k.q*100)/100;
+  if(S.cart.some(l=>l.kind==='carnet'&&l.id===k.id))return '';
+  return `<div class="ktip"><b>Vous prenez des cours régulièrement&nbsp;?</b>
+    <span>Un carnet de ${k.q} cours revient moins cher que les cours à l'unité : ${eur(per)} le cours au lieu de ${eur(one)}.</span>
+    <button class="lnk" style="font-size:12px" data-act="indCarnet" data-id="${k.id}">Prendre le ${k.n.toLowerCase().replace('carnet ','carnet de ')} (${eur(x.p)}) et y débiter ce cours</button></div>`;
+}
+ACT.indCarnet=a=>{
+  const sc=S.cours, k=CARNETS.find(c=>c.id===a.dataset.id);
+  if(!S.cart.length){hold=HOLD;holdDead=false}
+  S.cart.push({kind:'carnet',id:k.id,uid:uid()});
+  const l={kind:'ind',d:sc.slot.d,h:sc.slot.t,pro:sc.slot.pro,th:sc.slot.th,dur:sc.dur,credit:false,viaCarnet:k.id,editOf:sc.editOf||null};
+  sc.slot=null;sc.editOf=null;addLine(l);
 };
 ACT.indPro=a=>{S.cours.pro=a.dataset.v;S.cours.slot=null;render()};
 ACT.indDur=a=>{S.cours.dur=+a.dataset.v;S.cours.slot=null;render()};
@@ -2393,28 +2693,32 @@ function lineView(l){
   const u=me(), st=mySt();
   let v={tag:KTAG[l.kind],items:[],sub:'',title:''};
   if(l.kind==='gf'){const c=crs(l.crs), fl=flightsOf(l), multi=fl.length>1;
-    v.title=multi?`Green fee · groupe de ${l.players.length}`:'Green fee · '+c.n;
-    v.sub=multi?`${fday(l.d)} · ${fl.length} départs : ${fl.map(f=>crs(f.crs).n+' '+f.t).join(', ')} · ${plural(l.players.length,'joueur')}`
+    v.title=multi?`Green fee · groupe de ${l.players.length}`:'Green fee · '+c.n+(fl[0].h9?' · 9 trous':'')+(c.site?' · Golf d\'Hardelot':'');
+    v.sub=multi?`${fday(l.d)} · ${fl.length} départs : ${fl.map(f=>fN(f)+' '+f.t).join(', ')} · ${plural(l.players.length,'joueur')}`
       :`${fday(l.d)} · départ ${l.h} · ${plural(l.players.length,'joueur')}`;
     v.items=gfCalc(l);v.cancel=`Annulation gratuite jusqu'à 24 h avant ${multi?'le premier départ':'le départ'}`;
+    if(l.editOf&&l.editOf.paid){v.items.push({n:`Déjà réglé · départ du ${fdm(l.editOf.d)} à ${l.editOf.h}`,p:-l.editOf.paid,pub:-l.editOf.paid,paid:true});
+      v.title='Changement de départ · '+c.n+(fl[0].h9?' · 9 trous':'');v.extra='Vous ne réglez que la différence avec votre départ actuel, qui reste réservé jusqu\'au paiement.'}
     const j=joinOf(l);if(j){const pp=PROFILES[j.id];v.extra=`Vous jouez avec ${pp.n} (${crs(j.crs).n} ${j.t}) · ${pp.n.split(' ')[0]} sera prévenu·e.`}}
   if(l.kind==='comp'){const cp=comp(l.compId), c=crs(cp.crs), x=compPrice(cp,st), pi=partnerInfo(l.partner);
     v.title=cp.n;
-    v.sub=`${fday(cp.date)} · ${c.n} · ${cp.fmt}${pi?' · avec '+pi.n:''}`;
+    v.sub=`${fday(cp.date)} · ${c.n} · ${cp.fmt}${pi?' · avec '+pi.n:l.solo?' · partenaire attribué par les organisateurs':''}`;
     v.items=[{n:'Droit de jeu',p:x.dj,pub:cp.dj},{n:'Green fee du jour',p:x.gf,pub:x.gfPub,st:x.st}];
     if(pi&&l.split==='me'){const y=compPrice(cp,pi.st);v.items.push({n:'Droit de jeu — '+pi.n,p:y.dj,pub:cp.dj},{n:'Green fee — '+pi.n,p:y.gf,pub:y.gfPub,st:y.st})}
+    v.items.push(...compOptItems(l.opts));
     if(pi&&l.split==='each')v.extra=`${pi.n.split(' ')[0]} recevra un lien pour régler sa part (${eur(compPrice(cp,pi.st).p)}). Équipe tenue 48 h.`;
     v.cancel='Désinscription remboursée jusqu\'à la clôture du '+fdm(cp.close);v.acc=true;}
   if(l.kind==='ind'){
     v.title=`Cours individuel · ${l.dur===30?'30 min':'1 h'}`;
     v.sub=`${fday(l.d)} · ${l.h} · ${PROS[l.pro].n}${l.th?' · '+l.th:''}`;
     const x=lessonPrice(LESSON[l.dur],st);
-    v.items=[l.credit&&u&&u.credits[l.dur]?{n:'Réglé avec 1 crédit carnet',p:0,pub:0,credit:true}:{n:'Cours',...x}];
-    v.cancel='Annulation gratuite jusqu\'à 48 h avant le cours';v.acc=true;}
+    const vc=l.viaCarnet&&S.cart.some(y=>y.kind==='carnet'&&y.id===l.viaCarnet);
+    v.items=[l.credit&&u&&u.credits[l.dur]||vc?{n:vc?'1 crédit du carnet acheté avec ce panier':'Réglé avec 1 crédit carnet',p:0,pub:0,credit:true}:{n:'Cours',...x}];
+    v.cancel='Annulation gratuite jusqu\'à 24 h avant le cours';v.acc=true;}
   if(l.kind==='coll'){const c=COLL.find(x=>x.id===l.id);
     v.title=c.n;v.sub=`${fday(c.d)} · ${c.h} · ${c.dur} min · ${PROS[c.pro].n}${l.kid?' · pour '+l.kid.n:''}`;
     v.items=[{n:l.kid?'Inscription '+l.kid.n:'Inscription',...(l.kid?{p:c.p,pub:c.p,st:null}:lessonPrice(c.p,st))}];
-    v.cancel='Annulation gratuite jusqu\'à 48 h avant le cours';v.acc=true;}
+    v.cancel='Annulation gratuite jusqu\'à 24 h avant le cours';v.acc=true;}
   if(l.kind==='stage'){const s=STAGES.find(x=>x.id===l.id);
     v.title=s.n;v.sub=`Du ${fdm(s.d)} au ${fdm(s.d2)} · ${s.sched}${l.kid?' · pour '+l.kid.n:''}`;
     v.items=[{n:'Stage complet',...stagePrice(s,st)}];
@@ -2432,13 +2736,51 @@ function lineView(l){
   v.promo=pm&&pm.on.includes(pk)?Math.round(v.total*pm.pct*100)/100:0;
   return v;
 }
+/* Détail des réductions (retour du 24/09) : jamais un seul montant agrégé.
+   Chaque tarif statut est regroupé par personne, avec ce qu'il change ligne
+   à ligne ; le code promo et l'avoir restent des lignes à part. */
+function discounts(){
+  const u=me(), G={}, promo=[];
+  S.cart.forEach(l=>{const v=lineView(l);
+    v.items.forEach(i=>{if(i.credit||!(i.p<i.pub))return;
+      const who=i.who||(u?u.n+' (vous)':''), key=who+'|'+i.st, g=G[key]||(G[key]={who,st:i.st,amt:0,rows:[]});
+      g.amt+=i.pub-i.p;
+      const lbl=i.lbl||(v.items.length>1?v.title+' — '+i.n.toLowerCase():v.title);
+      (g.items=g.items||[]).push({lbl,p:i.p,pub:i.pub});
+      g.rows.push(`${lbl} : ${i.p===0?'inclus':eur(i.p)+' au lieu de '+eur(i.pub)}`)});
+    if(v.promo)promo.push(`${v.title} : −${eur(v.promo)}`)});
+  return {st:Object.values(G),promo};
+}
+/* le tarif gagné en créant son compte pendant l'achat reste signalé tant
+   que ce panier n'est pas réglé, et passe en tête du détail */
+const isNewSt=g=>!!(S.newSt&&S.newSt.id===S.user&&S.newSt.st.includes(g.st)&&/\(vous\)$/.test(g.who||''));
+const dscSort=L=>L.slice().sort((a,b)=>isNewSt(b)-isNewSt(a));
+function savingsHtml(T){
+  const D=discounts(), pm=S.promo&&PROMOS[S.promo], u=me();
+  const tot=Math.round((T.save+T.promo+T.avoir)*100)/100;
+  const pd=T.paid?`<div class="sumline"><span>Déjà réglé <span class="mut">· départ modifié</span></span><b>−${eur(T.paid)}</b></div>`:'';
+  if(!tot)return `<div class="sumline"><span>Prix public</span><b>${eur(T.pub)}</b></div>${pd}`;
+  return `<div class="sumline"><span>Prix public</span><b>${eur(T.pub)}</b></div>${pd}
+    <div class="disc"><span class="sbl">Vos réductions</span>
+    ${dscSort(D.st).map(g=>{const nw=isNewSt(g);
+      return `<div class="dsc ${nw?'new':''}">${nw?`<span class="dsc-new">${ST[g.st].n==='Licencié FFGolf'?'Licence reconnue':'Nouveau statut'} · appliqué à la création de votre compte</span>`:''}
+      <div class="dsc-h"><span><b>Tarif ${ST[g.st]?ST[g.st].n:'membre'}</b>${g.who?' · '+g.who:''}</span><b>−${eur(g.amt)}</b></div>
+      <ul>${g.items.map(r=>`<li><span>${r.lbl}<br><small>${r.p===0?'inclus':eur(r.p)+' au lieu de '+eur(r.pub)}</small></span><b>−${eur(r.pub-r.p)}</b></li>`).join('')}</ul></div>`}).join('')}
+    ${T.promo?`<div class="dsc"><div class="dsc-h"><span><b>Code promo ${S.promo}</b> · ${pm.n}</span><b>−${eur(T.promo)}</b></div>
+      <ul>${D.promo.map(r=>`<li>${r}</li>`).join('')}<li>Valable sur les ${pm.d}, appliqué après les tarifs statut.</li></ul></div>`:''}
+    ${T.avoir?`<div class="dsc"><div class="dsc-h"><span><b>Avoir</b></span><b>−${eur(T.avoir)}</b></div>
+      <ul><li>${eur(u.avoir)} disponibles jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}</li></ul></div>`:''}
+    <div class="dsc-t"><span>Total des réductions</span><b>−${eur(tot)}</b></div></div>`;
+}
 function cartTotals(){
   let pub=0,sub=0,promo=0;
-  S.cart.forEach(l=>{const v=lineView(l);pub+=v.pub;sub+=v.total;promo+=v.promo});
+  let paid=0;
+  S.cart.forEach(l=>{const v=lineView(l);pub+=v.pub;sub+=v.total;promo+=v.promo;v.items.forEach(i=>{if(i.paid)paid-=i.p})});
   const u=me();
   const after=sub-promo;
-  const avoir=u&&u.avoir&&S.useAvoir?Math.min(u.avoir,after):0;
-  return {pub,sub,save:pub-sub,promo,avoir,due:Math.max(0,Math.round((after-avoir)*100)/100)};
+  /* en lien de paiement partagé, l'avoir du team leader ne s'impute pas sur le groupe */
+  const avoir=u&&u.avoir&&S.useAvoir&&S.co.pay!=='link'?Math.min(u.avoir,after):0;
+  return {pub:pub+paid,paid,sub,save:pub-sub,promo,avoir,due:Math.max(0,Math.round((after-avoir)*100)/100)};
 }
 /* Retour à la porte d'entrée du parcours concerné : on continue à chercher
    là où l'on était, sans risquer d'ajouter deux fois la même ligne. */
@@ -2474,9 +2816,8 @@ ACT.holdSim=()=>{hold=1};
 ACT.holdRecheck=()=>{hold=HOLD;holdDead=false;paintHold();toast('Disponibilités revérifiées : toutes vos lignes sont encore disponibles.')};
 
 /* ═════════ Ajouté au panier · suggestions ═════════ */
-R.cross=()=>{
-  const l=S.lastAdded;if(!l){go('panier');return}
-  const v=lineView(l), has=k=>S.cart.some(x=>x.kind===k);
+function sugFor(l){
+  const has=k=>S.cart.some(x=>x.kind===k);
   const sug=[];
   const nextComp=COMPS.find(cp=>!isFull(cp)&&cp.date>(l.d||TODAY)&&(!l.crs||cp.crs===l.crs))||COMPS[0];
   if(l.kind==='gf'){
@@ -2499,6 +2840,11 @@ R.cross=()=>{
     s.dup=s.k==='gf'?S.cart.some(x=>x.kind==='gf'&&d&&x.d===d[1])
       :s.k==='comp'?!!(id&&(S.cart.some(x=>x.kind==='comp'&&x.compId===id[1])||compRegistered(comp(id[1]))))
       :has(s.k)});
+  return sug;
+}
+R.cross=()=>{
+  const l=S.lastAdded;if(!l){go('panier');return}
+  const v=lineView(l), sug=sugFor(l);
   $('#v-cross').innerHTML=`
    ${holdHtml()}
    <div class="scr-head"><div><span class="tag ol">✓ Ajouté à votre panier</span>
@@ -2547,16 +2893,19 @@ function dwHtml(){
        <div><span class="tag">${v.tag}</span><b class="h3">${v.title}</b><span class="mut">${v.sub}</span>
          <button class="lnk" data-act="lineDel" data-u="${l.uid}">Retirer</button></div>
        <div class="dwl-p">${v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div>`}).join('')}
-     ${hi&&S.lastAdded?`<button class="lnk dw-sug" data-act="dwSug">Voir les suggestions pour compléter →</button>`:''}
+     ${hi&&S.lastAdded?(()=>{const sg=sugFor(S.lastAdded).filter(x=>!x.dup).slice(0,2);if(!sg.length)return '';
+       return `<div class="dws"><div class="dws-h"><b class="h3">Pour compléter</b><button class="lnk" data-act="dwSug">Voir davantage de suggestions →</button></div>
+         ${sg.map(x=>`<div class="dws-c"><span class="dws-i" style="${bg(TAGIMG[x.tag]||IMG.mer)}"></span>
+           <div><span class="tag">${x.tag}</span><b>${x.t}</b><span class="mut">${x.p.p===0&&x.p.pub>0?'Inclus':(x.p.p<x.p.pub?`<span class="was">${eur(x.p.pub)}</span>`:'')+eur(x.p.p)}</span></div>
+           <button class="btn sm sec" data-act="dwSugGo" data-a="${x.act}" ${x.data||''}>Ajouter</button></div>`).join('')}</div>`})():''}
+     ${T.save+T.promo+T.avoir>0?savingsHtml(T):''}
      <p class="note" style="margin-bottom:0">Le tiroir ne s'ouvre seul qu'au premier ajout. Ensuite, l'ajout est simplement confirmé : le panier reste accessible en haut à droite (bandeau fixe en bas d'écran en mobile).</p>
    </div>
    <div class="dw-f">
-     ${T.save>0?`<div class="sumline"><span>Tarifs liés aux statuts</span><b>−${eur(T.save)}</b></div>`:''}
-     ${T.promo?`<div class="sumline"><span>Code ${S.promo}</span><b>−${eur(T.promo)}</b></div>`:''}
-     ${T.avoir?`<div class="sumline"><span>Avoir</span><b>−${eur(T.avoir)}</b></div>`:''}
      <div class="sumtot"><span class="h3">À payer aujourd'hui</span><b class="price" style="font-size:23px">${eur(T.due)}</b></div>
+     ${T.save+T.promo+T.avoir>0?`<p class="mut" style="margin-top:2px;font-size:12px">Dont ${eur(T.save+T.promo+T.avoir)} de réductions, détaillées ci-dessus.</p>`:''}
      <div class="dw-btn"><button class="btn" data-act="dwSee">Voir mon panier</button>
-       <button class="btn ghost" data-act="dwClose">Continuer mon panier</button></div>
+       <button class="btn ghost" data-act="dwClose">Continuer mes achats</button></div>
    </div>`;
 }
 function openDrawer(l){
@@ -2578,6 +2927,7 @@ function paintDrawer(){if(DW.on)$('#drawer').innerHTML=dwHtml()}
 ACT.dwClose=closeDrawer;
 ACT.dwSee=()=>{closeDrawer();go('panier')};
 ACT.dwSug=()=>{closeDrawer();go('cross')};
+ACT.dwSugGo=a=>{closeDrawer();ACT[a.dataset.a](a)};
 $('#dwBg').addEventListener('click',closeDrawer);
 
 /* bandeau fixe en bas d'écran : même rôle que l'icône, sans masquer la page
@@ -2615,7 +2965,7 @@ R.panier=()=>{
          ${v.promo?`<li><span>${pm.n}</span><b>−${eur(v.promo)}</b></li>`:''}</ul>
        ${v.extra?`<p class="mut" style="margin-top:6px">${v.extra}</p>`:''}
        <p class="mut" style="margin-top:6px">${v.cancel}</p>
-       <div class="row" style="margin-top:8px;gap:14px">${l.kind==='gf'?`<button class="lnk" style="font-size:12px" data-act="lineEditGf" data-u="${l.uid}">Modifier les joueurs</button>`:''}<button class="lnk" style="font-size:12px" data-act="lineDel" data-u="${l.uid}">Retirer</button></div></div>
+       <div class="row" style="margin-top:8px;gap:14px">${l.kind==='gf'?`<button class="lnk" style="font-size:12px" data-act="lineSlotGf" data-u="${l.uid}">Changer de jour ou d'horaire</button><button class="lnk" style="font-size:12px" data-act="lineEditGf" data-u="${l.uid}">Modifier joueurs &amp; options</button>`:''}<button class="lnk" style="font-size:12px" data-act="lineDel" data-u="${l.uid}">Retirer</button></div></div>
        <div class="cl-p"><div class="price">${v.total===0&&v.pub>0?'Inclus':eur(v.total-v.promo)}</div></div></div>`}).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
@@ -2625,10 +2975,7 @@ R.panier=()=>{
          ${S.promoErr?`<p class="mut" style="margin-top:6px">${S.promoErr}</p>`:''}`}
      ${u&&u.avoir?`<button class="sw ${S.useAvoir?'on':''}" data-act="avoirTog"><span><b class="h3">Utiliser mon avoir</b><br><span class="mut">${eur(u.avoir)} disponibles · jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}</span></span><i></i></button>`:''}
      <div class="hr" style="margin:12px 0"></div>
-     <div class="sumline"><span>Prix public</span><b>${eur(T.pub)}</b></div>
-     ${T.save>0?`<div class="sumline"><span>Tarifs liés aux statuts</span><b>−${eur(T.save)}</b></div>`:''}
-     ${T.promo?`<div class="sumline"><span>Code ${S.promo}</span><b>−${eur(T.promo)}</b></div>`:''}
-     ${T.avoir?`<div class="sumline"><span>Avoir</span><b>−${eur(T.avoir)}</b></div>`:''}
+     ${savingsHtml(T)}
      <div class="sumtot"><span class="h3">À payer aujourd'hui</span><b>${eur(T.due)}</b></div>
      ${!u?`<p class="mut" style="margin-top:6px">Membre ou licencié·e&nbsp;? <button class="lnk" style="font-size:12px" data-act="login">Connectez-vous</button> : le total sera recalculé.</p>`:''}
      <button class="btn full" style="margin-top:14px" data-go="checkout">${T.due===0?'Confirmer sans paiement':'Passer au paiement'}</button>
@@ -2673,6 +3020,28 @@ ACT.lineEditGf=a=>{
   const fl=flightsOf(l);Object.assign(S.gf,{joinWith:l.joinWith||null,date:l.d,t:l.h,crs:l.crs,pax:l.players.length,flights:fl,split:fl.map((f,k)=>l.players.filter(p=>(p.f||0)===k).length),act:0,players:l.players,fopts:l.fopts||[l.opts||{}],idxOk:false,editOf:l.editOf||null});
   go('gf-joueurs');
 };
+/* Changer le jour ou l'horaire d'une ligne sans tout ressaisir (retour du
+   24/09) : on revient au choix du départ, joueurs et options sont gardés de
+   côté et replacés sur le nouveau créneau. La ligne reste dans le panier
+   jusqu'à ce que le nouveau départ la remplace. */
+ACT.lineSlotGf=a=>{
+  const l=S.cart.find(x=>x.uid===a.dataset.u), g=S.gf;
+  Object.assign(g,{date:l.d,pax:l.players.length,moment:'all',t:null,crs:null,joinWith:null,split:null,idxOk:false,editOf:l.editOf||null,
+    swap:{uid:l.uid,d:l.d,h:l.h,crs:l.crs,multi:flightsOf(l).length>1,players:JSON.parse(JSON.stringify(l.players)),fopts:JSON.parse(JSON.stringify(l.fopts||[{}]))}});
+  resetFlights();go('gf');
+};
+ACT.gfSwapCancel=()=>{S.gf.swap=null;S.gf.editOf=null;go('panier')};
+/* replace les joueurs mis de côté sur le(s) créneau(x) choisi(s) */
+function swapIn(sz){
+  const g=S.gf, w=g.swap;if(!w)return false;
+  const ps=w.players.slice(0,g.pax);
+  while(ps.length<g.pax)ps.push({type:'guest',n:''});
+  let k=0;sz.forEach((n,f)=>{for(let j=0;j<n;j++)ps[k++].f=f});
+  g.players=ps;
+  g.fopts=sz.map((n,f)=>{const o={...(w.fopts[sz.length===1&&w.fopts.length>1?0:f]||{})};
+    GOPTS.forEach(op=>{const m=op.per==='voit'?Math.ceil(n/2):n;if((o[op.id]||0)>m)o[op.id]=m});return o});
+  return true;
+}
 ACT.promoGo=()=>{
   const c=($('#promoIn').value||'').trim().toUpperCase();
   if(PROMOS[c]){S.promo=c;S.promoErr=''}
@@ -2714,26 +3083,93 @@ R.checkout=()=>{
      <div class="card" style="padding:16px">${idHtml}</div>
      <div class="sect">2 · ${zero?'Garantie':'Paiement'}</div>
      <div class="card" style="padding:16px;${ident?'':'opacity:.45;pointer-events:none'}">
-     ${zero?`<p class="sub"><b style="color:var(--ink)">Rien à régler</b> : ${T.avoir?'votre avoir couvre le total':'vos réservations sont incluses dans votre abonnement ou réglées par vos crédits'}.</p>
-       <button class="sw ${co.garantie?'on':''}" data-act="coGar" style="margin-top:8px"><span><b class="h3">Garantir mes départs par carte</b><br><span class="mut">Facultatif. Rien n'est débité ; 30 € par joueur en cas d'absence non prévenue 24 h avant.</span></span><i></i></button>
-       ${co.garantie?cardFields():''}
-       <p class="note">Arbitrage du cadrage : l'abonné réserve sans paiement et l'empreinte reste facultative. Si les absences augmentent, le club pourra la rendre obligatoire sans changer l'écran.</p>`
-     :`${cardFields()}<p class="mut" style="margin-top:4px">Paiement sécurisé 3-D Secure. ${S.cart.some(l=>l.kind==='comp'&&l.split==='each')?'La part de votre partenaire ne vous est pas débitée.':''}</p>`}
+     ${zero?zeroHtml(T)
+     :creditNote()+payHtml(T,u)}
      </div>
      <label class="chkbox" style="margin-top:14px"><input type="checkbox" id="coCgv" ${co.cgv?'checked':''}><span>J'accepte les conditions générales de vente et les conditions d'annulation de chaque réservation.</span></label>
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Votre panier</div>
-     ${S.cart.map(l=>{const v=lineView(l);return `<div class="sumline"><span>${v.title}<br><span class="mut">${v.sub.split(' · ').slice(0,2).join(' · ')}</span></span><b>${v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div>`}).join('')}
-     ${T.save>0?`<div class="sumline"><span>Dont tarifs statut</span><b>−${eur(T.save)}</b></div>`:''}
-     ${T.avoir?`<div class="sumline"><span>Avoir</span><b>−${eur(T.avoir)}</b></div>`:''}
+     ${S.cart.map(l=>{const v=lineView(l);return `<div class="sumline"><span>${v.title}<br><span class="mut">${v.sub.split(' · ').slice(0,2).join(' · ')}</span></span><b>${v.items[0]&&v.items[0].credit?'1 crédit':eur(v.pub)}</b></div>`}).join('')}
+     <div class="hr" style="margin:6px 0"></div>
+     ${savingsHtml(T)}
      <div class="sumtot"><span class="h3">Total</span><b>${eur(T.due)}</b></div>
-     <button class="btn full" style="margin-top:14px" data-act="coPay" ${ident&&co.cgv&&!holdDead?'':'disabled'}>${zero?'Confirmer mes réservations':'Payer '+eur(T.due)}</button>
+     ${zero?'':payRecap(T,u)}
+     <button class="btn full" style="margin-top:14px" data-act="coPay" ${ident&&co.cgv&&!holdDead?'':'disabled'}>${zero?'Confirmer mes réservations':co.pay==='link'?'Enregistrer mon empreinte et créer le lien':payRest(T,u).rest>0?'Payer '+eur(payRest(T,u).rest):'Confirmer le paiement'}</button>
      ${holdDead?'<p class="mut" style="margin-top:8px">Revérifiez les disponibilités avant de payer.</p>':!ident?'<p class="mut" style="margin-top:8px">Identifiez-vous pour continuer.</p>':''}
    </div></aside></div>`;
   $('#coCgv').onchange=e=>{co.cgv=e.target.checked;render()};
   if(co.mode==='signup'&&!u)bindSignup();
 };
+/* Rien à payer. Retour du 24/09 : un cours réglé par un crédit carnet ne
+   demande jamais de carte — on explique la règle d'annulation et de no-show.
+   La garantie facultative ne vise que les autres lignes, avec un libellé
+   adapté (départ, cours, stage…). */
+const isCredit=l=>l.kind==='ind'&&l.credit&&me()&&me().credits[l.dur];
+function creditNote(){
+  const n=S.cart.filter(isCredit).length;if(!n)return '';
+  return `<div class="alert soft" style="margin:0 0 14px"><span class="ic">i</span><div><b>${n>1?'Ces cours sont réglés':'Ce cours est réglé'} avec ${n>1?'des crédits':'un crédit'} de votre carnet : aucune carte n'est demandée.</b><br>
+    Si vous annulez moins de 24 h avant le cours, le crédit est quand même décompté. Si vous ne venez pas sans prévenir, le crédit est décompté et l'absence est en plus enregistrée comme un no-show.</div></div>`;
+}
+function zeroHtml(T){
+  const co=S.co, rest=S.cart.filter(l=>!isCredit(l)), gf=rest.some(l=>l.kind==='gf'), other=rest.some(l=>l.kind!=='gf');
+  const what=gf&&!other?(rest.length>1?'mes départs':'mon départ'):rest.length>1?'mes réservations':({ind:'mon cours',coll:'mon cours',stage:'mon stage',comp:'mon inscription'}[rest[0]&&rest[0].kind]||'ma réservation');
+  return `${creditNote()}
+    ${rest.length?`<p class="sub"><b style="color:var(--ink)">Rien à régler</b> : ${T.avoir?'votre avoir couvre le total':'incluses dans votre abonnement'}.</p>
+      <button class="sw ${co.garantie?'on':''}" data-act="coGar" style="margin-top:8px"><span><b class="h3">Garantir ${what} par carte</b><br><span class="mut">Facultatif. Rien n'est débité ; ${gf&&!other?'30 € par joueur':'le montant de la prestation'} en cas d'absence non prévenue 24 h avant.</span></span><i></i></button>
+      ${co.garantie?cardFields():''}
+      <p class="note">Arbitrage du cadrage : l'abonné réserve sans paiement et l'empreinte reste facultative. Si les absences augmentent, le club pourra la rendre obligatoire sans changer l'écran.</p>`
+    :`<p class="sub"><b style="color:var(--ink)">Rien à régler</b>, aucune carte à saisir.</p>`}`;
+}
+/* ═════════ Moyens de paiement (retour du 24/09) ═════════
+   Tout régler maintenant (e-wallet, chèque cadeau, carte pour le reste),
+   ou lien de paiement unique envoyé au team leader : il pose son empreinte,
+   chacun règle ensuite ses propres prestations avec le même lien. */
+const GIFTS={'CADEAU-100':100,'CADEAU-50':50};
+const canLink=()=>S.cart.some(l=>(l.kind==='gf'&&l.players.length>1)||(l.kind==='comp'&&l.partner));
+function payRest(T,u){
+  const co=S.co;let left=T.due;
+  const w=co.pay==='all'&&co.wallet&&u&&u.wallet?Math.min(u.wallet,left):0;left-=w;
+  const gc=co.pay==='all'&&co.gift?Math.min(co.gift.amt,left):0;left-=gc;
+  return {w,gc,rest:Math.round(left*100)/100};
+}
+function payHtml(T,u){
+  const co=S.co, L=canLink();
+  if(!L&&co.pay==='link')co.pay='all';
+  const x=payRest(T,u);
+  return `${L?`<div class="radios" style="margin-bottom:14px">
+      <button class="radio ${co.pay==='all'?'on':''}" data-act="coPayMode" data-v="all"><span class="dot"></span><div><b>Je règle tout maintenant</b><small>Carte bancaire, e-wallet ou chèque cadeau, seuls ou combinés.</small></div></button>
+      <button class="radio ${co.pay==='link'?'on':''}" data-act="coPayMode" data-v="link"><span class="dot"></span><div><b>Chacun paie sa part · lien de paiement</b><small>Un lien unique à partager avec vos joueurs.</small></div></button></div>`:''}
+    ${co.pay==='link'?`<div class="steps">
+        <div class="ck ok"><span class="ic">1</span><div><b>Vous enregistrez votre empreinte bancaire</b><small>Rien n'est débité aujourd'hui. Elle garantit les places de tout le groupe : une part encore impayée 48 h avant le départ serait débitée sur votre carte.</small></div></div>
+        <div class="ck ok"><span class="ic">2</span><div><b>Vous partagez un lien unique</b><small>Il s'affiche juste après et vous est envoyé par e-mail : transmettez-le à vos joueurs (SMS, WhatsApp, e-mail).</small></div></div>
+        <div class="ck ok"><span class="ic">3</span><div><b>Chacun ouvre le même lien et coche ses prestations</b><small>Sa place, sa voiturette, sa location de clubs… puis règle sa part par carte, e-wallet ou chèque cadeau. Votre propre part se règle de la même façon.</small></div></div>
+        <div class="ck ok"><span class="ic">4</span><div><b>Les joueurs non identifiés créent leur compte en payant</b><small>Un invité ajouté sans licence ni compte crée son compte au moment de son paiement : sa place est alors rattachée à son nom.</small></div></div></div>
+      <div class="sect" style="margin:16px 0 4px">Votre empreinte bancaire</div>${cardFields()}
+      <p class="note">Délai de 48 h avant débit des parts impayées : hypothèse de la maquette, à arbitrer. Le lien reste valable jusqu'à cette échéance.</p>`
+    :`${u&&u.wallet?`<button class="sw ${co.wallet?'on':''}" data-act="coWallet"><span><b class="h3">Payer avec mon e-wallet</b><br><span class="mut">Solde disponible : ${eur(u.wallet)}${co.wallet?' · '+eur(x.w)+' utilisés':''}</span></span><i></i></button>`
+        :u?'':`<p class="mut" style="margin-bottom:8px">E-wallet : connectez-vous pour utiliser votre solde.</p>`}
+      <div class="h3" style="margin:12px 0 8px">Chèque cadeau</div>
+      ${co.gift?`<div class="between"><span><span class="tag ol">${co.gift.code}</span> <span class="mut">${eur(x.gc)} utilisés sur ${eur(co.gift.amt)}${co.gift.amt>x.gc?' · le solde reste sur le chèque':''}</span></span><button class="lnk" style="font-size:12px" data-act="coGiftX">Retirer</button></div>`
+        :`<div class="codebox"><input id="giftIn" placeholder="Code du chèque cadeau" style="text-transform:none"><button class="btn sm sec" data-act="coGift">Appliquer</button></div>
+          ${co.giftErr?`<p class="mut" style="margin-top:6px">${co.giftErr}</p>`:''}`}
+      ${x.rest>0?`<div class="sect" style="margin:16px 0 4px">Carte bancaire · ${eur(x.rest)}</div>${cardFields()}
+        <p class="mut" style="margin-top:4px">Paiement sécurisé 3-D Secure. ${S.cart.some(l=>l.kind==='comp'&&l.split==='each')?'La part de votre partenaire ne vous est pas débitée.':''}</p>`
+        :`<p class="sub" style="margin-top:12px"><b style="color:var(--ink)">Tout est couvert</b> : aucun paiement par carte.</p>`}
+      <p class="note">Démo : chèques cadeaux CADEAU-100 et CADEAU-50. E-wallet de 60 € sur le compte de Claire Dumas.</p>`}`;
+}
+function payRecap(T,u){
+  const co=S.co, x=payRest(T,u);
+  if(co.pay==='link')return `<div class="sumline"><span>Débité aujourd'hui</span><b>0 €</b></div><p class="mut" style="font-size:12px">${eur(T.due)} à régler par les joueurs via le lien de paiement.${u&&u.avoir&&S.useAvoir?' Votre avoir reste disponible pour régler votre propre part.':''}</p>`;
+  return `${x.w?`<div class="sumline"><span>E-wallet</span><b>−${eur(x.w)}</b></div>`:''}${x.gc?`<div class="sumline"><span>Chèque cadeau ${co.gift.code}</span><b>−${eur(x.gc)}</b></div>`:''}
+    ${x.w||x.gc?`<div class="sumline"><span><b style="color:var(--ink);font-weight:500">Reste à payer par carte</b></span><b>${eur(x.rest)}</b></div>`:''}`;
+}
+ACT.plCopy=()=>toast('Lien copié : collez-le dans votre conversation de groupe.');
+ACT.coPayMode=a=>{S.co.pay=a.dataset.v;render()};
+ACT.coWallet=()=>{S.co.wallet=!S.co.wallet;render()};
+ACT.coGift=()=>{const c=($('#giftIn').value||'').trim().toUpperCase();
+  if(GIFTS[c]){S.co.gift={code:c,amt:GIFTS[c]};S.co.giftErr=''}else S.co.giftErr=c?`Le chèque « ${c} » est introuvable ou déjà utilisé.`:'Saisissez le code du chèque.';render()};
+ACT.coGiftX=()=>{S.co.gift=null;render()};
 function cardFields(){
   return `<div class="ph" style="height:44px;border-radius:6px;margin:10px 0 8px">Champ carte sécurisé · prestataire de paiement</div>
     <div class="grid g2" style="gap:8px"><div class="ph" style="height:44px;border-radius:6px">MM / AA</div><div class="ph" style="height:44px;border-radius:6px">CVC</div></div>`;
@@ -2748,7 +3184,7 @@ ACT.coGuest=()=>{
 };
 ACT.coGuestEdit=()=>{S.co.guest=false;render()};
 ACT.coPay=()=>{
-  const u=me(), T=cartTotals();
+  const u=me(), T=cartTotals(), sav=savingsHtml(T);   /* figé avant de débiter l'avoir */
   const ref='TQ-'+(++S.ref)+'-'+uid().slice(0,3).toUpperCase();
   const lines=S.cart.map(l=>({l,v:lineView(l)}));
   if(u){
@@ -2757,16 +3193,20 @@ ACT.coPay=()=>{
       if(l.kind==='pass'){(u.passes=u.passes||[]).push({id:l.id,d:TODAY});return}
       if(l.kind==='carnet'){const k=CARNETS.find(x=>x.id===l.id), c=u.credits[k.dur];
         u.credits[k.dur]={left:(c?c.left:0)+k.q,tot:(c?c.tot:0)+k.q,end:'2027-09-17'};return}
-      if(l.kind==='ind'&&l.credit&&u.credits[l.dur])u.credits[l.dur].left--;
-      if(l.editOf){const o=RS.find(r=>r.id===l.editOf.id);if(o)o.cancelled='Remplacé par la modification du '+fdm(TODAY)}
+      if(l.kind==='ind'&&(l.credit||l.viaCarnet)&&u.credits[l.dur])u.credits[l.dur].left--;
+      if(l.editOf){const o=RS.find(r=>r.id===l.editOf.id);if(o)mvOut(o,l.editOf.moved)}
       const cp=l.kind==='comp'?comp(l.compId):null;
-      RS.push({id:"r"+uid(),kind:l.kind,compId:l.compId,t:v.title,sub:v.sub.split(' · ').slice(2).join(' · ')||v.sub,d:cp?cp.date:l.d,h:cp?cp.h:l.h,
-        close:cp?cp.close:null,pay:l.kind==='ind'&&l.credit?'credit':v.total===0?'incl':'card',amount:v.total-v.promo,fresh:true});
+      const gfx=l.kind==='gf'?{crs:l.crs,h9:!!flightsOf(l)[0].h9,players:l.players.map((p,i)=>({...p,paid:(gfCalc(l)[i]||{p:0}).p}))}:{};
+      RS.push({id:"r"+uid(),kind:l.kind,compId:l.compId,t:l.editOf&&l.kind==='gf'?v.title.replace('Changement de départ','Green fee'):v.title,sub:v.sub.split(' · ').slice(2).join(' · ')||v.sub,d:cp?cp.date:l.d,h:cp?cp.h:l.h,
+        close:cp?cp.close:null,pay:l.kind==='ind'&&(l.credit||l.viaCarnet)?'credit':v.total===0?'incl':'card',amount:v.total-v.promo+(l.editOf&&l.editOf.paid||0),fresh:true,...gfx});
       if(cp){cp.taken=Math.min(cp.cap,cp.taken+(l.partner?2:1))}
     });
     if(T.avoir)u.avoir=Math.round((u.avoir-T.avoir)*100)/100;
   }
-  S.done={ref,lines,T,guest:!u,mail:u?u.email:S.co.gMail,garantie:S.co.garantie};
+  const X=payRest(T,u);if(u&&X.w)u.wallet=Math.round((u.wallet-X.w)*100)/100;
+  S.done={ref,lines,T,sav,guest:!u,mail:u?u.email:S.co.gMail,garantie:S.co.garantie,pay:S.co.pay,X,gift:S.co.gift,
+    link:S.co.pay==='link'?'resonance-golf.fr/p/'+ref.toLowerCase():null};
+  Object.assign(S.co,{pay:'all',wallet:false,gift:null,giftErr:''});S.newSt=null;
   const joins=lines.map(({l})=>l.kind==='gf'&&joinOf(l)).filter(Boolean);
   if(joins.length&&u)setTimeout(()=>toast(joins.map(j=>`Notification envoyée à ${PROFILES[j.id].n.split(' ')[0]} : « ${u.n.split(' ')[0]} a rejoint votre départ de ${j.t} »`).join('<br>')),600);
   S.cart=[];S.promo=null;S.co.cgv=false;S.co.garantie=false;hold=HOLD;holdDead=false;
@@ -2777,10 +3217,21 @@ ACT.coPay=()=>{
 R.confirm=()=>{
   const d=S.done;if(!d){go('gf');return}
   $('#v-confirm').innerHTML=`
-   <div class="scr-head"><div><div class="okmark">✓</div><span class="eyebrow">${d.T.due?'Paiement accepté':'Réservation confirmée'}</span>
+   <div class="scr-head"><div><div class="okmark">✓</div><span class="eyebrow">${d.link?'Places réservées · paiements en attente':d.T.due?'Paiement accepté':'Réservation confirmée'}</span>
      <h1 class="h1">C'est <b>réservé</b>&nbsp;! À très vite au Touquet.</h1>
-     <p class="sub" style="margin-top:4px">Référence de réservation <b style="color:var(--ink)">${d.ref}</b> · confirmation envoyée à ${d.mail||'votre adresse'}</p></div>
+     <p class="sub" style="margin-top:4px">Référence de réservation <b style="color:var(--ink)">${d.ref}</b></p>
+     <div class="mailok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
+       <span>Un e-mail de confirmation de votre réservation vous sera envoyé sous peu${d.mail?' à <b>'+d.mail+'</b>':''}.</span></div></div>
      <span class="node">Confirmation</span></div>
+   ${d.link?`<div class="card plink"><span class="eyebrow">Lien de paiement du groupe</span>
+     <b class="h2" style="display:block;margin:4px 0 6px">Partagez ce lien avec vos joueurs</b>
+     <p class="sub">Chacun ouvre le même lien, coche les prestations qui le concernent et paie sa part. Un joueur sans compte crée le sien au moment de payer.</p>
+     <div class="codebox" style="margin:12px 0"><input value="${d.link}" readonly style="text-transform:none"><button class="btn sm" data-act="plCopy">Copier</button></div>
+     <div class="sbl" style="margin:6px 0">Prestations à régler</div>
+     <ul class="pl-l">${d.lines.flatMap(({v})=>{const k=v.total?(v.total-v.promo)/v.total:1;
+       return v.items.filter(i=>!i.credit).map(i=>`<li><span>${i.n}</span><b>${i.p===0?'Inclus':eur(Math.round(i.p*k*100)/100)}</b><em class="${i.p===0?'ok':''}">${i.p===0?'—':'À régler'}</em></li>`)}).join('')}</ul>
+     ${d.T.promo?`<p class="mut" style="margin-top:8px">Le code promo est déjà déduit de chaque part.</p>`:''}
+     <p class="mut" style="margin-top:8px">Les parts encore impayées 48 h avant le départ seront débitées sur votre empreinte bancaire.</p></div>`:''}
    <div class="two"><div class="card" style="padding:6px 18px">
      ${d.lines.map(({l,v})=>`<div class="cline" style="grid-template-columns:${l.kind==='gf'?'92px ':''}minmax(0,1fr) auto">
        ${l.kind==='gf'?'<div class="qr"></div>':''}
@@ -2790,8 +3241,12 @@ R.confirm=()=>{
        <div class="cl-p"><b>${v.total===0&&v.pub>0?'Inclus':v.items[0]&&v.items[0].credit?'1 crédit':eur(v.total-v.promo)}</b></div></div>`).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
-     <div class="sumline"><span>Total réglé</span><b>${eur(d.T.due)}</b></div>
-     ${d.T.save>0?`<div class="sumline"><span>Économisé grâce à votre statut</span><b>${eur(d.T.save)}</b></div>`:''}
+     <div class="h3" style="margin-bottom:8px">Détail du règlement</div>
+     ${d.sav}
+     <div class="sumtot" style="margin-bottom:8px"><span class="h3">Total</span><b>${eur(d.T.due)}</b></div>
+     ${d.link?`<div class="sumline"><span>À régler via le lien</span><b>${eur(d.T.due)}</b></div><div class="sumline"><span>Empreinte bancaire</span><b>enregistrée</b></div>`
+       :`${d.X.w?`<div class="sumline"><span>E-wallet</span><b>${eur(d.X.w)}</b></div>`:''}${d.X.gc?`<div class="sumline"><span>Chèque cadeau ${d.gift.code}</span><b>${eur(d.X.gc)}</b></div>`:''}
+         <div class="sumline"><span>${d.X.w||d.X.gc?'Carte bancaire':'Total réglé'}</span><b>${eur(d.X.rest)}</b></div>`}
      ${d.garantie?'<div class="sumline"><span>Garantie carte</span><b>enregistrée</b></div>':''}
      ${d.guest?`<p class="sub" style="margin:10px 0">Vous avez réservé sans compte. Créez-en un pour retrouver ce départ et profiter de votre tarif la prochaine fois.</p>
        <button class="btn full" data-act="signup">Créer mon compte</button>`
@@ -2802,7 +3257,7 @@ R.confirm=()=>{
 };
 
 /* ═════════ Espace personnel ═════════ */
-const RULES={gf:{h:24,n:'jusqu\'à 24 h avant le départ'},ind:{h:48,n:'jusqu\'à 48 h avant le cours'},coll:{h:48,n:'jusqu\'à 48 h avant le cours'},
+const RULES={gf:{h:24,n:'jusqu\'à 24 h avant le départ'},ind:{h:24,n:'jusqu\'à 24 h avant le cours'},coll:{h:24,n:'jusqu\'à 24 h avant le cours'},
   stage:{h:24*7,n:'jusqu\'à 7 jours avant le stage'}};
 function cancelInfo(r){
   let dl, n;
@@ -2811,6 +3266,20 @@ function cancelInfo(r){
   return {ok:NOW<dl,n,dl};
 }
 const fdl=d=>d.getDate()+' '+MONTHS[d.getMonth()]+' à '+String(d.getHours()).padStart(2,'0')+' h '+String(d.getMinutes()).padStart(2,'0');
+/* licence FFGolf : échéance toujours visible, renouvellement proposé à J-60 */
+const daysTo=k=>Math.round((dobj(k)-dobj(TODAY))/864e5);
+function licBox(u){
+  if(!u.lic)return `<div class="ck ko"><span class="ic">✕</span><div><b>Licence FFGolf</b><small>Aucune licence rattachée : le tarif Licencié ne s'applique pas.</small></div><button class="btn sm sec" data-act="addLic">Ajouter</button></div>`;
+  const end=u.licEnd||'2026-12-31', n=daysTo(end), soon=n<=60;
+  return `<div class="ck ${n<0?'ko':'ok'} ${soon?'lic-soon':''}"><span class="ic">${n<0?'✕':soon?'!':'✓'}</span><div><b>Licence FFGolf n° ${u.lic}</b>
+    <small>${n<0?'Expirée depuis le ':'Valable jusqu\'au '}${fdm(end)} ${end.slice(0,4)}${soon&&n>=0?` · <b style="color:var(--terra)">expire dans ${plural(n,'jour')}</b>`:''}${soon?'<br>Sans licence à jour, le tarif Licencié FFGolf ne s\'applique plus et les compétitions sont fermées.':''}</small></div>
+    ${soon?'<button class="btn sm" data-act="licRenew">Renouveler</button>':''}</div>`;
+}
+ACT.licRenew=()=>sheet(shead('Renouveler ma licence','FFGolf')+`<p class="sub" style="margin:4px 0 14px">Le renouvellement se fait auprès de la FFGolf ou de votre club. Dès qu'il est enregistré, votre nouvelle échéance remonte ici à la synchronisation de la nuit, et le tarif Licencié continue de s'appliquer.</p>
+  <button class="btn full" data-act="licRenewGo">Renouveler sur l'espace licencié FFGolf ↗</button>
+  <button class="btn ghost full" style="margin-top:8px" data-act="close">Plus tard</button>
+  <p class="note">Le renouvellement est proposé à partir de 60 jours avant l'échéance (retour du 24/09). Démo : la licence de Marc Lefèvre expire le 31 octobre.</p>`);
+ACT.licRenewGo=()=>{closeSheet();toast('Redirection vers l\'espace licencié FFGolf.')};
 R.espace=()=>{
   const u=me();
   if(!u){
@@ -2822,11 +3291,16 @@ R.espace=()=>{
   }
   const tab=S.space, all=(S.res[u.id]||[]);
   const up=all.filter(r=>!r.past&&!r.cancelled), past=all.filter(r=>r.past||r.cancelled);
-  const tabs=[['resa','Réservations',up.length],['proches','Mes proches',u.partners.length],['statut','Statut & tarifs'],['carnets','Carnets & avoirs'],['infos','Licence & documents']];
+  const tabs=[['resa','Réservations',up.length],['proches','Mes proches',u.partners.length],['statut','Statut & tarifs'],['carnets','Carnets & avoirs'],['infos','Mes informations']];
   let body='';
   if(tab==='resa'){
-    const list=(S.resTab==='avenir'?up:past).slice().sort((a,b)=>(a.d+a.h<b.d+b.h?-1:1)*(S.resTab==='avenir'?1:-1));
-    body=`<div class="chips"><button class="chip ${S.resTab==='avenir'?'on':''}" data-act="resTab" data-v="avenir">À venir · ${up.length}</button>
+    const waits=up.filter(r=>r.pay==='wait').sort((a,b)=>a.d<b.d?-1:1);
+    const list=(S.resTab==='avenir'?up.filter(r=>r.pay!=='wait'):past).slice().sort((a,b)=>(a.d+a.h<b.d+b.h?-1:1)*(S.resTab==='avenir'?1:-1));
+    body=`${waits.length?`<div class="sect" style="margin-top:0">Mes listes d'attente · ${waits.length}</div>
+      <div class="card" style="padding:4px 18px;margin-bottom:22px">${waits.map(r=>`<div class="wrow"><span class="tag">${KTAG[r.kind]}</span>
+        <div><b>${r.t}</b><span class="mut">${cap(fday(r.d))}${r.h?' · '+r.h.replace(':',' h '):''} · ${r.sub.replace(/^Liste d'attente · /,'')}</span></div>
+        <button class="btn sm ghost" data-act="waitQuit" data-id="${r.id}">Me désinscrire</button></div>`).join('')}</div>`:''}
+     <div class="chips"><button class="chip ${S.resTab==='avenir'?'on':''}" data-act="resTab" data-v="avenir">À venir · ${up.filter(r=>r.pay!=='wait').length}</button>
       <button class="chip ${S.resTab==='passees'?'on':''}" data-act="resTab" data-v="passees">Passées &amp; annulées · ${past.length}</button></div>
      ${list.length?list.map(r=>{const d=dobj(r.d), ci=r.past||r.cancelled?null:cancelInfo(r), wait=r.pay==='wait';
        return `<div class="card res ${r.past||r.cancelled?'past':''}">
@@ -2845,7 +3319,7 @@ R.espace=()=>{
        </div>`}).join('')
      :`<div class="card" style="padding:26px;text-align:center"><b class="h3">${S.resTab==='avenir'?'Aucune réservation à venir':'Rien à afficher'}</b>
         ${S.resTab==='avenir'?'<p class="sub" style="margin:6px 0 14px">Réservez un départ, un cours ou une compétition.</p><button class="btn sm" data-go="gf">Réserver un départ</button>':''}</div>`}
-     <p class="note">Délais d'annulation proposés au cadrage : 24 h pour un green fee, 48 h pour un cours, 7 jours pour un stage, la clôture des inscriptions pour une compétition. Passé le délai, les boutons restent visibles mais désactivés, avec la date limite. Le cours de Claire demain à 10 h en est l'exemple.</p>`;
+     <p class="note">Délais d'annulation proposés au cadrage : 24 h pour un green fee comme pour un cours (retour du 24/09), 7 jours pour un stage, la clôture des inscriptions pour une compétition. Passé le délai, les boutons restent visibles mais désactivés, avec la date limite. Le cours de Claire demain à 10 h en est l'exemple.</p>`;
   }
   if(tab==='statut'){
     const k1='2026-09-24', k2='2026-09-26';
@@ -2859,9 +3333,10 @@ R.espace=()=>{
       <div class="mcard"><div class="between"><img data-logo src="" alt="" style="height:30px;filter:brightness(0) invert(1)"><span class="mut" style="font-size:11px">Le Touquet</span></div>
         <div><div style="font-size:24px;font-weight:300;letter-spacing:.5px">${u.n}</div><div class="mut">${u.home}</div></div>
         <div class="row wrap" style="gap:6px">${u.st.map(s=>`<span class="tag">${ST[s].n}</span>`).join('')}</div>
-        <div class="between" style="margin-top:auto"><span class="mut">Licence ${u.lic||'—'} · index ${fidx(u.idx)}</span><span class="qr" style="width:46px;height:46px;background-size:8px 8px;border:0"></span></div></div>
+        <div class="between" style="margin-top:auto"><span class="mut">Licence ${u.lic||'—'}${u.lic?' · jusqu\'au '+fdm(u.licEnd||'2026-12-31')+' '+(u.licEnd||'2026').slice(0,4):''} · index ${fidx(u.idx)}</span><span class="qr" style="width:46px;height:46px;background-size:8px 8px;border:0"></span></div></div>
       <div class="card" style="padding:16px"><div class="h3" style="margin-bottom:8px">Vos avantages</div>
         ${u.st.map(s=>`<div class="ck ok"><span class="ic">✓</span><div><b>${ST[s].n}</b><small>${ST[s].s}</small></div></div>`).join('')}
+        ${licBox(u)}
         <p class="mut" style="margin-top:8px">Quand plusieurs statuts s'appliquent, c'est toujours le tarif le plus avantageux qui est retenu. Les remises ne se cumulent pas.</p></div></div>
      <div class="sect">Vos tarifs au Touquet</div>
      <div class="card" style="padding:4px 8px;overflow-x:auto"><table class="ttable"><thead><tr><th>Prestation</th><th class="r">Prix public</th><th class="r">Votre prix</th><th class="hide-s">Statut appliqué</th></tr></thead>
@@ -2882,28 +3357,54 @@ R.espace=()=>{
        return `<div class="card pack"><span class="tag" style="align-self:flex-start">${k.cat} · acheté le ${fdm(x.d)}</span>
          <b class="h2">${k.n}</b><span class="sub">${k.d}</span>
          <div class="foot"><span class="mut">Valable ${k.t}</span><button class="btn sm ghost" data-go="gf">Réserver un départ</button></div></div>`}).join('')}</div>`:''}
-     <div class="sect">Avoirs</div>
-     ${u.avoir?`<div class="card" style="padding:16px"><div class="between"><div><b class="h2">${eur(u.avoir)}</b><div class="mut">Avoir suite à l'annulation d'un départ · valable jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}</div></div>
-        <span class="tag ol">Utilisé automatiquement au panier</span></div></div>`
-      :'<div class="card" style="padding:16px"><span class="mut">Aucun avoir disponible.</span></div>'}
-     <p class="note">L'avoir est proposé par défaut au panier (interrupteur désactivable). Il vient d'une annulation remboursée en avoir plutôt que sur la carte : c'est l'un des deux choix proposés à l'annulation.</p>`;
+     <div class="grid g2" style="align-items:start">
+      <div><div class="sect">E-wallet</div>
+       <div class="card" style="padding:16px"><b class="h2">${eur(u.wallet||0)}</b>
+        <div class="mut">Solde de votre porte-monnaie électronique${u.wallet?' · utilisable au paiement, sur toutes les prestations':''}</div>
+        <p class="mut" style="margin-top:8px;font-size:12px">${u.wallet?'Au moment de payer, cochez « Payer avec mon e-wallet » : le solde est déduit avant la carte.':'Le e-wallet se crédite à l\'accueil du golf.'}</p></div></div>
+      <div><div class="sect">Avoirs</div>
+       <div class="card" style="padding:16px">${u.avoir?`<b class="h2">${eur(u.avoir)}</b><div class="mut">Avoir suite à une annulation · valable jusqu'au ${fdm(u.avoirEnd)} ${u.avoirEnd.slice(0,4)}<br>Sur toutes les prestations golf : parcours, locations, compétitions, enseignements</div>`
+         :'<span class="mut">Aucun avoir disponible.</span>'}
+        <div class="hr" style="margin:12px 0"></div>
+        <label class="chkbox"><input type="checkbox" data-avoirauto ${u.avoirAuto!==false?'checked':''}><span><b style="color:var(--ink);font-weight:500">Utiliser automatiquement mes avoirs au panier</b><br>${u.avoirAuto!==false?'Vos avoirs sont déduits d\'office ; vous pouvez toujours les retirer au panier.':'Vos avoirs sont conservés ; vous pouvez les activer au panier, commande par commande.'}</span></label></div></div>
+     </div>
+     <p class="note">Retour du 24/09 : solde du e-wallet affiché à côté des avoirs, et choix de l'utilisation automatique des avoirs au panier. Décoché, l'interrupteur du panier démarre sur « non » à chaque connexion.</p>`;
   }
   if(tab==='proches')body=prochesTab(u);
   if(tab==='infos'){
-    const cOk=u.cert&&u.cert>=TODAY;
-    body=`<div class="grid g2" style="align-items:start"><div class="card" style="padding:4px 16px">
-      <div class="ck ${u.lic?'ok':'ko'}"><span class="ic">${u.lic?'✓':'✕'}</span><div><b>Licence FFGolf</b><small>${u.lic?'N° '+u.lic+' · saison 2026 · synchronisée chaque nuit':'Aucune licence rattachée'}</small></div>${u.lic?'':'<button class="btn sm sec" data-act="addLic">Ajouter</button>'}</div>
-      <div class="ck ok"><span class="ic">✓</span><div><b>Index ${fidx(u.idx)}</b><small>Relevé FFGolf du 17 septembre</small></div></div>
-      <div class="ck ${cOk?'ok':'ko'}"><span class="ic">${cOk?'✓':'✕'}</span><div><b>Certificat médical</b><small>${u.cert?(cOk?'Valable jusqu\'au ':'Expiré depuis le ')+fdm(u.cert)+' '+u.cert.slice(0,4):'Non déposé'}${cOk?'':' — requis pour les compétitions'}</small></div><button class="btn sm ${cOk?'ghost':'sec'}" data-act="cert">${cOk?'Remplacer':'Déposer'}</button></div>
-      <div class="ck ok"><span class="ic">✓</span><div><b>Date de naissance</b><small>${fdm(u.dob)} ${u.dob.slice(0,4)} · ${ageAt(u.dob,TODAY)} ans</small></div></div>
+    const cOk=u.cert&&u.cert>=TODAY, pub=!!u.pubProfile;
+    const crow=(n,v,ph)=>`<div class="kv"><span class="mut">${n}</span>${v?`<b>${v}</b>`:`<span class="mut">${ph}</span>`}</div>`;
+    body=`<div class="grid g2 infos" style="align-items:start">
+     <div class="col">
+      <div class="card" style="padding:16px 18px"><div class="between" style="margin-bottom:4px"><div class="h3">Coordonnées</div><button class="lnk" style="font-size:12px" data-act="coordEdit">Modifier</button></div>
+       ${crow('E-mail',u.email)}
+       ${crow('Téléphone',u.tel,'Non renseigné')}
+       ${crow('Adresse postale',u.addr,'Non renseignée')}
+       ${crow('Golf de rattachement',u.club,'Non renseigné')}</div>
+      <div class="card" style="padding:4px 18px">
+       <div class="ck ${u.lic?'ok':'ko'}"><span class="ic">${u.lic?'✓':'✕'}</span><div><b>Licence FFGolf</b><small>${u.lic?'N° '+u.lic+' · valable jusqu\'au '+fdm(u.licEnd||'2026-12-31')+' '+(u.licEnd||'2026').slice(0,4)+' · synchronisée chaque nuit':'Aucune licence rattachée'}</small></div>${u.lic?'':'<button class="btn sm sec" data-act="addLic">Ajouter</button>'}</div>
+       <div class="ck ok"><span class="ic">✓</span><div><b>Index ${fidx(u.idx)}</b><small>Relevé FFGolf du 17 septembre</small></div></div>
+       <div class="ck ok"><span class="ic">✓</span><div><b>Date de naissance</b><small>${fdm(u.dob)} ${u.dob.slice(0,4)} · ${ageAt(u.dob,TODAY)} ans</small></div></div>
+       <div class="ck ok"><span class="ic">✓</span><div><b>Statut</b><small>${u.st.map(s=>ST[s].n).join(' · ')||'Prix public'}</small></div></div>
+      </div>
      </div>
-     <div class="card" style="padding:16px">
-      <div class="h3" style="margin-bottom:4px">Visibilité sur les départs</div>
-      <p class="mut" style="margin-bottom:10px">Ce que voient les autres joueurs inscrits sur le même créneau que vous.</p>
-      <div class="seg2" style="margin-bottom:4px"><button class="${u.pubProfile?'on':''}" data-act="pubProfile" data-v="1">Nom et index</button><button class="${u.pubProfile?'':'on'}" data-act="pubProfile" data-v="0">Profil masqué</button></div>
-      <div class="hr" style="margin:12px 0"></div>
-      <div class="h3" style="margin-bottom:6px">Coordonnées</div><p class="mut">${u.email}</p>
-</div></div>`;
+     <div class="col">
+      <div class="card" style="padding:4px 18px"><div class="h3" style="padding:14px 0 2px">Documents</div>
+       <div class="ck ${cOk?'ok':'ko'}"><span class="ic">${cOk?'✓':'✕'}</span><div><b>Certificat médical</b><small>${u.cert?(cOk?'Valable jusqu\'au ':'Expiré depuis le ')+fdm(u.cert)+' '+u.cert.slice(0,4):'Non déposé'}${cOk?'':' — requis pour les compétitions'}</small></div><button class="btn sm ${cOk?'ghost':'sec'}" data-act="cert">${cOk?'Remplacer':'Déposer'}</button></div>
+       ${u.lic?`<div class="ck ok"><span class="ic">✓</span><div><b>Attestation de licence 2026</b><small>Fournie par la FFGolf · PDF</small></div><button class="btn sm ghost" data-act="docDl">Télécharger</button></div>`:''}
+      </div>
+      <div class="card" style="padding:16px 18px">
+       <div class="h3" style="margin-bottom:4px">Visibilité sur les départs</div>
+       <p class="mut" style="margin-bottom:10px">Ce que voient les joueurs inscrits sur le même créneau que vous.</p>
+       <div class="seg2" style="margin-bottom:12px"><button class="${pub?'on':''}" data-act="pubProfile" data-v="1">Nom et index</button><button class="${pub?'':'on'}" data-act="pubProfile" data-v="0">Profil masqué</button></div>
+       <div class="vis">
+        <div class="vis-r"><span class="ic ok">✓</span><div><b>Vos proches</b><small>Voient toujours votre nom et votre index, même en profil masqué.</small></div></div>
+        <div class="vis-r"><span class="ic ${pub?'ok':''}">${pub?'✓':'—'}</span><div><b>Les autres joueurs</b><small>${pub?'Voient votre nom et votre index.':'Voient seulement « Profil masqué » et votre index.'}</small></div></div>
+       </div>
+       <p class="mut" style="margin-top:10px;font-size:12px">Masquer votre profil ne le cache pas à tout le monde : les personnes ajoutées dans <button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="proches">Mes proches</button> continuent de vous reconnaître sur un départ.</p>
+      </div>
+     </div></div>
+     <p class="note">Retour du 24/09 : coordonnées, licence et profil golfeur à gauche ; documents et visibilité à droite. Téléphone, adresse postale et golf de rattachement ajoutés aux coordonnées.</p>`;
   }
   $('#v-espace').innerHTML=`
    <div class="scr-head"><div class="hello"><span class="av" style="width:58px;height:58px;font-size:17px">${u.ini}</span>
@@ -2912,6 +3413,19 @@ R.espace=()=>{
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="spaceTab" data-t="${k}">${n}${c!=null?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
 };
+document.addEventListener('change',e=>{const el=e.target.closest('[data-avoirauto]');if(!el)return;
+  const u=me();u.avoirAuto=el.checked;S.useAvoir=el.checked;render();
+  toast(el.checked?'Vos avoirs seront déduits automatiquement au panier.':'Vos avoirs ne seront plus déduits automatiquement.')});
+ACT.coordEdit=()=>{const u=me();
+  sheet(shead('Mes coordonnées','')+`<label class="field"><span>E-mail</span><input value="${u.email}" disabled></label>
+    <label class="field"><span>Téléphone</span><input id="cdTel" type="tel" value="${u.tel||''}" placeholder="06 00 00 00 00"></label>
+    <label class="field"><span>Adresse postale</span><input id="cdAddr" value="${u.addr||''}" placeholder="N°, rue, code postal, ville"></label>
+    <label class="field"><span>Golf de rattachement</span><input id="cdClub" list="cdClubs" value="${u.club||''}" placeholder="Le golf où vous êtes membre"></label>
+    <datalist id="cdClubs">${['Le Touquet Golf Resort','Golf d\'Hardelot','Golf de Belle Dune','Golf de Brigode','Golf de Wimereux'].map(x=>`<option value="${x}">`).join('')}</datalist>
+    <p class="mut" style="margin:-4px 0 14px">Le golf de rattachement est celui de votre licence FFGolf ; il sert aux compétitions et aux accords de réciprocité.</p>
+    <button class="btn full" data-act="coordSave">Enregistrer</button>`)};
+ACT.coordSave=()=>{const u=me();u.tel=$('#cdTel').value.trim();u.addr=$('#cdAddr').value.trim();u.club=$('#cdClub').value.trim();closeSheet();render();toast('Coordonnées enregistrées.')};
+ACT.docDl=()=>toast('Attestation de licence téléchargée.');
 ACT.spaceTab=a=>{S.space=a.dataset.t;if(S.screen==='espace')render();else go('espace')};
 ACT.resTab=a=>{S.resTab=a.dataset.v;render()};
 const findRes=id=>(S.res[S.user]||[]).find(r=>r.id===id);
@@ -2926,13 +3440,16 @@ ACT.resCancel=a=>{
    `<p class="sub" style="margin:4px 0 14px"><b style="color:var(--ink)">${r.t}</b> · ${fday(r.d)}${r.h?' · '+r.h:''}</p>
    ${refund?`<div class="sect" style="margin-top:0">Remboursement de ${eur(r.amount)}</div><div class="radios">
      <button class="radio on" data-act="refundPick" data-v="card"><span class="dot"></span><div><b>Sur ma carte bancaire</b><small>Sous 5 à 7 jours ouvrés</small></div></button>
-     <button class="radio" data-act="refundPick" data-v="avoir"><span class="dot"></span><div><b>En avoir, tout de suite</b><small>Utilisable 9 mois sur tout le golf</small></div></button></div>`
+     <button class="radio" data-act="refundPick" data-v="avoir"><span class="dot"></span><div><b>Via un avoir, utilisable immédiatement</b><small>Valable 12 mois, sur toutes les prestations golf (parcours, locations, compétitions, enseignements)</small></div></button></div>`
     :r.pay==='credit'?'<div class="alert soft"><span class="ic">↺</span><div>Le crédit est <b>recrédité sur votre carnet</b>.</div></div>'
     :r.pay==='incl'?'<div class="alert soft"><span class="ic">i</span><div>Départ inclus dans votre abonnement : rien à rembourser. Le créneau est libéré pour d\'autres joueurs.</div></div>':''}
    ${r.kind==='gf'&&r.sub.includes('2 joueurs')?'<p class="mut" style="margin-top:10px">Les autres joueurs du départ sont prévenus par e-mail.</p>':''}
    <div class="row" style="margin-top:16px"><button class="btn" data-act="resCancelGo" data-id="${r.id}">Confirmer</button><button class="btn ghost" data-act="close">Garder ma réservation</button></div>`);
   S.refund='card';
 };
+/* quitter une liste d'attente : un clic, sans étape de confirmation */
+ACT.waitQuit=a=>{const r=findRes(a.dataset.id);r.cancelled='Liste d\'attente quittée le '+fdm(TODAY);render();
+  toast(`Vous n'êtes plus en liste d'attente pour <b>${r.t}</b>.`)};
 ACT.refundPick=a=>{S.refund=a.dataset.v;$$('[data-act="refundPick"]').forEach(b=>b.classList.toggle('on',b===a))};
 ACT.resCancelGo=a=>{
   const r=findRes(a.dataset.id), u=me();
@@ -2940,14 +3457,14 @@ ACT.resCancelGo=a=>{
   if(r.pay==='wait'){msg='Vous avez quitté la liste d\'attente.'}
   else if(r.pay==='credit'){const c=u.credits[r.kind==='ind'&&r.t.includes('1 h')?60:30];if(c)c.left++;msg='Réservation annulée, crédit recrédité.'}
   else if(r.pay==='card'&&r.amount>0){
-    if(S.refund==='avoir'){u.avoir=(u.avoir||0)+r.amount;u.avoirEnd=u.avoirEnd||'2027-06-17';msg=`Annulée : ${eur(r.amount)} ajoutés à votre avoir.`}
+    if(S.refund==='avoir'){u.avoir=(u.avoir||0)+r.amount;u.avoirEnd=u.avoirEnd&&u.avoirEnd>'2027-09-17'?u.avoirEnd:'2027-09-17';msg=`Annulée : ${eur(r.amount)} ajoutés à votre avoir.`}
     else msg=`Annulée : ${eur(r.amount)} remboursés sur votre carte sous 5 à 7 jours.`}
   r.cancelled=r.pay==='wait'?'Liste d\'attente quittée le '+fdm(TODAY):'Annulé le '+fdm(TODAY);
   closeSheet();render();toast(msg);
 };
 ACT.resEdit=a=>{
   const r=findRes(a.dataset.id);
-  if(r.kind==='gf'){Object.assign(S.gf,{date:r.d,editOf:{id:r.id,d:r.d,h:r.h},moment:'all'});go('gf');return}
+  if(r.kind==='gf'){mvOpen(r);return}
   if(r.kind==='ind'){Object.assign(S.cours,{dur:r.t.includes('1 h')?60:30,pro:'any',slot:null,wk:0,editOf:{id:r.id}});go('cours-ind');return}
   sheet(shead('Modifier '+(r.kind==='comp'?'mes préférences':'ma réservation'),KTAG[r.kind])+
    (r.kind==='comp'?`<p class="sub" style="margin:4px 0 12px">Les horaires sont publiés 48 h avant l'épreuve. D'ici là, vous pouvez changer vos préférences.</p>
@@ -2955,6 +3472,110 @@ ACT.resEdit=a=>{
      <label class="field"><span>Message au comité</span><input></label>`
    :`<p class="sub" style="margin:4px 0 12px">Un cours collectif ou un stage se modifie en changeant de session : annulez celle-ci (gratuit dans les délais), puis inscrivez-vous à une autre.</p>`)+
    `<button class="btn full" data-act="close">${r.kind==='comp'?'Enregistrer':'Compris'}</button>`);
+};
+/* ═════════ Déplacer un départ déjà réservé (retour du 24/09) ═════════
+   Comme au planning : on choisit d'abord les joueurs qui bougent, puis un
+   nouveau créneau, sur le même parcours par défaut (les autres restent
+   accessibles). Le récapitulatif montre ce qui est déjà réglé et la seule
+   différence à payer, ou à rendre en avoir. */
+const resPlayers=r=>r.players||[{type:'self',paid:r.amount}];
+const mvWho=(p,i)=>{const x=playerInfo(p,i);return {...x,n:x.you&&!x.anon?x.n+' (vous)':x.n}};
+function mvOpen(r){
+  S.mv={rid:r.id,sel:resPlayers(r).map((p,i)=>i),date:r.d,crs:r.crs||'foret',h9:!!r.h9,t:null,tc:null,other:false};go('gf-move');
+}
+function mvState(){
+  const m=S.mv, r=findRes(m.rid), ps=resPlayers(r), sel=m.sel.filter(i=>ps[i]);
+  const tc=m.tc||m.crs, c=crsV(tc,tc===m.crs?m.h9:false);
+  const paid=sel.reduce((t,i)=>t+(ps[i].paid||0),0);
+  const news=sel.map(i=>({i,p:ps[i],w:mvWho(ps[i],i),x:gfPrice(c,m.date,playerInfo(ps[i],i).st)}));
+  const nw=news.reduce((t,y)=>t+y.x.p,0);
+  return {m,r,ps,sel,c,paid,news,nw,diff:Math.round((nw-paid)*100)/100};
+}
+function mvTimes(c,k,n,r){
+  const cur=x=>c.id===r.crs&&k===r.d&&x.t===r.h;
+  const L=openSlots(c,k,n,'all').filter(x=>!cur(x));
+  if(!L.length)return '<p class="mut" style="padding:6px 0 4px">Aucun départ avec assez de places ce jour-là.</p>';
+  return `<div class="gtimes">${L.map(x=>`<button class="gtime ${S.mv.t===x.t&&(S.mv.tc||S.mv.crs)===c.id?'on':''}" data-act="mvPick" data-c="${c.id}" data-t="${x.t}"><b>${x.t}</b><i>${x.free} pl. libres</i></button>`).join('')}</div>`;
+}
+R['gf-move']=()=>{
+  if(!S.mv||!me()){go('espace');return}
+  const X=mvState(), {m,r,ps,sel,c}=X, n=sel.length, cur=crs(m.crs);
+  const start=(()=>{const x=dshift(m.date,-3);return x<DMIN?DMIN:x})();
+  const days=Array.from({length:9},(_,i)=>dshift(start,i)).filter(k=>k<=DMAX);
+  const ok=n&&m.t;
+  const others=CRS.filter(x=>x.id!==m.crs);
+  $('#v-gf-move').innerHTML=`
+   <button class="back" data-act="spaceTab" data-t="resa">← Mes réservations</button>
+   <div class="scr-head"><div><span class="eyebrow">Mon espace · modifier un green fee</span><h1 class="h1">Déplacer <b>mon départ</b></h1>
+     <p class="sub" style="margin-top:6px">Actuellement : ${cur.n}${m.h9?' 9 trous':''} · ${fday(r.d)} à ${r.h.replace(':',' h ')} · ${plural(ps.length,'joueur')}</p></div>
+     <span class="node">Déplacement · comme au planning</span></div>
+   <div class="two"><div>
+     <div class="sect" style="margin-top:0">1 · Qui change de départ&nbsp;?</div>
+     <div class="card" style="padding:4px 18px">${ps.map((p,i)=>{const w=mvWho(p,i);
+       return `<label class="chkbox mvp"><input type="checkbox" data-mvsel="${i}" ${m.sel.includes(i)?'checked':''}>
+         <span class="av ${w.you&&!w.anon?'':'lt'}" style="width:34px;height:34px">${w.anon||w.guest?i+1:w.n.split(' ').map(x=>x[0]).join('').slice(0,2)}</span>
+         <span style="flex:1"><b style="color:var(--ink);font-weight:500">${w.n}</b><br><span class="mut">${w.sub}</span></span>
+         <span class="mut" style="white-space:nowrap">${p.paid?'Réglé '+eur(p.paid):'Inclus'}</span></label>`}).join('')}</div>
+     <p class="mut" style="margin-top:8px">${n<ps.length&&n?`${plural(ps.length-n,'joueur garde','joueurs gardent')} le départ actuel.`:n?'Tout le départ est déplacé.':'Cochez au moins un joueur.'}</p>
+     <div class="sect">2 · Nouveau jour et nouvel horaire</div>
+     <div class="daynav"><button class="calnav" data-act="mvDay" data-n="-1" ${m.date<=DMIN?'disabled':''} aria-label="Jour précédent"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+     <div class="daystrip">${days.map(k=>{const q=n?openSlots(cur,k,n,'all').length:0;
+       return `<button class="day ${k===m.date?'on':''} ${q?'':'full'}" data-act="mvSetDay" data-k="${k}"><div class="dd">${DAYS[wday(k)].slice(0,3)}. ${+k.slice(8)}</div><div class="mut" style="font-size:10.5px">${MABR[+k.slice(5,7)-1]}</div><div class="pp">${q?plural(q,'départ'):'complet'}</div></button>`}).join('')}</div>
+     <button class="calnav" data-act="mvDay" data-n="1" ${m.date>=DMAX?'disabled':''} aria-label="Jour suivant"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button></div>
+     <div class="card" style="padding:14px 18px"><div class="between"><b class="h3">${cur.n}${m.h9?' · 9 trous':''} <span class="mut" style="font-weight:300">· même parcours</span></b><span class="mut">${cap(fday(m.date))}</span></div>
+       ${n?mvTimes(cur,m.date,n,r):'<p class="mut">Cochez d\'abord les joueurs à déplacer.</p>'}</div>
+     ${n?`<button class="lnk" style="margin-top:12px;font-size:12.5px" data-act="mvOther">${m.other?'Masquer les autres parcours':'Choisir un départ sur un autre parcours'}</button>
+     ${m.other?others.map(o=>`<div class="card" style="padding:14px 18px;margin-top:10px"><div class="between"><b class="h3">${o.n}</b><span class="mut">${pr(gfPrice(o,m.date,mySt()),{nost:true,small:'votre tarif'})}</span></div>
+       ${o.idxMax&&me().idx>o.idxMax?`<p class="mut">Index ${fidx(me().idx)} supérieur à la limite de ${o.idxMax}.</p>`:mvTimes(o,m.date,n,r)}</div>`).join(''):''}`:''}
+   </div>
+   <aside class="aside"><div class="card" style="padding:18px">
+     <div class="h3" style="margin-bottom:8px">Récapitulatif</div>
+     <div class="sumline"><span><b style="color:var(--ink);font-weight:500">Départ actuel</b><br><span class="mut">${cur.n} · ${fdm(r.d)} · ${r.h}</span></span></div>
+     ${X.news.map(y=>`<div class="sumline"><span>${y.w.n}</span><b>${y.p.paid?eur(y.p.paid):'Inclus'}</b></div>`).join('')}
+     <div class="sumline"><span>Déjà réglé</span><b>${eur(X.paid)}</b></div>
+     <div class="hr" style="margin:10px 0"></div>
+     <div class="sumline"><span><b style="color:var(--ink);font-weight:500">Nouveau départ</b><br><span class="mut">${ok?`${crs(m.tc||m.crs).n} · ${fdm(m.date)} · ${m.t}`:'À choisir'}</span></span></div>
+     ${ok?X.news.map(y=>`<div class="sumline"><span>${y.w.n}</span><b>${y.x.p<y.x.pub?`<span class="was">${eur(y.x.pub)}</span>`:''}${y.x.p===0&&y.x.pub>0?'Inclus':eur(y.x.p)}</b></div>`).join('')
+       +`<div class="sumline"><span>Nouveau tarif</span><b>${eur(X.nw)}</b></div>`:''}
+     <div class="sumtot"><span class="h3">${!ok?'Différence':X.diff>0?'Supplément à régler':X.diff<0?'Rendu en avoir':'Différence'}</span><b>${!ok?'—':X.diff>0?'+ '+eur(X.diff):X.diff<0?eur(-X.diff):'0 €'}</b></div>
+     <p class="mut" style="margin:8px 0 14px">${!ok?'Vous ne payez jamais deux fois : seule la différence avec ce que vous avez déjà réglé est demandée.':X.diff>0?'Seul le supplément est à payer. Votre départ actuel reste réservé jusqu\'au paiement.':X.diff<0?'Le nouveau départ coûte moins cher : la différence vous est rendue en avoir, utilisable immédiatement.':'Même tarif : rien à payer, le changement est immédiat.'}</p>
+     <button class="btn full" data-act="mvGo" ${ok?'':'disabled'}>${!ok?'Choisissez un nouveau départ':X.diff>0?'Ajouter le supplément au panier':'Confirmer le changement'}</button>
+     <p class="mut" style="margin-top:10px;font-size:12px">Options (voiturette, chariot…) : conservées sur le nouveau départ, modifiables à l'accueil.</p>
+   </div></aside></div>
+   <p class="note">Retour du 24/09 : on ne renvoie plus le client au début du tunnel. Comme au planning, il sélectionne d'abord les personnes de la réservation qui bougent, puis un créneau sur le même parcours par défaut, avec la possibilité de choisir un autre parcours. Le montant déjà réglé est rappelé et seule la différence est demandée.</p>`;
+  $$('[data-mvsel]').forEach(el=>el.onchange=()=>{const i=+el.dataset.mvsel;
+    m.sel=el.checked?[...new Set([...m.sel,i])].sort():m.sel.filter(x=>x!==i);
+    const cc=crs(m.tc||m.crs), s=m.t&&slots(cc,m.date).find(x=>x.t===m.t);if(s&&s.free<m.sel.length)m.t=null;render()});
+};
+ACT.mvDay=a=>{S.mv.date=dshift(S.mv.date,+a.dataset.n);S.mv.t=null;render()};
+ACT.mvSetDay=a=>{S.mv.date=a.dataset.k;S.mv.t=null;render()};
+ACT.mvOther=()=>{S.mv.other=!S.mv.other;render()};
+ACT.mvPick=a=>{S.mv.t=a.dataset.t;S.mv.tc=a.dataset.c;render()};
+/* retire d'une réservation les joueurs déplacés (tous : elle est remplacée) */
+function mvOut(o,moved){
+  const ps=resPlayers(o);
+  if(!moved||moved.length>=ps.length){o.cancelled='Remplacé par la modification du '+fdm(TODAY);return}
+  const out=moved.reduce((t,i)=>t+(ps[i].paid||0),0);
+  o.players=ps.filter((p,i)=>!moved.includes(i));o.amount=Math.round((o.amount-out)*100)/100;
+  o.sub=plural(o.players.length,'joueur')+' · '+o.players.map((p,i)=>mvWho(p,i).n.replace(' (vous)','')).join(', ');
+}
+ACT.mvGo=()=>{
+  const X=mvState(), {m,r,ps,sel,c}=X, u=me(), tc=m.tc||m.crs, h9=tc===m.crs&&m.h9;
+  const players=sel.map((i,k)=>({...ps[i],f:0}));
+  if(X.diff>0){
+    players.forEach(p=>delete p.paid);
+    addLine({kind:'gf',d:m.date,h:m.t,crs:tc,flights:[{crs:tc,t:m.t,h9}],players,fopts:[{}],
+      editOf:{id:r.id,d:r.d,h:r.h,moved:sel,paid:X.paid}});
+    return;
+  }
+  const RS=S.res[u.id];
+  if(X.diff<0){u.avoir=Math.round(((u.avoir||0)-X.diff)*100)/100;u.avoirEnd=u.avoirEnd&&u.avoirEnd>'2027-09-17'?u.avoirEnd:'2027-09-17'}
+  const np=players.map((p,k)=>({...p,paid:X.news[k].x.p}));
+  mvOut(r,sel);
+  RS.push({id:'r'+uid(),kind:'gf',t:'Green fee · '+crs(tc).n+(h9?' · 9 trous':''),sub:plural(np.length,'joueur')+' · '+np.map((p,i)=>mvWho(p,i).n.replace(' (vous)','')).join(', ')+(r.opts?' · '+r.opts:''),
+    d:m.date,h:m.t,pay:X.nw===0?'incl':'card',amount:X.nw,crs:tc,h9,players:np,opts:r.opts,fresh:true});
+  S.mv=null;S.space='resa';S.resTab='avenir';go('espace');
+  toast(`Départ déplacé au ${fday(m.date)} à ${m.t}.${X.diff<0?' '+eur(-X.diff)+' ajoutés à votre avoir.':''}`);
 };
 ACT.rebook=a=>{const r=findRes(a.dataset.id);Object.assign(S.gf,{date:'2026-09-24',editOf:null});go('gf')};
 
@@ -2993,7 +3614,7 @@ function prochesTab(u){
       <div class="seg2">${[['none','Personne'],['all','Tous mes proches'],['some','Au choix']].map(([k,n])=>`<button class="${(u.shareMode||'none')===k?'on':''}" data-act="shareMode" data-v="${k}">${n}</button>`).join('')}</div></div>
     <div class="grid g3">${list.map(p=>procheCard(p,u)).join('')}
       <button class="card pcard add" data-act="procheAdd"><span class="av" style="width:46px;height:46px;background:var(--gold);color:#fff;font-size:20px">＋</span>
-        <b class="h3">Ajouter un proche</b><span class="mut">Compte, licence, enfant ou simple invitation</span></button></div>
+        <b class="h3">Ajouter un proche</b><span class="mut">Par sa licence, en créant son profil ou par lien d'invitation</span></button></div>
     <p class="note">Question ouverte : ajouter un adulte qui a déjà un compte doit-il passer par son accord (invitation à accepter) ? Ici l'ajout est immédiat, et seuls le nom, le statut tarifaire et l'index lui sont empruntés.</p>`;
 }
 function procheSheet(){
@@ -3002,31 +3623,33 @@ function procheSheet(){
   let body='';
   if(a.mode==='find'){
     const f=a.found;
-    body=`<p class="sub" style="margin-bottom:12px">Votre proche joue déjà : retrouvez-le par son e-mail ou son numéro de licence. Son tarif (licencié, jeune, abonné…) sera appliqué automatiquement.</p>
-      <div class="codebox"><input id="paQ" placeholder="E-mail ou n° de licence FFGolf" value="${a.q||''}" style="text-transform:none"><button class="btn sm" data-act="paFind">Rechercher</button></div>
+    body=`<p class="sub" style="margin-bottom:12px">Votre proche joue déjà : retrouvez-le par son numéro de licence FFGolf (9 chiffres). Son tarif (licencié, jeune, abonné…) sera appliqué automatiquement.</p>
+      <div class="codebox"><input id="paQ" placeholder="N° de licence FFGolf (9 chiffres)" inputmode="numeric" value="${a.q||''}" style="text-transform:none"><button class="btn sm" data-act="paFind">Rechercher</button></div>
       ${f?`<div class="radio on" style="margin-top:12px;cursor:default"><span class="av lt">${f.ini}</span><div><b>${f.n}</b><small>${f.email?'Compte Resonance':'Licence FFGolf vérifiée'} · ${f.st.map(s=>ST[s].n).join(' · ')} · index ${fidx(f.idx)}</small></div></div>${rel}
         <button class="btn full" style="margin-top:18px" data-act="paSave">Ajouter ${f.n.split(' ')[0]} à mes proches</button>`
       :a.err?`<p class="mut" style="margin-top:10px">${a.err}</p>`:''}
-      <p class="note">Démo : sophie.marchand@email.fr, leo.garnier@email.fr, 5520871, ou n'importe quel numéro à 7 chiffres.</p>`;
+      <p class="note">Démo : 108830412 (Sophie Marchand), 109931045 (Léo Garnier), 105520871, ou n'importe quel numéro à 9 chiffres. Un proche sans licence s'ajoute par lien d'invitation : jamais de recherche par e-mail, une même adresse pouvant être partagée par deux personnes.</p>`;
   }
   if(a.mode==='create'){
     body=`<p class="sub" style="margin-bottom:12px">Pour un enfant ou un proche qui n'a pas de compte : son profil est rattaché au vôtre, vous le gérez à sa place.</p>
       <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom</span><input id="paFn" value="${a.fn||''}"></label>
       <label class="field"><span>Nom</span><input id="paLn" value="${a.ln||me().n.split(' ').slice(1).join(' ')}"></label></div>
       <label class="field"><span>Date de naissance</span><input id="paDob" type="date" value="${a.dob||''}"></label>
-      <label class="field"><span>N° de licence FFGolf <i style="font-style:normal;text-transform:none;letter-spacing:0;color:var(--g500)">— facultatif</i></span><input id="paLic" inputmode="numeric" placeholder="7 à 8 chiffres" value="${a.lic||''}"></label>
+      <label class="field"><span>N° de licence FFGolf <i style="font-style:normal;text-transform:none;letter-spacing:0;color:var(--g500)">— facultatif</i></span><input id="paLic" inputmode="numeric" placeholder="9 chiffres" value="${a.lic||''}"></label>
       ${rel}
       <button class="btn full" style="margin-top:18px" data-act="paCreate">Créer le profil</button>
       <p class="mut" style="margin-top:8px">La date de naissance calcule le tarif jeune ou senior ; la licence ajoute le tarif licencié et l'index.</p>`;
   }
   if(a.mode==='invite'){
     const link='resonance-golf.fr/i/'+me().ini+'-7F3K';
-    body=`<p class="sub" style="margin-bottom:14px">Envoyez ce lien à votre proche : il crée son compte (ou se connecte) et apparaît aussitôt dans vos proches, et vous dans les siens.</p>
+    body=`<p class="sub" style="margin-bottom:14px">Transmettez ce lien à votre proche par SMS ou par messagerie : il crée son compte (ou se connecte) et apparaît aussitôt dans vos proches, et vous dans les siens.</p>
       <div class="codebox"><input value="${link}" readonly style="text-transform:none"><button class="btn sm" data-act="paCopy">Copier</button></div>
-      <p class="mut" style="margin-top:10px">Lien valable 30 jours, utilisable une seule fois.</p>`;
+      <div class="row wrap" style="gap:8px;margin-top:10px"><button class="btn sm ghost" data-act="paCopy">Envoyer par SMS</button><button class="btn sm ghost" data-act="paCopy">Partager sur WhatsApp</button></div>
+      <p class="mut" style="margin-top:10px">Lien valable 30 jours, utilisable une seule fois.</p>
+      <p class="note">Plus d'ajout par e-mail (retour du 24/09) : ni recherche, ni invitation envoyée depuis le moteur à une adresse. Une même adresse pouvant être partagée par deux personnes, on risquerait de rattacher la mauvaise.</p>`;
   }
   return shead('Ajouter un proche')+
-    `<div class="seg2" style="margin:8px 0 18px;display:flex">${[['find','Il a un compte ou une licence'],['create','Créer son profil'],['invite','Inviter par lien']].map(([k,n])=>`<button class="${a.mode===k?'on':''}" style="flex:1" data-act="paMode" data-v="${k}">${n}</button>`).join('')}</div>`+body;
+    `<div class="seg2" style="margin:8px 0 18px;display:flex">${[['find','Il a une licence'],['create','Créer son profil'],['invite','Inviter par lien']].map(([k,n])=>`<button class="${a.mode===k?'on':''}" style="flex:1" data-act="paMode" data-v="${k}">${n}</button>`).join('')}</div>`+body;
 }
 function paBind(){
   const a=S.pa;
@@ -3039,12 +3662,12 @@ ACT.paRel=a=>{S.pa.rel=a.dataset.v;paOpen()};
 ACT.paFind=()=>{
   const a=S.pa, q=(a.q||'').trim().toLowerCase(), u=me();
   a.found=null;a.err='';
-  const acc=Object.values(PROFILES).find(x=>x.email===q||x.lic===q);
+  const acc=Object.values(PROFILES).find(x=>x.lic===q);
   if(acc&&acc.id===u.id)a.err='C\'est votre propre compte.';
   else if(acc&&u.partners.includes(acc.id))a.err=acc.n+' fait déjà partie de vos proches.';
   else if(acc)a.found=acc;
-  else if(/^\d{7,8}$/.test(q))a.found={id:'lic'+q,n:q==='1234567'?'Julien Morel':'Licencié·e n° '+q,ini:q==='1234567'?'JM':'FF',st:['licencie'],idx:q==='1234567'?38:20,lic:q,cert:'2027-06-30',_new:true};
-  else a.err='Aucun compte ni licence trouvés. Créez son profil, ou envoyez-lui un lien d\'invitation.';
+  else if(/^\d{9}$/.test(q))a.found={id:'lic'+q,n:q==='123456789'?'Julien Morel':'Licencié·e n° '+q,ini:q==='123456789'?'JM':'FF',st:['licencie'],idx:q==='123456789'?38:20,lic:q,cert:'2027-06-30',_new:true};
+  else a.err='Aucune licence trouvée avec ce numéro. Créez son profil, ou envoyez-lui un lien d\'invitation.';
   paOpen();
 };
 function addProche(p,rel){
@@ -3058,7 +3681,7 @@ ACT.paCreate=()=>{
   const a=S.pa;
   [['paFn','fn'],['paLn','ln'],['paDob','dob'],['paLic','lic']].forEach(([i,k])=>{const el=$('#'+i);if(el)a[k]=el.value.trim()});
   if(!a.fn||!a.ln||!a.dob){toast('Prénom, nom et date de naissance sont requis.');return}
-  const age=ageAt(a.dob,TODAY), st=[], lic=/^\d{7,8}$/.test((a.lic||'').trim())?a.lic.trim():null;
+  const age=ageAt(a.dob,TODAY), st=[], lic=/^\d{9}$/.test((a.lic||'').trim())?a.lic.trim():null;
   if(age<26)st.push('jeune');
   if(age>=65)st.push('senior');
   if(lic)st.push('licencie');
@@ -3209,11 +3832,12 @@ function occupants(cid,k,t){
   if(!taken)return [];
   const out=[];
   Object.entries(FRES).forEach(([id,rs])=>rs.forEach(r=>{if(r.crs===cid&&r.d===k&&r.t===t){const p=PROFILES[id];
-    out.push({n:p.n,idx:p.idx,pub:!!p.share,proche:u.partners.includes(id)});
+    out.push({n:p.n,idx:p.idx,pub:p.pubProfile!=null?p.pubProfile:!!p.share,proche:u.partners.includes(id)});
     for(let i=1;i<r.n;i++)out.push({...POOL[hash(cid+k+t+i)%POOL.length]})}}));
   let i=0;
   while(out.length<taken&&i<40){const q=POOL[hash(cid+k+t+'o'+i)%POOL.length];i++;if(q.n&&out.some(o=>o.n===q.n))continue;out.push({...q})}
-  return out.slice(0,taken).map(o=>({...o,vis:!!(o.pub&&o.n),ini:o.n?o.n.split(' ').map(w=>w[0]).join('').slice(0,2):''}));
+  /* « Profil masqué » ne vaut que pour les inconnus : un proche voit toujours le nom */
+  return out.slice(0,taken).map(o=>({...o,vis:!!((o.pub||o.proche)&&o.n),ini:o.n?o.n.split(' ').map(w=>w[0]).join('').slice(0,2):''}));
 }
 const occLbl=o=>o.vis?`${o.n} · index ${fidx(o.idx)}`:`Profil masqué · index ${fidx(o.idx)}`;
 function occDots(cid,t){
@@ -3235,7 +3859,7 @@ function decorateSlots(root){
     b.title='Déjà inscrits :\n'+L.map(occLbl).join('\n');
   });
 }
-ACT.pubProfile=a=>{me().pubProfile=a.dataset.v==='1';render();toast(me().pubProfile?'Votre nom et votre index sont visibles des autres joueurs sur vos départs.':'Votre profil est masqué : seuls vos proches autorisés vous voient.')};
+ACT.pubProfile=a=>{me().pubProfile=a.dataset.v==='1';render();toast(me().pubProfile?'Votre nom et votre index sont visibles de tous les joueurs de vos départs.':'Profil masqué pour les autres joueurs. Vos proches voient toujours votre nom.')};
 
 /* ═════════ Démarrage ═════════ */
 function toggleVp(){
