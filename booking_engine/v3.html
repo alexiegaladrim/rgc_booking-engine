@@ -187,6 +187,26 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .rsn-cta{margin-left:auto;display:inline-flex;align-items:center;gap:9px;background:var(--rg);color:var(--rink);
   padding:14px 20px;font-size:11.5px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;white-space:nowrap;transition:.15s}
 .rsn-cta:hover{background:#C99A38}
+.rsn-book{position:relative;margin-left:auto}
+.rsn-book .rsn-cta{margin-left:0}
+.rsn-chev{transition:transform .2s}
+.rsn-cta[aria-expanded="true"] .rsn-chev{transform:rotate(180deg)}
+.rsn-dd{position:absolute;right:0;top:calc(100% + 8px);z-index:30;width:290px;background:#fff;border:1px solid #EDEAE4;box-shadow:0 18px 44px rgba(24,17,13,.18);padding:8px;
+  display:flex;flex-direction:column;animation:rdd .16s ease-out}
+@keyframes rdd{from{opacity:0;transform:translateY(-4px)}}
+.rdd-h{padding:8px 10px 6px;font-size:11px;letter-spacing:.9px;text-transform:uppercase;color:#8C8377}
+.rsn-dd > button,.rdd-list button{display:flex;align-items:center;gap:12px;width:100%;padding:10px;text-align:left;font-size:14px;font-weight:500;color:var(--rink);transition:background .12s}
+.rsn-dd > button:hover,.rdd-list button:hover{background:#F6F5F2}
+.rsn-dd > button i{margin-left:auto;font-style:normal;color:#B3AA9C;font-size:18px}
+.rdd-ic{display:grid;place-items:center;color:var(--rg)}
+.rsn-dd2{width:340px}
+.rdd-back{font-size:12px!important;font-weight:500;color:#6B6257!important;padding:6px 10px!important}
+.rdd-list{max-height:320px;overflow-y:auto;display:flex;flex-direction:column}
+.rdd-t{display:flex;flex-direction:column;min-width:0;flex:1}
+.rdd-t small{font-size:11.5px;font-weight:300;color:#8C8377}
+.rsn-nav .rsn-dd span{text-transform:none;letter-spacing:0;white-space:normal;font-size:inherit;font-weight:inherit}
+.rsn-nav .rsn-dd .rdd-h{font-size:11px;letter-spacing:.9px;text-transform:uppercase;font-weight:500}
+.rsn-nav .rsn-dd .tag{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
 .rsn-hero{position:relative;min-height:460px;display:grid;place-items:center;text-align:center;background:#1d1d1d center/cover;padding:70px 24px 120px}
 .rsn-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 260px at 50% 55%,rgba(0,0,0,.42),transparent 70%),linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.14) 45%,rgba(0,0,0,.38))}
 .rsn-hero h1{position:relative;color:#fff;font-weight:200;font-size:44px;line-height:1.28;letter-spacing:1.4px;max-width:720px;text-shadow:0 2px 20px rgba(0,0,0,.45)}
@@ -218,7 +238,9 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
   .rsn-head img{height:46px}
   .rsn-nav{gap:14px;padding:12px 14px;justify-content:center}
   .rsn-nav span{font-size:10px;letter-spacing:.5px}
-  .rsn-cta{margin:8px 0 0;width:100%;justify-content:center}
+  .rsn-book{margin:8px 0 0;width:100%}
+  .rsn-cta{width:100%;justify-content:center}
+  .rsn-dd,.rsn-dd2{left:0;right:0;width:auto}
   .rsn-hero{min-height:300px;padding:40px 16px 80px}
   .rsn-hero h1{font-size:25px;letter-spacing:.5px}
   .rsn-hero::before{background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.3) 45%,rgba(0,0,0,.5))}
@@ -1702,12 +1724,13 @@ R.site=()=>{
   const cal='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg>';
   $('#v-site').innerHTML=`
   <div class="oob"><span class="node">Hors moteur</span><div><b>resonance.golf — site vitrine</b>
-    Navigation, hero et menu « Réserver un green-fee » repris du site actuel. Le moteur commence au choix du golf : le golf sélectionné ouvre directement son tunnel de green fee, sans page d'accueil intermédiaire.</div></div>
+    Navigation et hero repris du site actuel. Le bouton « Réserver » (anciennement « Réserver un green-fee ») ouvre un menu : on choisit d'abord l'activité, puis le golf, et l'on entre directement dans le bon tunnel, sans page d'accueil intermédiaire.</div></div>
   <div class="rsn">
     <div class="rsn-top"><span>Contact</span><span class="sp"></span><span>English</span><span class="rsn-acc">Accès client</span></div>
     <div class="rsn-head"><img data-logo src="" alt="Resonance Golf Collection"></div>
     <nav class="rsn-nav">${RSN_NAV.map(n=>`<span>${n}</span>`).join('')}
-      <button class="rsn-cta" data-act="rsnBook">${cal} Réserver un green-fee</button></nav>
+      <div class="rsn-book"><button class="rsn-cta" data-act="rsnMenu" aria-haspopup="true" aria-expanded="${S.rsnMenu?'true':'false'}">${cal} Réserver <svg class="rsn-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        ${S.rsnMenu?rsnMenuHtml():''}</div></nav>
     <section class="rsn-hero" style="background-image:url('${RSN_HERO}')">
       <h1>Le golf et au-delà dans une collection de golfs d'exception</h1></section>
     <div class="rsn-search">
@@ -1734,6 +1757,29 @@ ACT.lang=a=>{
   if(k==='fr')return;
   toast(`Prototype : la version <b>${n}</b> n'est pas maquettée. Le moteur est prévu en cinq langues — français, anglais, allemand, espagnol et néerlandais.`);
 };
+/* menu « Réserver » : 1. l'activité, 2. le golf. L'activité d'abord, car
+   c'est l'intention du joueur ; le golf n'est qu'un paramètre, pré-rempli
+   avec le dernier golf utilisé. */
+function rsnMenuHtml(){
+  const m=S.rsnMenu, ic=k=>`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ENAVIC[k]}</svg>`;
+  if(m.step===1)return `<div class="rsn-dd" role="menu"><span class="rdd-h">Que souhaitez-vous réserver&nbsp;?</span>
+    ${ENAV.map(([k,n])=>`<button role="menuitem" data-act="rsnAct" data-v="${k}"><span class="rdd-ic">${ic(k)}</span>${n}<i>›</i></button>`).join('')}</div>`;
+  const last=S.site||'touquet';
+  return `<div class="rsn-dd rsn-dd2" role="menu"><button class="rdd-back" data-act="rsnBack">‹ ${ENAV.find(e=>e[0]===m.act)[1]}</button>
+    <span class="rdd-h">Où souhaitez-vous jouer&nbsp;?</span>
+    <div class="rdd-list">${[golf(last),...rsnList().filter(g=>g.id!==last)].map((g,i)=>`<button role="menuitem" data-act="rsnGolf" data-v="${g.id}">
+      <span class="rdd-t"><b>${g.n}</b><small>${g.v}</small></span>${i===0?'<span class="tag ol">Dernier golf</span>':''}</button>`).join('')}</div></div>`;
+}
+ACT.rsnMenu=()=>{S.rsnMenu=S.rsnMenu?null:{step:1};render()};
+ACT.rsnAct=a=>{S.rsnMenu={step:2,act:a.dataset.v};render()};
+ACT.rsnBack=()=>{S.rsnMenu={step:1};render()};
+ACT.rsnGolf=a=>{
+  const g=golf(a.dataset.v), act=S.rsnMenu.act;
+  if(!g.live){toast(`Prototype : seul Le Touquet est maquetté. ${g.n} ouvrirait le même tunnel.`);return}
+  S.site=g.id;S.rsnMenu=null;go(act);
+};
+document.addEventListener('click',e=>{if(S&&S.rsnMenu&&!e.target.closest('.rsn-book')){S.rsnMenu=null;if(S.screen==='site')render()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S&&S.rsnMenu){S.rsnMenu=null;if(S.screen==='site')render()}});
 ACT.rsnBook=()=>{
   sheet(shead('Où souhaitez-vous jouer ?','Menu du site actuel')+
    `<p class="sub" style="margin:2px 0 14px">Le golf choisi ouvre son propre moteur de réservation.</p>
