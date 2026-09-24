@@ -3218,7 +3218,7 @@ R.checkout=()=>{
      :co.guest?`<div class="between"><span><b>${co.gName||'Invité·e'}</b> · ${co.gMail||''} · ${co.gTel||''}</span><button class="lnk" style="font-size:12px" data-act="coGuestEdit">Modifier</button></div>`
      :`<p class="mut" style="margin:0 0 12px;font-size:12px">${REQ} Champs obligatoires</p>
        <div class="grid g2" style="gap:0 12px"><label class="field"><span>Nom complet ${REQ}</span><input id="gName" value="${co.gName||''}"></label><label class="field"><span>E-mail ${REQ}</span><input id="gMail" type="email" value="${co.gMail||''}" placeholder="vous@exemple.fr"></label></div>
-       <label class="field"><span>Téléphone ${REQ}</span><input id="gTel" type="tel" value="${co.gTel||''}" placeholder="06 12 34 56 78"><small class="mut" style="display:block;margin-top:6px;font-size:12px">Pour le rappel par SMS 48 h avant. La confirmation arrive par e-mail.</small></label>
+       <label class="field"><span>Téléphone ${REQ}</span><input id="gTel" type="tel" value="${co.gTel||''}" placeholder="06 12 34 56 78"><small class="mut" style="display:block;margin-top:6px;font-size:12px">Pour le rappel par SMS 24 h avant. La confirmation arrive par e-mail.</small></label>
        <button class="btn sec" data-act="coGuest">Continuer sans compte</button>
        <p class="mut" style="margin-top:8px">Sans compte, le prix public s'applique et la réservation se gère depuis le lien reçu par e-mail.</p>`}
     ${needAcc?`<p class="note">Compte obligatoire : votre panier contient ${S.cart.filter(l=>l.kind!=='gf').map(l=>KTAG[l.kind].toLowerCase()).filter((x,i,a)=>a.indexOf(x)===i).join(', ')}. Les inscriptions et les carnets sont rattachés à une personne (licence, suivi, crédits). Le green fee seul reste possible sans compte.</p>`:''}`;
@@ -3363,8 +3363,8 @@ ACT.coPay=()=>{
 };
 
 /* ═════════ Confirmation ═════════ */
-/* rappel SMS 48 h avant (retour test du 24/09) : le délai laisse encore
-   le temps d'annuler gratuitement (24 h). Tout le reste passe par e-mail. */
+/* rappel SMS 24 h avant (retour test du 24/09, corrigé : 24 h et non 48 h).
+   Tout le reste passe par e-mail. */
 const RAPPEL={gf:'votre départ',ind:'votre cours',coll:'votre cours',stage:'votre stage',comp:'votre compétition',resto:'votre table'};
 function rappelWhat(ls){const w=[...new Set(ls.map(l=>RAPPEL[l.kind]).filter(Boolean))];
   return w.length>1?'chaque réservation':w[0]}
@@ -3377,7 +3377,7 @@ R.confirm=()=>{
      <div class="mailok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
        <span>Un e-mail de confirmation de votre réservation vous sera envoyé sous peu${d.mail?' à <b>'+d.mail+'</b>':''}.</span></div>
      ${d.lines.some(({l})=>RAPPEL[l.kind])&&d.tel?`<div class="mailok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
-       <span>Rappel par SMS <b>48 h avant</b> ${rappelWhat(d.lines.map(({l})=>l))}, au <b>${d.tel}</b>. Modifications et annulations vous sont confirmées par e-mail.</span></div>`:''}</div>
+       <span>Rappel par SMS <b>24 h avant</b> ${rappelWhat(d.lines.map(({l})=>l))}, au <b>${d.tel}</b>. Modifications et annulations vous sont confirmées par e-mail.</span></div>`:''}</div>
      <span class="node">Confirmation</span></div>
    ${d.link?`<div class="card plink"><span class="eyebrow">Lien de paiement du groupe</span>
      <b class="h2" style="display:block;margin:4px 0 6px">Partagez ce lien avec vos joueurs</b>
@@ -3456,7 +3456,7 @@ R.espace=()=>{
       <div class="card" style="padding:4px 18px;margin-bottom:22px">${waits.map(r=>`<div class="wrow"><span class="tag">${KTAG[r.kind]}</span>
         <div><b>${r.t}</b><span class="mut">${cap(fday(r.d))}${r.h?' · '+r.h.replace(':',' h '):''} · ${r.sub.replace(/^Liste d'attente · /,'')}</span></div>
         <button class="btn sm ghost" data-act="waitQuit" data-id="${r.id}">Me désinscrire</button></div>`).join('')}</div>`:''}
-     <p class="mut" style="margin:0 0 12px;font-size:12.5px">${u.smsOff||!u.tel?'Rappel SMS désactivé':'Rappel par SMS 48 h avant chaque départ, cours ou compétition'} · confirmations et modifications par e-mail. <button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="infos">Réglages</button></p>
+     <p class="mut" style="margin:0 0 12px;font-size:12.5px">${u.smsOff||!u.tel?'Rappel SMS désactivé':'Rappel par SMS 24 h avant chaque départ, cours ou compétition'} · confirmations et modifications par e-mail. <button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="infos">Réglages</button></p>
      <div class="chips"><button class="chip ${S.resTab==='avenir'?'on':''}" data-act="resTab" data-v="avenir">À venir · ${up.filter(r=>r.pay!=='wait').length}</button>
       <button class="chip ${S.resTab==='passees'?'on':''}" data-act="resTab" data-v="passees">Passées &amp; annulées · ${past.length}</button></div>
      ${list.length?list.map(r=>{const d=dobj(r.d), ci=r.past||r.cancelled?null:cancelInfo(r), wait=r.pay==='wait';
@@ -3552,7 +3552,7 @@ R.espace=()=>{
       </div>
       <div class="card" style="padding:16px 18px">
        <div class="h3" style="margin-bottom:8px">Notifications</div>
-       <label class="chkbox"><input type="checkbox" data-smsrem ${u.smsOff?'':'checked'} ${u.tel?'':'disabled'}><span><b style="color:var(--ink);font-weight:500">Rappel par SMS 48 h avant</b><br>${u.tel?'Chaque départ, cours, stage ou compétition, au '+u.tel+'.':'Ajoutez un numéro de téléphone dans vos coordonnées.'}</span></label>
+       <label class="chkbox"><input type="checkbox" data-smsrem ${u.smsOff?'':'checked'} ${u.tel?'':'disabled'}><span><b style="color:var(--ink);font-weight:500">Rappel par SMS 24 h avant</b><br>${u.tel?'Chaque départ, cours, stage ou compétition, au '+u.tel+'.':'Ajoutez un numéro de téléphone dans vos coordonnées.'}</span></label>
        <p class="mut" style="margin-top:8px;font-size:12px">Confirmations, modifications et annulations : toujours par e-mail, à ${u.email}.</p>
       </div>
       <div class="card" style="padding:16px 18px">
@@ -3576,7 +3576,7 @@ R.espace=()=>{
    ${body}`;
 };
 document.addEventListener('change',e=>{const el=e.target.closest('[data-smsrem]');if(!el)return;
-  me().smsOff=!el.checked;render();toast(el.checked?'Rappel SMS activé : 48 h avant chaque réservation.':'Rappel SMS désactivé. Vous gardez les e-mails de confirmation.')});
+  me().smsOff=!el.checked;render();toast(el.checked?'Rappel SMS activé : 24 h avant chaque réservation.':'Rappel SMS désactivé. Vous gardez les e-mails de confirmation.')});
 document.addEventListener('change',e=>{const el=e.target.closest('[data-avoirauto]');if(!el)return;
   const u=me();u.avoirAuto=el.checked;S.useAvoir=el.checked;render();
   toast(el.checked?'Vos avoirs seront déduits automatiquement au panier.':'Vos avoirs ne seront plus déduits automatiquement.')});
