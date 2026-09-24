@@ -283,12 +283,30 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
   background:rgba(243,234,213,.09);border:1px solid rgba(243,234,213,.2);border-radius:999px;padding:5px 10px}
 .pbar > .pb-a{display:flex;flex-direction:column;align-items:stretch;gap:9px;flex:none;min-width:0}
 .pbar > .pb-a .lnk{text-align:center}
-.pbar.on{background:var(--gold-soft);color:var(--g700);border:1px solid var(--gold-light)}
+.pbar.on{background:var(--gold-soft);color:var(--g700);border:1px solid var(--gold-light);box-shadow:none;padding:9px 16px 9px 10px;gap:12px;font-size:13px;border-radius:14px}
+.pbar.on .av{width:30px;height:30px;font-size:11px}
+.pbar.on .pb-long b{display:inline;font-size:13.5px;margin:0}
+.pbar.on .pb-note{color:var(--g500)}
+/* accueil green fee plus compact : faire apparaître le premier parcours sans défiler */
+#v-gf .fil{margin-bottom:14px}
+#v-gf .scr-head{margin-bottom:14px}
+#v-gf .scr-head .eyebrow{margin-bottom:6px}
+#v-gf .scr-head .h1{font-size:30px}
+#v-gf .scr-head .sub{margin-top:4px!important}
+#v-gf .pbar{margin-bottom:14px}
+#v-gf .sbar{margin-bottom:12px;border-radius:18px}
+#v-gf .sbf{padding:11px 18px;gap:12px}
+#v-gf .sbi{width:38px;height:38px;border-radius:12px}
+#v-gf button.sbf{border-radius:18px 0 0 18px}
+#v-gf .daynav{margin-bottom:16px}
+#v-gf .daystrip{padding-bottom:4px}
+#v-gf .day{padding:7px 6px}
+#v-gf .day .pp{margin-top:3px}
 .pbar.on b{color:var(--ink)}
 .pbar.on .lnk{color:var(--ink)}
 .pbar.on .av{background:var(--gold);color:#fff}
 .pb-short{display:none}
-.pbar.lite{background:var(--cream);border:1px solid var(--line);box-shadow:none;color:var(--g700);padding:12px 16px 12px 20px;gap:14px;font-size:13px}
+.pbar.lite{background:var(--cream);border:1px solid var(--line);box-shadow:none;color:var(--g700);padding:9px 14px 9px 18px;gap:14px;font-size:13px;border-radius:14px}
 .pbar.lite b{color:var(--ink)}
 .pbar.lite .pb-long b{display:inline;font-size:13.5px;margin:0}
 .pbar.lite .pb-st{display:block;margin-top:2px;font-size:12px;color:var(--g500);cursor:default;user-select:text}
@@ -379,7 +397,6 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .crs-img{width:210px;flex:none;background:var(--sand) center/cover;min-height:150px}
 .crs-t{flex:1;min-width:0;padding:20px 0}
 .crs-h .price{padding:20px 22px 0 0}
-.crs-h .price .hsel{margin:12px 0 0 auto}
 .crs-img{position:relative}
 .crs-holes{position:absolute;left:12px;top:12px;display:flex;align-items:baseline;gap:5px;padding:6px 11px;border-radius:10px;background:rgba(27,21,15,.82);color:#fff;
   font-size:10.5px;font-weight:500;letter-spacing:1.3px;text-transform:uppercase;backdrop-filter:blur(4px)}
@@ -387,7 +404,9 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .crs-hn{font-size:15px;font-weight:400;color:var(--g600);letter-spacing:0;white-space:nowrap}
 .crs > :not(.crs-h){margin:0 22px 20px}
 .crs .gtimes{margin-top:0;padding-top:16px;border-top:1px solid var(--line)}
+.crs > .wl,.crs > .alert{margin-top:18px}
 .gtimes{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.gtime[hidden]{display:none!important}
 .gtime{display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center;min-width:74px;background:var(--paper);transition:.15s}
 .gtime:hover{border-color:var(--gold);background:var(--gold-soft)}
 .gtime b{display:block;font-size:15px;font-weight:500}
@@ -708,11 +727,6 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .morehint.on{display:block;animation:mh 1.6s ease-in-out infinite}
 body.cbar .morehint{bottom:84px}
 @keyframes mh{50%{transform:translate(-50%,4px)}}
-.optsum{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:14px 16px;text-align:left;cursor:pointer}
-.optsum > span:first-child{display:flex;flex-direction:column;gap:2px;min-width:0}
-.optsum .chev{flex:none;font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold-dark)}
-.optsum:hover{border-color:var(--gold)}
-.optclose{display:block;margin:10px 0 0 auto;font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--g600)}
 .cartbar b{display:block;font-size:17px;font-weight:500}
 .cartbar small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--g500);margin-top:3px}
 .cartbar .btn{flex:none}
@@ -1076,9 +1090,9 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .pbar .lnk{font-size:12px;flex:none}
   .pbar .stl{white-space:normal}
   .crs-h .price{padding:0 20px 14px;text-align:left}
-  .crs-h .price .hsel{margin:10px 0 0}
   .crs-hn{display:block;margin-top:2px}
   .crs > :not(.crs-h){margin:0 20px 18px}
+  .crs > .wl,.crs > .alert{margin-top:16px}
   .comp{grid-template-columns:56px minmax(0,1fr);gap:12px 14px;padding:16px}
   .comp .cside{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px;min-width:0;
     border-top:1px solid var(--line);padding-top:14px}
@@ -1491,8 +1505,8 @@ function pbar(ctx,chips){
       <div class="pb-short"><b>Un meilleur prix vous attend</b> Connectez-vous pour voir votre tarif.</div>
       <div class="pb-a"><button class="btn sm" data-act="login">Me connecter</button>
       <button class="lnk pb-long" data-act="signup">Créer un compte</button></div></div>`;
-  return `<div class="pbar on"><span class="av">${u.ini}</span><div class="pb-long"><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}<br>
-      Vos tarifs sont appliqués. Quand vous cumulez plusieurs statuts, le tarif le plus avantageux est appliqué.</div>
+  return `<div class="pbar on"><span class="av">${u.ini}</span><div class="pb-long"><b>${u.n}</b> · ${u.st.map(s=>ST[s].n).join(' · ')}
+      <span class="pb-note">· vos tarifs sont appliqués${u.st.length>1?', le plus avantageux est retenu':''}</span></div>
       <div class="pb-short"><span class="stl" style="margin:0">Vos tarifs ${u.st.length>1?'membre':ST[u.st[0]].n} appliqués</span></div>
       <button class="lnk" data-go="espace">Mon espace</button></div>`;
 }
@@ -1988,9 +2002,9 @@ R.gf=()=>{
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
        <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"><span class="crs-holes"><b>${c.nine?9:18}</b>trous</span></div><div class="crs-t"><div class="row wrap" style="gap:6px">${tags}</div>
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n} <span class="crs-hn">· ${c.nine?'9 trous':'18 trous'} · par ${c.par}</span></b>
-         <span class="mut">Départ toutes les ${c.cad} min${c.p9?' · aussi jouable en 9 trous':''}</span></div>
-         <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}
-           ${c.p9?`<div class="seg2 hsel" role="group" aria-label="Formule">${[['18','18 trous'],['9','9 trous']].map(([v,n])=>`<button class="${((g.h9||{})[c.id]?'9':'18')===v?'on':''}" data-act="gfHoles" data-c="${c.id}" data-v="${v}">${n}</button>`).join('')}</div>`:''}</div></div>
+         <span class="mut">Départ toutes les ${c.cad} min</span>
+         ${c.p9?`<div class="seg2 hsel" role="group" aria-label="Formule">${[['18','18 trous'],['9','9 trous']].map(([v,n])=>`<button class="${((g.h9||{})[c.id]?'9':'18')===v?'on':''}" data-act="gfHoles" data-c="${c.id}" data-v="${v}">${n}</button>`).join('')}</div>`:''}</div>
+         <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur'})}</div></div>
        ${body}</div>`}).join('')}
    ${tot?hdlBlock(rows,tot):''}
    ${grp?`<div class="gbar"><div><b>${placedN()} / ${g.pax} joueurs placés · ${plural(g.flights.length,'créneau','créneaux')}</b><span class="mut">${g.flights.length?g.flights.map((f,i)=>`${fN(f)} ${f.t} (${gfSizes()[i]})`).join(' · '):'Aucun créneau sélectionné'}</span></div>
@@ -2000,7 +2014,27 @@ R.gf=()=>{
    <p class="note">La Mer et La Forêt se réservent en 18 ou en 9 trous (retour du 24/09) : le choix se fait parcours par parcours et recalcule le prix. Hypothèse de la maquette : les départs 9 trous partent du trou 1 sur la même grille ; le planning peut les limiter à certaines plages (colonne 18T | 9T du planning v3).</p>
    <p class="note">Senior : la remise ne vaut que du lundi au vendredi. Passez sur un samedi avec Bernard Roux pour voir le prix remonter au tarif licencié.</p>`;
   decorateSlots('#v-gf');
+  clampSlots();
 };
+/* 2 lignes de créneaux au plus par parcours, le dernier emplacement
+   devenant « Voir plus » (ouvre tous les départs du parcours) */
+function clampSlots(){
+  $$('#v-gf .gtimes[data-clamp]').forEach(box=>{
+    box.querySelectorAll('.gtime.more').forEach(b=>b.remove());
+    const items=[...box.children];items.forEach(b=>b.hidden=false);
+    const tops=[...new Set(items.map(b=>b.offsetTop))];
+    if(tops.length<=2)return;
+    const row2=tops[1];
+    items.forEach(b=>{if(b.offsetTop>row2)b.hidden=true});
+    const more=document.createElement('button');
+    more.className='gtime more';more.dataset.act='gfMore';more.dataset.c=box.dataset.clamp;box.appendChild(more);
+    const vis=()=>items.filter(b=>!b.hidden);
+    const lbl=()=>{more.innerHTML=`<b>Voir plus</b><i>+${items.length-vis().length} départs</i>`};
+    lbl();
+    while(more.offsetTop>row2&&vis().length){vis().pop().hidden=true;lbl()}
+  });
+}
+addEventListener('resize',()=>{if(S&&S.screen==='gf')clampSlots()});
 /* Hardelot : déplié d'office quand Le Touquet n'a plus rien (ou un parcours
    complet), sinon simple lien repliable en fin de liste. */
 function hdlBlock(rows,tot){
@@ -2257,9 +2291,7 @@ R['gf-joueurs']=()=>{
      <div class="sect">Options${multi?' · par départ':''}</div>
      ${fl.map((f,k)=>{const fc=crsV(f.crs,f.h9), n=g.players.filter(p=>(p.f||0)===k).length, fo=(g.fopts&&g.fopts[k])||{};
        return `${multi?`<div class="fhead" style="margin-top:${k?16:0}px"><span class="fl-n">${k+1}</span><div><b>Départ ${k+1} · ${fN(f)} · ${f.t}</b><span class="mut">${plural(n,'joueur')}</span></div></div>`:''}
-       ${!(g.optOpen||{})[k]?`<button class="card optsum" data-act="gfOptTog" data-k="${k}"><span><b class="h3">${GOPTS.some(o=>fo[o.id])?GOPTS.filter(o=>fo[o.id]).map(o=>o.n.toLowerCase().replace(/^./,m=>m.toUpperCase())+(fo[o.id]>1?' × '+fo[o.id]:'')).join(' · '):'Aucune option'}</b>
-         <span class="mut">${GOPTS.some(o=>fo[o.id])?'Modifier ou ajouter une option':'Voiturette, chariot électrique, location de clubs, seau de practice'}</span></span><span class="chev">${GOPTS.some(o=>fo[o.id])?'Modifier':'Ajouter'} ▾</span></button>`
-       :`<div class="card" style="padding:4px 16px"><button class="optclose" data-act="gfOptTog" data-k="${k}">Replier ▴</button>${GOPTS.map(o=>{const x=optPrice(o,fc,[]), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
+       <div class="card" style="padding:4px 16px">${GOPTS.map(o=>{const x=optPrice(o,fc,[]), q=fo[o.id]||0, mx=o.per==='voit'?Math.ceil(n/2):n;
          const pk=g.players.map((p,i)=>({p,i,pi:playerInfo(p,i)})).filter(y=>(y.p.f||0)===k).map(y=>({...y,x:optPrice(o,fc,y.pi.st)})).filter(y=>y.x.p<y.x.pub);
          const me1=y=>y.pi.you&&!y.pi.anon, fn=y=>me1(y)?'Vous':y.pi.n.split(' ')[0];
          const perkTxt=!pk.length?'':o.per==='voit'
@@ -2269,7 +2301,7 @@ R['gf-joueurs']=()=>{
            <div style="text-align:right;font-weight:500;white-space:nowrap;font-size:13px">${eur(x.pub)}<div class="mut">${o.per==='voit'?'par voiturette':'par joueur'}</div></div>
            <div class="qty sm"><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="-1" ${q<=0?'disabled':''} aria-label="Moins"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg></button><b>${q}</b><button data-act="gfOpt" data-f="${k}" data-o="${o.id}" data-n="1" ${q>=mx?'disabled':''} aria-label="Plus"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8M6 2v8"/></svg></button></div></div>
            ${o.id==='clubs'&&q?`<div class="clubcfg">${clubCfg(fo,q).map((cf,j)=>`<div class="cc-row"><span class="mut">Série ${j+1}</span>
-             ${[['h',CLUBH],['g',CLUBG]].map(([key,L])=>`<div class="seg2">${L.map(([v,n])=>`<button class="${cf[key]===v?'on':''}" data-act="gfClub" data-f="${k}" data-j="${j}" data-k="${key}" data-v="${v}">${n}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}`}).join('')}</div>`}`}).join('')}
+             ${[['h',CLUBH],['g',CLUBG]].map(([key,L])=>`<div class="seg2">${L.map(([v,n])=>`<button class="${cf[key]===v?'on':''}" data-act="gfClub" data-f="${k}" data-j="${j}" data-k="${key}" data-v="${v}">${n}</button>`).join('')}</div>`).join('')}</div>`).join('')}</div>`:''}`}).join('')}</div>`}).join('')}
    </div>
    <aside class="aside"><div class="card" style="padding:18px">
      <div class="h3" style="margin-bottom:8px">Récapitulatif</div>
@@ -2298,7 +2330,6 @@ function syncSplit(){
   g.fopts=g.flights.map((f,k)=>{const o={...((g.fopts||[])[k]||{})}, n=g.split[k];
     GOPTS.forEach(op=>{const m=op.per==='voit'?Math.ceil(n/2):n;if((o[op.id]||0)>m)o[op.id]=m});return o});
 }
-ACT.gfOptTog=a=>{const g=S.gf;g.optOpen={...(g.optOpen||{}),[a.dataset.k]:!(g.optOpen||{})[a.dataset.k]};render()};
 ACT.gfAddP=a=>{
   const g=S.gf, k=+a.dataset.k;
   let at=-1;g.players.forEach((p,i)=>{if((p.f||0)===k)at=i});
@@ -3967,14 +3998,14 @@ ACT.proxPick=a=>{
 };
 /* liste des créneaux d'un parcours (réservation 1 à 4 joueurs), proches compris */
 function singleTimes(c,ok){
-  const g=S.gf, {byT,near}=proxMarks(c), MAX=8;   /* une ligne par parcours (retour test du 24/09) */
+  const g=S.gf, {byT,near}=proxMarks(c), MAX=999;   /* limité à 2 lignes à l'affichage : clampSlots() */
   const extra=Object.keys(byT).concat(Object.keys(near));
   const list=ok.filter((s,i)=>i<MAX||extra.includes(s.t));
   Object.values(byT).forEach(rs=>{if(!list.some(s=>s.t===rs[0].t))list.push({t:rs[0].t,free:rs[0].free,prox:true})});
   list.sort((a,b)=>a.t<b.t?-1:1);
   const rest=ok.length-list.filter(s=>!s.prox).length;
   if(!list.length)return '';
-  return `<div class="gtimes">${list.map(s=>{
+  return `<div class="gtimes" data-clamp="${c.id}">${list.map(s=>{
     const rs=byT[s.t], can=s.free>=g.pax;
     if(rs)return `<button class="gtime pro ${can?'':'full'}" ${can?`data-act="proxJoin" data-id="${rs[0].p.id}"`:'disabled'} data-c="${c.id}" data-t="${s.t}">${rs.map(gav).join('')}<b>${s.t}</b><i>${can?'avec '+rs[0].p.n.split(' ')[0]:'complet'}</i></button>`;
     return `<button class="gtime ${near[s.t]?'nx':''}" data-act="gfPick" data-c="${c.id}" data-t="${s.t}"><b>${s.t}</b><i>${near[s.t]?'à côté de '+near[s.t]:s.free+' pl. libres'}</i></button>`}).join('')}${rest>0?`<button class="gtime more" data-act="gfMore" data-c="${c.id}">+${rest} autres</button>`:''}</div>`;
@@ -4033,6 +4064,7 @@ function toggleVp(){
   document.body.classList.toggle('vp-mobile',m);
   st.scrollTop=0;window.scrollTo(0,0);
   fitPhone();
+  if(S&&S.screen==='gf')clampSlots();
 }
 /* le cadre garde 402 × 874 ; on le réduit seulement si la fenêtre ne le contient pas */
 function fitPhone(){
