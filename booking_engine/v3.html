@@ -329,11 +329,13 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .pbar.on .lnk{color:var(--ink)}
 .pbar.on .av{background:var(--gold);color:#fff}
 .pb-short{display:none}
-.pbar.lite{background:var(--cream);border:1px solid var(--line);box-shadow:none;color:var(--g700);padding:9px 14px 9px 18px;gap:14px;font-size:13px;border-radius:14px}
+/* retour du 29/09 : bandeau trop discret → fond doré clair, statuts en pastilles blanches lisibles */
+.pbar.lite{background:var(--gold-light);border:1px solid #D6C391;box-shadow:none;color:var(--g800);padding:12px 16px 12px 20px;gap:14px;font-size:14px;border-radius:14px}
 .pbar.lite b{color:var(--ink)}
-.pbar.lite .pb-long b{display:inline;font-size:13.5px;margin:0}
-.pbar.lite .pb-st{display:block;margin-top:2px;font-size:12px;color:var(--g500);cursor:default;user-select:text}
-.pbar.lite .pb-st i{font-style:normal;margin:0 7px;color:var(--g400)}
+.pbar.lite .pb-long b{display:inline;font-size:14.5px;font-weight:600;margin:0}
+.pbar.lite .pb-st{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;cursor:default;user-select:text}
+.pbar.lite .pb-st span{background:#fff;border:1px solid #D6C391;border-radius:999px;padding:3px 11px;font-size:12.5px;color:var(--g800);white-space:nowrap}
+.pbar.lite .pb-st span b{font-weight:600}
 .pbar.lite > .pb-a{flex-direction:row;align-items:center;gap:14px}
 .pbar.lite .btn{background:var(--ink);color:#fff}
 .pbar.lite .btn:hover{background:var(--gold)}
@@ -432,15 +434,22 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .crsrow.h{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;margin-bottom:16px}
 .crsrow.h .crs{margin:0;display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0;align-self:stretch}
 .crsrow.h .crs > :not(.crs-h){align-self:start}
-.crsrow.h .crs-h{flex-direction:column;gap:0}
-.crsrow.h .crs-t{flex:1}
-.crsrow.h .crs-img{width:auto;min-height:0;height:120px}
-.crsrow.h .crs-t{padding:14px 16px 0}
-.crsrow.h .crs-t .h1{font-size:22px!important;margin-top:6px!important}
+.crs-itag{display:none}
+/* V2 compacte (retour du 29/09) : prix en haut à droite sous la photo, tag
+   d'index posé sur la photo, sans « Départ toutes les x min » */
+.crsrow.h .crs-h{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;align-items:start;align-content:start}
+.crsrow.h .crs-img{grid-column:1/-1;width:auto;min-height:0;height:120px}
+.crsrow.h .crs-itag{display:flex;position:absolute;left:12px;bottom:12px}
+.crsrow.h .crs-itag .tag{background:rgba(255,255,255,.94);color:var(--ink)}
+.crsrow.h .crs-tags,.crsrow.h .crs-cad{display:none!important}
+.crsrow.h .crs-t{padding:12px 8px 0 16px}
+.crsrow.h .crs-t .h1{font-size:22px!important;margin-top:0!important}
+.crsrow.h .crs-t .seg2.hsel{margin-top:8px}
 .crsrow.h .crs-hn{display:block;font-size:13px;margin-top:2px}
 .crs-hn i{font-style:normal}
 .crsrow.h .crs-hn i{display:none}
-.crsrow.h .crs-h .price{padding:10px 16px 14px;text-align:left;font-size:22px}
+.crsrow.h .crs-h .price{grid-column:2;grid-row:2;padding:12px 16px 12px 0;text-align:right;font-size:22px}
+.crsrow.h .crs-h .price small{letter-spacing:.8px}
 .crsrow.h .crs > :not(.crs-h){margin:0 14px 14px}
 .crsrow.h .gtimes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .crsrow.h .gtime{min-width:0;padding:7px 4px}
@@ -740,6 +749,12 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .vis-r small{display:block;color:var(--g600);font-size:12.5px;margin-top:1px}
 .vis-r .ic{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:var(--line);color:var(--g600)}
 .vis-r .ic.ok{background:var(--green);color:#fff}
+.waitbox{background:var(--sand);border:1.5px dashed var(--line-2);border-radius:18px;padding:18px 20px 8px;margin-bottom:28px}
+.wb-h{display:flex;gap:14px;align-items:flex-start;margin-bottom:8px}
+.wb-ic{flex:none;width:38px;height:38px;border-radius:12px;background:var(--ink);color:#fff;display:grid;place-items:center}
+.wb-h .h2{display:flex;align-items:center;gap:8px}
+.wb-n{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--ink);color:#fff;font-size:12px;font-weight:600}
+.wb-l{background:#fff;border-radius:14px;padding:2px 16px;margin:12px 0 10px}
 .wrow{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
 .wrow:first-child{border-top:0}
 .wrow > div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -777,6 +792,10 @@ body:not(.ann) .node,body:not(.ann) .note,body:not(.ann) .oob{display:none!impor
 .quota small{display:block;margin-top:6px;font-size:12px}
 .bookbox{padding:16px 18px;border-color:var(--gold-light);background:var(--gold-soft)}
 .bk-p{display:grid;gap:8px;margin-top:12px}
+.cotis-end{margin-top:6px;font-size:13.5px;color:var(--g700)}
+.cotis-end.soon{color:var(--terra)}
+.cotis-end .lnk{font-size:13px;margin-left:6px}
+.mc-end{margin-top:4px;font-size:12.5px;color:var(--gold-light)}
 .oxl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px}
 .oxh{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-dark);margin-right:2px}
 .oxc{font-size:12px;border:1px solid var(--line-2);border-radius:999px;padding:3px 10px;background:var(--paper)}
@@ -1300,11 +1319,12 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
   .crsrow.h{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-right:-18px;padding-right:18px;padding-bottom:4px}
   .crsrow.h::-webkit-scrollbar{height:0}
   .crsrow.h .crs{flex:0 0 84%;scroll-snap-align:start;display:block}
-  .crsrow.h .crs-h .price{padding:10px 16px 14px}
+  .crsrow.h .crs-h .price{padding:12px 14px 10px 0;font-size:20px}
   .crsrow.h .crs-img{height:96px}
   .crs-lh{flex-wrap:wrap;gap:8px}
   .crs-lh > .h2{flex:1 1 100%}
-  .crs-lh > .row{flex:1 1 100%;justify-content:space-between}
+  .crs-lh > .row{flex:1 1 100%;justify-content:space-between;flex-wrap:wrap;row-gap:8px}
+  .crs-lh .pl-leg{flex:1 1 100%}
   .crsrow.h .crs > :not(.crs-h){margin:0 12px 12px}
   .comp{grid-template-columns:56px minmax(0,1fr);gap:12px 14px;padding:16px}
   .comp .cside{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px;min-width:0;
@@ -1465,15 +1485,15 @@ const stOfName=n=>{const x=Object.values(PROFILES).find(p=>p.n===n);return x};
 const P=(o)=>Object.assign({partners:[],credits:{},avoir:0,avoirEnd:null,wallet:0},o);
 const SEED_PROFILES={
   claire: P({id:'claire',n:'Claire Dumas',ini:'CD',email:'claire.dumas@email.fr',dob:'1982-04-11',st:['abonne','licencie'],
-    lic:'108412337',licEnd:'2026-12-31',idx:14.2,cert:'2027-03-02',tel:'06 12 48 90 37',addr:'14 avenue du Général de Gaulle, 62520 Le Touquet-Paris-Plage',club:'Le Touquet Golf Resort',home:'Abonnement 7 j/7 · Le Touquet Golf Resort · 2026',
+    lic:'108412337',licEnd:'2026-12-31',idx:14.2,cert:'2027-03-02',tel:'06 12 48 90 37',addr:'14 avenue du Général de Gaulle, 62520 Le Touquet-Paris-Plage',club:'Le Touquet Golf Resort',home:'Abonnement 7 j/7 · Le Touquet Golf Resort · 2026',cotis:{n:'Abonnement 7 j/7 · Le Touquet',end:'2026-12-31'},
     credits:{30:{left:3,tot:5,end:'2027-02-14'}},avoir:25,avoirEnd:'2027-06-30',wallet:60,partners:['paul','jules','sophie'],
     rel:{paul:'Conjoint·e',jules:'Enfant',sophie:'Ami·e'}}),
   marc:   P({id:'marc',n:'Marc Lefèvre',ini:'ML',email:'marc.lefevre@email.fr',dob:'1975-09-02',st:['reseau','licencie'],
-    lic:'107203318',licEnd:'2026-10-31',idx:22.5,cert:'2026-08-30',tel:'06 71 22 05 64',addr:'3 rue Saint-Jean, 62200 Boulogne-sur-Mer',club:'Golf d\'Hardelot',home:'Abonnement Passion 7/7 · Golf d\'Hardelot · 2026',stLbl:{reseau:'Abonné Passion Hardelot 7/7'},partners:['claire'],rel:{claire:'Ami·e'}}),
+    lic:'107203318',licEnd:'2026-10-31',idx:22.5,cert:'2026-08-30',tel:'06 71 22 05 64',addr:'3 rue Saint-Jean, 62200 Boulogne-sur-Mer',club:'Golf d\'Hardelot',home:'Abonnement Passion 7/7 · Golf d\'Hardelot · 2026',cotis:{n:'Abonnement Passion 7/7 · Golf d\'Hardelot',end:'2026-11-15'},stLbl:{reseau:'Abonné Passion Hardelot 7/7'},partners:['claire'],rel:{claire:'Ami·e'}}),
   leo:    P({id:'leo',n:'Léo Garnier',ini:'LG',email:'leo.garnier@email.fr',dob:'2007-05-19',st:['jeune','licencie'],
     lic:'109931045',licEnd:'2026-12-31',idx:8.4,cert:'2027-01-10',tel:'07 58 13 44 90',addr:'27 rue de Metz, 62520 Le Touquet-Paris-Plage',club:'Le Touquet Golf Resort',home:'Tarif jeune jusqu\'au 19/05/2033'}),
   bernard:P({id:'bernard',n:'Bernard Roux',ini:'BR',email:'bernard.roux@email.fr',dob:'1958-02-07',st:['loisir','licencie'],quota:{used:18,max:30},
-    lic:'105520871',licEnd:'2026-12-31',idx:31.0,cert:'2027-05-20',tel:'06 09 87 31 12',addr:'8 allée des Pins, 62780 Cucq',club:'Golf de Belle Dune',home:'Abonnement Loisir 5/7 · Le Touquet Golf Resort · 2026',partners:['sophie'],rel:{sophie:'Famille'}}),
+    lic:'105520871',licEnd:'2026-12-31',idx:31.0,cert:'2027-05-20',tel:'06 09 87 31 12',addr:'8 allée des Pins, 62780 Cucq',club:'Golf de Belle Dune',home:'Abonnement Loisir 5/7 · Le Touquet Golf Resort · 2026',cotis:{n:'Abonnement Loisir 5/7 · Le Touquet',end:'2027-03-31'},partners:['sophie'],rel:{sophie:'Famille'}}),
   sophie: P({id:'sophie',n:'Sophie Marchand',ini:'SM',email:'sophie.marchand@email.fr',dob:'1988-11-23',st:['licencie'],
     lic:'108830412',licEnd:'2026-12-31',idx:12.7,cert:'2027-02-01',tel:'06 44 70 18 25',addr:'52 rue Nationale, 59000 Lille',club:'Golf de Brigode',home:'Licenciée FFGolf · sans abonnement',share:true}),
   paul:   P({id:'paul',n:'Paul Dumas',ini:'PD',email:'paul.dumas@email.fr',dob:'1979-07-30',st:['licencie'],
@@ -1689,7 +1709,7 @@ function fresh(){
     comp:{view:'list',scope:'site',site:'all',reg:0,fk:'all',mine:false,month:'2026-10',id:null,partner:null,split:'me',pref:'indiff',wait:false},
     cours:{tab:'ind',th:'all',pro:'any',dur:30,wk:0,slot:null,useCredit:true},
     cart:[],promo:null,promoErr:'',useAvoir:true,lastAdded:null,
-    co:{mode:'login',guest:false,cgv:false,garantie:false,newAcc:{},pay:'all',wallet:false,gift:null,giftErr:''},
+    co:{mode:'guest',guest:false,cgv:false,garantie:false,newAcc:{},pay:'all',wallet:false,gift:null,giftErr:''},
     space:'resa',resTab:'avenir',res:seedRes(),done:null,ref:1040};
 }
 const me=()=>S.user?PROFILES[S.user]:null;
@@ -1758,7 +1778,7 @@ function pbar(ctx,chips){
      sont du texte simple (non cliquable), seul « Me connecter » est un bouton */
   if(!u)return `<div class="pbar lite">
       <div class="pb-long"><b>Abonné, licencié ou jeune&nbsp;?</b> Connectez-vous : ${ctx||'tous les prix'} se recalculent à votre tarif.
-      ${(chips||[]).length?`<span class="pb-st">${chips.map(c=>c.replace(' · ',' : ')).join('<i>·</i>')}</span>`:''}</div>
+      ${(chips||[]).length?`<span class="pb-st">${chips.map(c=>{const [n,v]=c.split(' · ');return `<span>${n}${v?' : <b>'+v+'</b>':''}</span>`}).join('')}</span>`:''}</div>
       <div class="pb-short"><b>Un meilleur prix vous attend</b> Connectez-vous pour voir votre tarif.</div>
       <div class="pb-a"><button class="btn sm" data-act="login">Me connecter</button>
       <button class="lnk pb-long" data-act="signup">Créer un compte</button></div></div>`;
@@ -2138,9 +2158,19 @@ ACT.gfWaitGo=()=>{
   (S.res[u.id]=S.res[u.id]||[]).push({id:'r'+uid(),kind:'gf',t:'Green fee · '+(all?'Le Touquet · tous parcours':crs(w.crs).n),
     sub:`Liste d'attente · ${plural(w.pax,'joueur')} · ${MOMLBL2[w.moment]}`,
     d:w.d,h:'',pay:'wait',amount:0,waitGf:{...w},fresh:true});
-  closeSheet();render();
-  toast(`✓ Vous êtes en liste d'attente pour <b>${nm}</b>, ${fday(w.d)}. Retrouvez-la dans Mon espace, où vous pouvez vous désinscrire à tout moment.`);
+  render();
+  /* retour du 29/09 : même confirmation que la compétition, avec accès direct à Mon espace */
+  sheet(shead('Vous êtes sur la liste d\'attente','Liste d\'attente')+
+   `<p class="sub" style="margin:4px 0 14px;text-align:center">${cap(fday(w.d))} · ${all?'les trois parcours':nm} · ${plural(w.pax,'joueur')} · ${MOMLBL2[w.moment]}</p>
+    <div class="checks">
+      <div class="ck ok"><span class="ic">1</span><div><b>Rien n'est réservé ni débité aujourd'hui</b></div></div>
+      <div class="ck ok"><span class="ic">2</span><div><b>Un départ se libère&nbsp;?</b><small>Vous êtes prévenu·e par e-mail et SMS.</small></div></div>
+      <div class="ck ok"><span class="ic">3</span><div><b>Confirmez depuis l'alerte</b><small>La place revient au premier qui confirme et paie.</small></div></div>
+      <div class="ck ok"><span class="ic">4</span><div><b>Désinscription en un clic</b><small>Depuis Mon espace, à tout moment.</small></div></div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn" data-act="myWaits">Voir mes listes d'attente</button><button class="btn ghost" data-act="close">Fermer</button></div>`);
 };
+ACT.myWaits=()=>{closeSheet();S.space='resa';go('espace')};
 
 /* ═════════ Navigation du moteur : les 4 portes de février 2027 ═════════ */
 /* retour du 28/09 : un membre ne se reconnaissait pas dans « Green-fee » */
@@ -2346,9 +2376,9 @@ R.gf=()=>{
        :grp?groupTimes(c,r.ok)
        :singleTimes(c,r.ok)||gfWaitBox(c);
      return `<div class="card crs ${r.ok.length&&!r.blocked||grp&&g.flights.some(f=>f.crs===c.id)?'':'off'}">
-       <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"><span class="crs-holes"><b>${c.nine?9:18}</b>trous</span></div><div class="crs-t">${tags?`<div class="row wrap" style="gap:6px">${tags}</div>`:''}
+       <div class="crs-h"><div class="crs-img" style="${bg(CRSIMG[c.id])}"><span class="crs-holes"><b>${c.nine?9:18}</b>trous</span>${tags?`<span class="crs-itag">${tags}</span>`:''}</div><div class="crs-t">${tags?`<div class="row wrap crs-tags" style="gap:6px">${tags}</div>`:''}
          <b class="h1" style="display:block;margin:8px 0 2px;font-size:28px">${c.n} <span class="crs-hn"><i>· </i>${c.nine?'9 trous':'18 trous'} · par ${c.par}</span></b>
-         <span class="mut">Départ toutes les ${c.cad} min</span>
+         <span class="mut crs-cad">Départ toutes les ${c.cad} min</span>
          ${c.p9?`<div class="seg2 hsel" role="group" aria-label="Formule">${[['18','18 trous'],['9','9 trous']].map(([v,n])=>`<button class="${((g.h9||{})[c.id]?'9':'18')===v?'on':''}" data-act="gfHoles" data-c="${c.id}" data-v="${v}">${n}</button>`).join('')}</div>`:''}</div>
          <div class="price">${pr(r.price,{small:u?'votre tarif, par joueur':'par joueur',nost:true})}</div></div>
        ${body}</div>`}).join('')}
@@ -2716,7 +2746,7 @@ ACT.gfPlayer=a=>{
    <div class="codebox"><input id="pSearch" placeholder="N° de licence FFGolf (9 chiffres)" inputmode="numeric" style="text-transform:none"><button class="btn sm" data-act="gfSearch" data-i="${i}">Rechercher</button></div>
    <div id="pRes" style="margin-top:10px"></div>
    <div class="sect">Ou en invité·e, sans licence</div>
-   <p class="mut" style="margin:-2px 0 10px">Indiquez son prénom et son nom : le starter l'appelle par son nom au départ et il figure sur la carte de score. Vous pourrez aussi le compléter plus tard.</p>
+   <p class="mut" style="margin:-2px 0 10px">Indiquez son prénom et son nom : votre invité·e sera reconnu·e automatiquement au desk pour le check-in. Vous pourrez aussi le compléter plus tard.</p>
    <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom</span><input id="pGuestFn" value="${p.type==='guest'?p.fn||'':''}" autocomplete="off"></label>
    <label class="field"><span>Nom</span><input id="pGuestLn" value="${p.type==='guest'?p.ln||'':''}" autocomplete="off"></label></div>
    <div id="pGuestWarn"></div>
@@ -3055,7 +3085,7 @@ ACT.compWait=()=>{
       <div class="ck ok"><span class="ic">3</span><div><b>24 h pour confirmer et payer</b><small>Passé ce délai, la place est proposée à la personne suivante.</small></div></div>
       <div class="ck ok"><span class="ic">4</span><div><b>À la clôture du ${fdm(cp.close)}</b><small>Sans place libérée, la liste est close et vous êtes prévenu·e.</small></div></div>
     </div>
-    <div class="row" style="margin-top:16px"><button class="btn" data-act="close" data-go="espace">Voir dans mon espace</button><button class="btn ghost" data-act="close">Fermer</button></div>`);
+    <div class="row" style="margin-top:16px"><button class="btn" data-act="myWaits">Voir mes listes d'attente</button><button class="btn ghost" data-act="close">Fermer</button></div>`);
   render();
 };
 
@@ -3724,16 +3754,17 @@ R.checkout=()=>{
   if(u)idHtml=`<div class="between"><div class="row"><span class="av">${u.ini}</span><div><b>${u.n}</b><div class="mut">${u.email} · ${u.st.map(s=>stN(s,u)).join(' · ')}</div></div></div>
      <button class="lnk" style="font-size:12px" data-act="login">Changer de compte</button></div>`;
   else idHtml=`<div class="tabs" style="margin-bottom:14px">
-      <button class="${co.mode==='login'?'on':''}" data-act="coMode" data-v="login">J'ai un compte</button>
+      ${needAcc?'':`<button class="${co.mode==='guest'?'on':''}" data-act="coMode" data-v="guest">Avancer sans compte</button>`}
       <button class="${co.mode==='signup'?'on':''}" data-act="coMode" data-v="signup">Créer mon compte</button>
-      ${needAcc?'':`<button class="${co.mode==='guest'?'on':''}" data-act="coMode" data-v="guest">Sans compte</button>`}</div>
+      <button class="${co.mode==='login'?'on':''}" data-act="coMode" data-v="login">Me connecter</button></div>
     ${co.mode==='login'?`<p class="sub" style="margin-bottom:12px">Connectez-vous : le total est recalculé avec votre tarif avant le paiement.</p><button class="btn" data-act="login">Me connecter</button>`
      :co.mode==='signup'?signupForm()+`<button class="btn" data-act="coSignup">Créer mon compte et continuer</button>`
      :co.guest?`<div class="between"><span><b>${co.gName||'Invité·e'}</b> · ${co.gMail||''} · ${co.gTel||''}</span><button class="lnk" style="font-size:12px" data-act="coGuestEdit">Modifier</button></div>`
      :`<p class="mut" style="margin:0 0 12px;font-size:12px">${REQ} Champs obligatoires</p>
-       <div class="grid g2" style="gap:0 12px"><label class="field"><span>Nom complet ${REQ}</span><input id="gName" value="${co.gName||''}"></label><label class="field"><span>E-mail ${REQ}</span><input id="gMail" type="email" value="${co.gMail||''}" placeholder="vous@exemple.fr"></label></div>
+       <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom ${REQ}</span><input id="gFn" value="${co.gFn||''}" autocomplete="given-name"></label><label class="field"><span>Nom ${REQ}</span><input id="gLn" value="${co.gLn||''}" autocomplete="family-name"></label></div>
+       <label class="field"><span>E-mail ${REQ}</span><input id="gMail" type="email" value="${co.gMail||''}" placeholder="vous@exemple.fr"></label>
        <label class="field"><span>Téléphone ${REQ}</span>${telField('gTel',co.gTel)}<small class="mut" style="display:block;margin-top:6px;font-size:12px">Pour le rappel par SMS 24 h avant. La confirmation arrive par e-mail.</small></label>
-       <button class="btn sec" data-act="coGuest">Continuer sans compte</button>
+       <button class="btn sec" data-act="coGuest">Avancer sans compte</button>
        <p class="mut" style="margin-top:8px">Sans compte, le prix public s'applique et la réservation se gère depuis le lien reçu par e-mail.</p>`}
     ${needAcc?`<p class="note">Compte obligatoire : votre panier contient ${S.cart.filter(l=>l.kind!=='gf').map(l=>KTAG[l.kind].toLowerCase()).filter((x,i,a)=>a.indexOf(x)===i).join(', ')}. Les inscriptions et les carnets sont rattachés à une personne (licence, suivi, crédits). Le green fee seul reste possible sans compte.</p>`:''}`;
   const zero=T.due===0;
@@ -3894,9 +3925,9 @@ ACT.coMode=a=>{S.co.mode=a.dataset.v;render()};
 ACT.coGar=()=>{S.co.garantie=!S.co.garantie;render()};
 ACT.coSignup=()=>{const id=createAccount();if(id)login(id)};
 ACT.coGuest=()=>{
-  const n=$('#gName').value.trim(), m=$('#gMail').value.trim(), cc=$('#gTelCc').value, t=telNorm($('#gTel').value,cc);
-  if(!n||!mailOk(m)||!t){toast(!n?'Indiquez votre nom.':!mailOk(m)?'Indiquez une adresse e-mail valide.':'Indiquez un numéro de téléphone valide (rappel SMS).');return}
-  Object.assign(S.co,{guest:true,gName:n,gMail:m,gTel:t});render();
+  const fn=$('#gFn').value.trim(), ln=$('#gLn').value.trim(), n=(fn+' '+ln).trim(), m=$('#gMail').value.trim(), cc=$('#gTelCc').value, t=telNorm($('#gTel').value,cc);
+  if(!fn||!ln||!mailOk(m)||!t){toast(!fn?'Indiquez votre prénom.':!ln?'Indiquez votre nom.':!mailOk(m)?'Indiquez une adresse e-mail valide.':'Indiquez un numéro de téléphone valide (rappel SMS).');return}
+  Object.assign(S.co,{guest:true,gFn:fn,gLn:ln,gName:n,gMail:m,gTel:t});render();
 };
 ACT.coGuestEdit=()=>{S.co.guest=false;render()};
 ACT.cartConfirm0=()=>ACT.coPay();
@@ -4034,6 +4065,18 @@ function cancelInfo(r){
 const fdl=d=>d.getDate()+' '+MONTHS[d.getMonth()]+' à '+String(d.getHours()).padStart(2,'0')+' h '+String(d.getMinutes()).padStart(2,'0');
 /* licence FFGolf : échéance toujours visible, renouvellement proposé à J-60 */
 const daysTo=k=>Math.round((dobj(k)-dobj(TODAY))/864e5);
+/* Retour du 29/09 : la date d'expiration de la cotisation est explicite
+   (en-tête de Mon espace, carte de membre, Vos avantages), renouvellement à J-60. */
+function cotisBox(u){
+  if(!u.cotis)return '';
+  const end=u.cotis.end, n=daysTo(end), soon=n<=60;
+  return `<div class="ck ${n<0?'ko':'ok'} ${soon?'lic-soon':''}"><span class="ic">${n<0?'✕':soon?'!':'✓'}</span><div><b>Cotisation · ${u.cotis.n}</b>
+    <small>${n<0?'Expirée depuis le ':'Valable jusqu\'au '}<b>${fdm(end)} ${end.slice(0,4)}</b>${soon&&n>=0?` · <b style="color:var(--terra)">expire dans ${plural(n,'jour')}</b><br>Sans renouvellement, vos avantages d'abonné cessent à cette date.`:''}</small></div>
+    ${soon?'<button class="btn sm" data-act="cotisRenew">Renouveler</button>':''}</div>`;
+}
+ACT.cotisRenew=()=>{const u=me();sheet(shead('Renouveler ma cotisation',u.cotis.n)+`<p class="sub" style="margin:4px 0 14px">Votre cotisation est valable jusqu'au <b>${fdm(u.cotis.end)} ${u.cotis.end.slice(0,4)}</b>. Le renouvellement se règle en ligne ou à l'accueil du golf ; vos avantages continuent sans interruption.</p>
+  <button class="btn full" data-act="close">Être rappelé·e par l'accueil</button>
+  <p class="note">Démo : la cotisation de Marc Lefèvre (Passion 7/7 Hardelot) expire le 15 novembre, le renouvellement est donc proposé (J-60, comme la licence). Le paiement en ligne de la cotisation est hors périmètre de la v1.</p>`)};
 function licBox(u){
   if(!u.lic)return `<div class="ck ko"><span class="ic">✕</span><div><b>Licence FFGolf</b><small>Aucune licence rattachée : le tarif Licencié ne s'applique pas.</small></div><button class="btn sm sec" data-act="addLic">Ajouter</button></div>`;
   const end=u.licEnd||'2026-12-31', n=daysTo(end), soon=n<=60;
@@ -4102,10 +4145,14 @@ R.espace=()=>{
   if(tab==='resa'){
     const waits=up.filter(r=>r.pay==='wait').sort((a,b)=>a.d<b.d?-1:1);
     const list=(S.resTab==='avenir'?up.filter(r=>r.pay!=='wait'):past).slice().sort((a,b)=>(a.d+a.h<b.d+b.h?-1:1)*(S.resTab==='avenir'?1:-1));
-    body=`${waits.length?`<div class="sect" style="margin-top:0">Mes listes d'attente · ${waits.length}</div>
-      <div class="card" style="padding:4px 18px;margin-bottom:22px">${waits.map(r=>`<div class="wrow"><span class="tag">${KTAG[r.kind]}</span>
+    /* retour du 29/09 : les listes d'attente forment un bloc à part, bien
+       séparé des réservations (fond distinct, titre, rien n'est réservé) */
+    body=`${waits.length?`<section class="waitbox"><div class="wb-h"><span class="wb-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg></span>
+        <div><h2 class="h2">Mes listes d'attente <span class="wb-n">${waits.length}</span></h2><p class="mut">Rien n'est réservé ni débité : vous êtes prévenu·e par e-mail et SMS si une place se libère.</p></div></div>
+      <div class="wb-l">${waits.map(r=>`<div class="wrow"><span class="tag">${KTAG[r.kind]}</span>
         <div><b>${r.t}</b><span class="mut">${cap(fday(r.d))}${r.h?' · '+r.h.replace(':',' h '):''} · ${r.sub.replace(/^Liste d'attente · /,'')}</span></div>
-        <button class="btn sm ghost" data-act="waitQuit" data-id="${r.id}">Me désinscrire</button></div>`).join('')}</div>`:''}
+        <button class="btn sm ghost" data-act="waitQuit" data-id="${r.id}">Me désinscrire</button></div>`).join('')}</div></section>
+      <h2 class="h2" style="margin:6px 0 10px">Mes réservations</h2>`:''}
      <p class="mut" style="margin:0 0 12px;font-size:12.5px">${u.smsOff||!u.tel?'Rappel SMS désactivé':'Rappel par SMS 24 h avant chaque départ, cours ou compétition'} · confirmations et modifications par e-mail. <button class="lnk" style="font-size:12px" data-act="spaceTab" data-t="infos">Réglages</button></p>
      <div class="chips"><button class="chip ${S.resTab==='avenir'?'on':''}" data-act="resTab" data-v="avenir">À venir · ${up.filter(r=>r.pay!=='wait').length}</button>
       <button class="chip ${S.resTab==='passees'?'on':''}" data-act="resTab" data-v="passees">Passées &amp; annulées · ${past.length}</button></div>
@@ -4143,12 +4190,13 @@ R.espace=()=>{
       ['Compétition sur La Forêt','droit de jeu + green fee',compPrice(comp('toussaint'),u.st)]];
     body=`<div class="grid g2" style="align-items:start">
       <div class="mcard"><div class="between"><img data-logo src="" alt="" style="height:30px;filter:brightness(0) invert(1)"><span class="mut" style="font-size:11px">Le Touquet</span></div>
-        <div><div style="font-size:24px;font-weight:400;letter-spacing:.5px">${u.n}</div><div class="mut">${u.home}</div></div>
+        <div><div style="font-size:24px;font-weight:400;letter-spacing:.5px">${u.n}</div><div class="mut">${u.home}</div>${u.cotis?`<div class="mc-end">Valable jusqu'au <b>${fdm(u.cotis.end)} ${u.cotis.end.slice(0,4)}</b></div>`:''}</div>
         <div class="row wrap" style="gap:6px">${u.st.map(s=>`<span class="tag">${stN(s,u)}</span>`).join('')}</div>
         <div class="between" style="margin-top:auto"><span class="mut">Licence ${u.lic||'—'}${u.lic?' · jusqu\'au '+fdm(u.licEnd||'2026-12-31')+' '+(u.licEnd||'2026').slice(0,4):''} · index ${fidx(u.idx)}</span><span class="qr" style="width:46px;height:46px;background-size:8px 8px;border:0"></span></div></div>
       <div class="card" style="padding:16px"><div class="h3" style="margin-bottom:8px">Vos avantages</div>
         ${u.st.map(s=>`<div class="ck ok"><span class="ic">✓</span><div><b>${stN(s,u)}</b><small>${ST[s].s}</small></div></div>`).join('')}
         ${u.quota?`<div class="quota"><div class="between"><b>Green fees de votre abonnement</b><span><b>${u.quota.used}</b> / ${u.quota.max}</span></div><div class="mate-b"><i style="width:${Math.round(u.quota.used/u.quota.max*100)}%"></i></div><small class="mut">${u.quota.max-u.quota.used} green fees inclus restants en 2026, du lundi au vendredi. Au-delà, le tarif licencié s'applique.</small></div>`:''}
+        ${cotisBox(u)}
         ${licBox(u)}
         <p class="mut" style="margin-top:8px">Quand plusieurs statuts s'appliquent, c'est toujours le tarif le plus avantageux qui est retenu. Les remises ne se cumulent pas.</p></div></div>
      <div class="between" style="margin:26px 0 10px;flex-wrap:wrap"><div class="sect" style="margin:0">Vos green fees au Touquet, par saison</div>
@@ -4241,7 +4289,8 @@ R.espace=()=>{
   }
   $('#v-espace').innerHTML=`
    <div class="scr-head"><div class="hello"><span class="av" style="width:58px;height:58px;font-size:17px">${u.ini}</span>
-     <div><span class="eyebrow" style="margin-bottom:4px">Mon espace</span><h1 class="h1">Bonjour <b>${u.n.split(' ')[0]}</b></h1><p class="sub">${u.st.map(s=>stN(s,u)).join(' · ')}</p></div></div>
+     <div><span class="eyebrow" style="margin-bottom:4px">Mon espace</span><h1 class="h1">Bonjour <b>${u.n.split(' ')[0]}</b></h1><p class="sub">${u.st.map(s=>stN(s,u)).join(' · ')}</p>
+     ${u.cotis?`<p class="cotis-end ${daysTo(u.cotis.end)<=60?'soon':''}">Cotisation valable jusqu'au <b>${fdm(u.cotis.end)} ${u.cotis.end.slice(0,4)}</b>${daysTo(u.cotis.end)<=60?` · expire dans ${plural(daysTo(u.cotis.end),'jour')} <button class="lnk" data-act="cotisRenew">Renouveler</button>`:''}</p>`:''}</div></div>
      <button class="btn ghost sm logout" data-act="logout"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5M5 12h11"/></svg><span class="lo-t">Se déconnecter</span></button></div>
    <div class="tabs">${tabs.map(([k,n,c])=>`<button class="${tab===k?'on':''}" data-act="spaceTab" data-t="${k}">${n}${c!=null?`<i>${c}</i>`:''}</button>`).join('')}</div>
    ${body}`;
@@ -4468,9 +4517,12 @@ function procheSheet(){
   }
   if(a.mode==='create'){
     body=`<p class="sub" style="margin-bottom:12px">Pour un enfant ou un proche qui n'a pas de compte : son profil est rattaché au vôtre, vous le gérez à sa place.</p>
-      <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom</span><input id="paFn" value="${a.fn||''}"></label>
-      <label class="field"><span>Nom</span><input id="paLn" value="${a.ln||me().n.split(' ').slice(1).join(' ')}"></label></div>
-      <label class="field"><span>Date de naissance</span><input id="paDob" type="date" value="${a.dob||''}"></label>
+      <p class="mut" style="margin:0 0 12px;font-size:12.5px">${REQ} Champs obligatoires</p>
+      <div class="grid g2" style="gap:0 12px"><label class="field"><span>Prénom ${REQ}</span><input id="paFn" value="${a.fn||''}"></label>
+      <label class="field"><span>Nom ${REQ}</span><input id="paLn" value="${a.ln||me().n.split(' ').slice(1).join(' ')}"></label></div>
+      <div class="grid g2" style="gap:0 12px"><label class="field"><span>Date de naissance ${REQ}</span><input id="paDob" type="date" value="${a.dob||''}"></label>
+      <label class="field"><span>Téléphone ${REQ}</span>${telField('paTel',a.tel,a.telCc)}</label></div>
+      <p class="mut" style="margin:-6px 0 12px;font-size:12px">Son numéro (ou le vôtre pour un jeune enfant) sert au rappel SMS 24 h avant ses départs et ses cours.</p>
       <label class="field"><span>N° de licence FFGolf <i style="font-style:normal;text-transform:none;letter-spacing:0;color:var(--g500)">— facultatif</i></span><input id="paLic" inputmode="numeric" placeholder="9 chiffres" value="${a.lic||''}"></label>
       ${rel}
       <button class="btn full" style="margin-top:18px" data-act="paCreate">Créer le profil</button>
@@ -4491,7 +4543,7 @@ function paBind(){
   const a=S.pa;
   [['paQ','q'],['paFn','fn'],['paLn','ln'],['paDob','dob'],['paLic','lic']].forEach(([i,k])=>{const el=$('#'+i);if(el)el.oninput=()=>{a[k]=el.value}});
 }
-function paOpen(){sheet(procheSheet());paBind()}
+function paOpen(){sheet(procheSheet());paBind();bindTel('paTel',(v,c)=>{S.pa.tel=v;S.pa.telCc=c})}
 ACT.procheAdd=()=>{S.pa={mode:'find',rel:'Ami·e'};paOpen()};
 ACT.paMode=a=>{S.pa.mode=a.dataset.v;S.pa.rel=a.dataset.v==='create'?'Enfant':'Ami·e';paOpen()};
 ACT.paRel=a=>{S.pa.rel=a.dataset.v;paOpen()};
@@ -4516,12 +4568,14 @@ ACT.paSave=()=>{const a=S.pa, p={...a.found};delete p._new;addProche(p,a.rel);cl
 ACT.paCreate=()=>{
   const a=S.pa;
   [['paFn','fn'],['paLn','ln'],['paDob','dob'],['paLic','lic']].forEach(([i,k])=>{const el=$('#'+i);if(el)a[k]=el.value.trim()});
-  if(!a.fn||!a.ln||!a.dob){toast('Prénom, nom et date de naissance sont requis.');return}
+  const telEl=$('#paTel');if(telEl){a.tel=telEl.value;a.telCc=$('#paTelCc').value}
+  if(!a.fn||!a.ln||!a.dob||!a.tel){toast('Prénom, nom, date de naissance et téléphone sont requis.');return}
+  const tel=telNorm(a.tel,a.telCc);if(!tel){toast(`Numéro non valide pour ${ccOf(a.telCc||'33')[1]} (ex. ${ccOf(a.telCc||'33')[4]}).`);return}
   const age=ageAt(a.dob,TODAY), st=[], lic=/^\d{9}$/.test((a.lic||'').trim())?a.lic.trim():null;
   if(age<26)st.push('jeune');
   if(lic)st.push('licencie');
   const id='dep'+uid();
-  addProche({id,n:a.fn+' '+a.ln,ini:(a.fn[0]+a.ln[0]).toUpperCase(),dob:a.dob,st,lic,idx:lic?45:null,cert:lic?'2027-06-30':null,dep:true,
+  addProche({id,n:a.fn+' '+a.ln,ini:(a.fn[0]+a.ln[0]).toUpperCase(),dob:a.dob,tel,st,lic,idx:lic?45:null,cert:lic?'2027-06-30':null,dep:true,
     home:'Profil rattaché au compte de '+me().n},a.rel);
   closeSheet();render();toast(`Profil de ${a.fn} créé${st.length?' · tarif '+ST[st[0]].n+' appliqué':''}.`);
 };
