@@ -1423,7 +1423,7 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .gc-tt{font:inherit;color:inherit;text-align:left;padding:0}
 .gc-tt:hover,.gc-tt:focus-visible{color:var(--gold-dark)}
 /* bandeau saisonnier */
-.gc-season{min-height:260px}
+.gc-season{min-height:0}
 .gc-season .gc-picks{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .gc-season .gc-picks button{display:inline-flex;align-items:baseline;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.5);
   background:rgba(27,21,15,.35);color:var(--paper);font-size:13.5px;transition:background .15s,border-color .15s}
@@ -1431,32 +1431,31 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .gc-season .gc-picks small{font-size:12px;color:var(--gold-light)}
 .gc-season .btn{margin-top:18px}
 /* entrées */
-.gc-occ{display:flex;flex-wrap:wrap;gap:8px}
-.gc-uni{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.gc-uni button{position:relative;min-height:124px;border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
-  padding:14px 16px;text-align:left;color:var(--paper);background:linear-gradient(135deg,var(--ink-soft),var(--gold-dark)) center/cover;transition:box-shadow .15s}
-.gc-uni button::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,21,15,.05),rgba(27,21,15,.72))}
-.gc-uni button > *{position:relative}
-.gc-uni b{font-size:17px;font-weight:500}
-.gc-uni small{font-size:12px;color:var(--gold-light);margin-top:2px}
-.gc-uni button.on,.gc-uni button:focus-visible{box-shadow:0 0 0 3px var(--gold)}
-.gc-eta{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
-.gc-eta::-webkit-scrollbar{height:0}
-.gc-eta button{flex:none;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--paper);text-align:left;transition:border-color .15s}
-.gc-eta button:hover,.gc-eta button:focus-visible{border-color:var(--gold)}
-.gc-eta button.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.gc-eta b{display:block;font-size:14px;white-space:nowrap}
-.gc-eta small{display:block;font-size:12px;color:var(--g500);margin-top:2px}
+.gc-explore{margin-top:4px}
+.gc-etabs{display:flex;gap:22px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.gc-etabs::-webkit-scrollbar{height:0}
+.gc-etabs button{padding:10px 0;margin-bottom:-1px;border-bottom:2px solid transparent;font-size:11px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--g500);white-space:nowrap}
+.gc-etabs button:hover{color:var(--ink)}
+.gc-etabs button.on{color:var(--ink);border-color:var(--gold)}
+.gc-erow{display:flex;gap:8px;padding:14px 2px 4px;overflow-x:auto;scrollbar-width:none}
+.gc-erow::-webkit-scrollbar{height:0}
+.gc-erow[hidden]{display:none}
+.gc-erow .chip{flex:none;display:inline-flex;align-items:center;gap:8px}
+.gc-erow .chip small{font-size:11px;color:var(--g500)}
+.gc-erow .chip.on small{color:var(--gold-light)}
+.gc-thumb{flex:none;width:22px;height:22px;margin:-4px 0 -4px -8px;border-radius:50%;background:linear-gradient(135deg,var(--ink-soft),var(--gold-dark)) center/cover}
 /* filtres */
-#gc-res{scroll-margin-top:130px;margin-top:34px}
-.gc-fbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.gc-fbar .field{margin-bottom:0}
+#gc-res{scroll-margin-top:130px;margin-top:18px}
+.gc-tools{display:flex;align-items:center;gap:16px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gc-fbar{flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.gc-sel{padding:9px 12px;font-size:13.5px;border-radius:10px}
+.gc-sel.on{border-color:var(--ink)}
+.gc-tsum{flex:none;white-space:nowrap;display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--g600)}
 .gc-fbar-m{display:none;align-items:center;justify-content:space-between;gap:12px}
 .gc-fbar-m .btn{flex:none}
-.gc-active{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+.gc-active{display:none;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px}
 .gc-active .chip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px}
 .gc-active .chip svg{flex:none}
-.gc-count{margin-top:14px;font-size:13.5px;color:var(--g600)}
 .gc-empty{padding:24px;margin-top:18px}
 .gc-empty .h2{margin-top:10px}
 .gc-empty .chips{margin:14px 0 6px}
@@ -1468,11 +1467,10 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .gc-sfoot .btn{flex:1}
 body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne masque pas le pied de la feuille */
 @container (max-width:640px){
-  .gc-fbar{display:none}
-  .gc-fbar-m{display:flex}
-  .gc-count{display:none}
-  .gc-uni{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .gc-uni button{min-height:96px}
+  .gc-fbar,.gc-tsum{display:none}
+  .gc-fbar-m{display:flex;flex:1}
+  .gc-tools{padding:10px 0}
+  .gc-active{display:flex}
   .gc-season{min-height:0}
 }
 @media (max-width:640px){
@@ -1557,6 +1555,7 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
   .gc-places{grid-template-columns:1fr}
   .gc-gal-main{border-radius:16px}
 }
+.gc-fbar-m .mut{font-size:13.5px}
 @media (prefers-reduced-motion:reduce){.gc-uni button,.gc-eta button,.gc-thumbs button,.gc-season .gc-picks button{transition:none}}
 /* ═════════ Bons cadeaux · lot B2 ═════════ */
 /* personnalisation */
@@ -2762,8 +2761,8 @@ function gcCard(o){
 const gcGrid=list=>`<div class="gc-grid">${list.map(gcCard).join('')}</div>`;
 function gcSelect(k){
   const [l,all,opts]=GC_FK[k];
-  return `<label class="field"><span>${l}</span><select class="inp" data-gcf="${k}"><option value="">${all}</option>
-    ${opts().map(([v,t])=>`<option value="${v}"${GCS.f[k]===v?' selected':''}>${t}</option>`).join('')}</select></label>`;
+  return `<select class="inp gc-sel${GCS.f[k]?' on':''}" data-gcf="${k}" aria-label="${l}"><option value="">${all}</option>
+    ${opts().map(([v,t])=>`<option value="${v}"${GCS.f[k]===v?' selected':''}>${t}</option>`).join('')}</select>`;
 }
 function gcEmpty(){
   const f=GCS.f, act=gcActive(), carte=gcOffer('carte-cadeau');
@@ -2791,25 +2790,26 @@ function gcCountTxt(){
   const n=gcIdeas(GCS.f).length;return cap(gcN(n))+(gcMatch(gcOffer('carte-cadeau'),GCS.f)?' et la carte cadeau':'');
 }
 R.cadeaux=()=>{
-  const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(gcFeatured);
+  const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(gcFeatured), ent=GCS.ent||'occ';
   const ideas=pred=>GC_OFFERS.filter(o=>o.type!=='carte'&&pred(o)).length;
   const places=GC_PLACES.filter(([k])=>ideas(o=>gcPlaces(o).includes(k)));
   $('#v-cadeaux').innerHTML=`
    <div class="band gc-season" style="${bg(IMG.hero)}"><div>${season.length?'<span class="eyebrow">À la une</span>':''}<h1 class="h1">Offrir <b>un moment</b> dans la Collection</h1>
      <p class="sub" style="margin-top:6px">Cartes cadeaux, expériences et coffrets, envoyés par e-mail avec un bon à imprimer. Valables ${GC_VALIDITY} mois.</p>
      ${season.length?`<div class="gc-picks">${season.map(o=>`<button data-act="gcOffer" data-id="${o.id}">${o.title}<small>${o.price?eur(o.price):'dès '+eur(o.amounts[0])}</small></button>`).join('')}</div>`:''}</div></div>
-   <div class="gc-h">Par occasion</div>
-   <div class="gc-occ">${GC_OCCASIONS.map(([k,l])=>`<button class="chip ${f.occ===k?'on':''}" data-act="gcF" data-k="occ" data-v="${k}" data-scroll="1" aria-pressed="${f.occ===k}">${l}</button>`).join('')}</div>
-   <div class="gc-h">Par univers</div>
-   <div class="gc-uni">${GC_UNIVERS.map(([k,l])=>`<button class="${f.univ===k?'on':''}" data-act="gcF" data-k="univ" data-v="${k}" data-scroll="1" aria-pressed="${f.univ===k}"${GC_UNIV_IMG[k]?` style="${bg(GC_UNIV_IMG[k])}"`:''}><b>${l}</b><small>${gcN(ideas(o=>o.univers.includes(k)))}</small></button>`).join('')}</div>
-   <div class="gc-h">Par établissement</div>
-   <div class="gc-eta">${places.map(([k,l])=>`<button class="${f.etab===k?'on':''}" data-act="gcF" data-k="etab" data-v="${k}" data-scroll="1" aria-pressed="${f.etab===k}"><b>${l}</b><small>${gcN(ideas(o=>gcPlaces(o).includes(k)))}</small></button>`).join('')}</div>
+   <div class="gc-explore">
+     <div class="gc-etabs" role="tablist" aria-label="Explorer les cadeaux">${GC_ENT.map(([k,l])=>`<button role="tab" class="${ent===k?'on':''}" aria-selected="${ent===k}" data-act="gcEnt" data-v="${k}">${l}</button>`).join('')}</div>
+     <div class="gc-erow gc-occ" role="tabpanel"${ent==='occ'?'':' hidden'}>${GC_OCCASIONS.map(([k,l])=>`<button class="chip ${f.occ===k?'on':''}" data-act="gcF" data-k="occ" data-v="${k}" data-scroll="1" aria-pressed="${f.occ===k}">${l}</button>`).join('')}</div>
+     <div class="gc-erow gc-uni" role="tabpanel"${ent==='univ'?'':' hidden'}>${GC_UNIVERS.map(([k,l])=>`<button class="chip ${f.univ===k?'on':''}" data-act="gcF" data-k="univ" data-v="${k}" data-scroll="1" aria-pressed="${f.univ===k}"><i class="gc-thumb"${GC_UNIV_IMG[k]?` style="${bg(GC_UNIV_IMG[k])}"`:''}></i>${l}<small>${ideas(o=>o.univers.includes(k))}</small></button>`).join('')}</div>
+     <div class="gc-erow gc-eta" role="tabpanel"${ent==='etab'?'':' hidden'}>${places.map(([k,l])=>`<button class="chip ${f.etab===k?'on':''}" data-act="gcF" data-k="etab" data-v="${k}" data-scroll="1" aria-pressed="${f.etab===k}">${l}<small>${ideas(o=>gcPlaces(o).includes(k))}</small></button>`).join('')}</div>
+   </div>
    <section id="gc-res" aria-label="Cadeaux">
-     <div class="gc-h">${act.length?'Votre sélection':'Tous les cadeaux'}</div>
-     <div class="gc-fbar" role="group" aria-label="Filtrer les cadeaux">${Object.keys(GC_FK).map(gcSelect).join('')}</div>
-     <div class="gc-fbar-m"><span class="mut">${gcCountTxt()}</span><button class="btn sm sec" id="gcFiltBtn" data-act="gcFilters" aria-haspopup="dialog">Filtrer${act.length?' · '+act.length:''}</button></div>
+     <div class="gc-tools">
+       <div class="gc-fbar" role="group" aria-label="Filtrer les cadeaux">${Object.keys(GC_FK).map(gcSelect).join('')}</div>
+       <div class="gc-tsum"><span class="gc-count" aria-live="polite">${gcCountTxt()}</span>${act.length?'<button class="lnk" data-act="gcClear">Effacer</button>':''}</div>
+       <div class="gc-fbar-m"><span class="mut">${gcCountTxt()}</span><button class="btn sm sec" id="gcFiltBtn" data-act="gcFilters" aria-haspopup="dialog">Filtrer${act.length?' · '+act.length:''}</button></div>
+     </div>
      ${act.length?`<div class="gc-active">${act.map(k=>`<button class="chip on" data-act="gcF" data-k="${k}" data-v="${f[k]}" aria-label="Retirer le filtre ${gcFLabel(k,f[k])}">${gcFLabel(k,f[k])}${GC_X}</button>`).join('')}<button class="lnk" data-act="gcClear">Effacer les filtres</button></div>`:''}
-     <div class="gc-count" aria-live="polite">${gcCountTxt()}</div>
      ${gcResults()}
    </section>
    <p class="note">Univers, occasions et mise en avant repris du back-office (hypothèses de démonstration). Prix et validité non contractuels.</p>`;
@@ -2927,6 +2927,9 @@ function gcSheetHtml(){
 function gcScrollRes(){const el=$('#gc-res');if(el&&el.scrollIntoView)el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}
 function gcRefresh(){if(S.screen!=='cadeaux')go('cadeaux');else render();if(gcSheetOpen())sheet(gcSheetHtml(),'gc-fsheet')}
 ACT.gcF=a=>{const k=a.dataset.k,v=a.dataset.v;GCS.f[k]=GCS.f[k]===v&&!a.dataset.set?'':v;gcRefresh();if(a.dataset.scroll)gcScrollRes()};
+/* entrées : un seul rang de puces, l'onglet choisit occasion, univers ou établissement (reprise du 29/10 : arriver plus vite aux offres) */
+const GC_ENT=[['occ','Par occasion'],['univ','Par univers'],['etab','Par établissement']];
+ACT.gcEnt=a=>{GCS.ent=a.dataset.v;render()};
 ACT.gcClear=()=>{Object.keys(GCS.f).forEach(k=>GCS.f[k]='');gcRefresh()};
 ACT.gcFilters=()=>sheet(gcSheetHtml(),'gc-fsheet');
 ACT.gcSheetDone=()=>{closeSheet();gcScrollRes()};
