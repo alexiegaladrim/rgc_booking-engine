@@ -1430,23 +1430,9 @@ button.sbf.open .sbv svg{transform:rotate(180deg)}
 .gc-season .gc-picks button:hover,.gc-season .gc-picks button:focus-visible{background:rgba(27,21,15,.6);border-color:var(--gold-light)}
 .gc-season .gc-picks small{font-size:12px;color:var(--gold-light)}
 .gc-season .btn{margin-top:18px}
-/* entrées */
-.gc-explore{margin-top:4px}
-.gc-etabs{display:flex;gap:22px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
-.gc-etabs::-webkit-scrollbar{height:0}
-.gc-etabs button{padding:10px 0;margin-bottom:-1px;border-bottom:2px solid transparent;font-size:11px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--g500);white-space:nowrap}
-.gc-etabs button:hover{color:var(--ink)}
-.gc-etabs button.on{color:var(--ink);border-color:var(--gold)}
-.gc-erow{display:flex;gap:8px;padding:14px 2px 4px;overflow-x:auto;scrollbar-width:none}
-.gc-erow::-webkit-scrollbar{height:0}
-.gc-erow[hidden]{display:none}
-.gc-erow .chip{flex:none;display:inline-flex;align-items:center;gap:8px}
-.gc-erow .chip small{font-size:11px;color:var(--g500)}
-.gc-erow .chip.on small{color:var(--gold-light)}
-.gc-thumb{flex:none;width:22px;height:22px;margin:-4px 0 -4px -8px;border-radius:50%;background:linear-gradient(135deg,var(--ink-soft),var(--gold-dark)) center/cover}
 /* filtres */
 #gc-res{scroll-margin-top:130px;margin-top:18px}
-.gc-tools{display:flex;align-items:center;gap:16px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.gc-tools{display:flex;align-items:center;gap:16px;padding:4px 0}   /* 29/10 : sans filets (Alexie) */
 .gc-fbar{flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .gc-sel{padding:9px 12px;font-size:13.5px;border-radius:10px}
 .gc-sel.on{border-color:var(--ink)}
@@ -2790,19 +2776,11 @@ function gcCountTxt(){
   const n=gcIdeas(GCS.f).length;return cap(gcN(n))+(gcMatch(gcOffer('carte-cadeau'),GCS.f)?' et la carte cadeau':'');
 }
 R.cadeaux=()=>{
-  const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(gcFeatured), ent=GCS.ent||'occ';
-  const ideas=pred=>GC_OFFERS.filter(o=>o.type!=='carte'&&pred(o)).length;
-  const places=GC_PLACES.filter(([k])=>ideas(o=>gcPlaces(o).includes(k)));
+  const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(gcFeatured);   /* 29/10 : entrées en onglets retirées (Alexie : filtres redondants), seules les listes restent */
   $('#v-cadeaux').innerHTML=`
    <div class="band gc-season" style="${bg(IMG.hero)}"><div>${season.length?'<span class="eyebrow">À la une</span>':''}<h1 class="h1">Offrir <b>un moment</b> dans la Collection</h1>
      <p class="sub" style="margin-top:6px">Cartes cadeaux, expériences et coffrets, envoyés par e-mail avec un bon à imprimer. Valables ${GC_VALIDITY} mois.</p>
      ${season.length?`<div class="gc-picks">${season.map(o=>`<button data-act="gcOffer" data-id="${o.id}">${o.title}<small>${o.price?eur(o.price):'dès '+eur(o.amounts[0])}</small></button>`).join('')}</div>`:''}</div></div>
-   <div class="gc-explore">
-     <div class="gc-etabs" role="tablist" aria-label="Explorer les cadeaux">${GC_ENT.map(([k,l])=>`<button role="tab" class="${ent===k?'on':''}" aria-selected="${ent===k}" data-act="gcEnt" data-v="${k}">${l}</button>`).join('')}</div>
-     <div class="gc-erow gc-occ" role="tabpanel"${ent==='occ'?'':' hidden'}>${GC_OCCASIONS.map(([k,l])=>`<button class="chip ${f.occ===k?'on':''}" data-act="gcF" data-k="occ" data-v="${k}" data-scroll="1" aria-pressed="${f.occ===k}">${l}</button>`).join('')}</div>
-     <div class="gc-erow gc-uni" role="tabpanel"${ent==='univ'?'':' hidden'}>${GC_UNIVERS.map(([k,l])=>`<button class="chip ${f.univ===k?'on':''}" data-act="gcF" data-k="univ" data-v="${k}" data-scroll="1" aria-pressed="${f.univ===k}"><i class="gc-thumb"${GC_UNIV_IMG[k]?` style="${bg(GC_UNIV_IMG[k])}"`:''}></i>${l}<small>${ideas(o=>o.univers.includes(k))}</small></button>`).join('')}</div>
-     <div class="gc-erow gc-eta" role="tabpanel"${ent==='etab'?'':' hidden'}>${places.map(([k,l])=>`<button class="chip ${f.etab===k?'on':''}" data-act="gcF" data-k="etab" data-v="${k}" data-scroll="1" aria-pressed="${f.etab===k}">${l}<small>${ideas(o=>gcPlaces(o).includes(k))}</small></button>`).join('')}</div>
-   </div>
    <section id="gc-res" aria-label="Cadeaux">
      <div class="gc-tools">
        <div class="gc-fbar" role="group" aria-label="Filtrer les cadeaux">${Object.keys(GC_FK).map(gcSelect).join('')}</div>
@@ -2928,8 +2906,6 @@ function gcScrollRes(){const el=$('#gc-res');if(el&&el.scrollIntoView)el.scrollI
 function gcRefresh(){if(S.screen!=='cadeaux')go('cadeaux');else render();if(gcSheetOpen())sheet(gcSheetHtml(),'gc-fsheet')}
 ACT.gcF=a=>{const k=a.dataset.k,v=a.dataset.v;GCS.f[k]=GCS.f[k]===v&&!a.dataset.set?'':v;gcRefresh();if(a.dataset.scroll)gcScrollRes()};
 /* entrées : un seul rang de puces, l'onglet choisit occasion, univers ou établissement (reprise du 29/10 : arriver plus vite aux offres) */
-const GC_ENT=[['occ','Par occasion'],['univ','Par univers'],['etab','Par établissement']];
-ACT.gcEnt=a=>{GCS.ent=a.dataset.v;render()};
 ACT.gcClear=()=>{Object.keys(GCS.f).forEach(k=>GCS.f[k]='');gcRefresh()};
 ACT.gcFilters=()=>sheet(gcSheetHtml(),'gc-fsheet');
 ACT.gcSheetDone=()=>{closeSheet();gcScrollRes()};
