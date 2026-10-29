@@ -1481,7 +1481,8 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
   .sheet.gc-fsheet .gc-sfoot{margin:22px -18px -20px;padding:14px 18px 18px;bottom:-20px}
 }
 /* cartes d'offre verticales, visuel en tête (reprise du 29/10) */
-.gc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:36px 24px}
+.gc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 28px}
+@container (max-width:900px){.gc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .gc-card{display:flex;flex-direction:column;min-width:0}
 .gc-cimg{position:relative;display:grid;place-items:center;aspect-ratio:1/1;width:100%;border-radius:var(--r);overflow:hidden;color:var(--gold-dark);
   background:linear-gradient(135deg,var(--sand),var(--gold-soft)) center/cover;transition:transform .35s ease,box-shadow .2s}
@@ -1578,7 +1579,7 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
 .gc-mod:hover{border-color:var(--gold)}
 .gc-mod.on{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
 .gc-mod:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.gc-mod i{display:block;height:58px;border-radius:9px;margin-bottom:8px;background-size:cover;background-position:center}
+.gc-mod i{display:block;height:58px;border-radius:9px;margin-bottom:8px}
 .gc-mod b{display:block;font-size:13.5px}
 .gc-mod small{display:block;margin-top:2px;font-size:11.5px;line-height:1.35;color:var(--g600)}
 .gc-pcta{display:grid;gap:10px;margin-top:18px}
@@ -1588,7 +1589,7 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
 /* le bon : modèles */
 .gc-m-encre{background:var(--ink);color:var(--gold-light)}
 .gc-m-links{background-color:var(--ink);background-size:cover;background-position:center;color:var(--gold-light)}
-.gc-m-fetes{background:radial-gradient(circle,var(--gold-light) 0 1.5px,transparent 2.5px) 0 0/22px 22px,var(--gold-soft);color:var(--gold-dark)}
+.gc-m-fetes{background:radial-gradient(circle,var(--gold) 0 1.2px,transparent 2px) 0 0/18px 18px,var(--gold-soft);color:var(--gold-dark)}
 .gc-m-jardin{background:var(--green);color:var(--green-soft)}
 .gc-mod i.gc-m-fetes{box-shadow:inset 0 0 0 1px var(--line)}
 .gc-bon{position:relative;overflow:hidden;display:grid;gap:8px;padding:22px 22px 18px;border-radius:18px;box-shadow:var(--shadow);font-size:14px;line-height:1.4}
@@ -1606,6 +1607,7 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
 .gc-bon-foot b{font-weight:500;letter-spacing:1.5px}
 .gc-bon-foot small{display:block;opacity:.85}
 .gc-bon-qr{flex:none;width:46px;height:46px;border-radius:6px;border:4px solid var(--paper);background:repeating-conic-gradient(var(--ink) 0 25%,var(--paper) 0 50%) 0 0/9px 9px}
+.gc-bon.gc-m-fetes{background:radial-gradient(circle,var(--gold-light) 0 1.5px,transparent 2.2px) 0 0/26px 26px,var(--gold-soft);box-shadow:var(--shadow),inset 0 0 0 1px var(--line)}
 .gc-bon.gc-m-fetes .gc-bon-t,.gc-bon.gc-m-fetes .gc-bon-v{color:var(--ink)}
 .gc-bon.gc-m-fetes .gc-bon-foot{border-top-color:var(--line-2)}
 .gc-bon.gc-m-jardin .gc-bon-t,.gc-bon.gc-m-jardin .gc-bon-v{color:var(--paper)}
@@ -2683,7 +2685,10 @@ window.__gc={GC_OFFERS,GCSW,GC_TEST_BONS,get screen(){return S.screen},go};
    classement que le back-office (lot A1). Absents du §6 du brief : hypothèses de démonstration. */
 const GC_UNIVERS=[['golf','Golf'],['spa','Spa & bien-être'],['table','Gastronomie'],['sejour','Séjours']];
 const GC_OCCASIONS=[['anniversaire','Anniversaire'],['noel','Noël'],['fete-meres','Fête des mères'],['fete-peres','Fête des pères'],['saint-valentin','Saint-Valentin'],['remerciement','Remerciement'],['retraite','Départ à la retraite']];
-const GC_SAISON=['noel-2026','Noël 2026'];   /* mise en avant courante, réglée dans le back-office */
+/* Mise en avant : période réglée dans le back-office (FEAT_DEMO, mêmes dates de démo).
+   Le bandeau montre les offres dont la période couvre la date du jour. */
+const GC_FEAT={'noel-2026':['2026-09-15','2026-12-24']};
+function gcFeatured(o){return !!o.featFrom&&o.featFrom<=TODAY&&TODAY<=o.featTo}
 const GC_META={
   'carte-cadeau':{u:['golf','spa','table','sejour'],o:['anniversaire','noel','remerciement'],s:'noel-2026',pdv:[]},
   'green-fee-la-mer':{u:['golf'],o:['anniversaire','fete-peres'],pdv:['Accueil golf']},
@@ -2698,7 +2703,7 @@ const GC_META={
   'golf-pour-deux-moliets':{u:['golf','table'],o:['anniversaire','fete-peres'],pdv:['Accueil golf','Restaurant du club-house']},
   'escapade-opio':{u:['golf','spa'],o:['anniversaire','remerciement'],pdv:['Accueil golf','Spa']}};
 GC_OFFERS.forEach(o=>{const m=GC_META[o.id];
-  Object.assign(o,{univers:m.u,occasions:m.o,saison:m.s||''});
+  Object.assign(o,{univers:m.u,occasions:m.o,saison:m.s||'',featFrom:m.s?GC_FEAT[m.s][0]:'',featTo:m.s?GC_FEAT[m.s][1]:''});
   (o.lines||[]).forEach((l,i)=>{l.pdv=m.pdv[i]})});
 /* galerie : photos déjà présentes dans le Booking Engine, sinon emplacement « visuel à venir »
    (libellés de la médiathèque du back-office) */
@@ -2743,7 +2748,7 @@ function gcCard(o){
   const eb=o.type==='carte'?GC_TYPES.carte.l:GC_TYPES[o.type].l+' · '+o.univers.map(u=>GC_UNIVERS.find(x=>x[0]===u)[1]).join(', ');
   return `<article class="gc-card" id="gc-${o.id}" data-offer="${o.id}">
     <button class="gc-cimg" data-act="gcOffer" data-id="${o.id}" aria-label="Voir ${gcEsc(o.title)}"${url?` style="${bg(v)}"`:''}>
-      ${url?'':`<span class="gc-cph">${GC_GIFT}${v?'Visuel à venir · '+v:''}</span>`}${o.saison===GC_SAISON[0]?`<em class="gc-cbadge">${GC_SAISON[1]}</em>`:''}</button>
+      ${url?'':`<span class="gc-cph">${GC_GIFT}${v?'Visuel à venir · '+v:''}</span>`}${gcFeatured(o)?`<em class="gc-cbadge">À la une</em>`:''}</button>
     <div class="gc-cb">
       <span class="gc-ceb">${eb}</span>
       <h3 class="gc-ct"><button class="gc-tt" data-act="gcOffer" data-id="${o.id}">${o.title}</button></h3>
@@ -2786,14 +2791,13 @@ function gcCountTxt(){
   const n=gcIdeas(GCS.f).length;return cap(gcN(n))+(gcMatch(gcOffer('carte-cadeau'),GCS.f)?' et la carte cadeau':'');
 }
 R.cadeaux=()=>{
-  const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(o=>o.saison===GC_SAISON[0]);
+  const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(gcFeatured);
   const ideas=pred=>GC_OFFERS.filter(o=>o.type!=='carte'&&pred(o)).length;
   const places=GC_PLACES.filter(([k])=>ideas(o=>gcPlaces(o).includes(k)));
   $('#v-cadeaux').innerHTML=`
-   <div class="band gc-season" style="${bg(IMG.hero)}"><div><span class="eyebrow">${GC_SAISON[1]}</span><h1 class="h1">Offrir <b>un moment</b> dans la Collection</h1>
-     <p class="sub" style="margin-top:6px">Cartes cadeaux, expériences et coffrets, envoyés par e-mail avec un bon à imprimer. Valables ${GC_VALIDITY} mois. Commandé jusqu'au 24 décembre, le bon arrive à temps.</p>
-     <div class="gc-picks">${season.map(o=>`<button data-act="gcOffer" data-id="${o.id}">${o.title}<small>${o.price?eur(o.price):'dès '+eur(o.amounts[0])}</small></button>`).join('')}</div>
-     <button class="btn gold sm" data-act="gcF" data-k="occ" data-v="noel" data-set="1" data-scroll="1">Voir les idées pour Noël</button></div></div>
+   <div class="band gc-season" style="${bg(IMG.hero)}"><div>${season.length?'<span class="eyebrow">À la une</span>':''}<h1 class="h1">Offrir <b>un moment</b> dans la Collection</h1>
+     <p class="sub" style="margin-top:6px">Cartes cadeaux, expériences et coffrets, envoyés par e-mail avec un bon à imprimer. Valables ${GC_VALIDITY} mois.</p>
+     ${season.length?`<div class="gc-picks">${season.map(o=>`<button data-act="gcOffer" data-id="${o.id}">${o.title}<small>${o.price?eur(o.price):'dès '+eur(o.amounts[0])}</small></button>`).join('')}</div>`:''}</div></div>
    <div class="gc-h">Par occasion</div>
    <div class="gc-occ">${GC_OCCASIONS.map(([k,l])=>`<button class="chip ${f.occ===k?'on':''}" data-act="gcF" data-k="occ" data-v="${k}" data-scroll="1" aria-pressed="${f.occ===k}">${l}</button>`).join('')}</div>
    <div class="gc-h">Par univers</div>
@@ -2808,7 +2812,7 @@ R.cadeaux=()=>{
      <div class="gc-count" aria-live="polite">${gcCountTxt()}</div>
      ${gcResults()}
    </section>
-   <p class="note">Lot B1 : univers, occasions et mise en avant « ${GC_SAISON[1]} » repris du back-office (hypothèses de démonstration, voir la barre « Démo · cadeaux »). Prix et validité non contractuels.</p>`;
+   <p class="note">Univers, occasions et mise en avant repris du back-office (hypothèses de démonstration). Prix et validité non contractuels.</p>`;
 };
 
 /* fiche offre */
@@ -2873,7 +2877,7 @@ R.cadeau=()=>{
       ${g.length>1?`<div class="gc-thumbs">${g.map((u,j)=>`<button class="${j===i?'on':''}" data-act="gcImg" data-i="${j}" aria-label="Voir le visuel ${j+1}" aria-pressed="${j===i}"${gcIsUrl(u)?` style="${bg(u)}"`:''}>${gcIsUrl(u)?'':ph('')}</button>`).join('')}</div>`:''}
     </div>
     <aside class="card gc-buy">
-      <div class="row wrap" style="gap:6px"><span class="tag">${GC_TYPES[o.type].l}</span><span class="tag">Valable ${GC_VALIDITY} mois</span>${o.saison===GC_SAISON[0]?`<span class="tag ol">${GC_SAISON[1]}</span>`:''}</div>
+      <div class="row wrap" style="gap:6px"><span class="tag">${GC_TYPES[o.type].l}</span><span class="tag">Valable ${GC_VALIDITY} mois</span>${gcFeatured(o)?`<span class="tag ol">À la une</span>`:''}</div>
       <h1 class="h1 gc-ft">${o.title}</h1>
       <p class="sub">${o.sub}</p>
       ${o.type==='carte'?gcAmountHtml(o)+(GCSW.A==='un'?gcEtabPick():''):`<div class="price gc-fp">${eur(amount)}<small>le bon</small></div>`}
@@ -2971,7 +2975,7 @@ function gcCtlB1(){
     <ul><li>Univers, occasions et mise en avant saisonnière : absents du §6 du brief. Mêmes listes et même classement que le back-office (lot A1), à valider avec RGC.</li>
     <li>Univers : ${GC_UNIVERS.map(u=>u[1]).join(', ')}.</li>
     <li>Occasions : ${GC_OCCASIONS.map(u=>u[1]).join(', ')}.</li>
-    <li>Bandeau saisonnier « ${GC_SAISON[1]} » : ${GC_OFFERS.filter(o=>o.saison===GC_SAISON[0]).map(o=>o.title).join(', ')}.</li>
+    <li>Mise en avant (période réglée dans le back-office, démo du 15 sept. au 24 déc. 2026) : ${GC_OFFERS.filter(gcFeatured).map(o=>o.title).join(', ')}.</li>
     <li>Budgets : ${GC_BUDGETS.map(b=>b[1].toLowerCase()).join(', ')}. La carte cadeau entre dans tous les budgets et tous les établissements.</li>
     <li>Filtre établissement : les 12 golfs et Famille Victoire ; hôtel et spa comptent pour leur site (Le Manoir au Touquet, Spa La Bégude à Opio Valbonne, à confirmer).</li>
     <li>Montant libre de la carte : euros entiers, de 20 à 1 000 €. Montant proposé par défaut : 100 €.</li>
@@ -4352,8 +4356,8 @@ R.panier=()=>{
    <div class="two"><div class="card" style="padding:14px 18px">
      ${gcPanierLines(l=>{const v=lineView(l);return `<div class="cline"><div>
        <div class="row wrap" style="gap:6px"><span class="tag">${v.tag}</span>${v.total===0&&v.pub>0?'<span class="tag ol">Sans paiement</span>':''}${l.editOf?'<span class="tag ol">Modification</span>':''}</div>
-       <b class="h3" style="display:block;margin-top:7px">${v.title}</b><div class="mut">${v.sub}</div>
-       ${lineTable(l,v,pm)}
+       <b class="h3" style="display:block;margin-top:7px">${v.title}</b><div class="mut">${v.gcSub||v.sub}</div>
+       ${l.kind==='gift'?'':lineTable(l,v,pm)}
        ${v.extra?`<p class="mut" style="margin-top:6px">${v.extra}</p>`:''}
        <p class="mut" style="margin-top:6px">${v.cancel}</p>
        <div class="row" style="margin-top:8px;gap:14px">${l.kind==='gf'?`<button class="lnk" style="font-size:12px" data-act="lineSlotGf" data-u="${l.uid}">Changer de jour ou d'horaire</button><button class="lnk" style="font-size:12px" data-act="lineEditGf" data-u="${l.uid}">Modifier joueurs &amp; options</button>`:''}${l.kind==='gift'?gcLineLinks(l):''}</div></div>
@@ -4797,6 +4801,7 @@ function gcLineView(l,v){
   v.tag='Bon cadeau';
   v.title=o.type==='carte'?`${o.title} · ${eur(l.amount)}`:o.title;
   v.sub=[moi?'Pour vous · '+gcEsc(l.to):'Pour '+gcEsc(l.to), moi?'envoyé à votre adresse':gcEsc(l.mail), gcSendTxt(l), 'modèle '+gcModelName(l.model)].join(' · ');
+  v.gcSub=cap([l.etab?'valable à '+gcEtabName(l.etab):'',gcSendTxt(l),'modèle '+gcModelName(l.model)].filter(Boolean).join(' · '));   /* panier : le bénéficiaire est déjà en tête du groupe */
   v.items=[{n:GC_TYPES[o.type].l+(l.etab?' · valable à '+gcEtabName(l.etab):''),p:l.amount,pub:l.amount,st:null}];
   const m=l.msg?(l.msg.length>90?l.msg.slice(0,90).trim()+'…':l.msg):'';
   v.extra=moi?'':`${m?'Message : « '+gcEsc(m)+' » · ':'Sans message · '}de la part de ${gcEsc(l.from)}`;
@@ -4852,7 +4857,7 @@ function gcPersoCheck(d){
   if(moi)return e;
   const m=d.mail.trim();
   if(!m)e.mail='Indiquez l’adresse e-mail du bénéficiaire : le bon lui est envoyé à cette adresse.';
-  else if(!mailOk(m))e.mail=`L’adresse « ${gcEsc(m)} » n’est pas valide. Vérifiez qu’elle contient un @ et un nom de domaine, par exemple marc.dumas@exemple.fr.`;
+  else if(!mailOk(m))e.mail=`L’adresse « ${gcEsc(m)} » n’est pas valide. Vérifiez qu’elle contient un @ et un nom de domaine, par exemple prenom.nom@exemple.fr.`;
   if(d.msg.length>GC_MSG_MAX){const x=d.msg.length-GC_MSG_MAX;
     e.msg=`Votre message compte ${d.msg.length} caractères, soit ${x} de trop. Raccourcissez-le à ${GC_MSG_MAX} caractères au maximum.`}
   if(!d.from.trim())e.from='Indiquez de la part de qui vient ce cadeau : votre prénom, ou plusieurs, par exemple « Claire et Paul ».';
@@ -5012,11 +5017,11 @@ function gcSepSheet(){
   const opt=(v,b,s)=>`<button class="radio" data-act="gcSepGo" data-v="${v}"><span class="dot"></span><div><b>${b}</b><small>${s}</small></div></button>`;
   sheet(shead(g?'Ce bon cadeau se commande à part':'Cette réservation se règle à part','Commande séparée')+
    `<p class="sub" style="margin:4px 0 14px">Votre panier contient déjà ${g?gcCartN(C):plural(C.length,'bon cadeau','bons cadeaux')} : <b style="color:var(--ink)">${tt}</b>.
-     Les bons cadeaux et les réservations sont payés dans deux commandes distinctes, chacune avec sa facture. Que souhaitez-vous régler en premier ?</p>
+     Les bons cadeaux et les réservations sont payés dans deux commandes distinctes, chacune avec sa facture. Que souhaitez-vous régler en premier&nbsp;?</p>
     <div class="radios gc-sep">
-     ${g?opt('first','Commander d’abord le bon cadeau','Vos réservations sont gardées de côté et reviennent dans votre panier juste après. Leurs places ne sont plus bloquées entre-temps : vous revérifierez les disponibilités avant de les payer.')
+     ${g?opt('first','Commander d’abord le bon cadeau',(C.length>1?'Vos réservations sont gardées de côté et reviennent dans votre panier juste après. Leurs places':'Votre réservation est gardée de côté et revient dans votre panier juste après. Ses places')+' ne sont plus bloquées entre-temps : vous revérifierez les disponibilités avant de payer.')
         +opt('later','Régler d’abord mes réservations','Votre bon est gardé tel que vous l’avez personnalisé. Il revient dans votre panier juste après le paiement de vos réservations.')
-       :opt('first','Payer d’abord cette réservation','Vos bons cadeaux sont gardés de côté, avec leur personnalisation, et reviennent dans votre panier juste après.')
+       :opt('first','Payer d’abord cette réservation',(C.length>1?'Vos bons cadeaux sont gardés de côté, avec leur personnalisation, et reviennent':'Votre bon cadeau est gardé de côté, avec sa personnalisation, et revient')+' dans votre panier juste après.')
         +opt('later','Payer d’abord mes bons cadeaux','La réservation est gardée de côté et revient dans votre panier juste après. Ses places ne sont pas bloquées entre-temps.')}</div>
     ${g?'<button class="lnk" style="display:block;margin:14px auto 0" data-act="close">Annuler, revenir au bon</button>':''}`,'gc-sepsheet');
 }
@@ -5028,7 +5033,9 @@ ACT.gcSepGo=a=>{
     const back=(GCS.parked||[]).filter(x=>gcIsGift(x)===g), other=S.cart.filter(x=>gcIsGift(x)!==g);
     GCS.parked=other.concat((GCS.parked||[]).filter(x=>gcIsGift(x)!==g));if(!GCS.parked.length)GCS.parked=null;
     S.cart=back;addLine(l);
-    toast(`${g?'Vos réservations sont gardées de côté':'Vos bons cadeaux sont gardés de côté'} : ${g?'elles reviennent':'ils reviennent'} dans votre panier après ce paiement.`);
+    const n=GCS.parked.length, one=n===1;
+    toast(g?(one?'Votre réservation est gardée de côté : elle revient':'Vos réservations sont gardées de côté : elles reviennent')+' dans votre panier après ce paiement.'
+      :(one?'Votre bon cadeau est gardé de côté : il revient':'Vos bons cadeaux sont gardés de côté : ils reviennent')+' dans votre panier après ce paiement.');
   }else{
     l.uid=uid();gcPark([l]);go('panier');
     toast(`${g?'Votre bon cadeau est gardé de côté':'Cette réservation est gardée de côté'} : ${g?'il revient':'elle revient'} dans votre panier juste après ce paiement.`);
