@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadeaux — Resonance Golf Collection</title>
+<title>Coffrets &amp; cartes cadeaux — Resonance Golf Collection</title>
 <link rel="icon" href="../../booking_engine/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1636,6 +1636,61 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
 .gc-decl{margin-top:0}
 @container (max-width:460px){.gc-xpay-b,.gc-inv-f{grid-template-columns:minmax(0,1fr)}.gc-inv-f .gc-f.gc-half{grid-column:1/-1}}
 @media (prefers-reduced-motion:reduce){.gc-mod,.gc-wal{transition:none}}
+/* ═════════ Bons cadeaux · lot B2b ═════════ */
+/* cartes d'offre paysage : reprise des parcours du green fee en V2 côte à côte (.crsrow.h .crs) */
+.crsrow.h.gc-crsrow{gap:20px 18px;margin-bottom:8px}
+.crsrow.h.gc-crsrow .crs-img{display:grid;place-items:center;height:136px;padding:0;color:var(--gold-dark);cursor:pointer;transition:filter .2s}
+.crsrow.h.gc-crsrow .crs-img:hover{filter:brightness(1.05)}
+.crsrow.h.gc-crsrow .crs-img:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.gc-offer .crs-img .gc-cph{font-size:10px}
+.gc-offer .crs-img .gc-cph svg{width:24px;height:24px}
+.gc-offer .crs-holes b{font-size:16px}
+.gc-offer .gc-ceb{display:block;margin-bottom:4px;font-size:10px;letter-spacing:1.6px}
+.crsrow.h.gc-crsrow .crs-t .h1{font-size:19px!important;line-height:1.25}
+.gc-offer .crs-t .h1{font-weight:500}   /* lot B2c : nom de l'offre un peu plus gras (Jost 500), cartes cadeaux seulement */
+.gc-offer .crs-hn{color:var(--g500)}
+.crsrow.h.gc-crsrow .crs > .gc-cbody{align-self:stretch;display:flex;flex-direction:column;margin:0 16px 16px}
+.gc-cbody .gc-csub{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.gc-cbody .gc-inc{margin-top:8px}
+.gc-cbody .gc-where{margin:8px 0 14px;font-size:12.5px}
+.gc-cbody .btn{margin-top:auto}
+/* lot B2c · cartes d'offres v2 */
+.gc-offer .gc-ceb{color:var(--gold-dark);text-transform:uppercase;font-weight:500}
+.gc-offer .crs-t{padding-right:16px}
+.gc-offer .gc-venue{display:block;margin-top:6px;font-size:16px;line-height:1.3;color:var(--gold-dark)}
+.gc-offer .crs-t .gc-where{margin:6px 0 0;font-size:12.5px;color:var(--g500)}
+.gc-offer .crs-t .gc-where svg{color:var(--g500)}
+.crsrow.h.gc-crsrow .crs > .gc-cfoot2{flex-direction:row;align-items:center;justify-content:space-between;gap:12px;margin:0 16px 16px;padding-top:14px;border-top:1px solid var(--line);align-self:end}
+.gc-cprice{font-size:13px;color:var(--g500);white-space:nowrap}
+.gc-cprice b{font-size:22px;font-weight:400;color:var(--ink);letter-spacing:-.2px}
+.gc-cprice small{font-size:12px;color:var(--g500)}
+.gc-go{flex:none;display:grid;place-items:center;width:40px;height:40px;border:1px solid var(--line-2);border-radius:4px;background:none;color:var(--ink);cursor:pointer;transition:border-color .2s,color .2s}
+.gc-go:hover{border-color:var(--gold);color:var(--gold-dark)}
+.gc-go:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.gc-go{transition:none}}
+@container (max-width:900px){.crsrow.h.gc-crsrow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (max-width:560px){
+  .crsrow.h.gc-crsrow{display:grid;grid-template-columns:minmax(0,1fr);overflow:visible;margin-right:0;padding-right:0;gap:14px}
+  .crsrow.h.gc-crsrow .crs{display:grid}
+  .crsrow.h.gc-crsrow .crs-img{height:150px}
+}
+/* filtres allégés : listes compactes à la largeur de leur contenu */
+@container (min-width:641px){
+  .gc-fbar{display:flex;flex-wrap:wrap;gap:8px}
+  .gc-sel{width:auto;max-width:240px;padding:7px 12px;font-size:13px;border-width:1px;border-radius:999px}
+  .gc-sel[data-gcf="etab"]{max-width:190px}
+}
+.sheet.gc-fsheet .gc-sg-etab .chips{gap:6px}
+.sheet.gc-fsheet .gc-sg-etab .chip{padding:6px 11px;font-size:12px}
+/* fiche carte cadeau : où l'utiliser */
+.gc-valid{display:flex;gap:8px;align-items:flex-start;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--gold-soft);font-size:14px;line-height:1.4;color:var(--ink)}
+.gc-valid svg{flex:none;margin-top:2px;color:var(--gold-dark)}
+.gc-valid small{display:block;margin-top:2px;font-size:12.5px;color:var(--g600)}
+/* paiement : champ carte cadeau */
+.gc-gcard .gc-gc-help{margin:0 0 8px;font-size:12.5px;line-height:1.45}
+.gc-gcard .gc-gc-lim{margin-top:8px;font-size:12.5px;line-height:1.45}
+.gc-gcard .gc-gc-due{margin-top:8px}
+@media (prefers-reduced-motion:reduce){.crsrow.h.gc-crsrow .crs-img{transition:none}}
 </style>
 </head>
 <body>
@@ -1674,9 +1729,9 @@ body:has(.sheet-bg.on) .gc-ctl-btn{display:none}   /* la pastille de démo ne ma
   <section class="screen" id="sc-comp" data-title="Compétitions · 1 — Calendrier"><div class="pad" id="v-comp"></div></section>
   <section class="screen" id="sc-comp-inscr" data-title="Compétitions · 2 — Inscription & éligibilité"><div class="pad" id="v-comp-inscr"></div></section>
   <section class="screen" id="sc-cours" data-title="Cours · 1 — Catalogue (individuel, collectif, stages, carnets)"><div class="pad" id="v-cours"></div></section>
-  <section class="screen" id="sc-cadeaux" data-title="Cadeaux — cartes cadeaux, expériences et coffrets"><div class="pad" id="v-cadeaux"></div></section>
-  <section class="screen" id="sc-cadeau" data-title="Cadeaux — fiche offre"><div class="pad" id="v-cadeau"></div></section>
-  <section class="screen" id="sc-gcperso" data-title="Cadeaux — personnalisation du bon"><div class="pad" id="v-gcperso"></div></section>
+  <section class="screen" id="sc-cadeaux" data-title="Coffrets &amp; cartes cadeaux"><div class="pad" id="v-cadeaux"></div></section>
+  <section class="screen" id="sc-cadeau" data-title="Coffrets &amp; cartes cadeaux — fiche offre"><div class="pad" id="v-cadeau"></div></section>
+  <section class="screen" id="sc-gcperso" data-title="Coffrets &amp; cartes cadeaux — personnalisation du bon"><div class="pad" id="v-gcperso"></div></section>
   <section class="screen" id="sc-pass" data-title="Cartes &amp; Pass — cartes réseau, carnets et voiturettes"><div class="pad" id="v-pass"></div></section>
   <section class="screen" id="sc-cours-ind" data-title="Cours · 2 — Cours individuel : pro & créneau"><div class="pad" id="v-cours-ind"></div></section>
   <section class="screen" id="sc-cross" data-title="Ajouté au panier · suggestions"><div class="pad" id="v-cross"></div></section>
@@ -2446,7 +2501,7 @@ ACT.myWaits=()=>{closeSheet();S.space='resa';go('espace')};
 
 /* ═════════ Navigation du moteur : les 4 portes de février 2027 ═════════ */
 /* retour du 28/09 : un membre ne se reconnaissait pas dans « Green-fee » */
-const ENAV=[['gf','Green-fee / Départ membres'],['pass','Cartes & Pass'],['cours','Cours & stages'],['comp','Compétitions'],['cadeaux','Cadeaux']];
+const ENAV=[['gf','Green-fee / Départ membres'],['pass','Cartes & Pass'],['cours','Cours & stages'],['comp','Compétitions'],['cadeaux','Coffrets & cartes cadeaux']];   /* bons cadeaux · lot B2b : nom de la rubrique (retour du 29/10) */
 /* icônes des 4 rubriques (retour test utilisateur du 24/09 : les onglets passaient inaperçus) */
 const ENAVIC={
   gf:'<path d="M7 21V3.5l10 4-10 4"/><path d="M4 21h9"/>',
@@ -2577,23 +2632,24 @@ const GC_ETABS={};
 GC_SITES.forEach(s=>GC_ETABS[s.code]={n:s.n,short:s.short});
 Object.assign(GC_ETABS,{MANOIR:{n:'Hôtel Le Manoir',short:'Hôtel Le Manoir, Le Touquet'},BEGUDE:{n:'Le Mas de la Bégude',short:'Le Mas de la Bégude'},
   SPA:{n:'Spa La Bégude',short:'Spa La Bégude, Opio Valbonne'},VICTOIRE:{n:'Famille Victoire',short:'Famille Victoire'}});
-const GC_TYPES={carte:{l:'Carte cadeau',s:'Cartes cadeaux',d:'Un montant à utiliser librement'},
-  experience:{l:'Expérience',s:'Expériences',d:'Une prestation précise, dans un lieu'},
-  coffret:{l:'Coffret',s:'Coffrets',d:'Plusieurs moments réunis en un cadeau'}};
+/* lot B2b (retours du 29/10) : Expérience et Coffret fusionnent en un seul type « Coffret ».
+   Deux types restent ; l'ordre des clés est l'ordre des sections de l'écran. */
+const GC_TYPES={coffret:{l:'Coffret',s:'Coffrets',d:'Une ou plusieurs prestations, à utiliser en une seule fois'},
+  carte:{l:'Carte cadeau',s:'Cartes cadeaux',d:'Un montant, utilisable en plusieurs fois'}};
 const GC_OFFERS=[
   {id:'carte-cadeau',type:'carte',title:'Carte cadeau Resonance',amounts:[50,100,150,200],free:{min:20,max:1000},price:null,img:IMG.hero,
    sub:'Le choix laissé à la personne qui la reçoit : green fee, cours, table ou soin, en une ou plusieurs fois.'},
-  {id:'green-fee-la-mer',type:'experience',title:'Green fee 18 trous, La Mer',price:120,img:IMG.mer2,
+  {id:'green-fee-la-mer',type:'coffret',title:'Green fee 18 trous, La Mer',price:120,img:IMG.mer2,
    sub:'Le links du Touquet, au bord de la Manche.',lines:[{p:'Green fee 18 trous · La Mer',etab:'TQT',q:1}]},
-  {id:'green-fee-duo-hardelot',type:'experience',title:'Green fee pour deux, Les Pins',price:190,img:CRSIMG.pins,
+  {id:'green-fee-duo-hardelot',type:'coffret',title:'Green fee pour deux, Les Pins',price:190,img:CRSIMG.pins,
    sub:'Un parcours à jouer à deux, dans la forêt d\'Hardelot.',lines:[{p:'Green fee 18 trous · Les Pins',etab:'GHA',q:2}]},
-  {id:'initiation-golf',type:'experience',title:'Initiation au golf, 2 h avec un pro',price:65,img:IMG.acad,
+  {id:'initiation-golf',type:'coffret',title:'Initiation au golf, 2 h avec un pro',price:65,img:IMG.acad,
    sub:'Deux heures pour découvrir le swing, le putting et le parcours, matériel prêté.',lines:[{p:'Cours initiation 2 h',etab:'GGB',q:1}]},
-  {id:'soin-signature',type:'experience',title:'Soin signature 60 min',price:95,img:null,
+  {id:'soin-signature',type:'coffret',title:'Soin signature 60 min',price:95,img:null,
    sub:'Une heure de soin du visage et du corps.',lines:[{p:'Soin signature 60 min',etab:'SPA',q:1}]},
-  {id:'menu-victoire',type:'experience',title:'Menu dégustation pour deux',price:140,img:null,
+  {id:'menu-victoire',type:'coffret',title:'Menu dégustation pour deux',price:140,img:null,
    sub:'Le menu du moment, pour deux personnes.',lines:[{p:'Menu dégustation × 2',etab:'VICTOIRE',q:1}]},
-  {id:'nuit-manoir',type:'experience',title:'Une nuit au Manoir, petit-déjeuner inclus',price:260,img:IMG.hero,
+  {id:'nuit-manoir',type:'coffret',title:'Une nuit au Manoir, petit-déjeuner inclus',price:260,img:IMG.hero,
    sub:'Une chambre double au cœur du resort, à deux pas des parcours.',lines:[{p:'Nuit chambre double + petit-déjeuner',etab:'MANOIR',q:1}]},
   {id:'golf-dejeuner',type:'coffret',title:'Golf & déjeuner',price:160,img:IMG.links,
    sub:'Un parcours sur La Mer, puis la table du club-house.',lines:[{p:'Green fee 18 trous · La Mer',etab:'TQT',q:1},{p:'Déjeuner au club-house',etab:'TQT',q:1}]},
@@ -2606,6 +2662,14 @@ const GC_OFFERS=[
   {id:'escapade-opio',type:'coffret',title:'Escapade golf et spa',price:240,img:IMG.decouverte,
    sub:'Un parcours à Opio Valbonne et un soin au spa du domaine.',lines:[{p:'Green fee 18 trous · Opio-Valbonne',etab:'OPV',q:1},{p:'Soin signature 60 min',etab:'SPA',q:1}]}];
 const gcOffer=id=>GC_OFFERS.find(o=>o.id===id);
+/* lot B2c (décision du 30/10) : un coffret s'utilise en une seule fois, même à plusieurs prestations ;
+   une prestation non utilisée ce jour-là est perdue. « Le même séjour » si le coffret comprend une nuit. */
+const GC_ONCE='À utiliser en une seule fois';
+const gcStay=o=>!!o.lines&&o.lines.some(l=>/^Nuit/.test(l.p));
+function gcOnceCond(o){
+  const many=new Set(o.lines.map(l=>l.etab)).size>1;
+  return `Le coffret s’utilise en une seule fois : toutes les prestations ${gcStay(o)?'pendant le même séjour':'le même jour'}, dans ${many?'les établissements indiqués':'l’établissement indiqué'}.`;
+}
 /* bons remarquables du back-office (codes fixes) : serviront à la boucle du lot B3 */
 const GC_TEST_BONS=[
   {code:'RGC-7KQ2-M9XA',offer:'carte-cadeau',st:'Consommé partiellement',solde:60,init:150},
@@ -2621,22 +2685,22 @@ const GCSW_DEF={
   A:{q:'Carte cadeau mono ou multi-établissements',o:[['tous','Tous les établissements'],['un','Un établissement']]},
   B:{q:'Apple Pay et Google Pay',o:[['cb','CB seule'],['wallets','CB + wallets']]},
   C:{q:'Modèles visuels de bon',o:[['2','2'],['4','4']]},
-  D:{q:'Envoi programmé au bénéficiaire',o:[['immediat','Immédiat seul'],['date','Immédiat ou date choisie']]},
+  D:{q:'Envoi programmé au bénéficiaire (tranché le 29/10 : date choisie proposée)',o:[['immediat','Immédiat seul'],['date','Immédiat ou date choisie']]},
   H:{q:'Panier mixte (green fee + cadeau)',o:[['mixte','Autorisé'],['separe','Commande cadeau séparée']]}};
-const GCSW_INIT={A:'tous',B:'cb',C:'2',D:'immediat',H:'mixte'};
+const GCSW_INIT={A:'tous',B:'cb',C:'2',D:'date',H:'mixte'};   /* lot B2d : D tranché le 29/10, le choix de la date est affiché par défaut */
 const GCSW=Object.assign({},GCSW_INIT);
 const gcSwLabel=k=>GCSW_DEF[k].o.find(x=>x[0]===GCSW[k])[1];
 
 const GC_PIN='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>';
 function gcWhere(o){
   if(o.type==='carte')return GCSW.A==='tous'
-    ?'Valable dans les 12 golfs de la Collection, leurs hôtels, restaurants et spas'
+    ?`Valable dans les ${GC_SITES.length} golfs de la Collection, leurs hôtels, restaurants et spas`
     :'Valable dans l\'établissement choisi au moment de l\'achat';
   const s=[...new Set(o.lines.map(l=>GC_ETABS[l.etab].short))];
   return s.join(' · ');
 }
 function gcIncluded(o){
-  if(!o.lines||o.type!=='coffret')return '';
+  if(!o.lines||o.type!=='coffret'||o.lines.length<2)return '';   /* lot B2b : un coffret d'une seule prestation n'en répète pas le titre */
   return `<ul class="gc-inc">${o.lines.map(l=>`<li>${l.q>1?l.q+' × ':''}${l.p.replace(/ · .*$/,'')}, ${GC_ETABS[l.etab].short}</li>`).join('')}</ul>`;
 }
 /* R.cadeaux, ACT.gcOffer : remplacés au lot B1 (écran de découverte et fiche offre) */
@@ -2648,12 +2712,12 @@ function gcCtlHtml(){
     ${Object.entries(GCSW_DEF).map(([k,d])=>`<div class="gc-sw" data-sw="${k}"><span><b>${k}</b> · ${d.q}</span><div class="gc-seg">${d.o.map(([v,l])=>`<button class="${GCSW[k]===v?'on':''}" data-act="gcSw" data-k="${k}" data-v="${v}" aria-pressed="${GCSW[k]===v}">${l}</button>`).join('')}</div></div>`).join('')}
     <div class="gc-sw"><span><b>Langue</b> · FR / EN</span><ul><li>Le Booking Engine copié ne gère pas l'anglais (sélecteur illustratif). Les textes EN sont saisis dans le back-office ; leur affichage reste à maquetter.</li></ul></div>
     <hr><h4>Sans commutateur</h4>
-    <ul><li>Rail de paiement porté par Rosie, entité encaisseuse unique avec refacturation interne</li><li>Paiement ANCV</li><li>Cagnotte (Phase 2)</li><li>Cible entreprises / CSE (Phase 2)</li><li>Nombre de golfs : 11 dans le doc client, 12 dans le Booking Engine</li><li>Validité par défaut : ${GC_VALIDITY} mois (hypothèse E, réglée dans le back-office)</li></ul>
-    <hr><h4>Libellés proposés</h4><ul><li>Carte cadeau · Expérience · Coffret (doc client : « bon prestation », « package combiné »)</li><li>Onglet « Cadeaux » ; la tuile du site garde « Chèques cadeaux »</li></ul>
+    <ul><li>Rail de paiement porté par Rosie, entité encaisseuse unique avec refacturation interne</li><li>Paiement ANCV</li><li>Cagnotte (Phase 2)</li><li>Cible entreprises / CSE (Phase 2)</li><li>Nombre de golfs : 11 dans le doc client, 12 dans le Booking Engine</li><li>Validité par défaut : ${GC_VALIDITY} mois à partir de la réception du bon (hypothèse E, réglée dans le back-office)</li></ul>
+    <hr><h4>Libellés proposés</h4><ul><li>Deux types depuis le 29/10 : Carte cadeau (un montant, plusieurs utilisations) · Coffret (une ou plusieurs prestations, à utiliser en une seule fois). Expérience a fusionné dans Coffret (doc client : « bon prestation », « package combiné »).</li><li>Rubrique « Coffrets &amp; cartes cadeaux » (retour du 29/10) ; la tuile du site garde « Chèques cadeaux » ; « bon cadeau » reste le mot générique du panier et du paiement.</li></ul>
     <hr><h4>Données de démo partagées avec le BO</h4>
     <ul>${GC_TEST_BONS.map(b=>`<li><code>${b.code}</code> · ${gcOffer(b.offer).title} · ${b.st}${b.solde!=null?', solde '+eur(b.solde):''}</li>`).join('')}</ul>
     <ul>${GC_PROMOS.map(([c,d])=>`<li><code>${c}</code> ${d}</li>`).join('')}</ul>
-    ${gcCtlB1()}${gcCtlB2()}
+    ${gcCtlB1()}${gcCtlB2()}${gcCtlB2b()/* bons cadeaux · lot B2b */}
     <p style="margin:12px 0 0;color:var(--g500)">Effet visible : A (périmètre de la carte cadeau sur la liste et sur la fiche, choix de l'établissement à l'achat) · B (Apple Pay et Google Pay au paiement d'un panier qui contient un bon) · C (modèles proposés à la personnalisation) · D (date d'envoi au choix) · H (commande cadeau séparée : choix expliqué à l'ajout, partie mise de côté dans le panier).</p>
     <button class="btn sm sec" style="margin-top:14px" data-act="gcReset">Réinitialiser</button>`;
 }
@@ -2727,24 +2791,52 @@ const gcN=n=>n?`${n} idée${n>1?'s':''}`:'aucune idée';
 const GC_X='<svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"/></svg>';
 const GC_GIFT='<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.6-5-1.5S10 8 12 8Zm0 0c1.5-3 5-3.6 5-1.5S14 8 12 8Z"/></svg>';
 
-/* carte d'offre verticale, visuel en tête (retour d'Alexie du 29/10, référence SecretBox) */
+/* lot B2b (retour du 29/10) : carte paysage, trois par ligne en desktop, même traitement que les
+   parcours du green fee en V2 « côte à côte » (.crsrow.h .crs : photo en bandeau, titre, prix à droite).
+   Une par ligne en mobile. Remplace la carte verticale du B1 (.gc-card, CSS laissé sans usage). */
+/* lot B2c · cartes d'offres v2 (30/10, référence concurrente) : photo, surtitre, nom, établissement
+   en accent, lieu en gris, filet, prix à gauche et bouton flèche à droite. Accroche, « Valable 12 mois »,
+   liste des prestations et bouton « Offrir » retirés de la carte (la fiche les donne). */
+const GC_HOME={MANOIR:'TQT',SPA:'OPV',BEGUDE:'OPV'};   /* hypothèse : site de rattachement des établissements hors golf ; Famille Victoire sans site */
+const GC_ARROW='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg>';   /* tracé de ti-arrow-right (Tabler), en SVG inline */
+function gcVenue(o){   /* ligne 4 (accent) et ligne 5 (gris), sans doublon */
+  if(o.type==='carte')return GCSW.A==='tous'
+    ?{v:`Les ${GC_SITES.length} golfs de la Collection`,loc:'Et leurs hôtels, restaurants et spas'}
+    :{v:'Un établissement au choix',loc:'Choisi au moment de l’achat'};
+  const ks=[...new Set(o.lines.map(l=>l.etab))];
+  const v=[...new Set(ks.map(k=>{const s=GC_ETABS[k]&&GC_SITES.some(x=>x.code===k)?k:GC_HOME[k];return s?GC_ETABS[s].short:GC_ETABS[k].n}))];
+  const loc=ks.map(k=>GC_ETABS[k].n).filter(n=>!v.includes(n));
+  return {v:v.join(' · '),loc:loc.join(' · ')};
+}
+function gcPax(o){   /* « pour 2 » seulement si toutes les prestations ont la même quantité, 2 ou plus (hypothèse) */
+  if(!o.lines)return 0;const q=o.lines.map(l=>l.q);return q.every(x=>x===q[0])&&q[0]>1?q[0]:0;
+}
+function gcCardPrice(o){   /* coffret : prix fixe ; carte, ou coffret à plusieurs prix vus ensemble : « À partir de » + minimum */
+  if(o.type==='carte')return {from:true,p:Math.min(...o.amounts)};
+  const ps=(o.prices||[]).filter(x=>!GCS.f.etab||x.k===GCS.f.etab).map(x=>x.price);
+  if(ps.length>1&&Math.min(...ps)!==Math.max(...ps))return {from:true,p:Math.min(...ps),pax:gcPax(o)};
+  return {from:false,p:ps.length?ps[0]:o.price,pax:gcPax(o)};
+}
 function gcCard(o){
-  const v=(GC_GAL[o.id]||[o.img])[0], url=v&&gcIsUrl(v);
+  const v=gcVisuals(o)[0], url=v&&gcIsUrl(v), n=(o.lines||[]).length;
   const eb=o.type==='carte'?GC_TYPES.carte.l:GC_TYPES[o.type].l+' · '+o.univers.map(u=>GC_UNIVERS.find(x=>x[0]===u)[1]).join(', ');
-  return `<article class="gc-card" id="gc-${o.id}" data-offer="${o.id}">
-    <button class="gc-cimg" data-act="gcOffer" data-id="${o.id}" aria-label="Voir ${gcEsc(o.title)}"${url?` style="${bg(v)}"`:''}>
-      ${url?'':`<span class="gc-cph">${GC_GIFT}${v?'Visuel à venir · '+v:''}</span>`}${gcFeatured(o)?`<em class="gc-cbadge">À la une</em>`:''}</button>
-    <div class="gc-cb">
-      <span class="gc-ceb">${eb}</span>
-      <h3 class="gc-ct"><button class="gc-tt" data-act="gcOffer" data-id="${o.id}">${o.title}</button></h3>
-      <p class="gc-csub">${o.sub}</p>
-      ${gcIncluded(o)}
-      <div class="gc-where">${GC_PIN}<span>${gcWhere(o)}</span></div>
-      <div class="gc-cfoot"><div class="gc-cp">${o.price?`<b>${eur(o.price)}</b><small>le bon · valable ${GC_VALIDITY} mois</small>`:`<span>À partir de</span><b>${eur(o.amounts[0])}</b><small>ou montant libre · valable ${GC_VALIDITY} mois</small>`}</div>
-        <button class="btn sm" data-act="gcOffer" data-id="${o.id}">Offrir</button></div>
+  const pill=o.type==='coffret'&&n>1?`<b>${n}</b>prestations`:'';   /* lot B2c : pastille seulement à partir de 2 prestations ; ni « 1 prestation » ni « Plusieurs utilisations » */
+  const W=gcVenue(o), P=gcCardPrice(o);
+  return `<article class="card crs gc-offer" id="gc-${o.id}" data-offer="${o.id}">
+    <div class="crs-h">
+      <button class="crs-img" data-act="gcOffer" data-id="${o.id}" aria-label="Voir ${gcEsc(o.title)}"${url?` style="${bg(v)}"`:''}>
+        ${url?'':`<span class="gc-cph">${GC_GIFT}${v?'Visuel à venir · '+v:''}</span>`}${pill?`<span class="crs-holes">${pill}</span>`:''}${gcFeatured(o)?`<span class="crs-itag"><span class="tag">À la une</span></span>`:''}</button>
+      <div class="crs-t"><span class="gc-ceb">${eb}</span>
+        <b class="h1"><button class="gc-tt" data-act="gcOffer" data-id="${o.id}">${o.title}</button></b>
+        <span class="gc-venue" data-role="venue">${W.v}</span>
+        ${W.loc?`<div class="gc-where">${GC_PIN}<span>${W.loc}</span></div>`:''}</div>
+    </div>
+    <div class="gc-cbody gc-cfoot2">
+      <div class="gc-cprice" data-role="card-price">${P.from?'<small>À partir de</small> ':''}<b>${eur(P.p)}</b>${P.pax?` <small>pour ${P.pax}</small>`:''}</div>
+      <button class="gc-go" data-act="gcOffer" data-id="${o.id}" aria-label="Voir l’offre ${gcEsc(o.title)}">${GC_ARROW}</button>
     </div></article>`;
 }
-const gcGrid=list=>`<div class="gc-grid">${list.map(gcCard).join('')}</div>`;
+const gcGrid=list=>`<div class="crsrow h gc-crsrow">${list.map(gcCard).join('')}</div>`;
 function gcSelect(k){
   const [l,all,opts]=GC_FK[k];
   return `<select class="inp gc-sel${GCS.f[k]?' on':''}" data-gcf="${k}" aria-label="${l}"><option value="">${all}</option>
@@ -2757,7 +2849,7 @@ function gcEmpty(){
   const placeTxt=f.etab?(GCSW.A==='tous'?`Elle est valable à ${gcPlaceName(f.etab)}, comme dans tous les établissements de la Collection.`
     :`Elle peut être rendue valable à ${gcPlaceName(f.etab)} au moment de l'achat.`):'Elle laisse le choix du moment et du lieu.';
   return `<div class="card gc-empty" data-role="empty"><span class="gc-ei">${GC_GIFT}</span>
-    <div class="h2">Aucune expérience ni aucun coffret pour ces critères</div>
+    <div class="h2">Aucun coffret pour ces critères</div>
     <p class="mut" style="margin-top:4px">Votre sélection : ${what}. ${rm.length?'Retirez un critère pour élargir la recherche.':'Effacez les filtres pour revoir tous les cadeaux.'}</p>
     ${rm.length?`<div class="chips">${rm.map(([k,n])=>`<button class="chip" data-act="gcF" data-k="${k}" data-v="${f[k]}">Retirer « ${gcFLabel(k,f[k])} » · ${gcN(n)}</button>`).join('')}</div>`:''}
     <button class="lnk" data-act="gcClear">Effacer tous les filtres</button></div>
@@ -2778,10 +2870,10 @@ function gcCountTxt(){
 R.cadeaux=()=>{
   const f=GCS.f, act=gcActive(), season=GC_OFFERS.filter(gcFeatured);   /* 29/10 : entrées en onglets retirées (Alexie : filtres redondants), seules les listes restent */
   $('#v-cadeaux').innerHTML=`
-   <div class="band gc-season" style="${bg(IMG.hero)}"><div>${season.length?'<span class="eyebrow">À la une</span>':''}<h1 class="h1">Offrir <b>un moment</b> dans la Collection</h1>
-     <p class="sub" style="margin-top:6px">Cartes cadeaux, expériences et coffrets, envoyés par e-mail avec un bon à imprimer. Valables ${GC_VALIDITY} mois.</p>
+   <div class="band gc-season" style="${bg(IMG.hero)}"><div><span class="eyebrow">Coffrets &amp; cartes cadeaux${season.length?' · À la une':''}</span><h1 class="h1">Offrir <b>un moment</b> dans la Collection</h1>
+     <p class="sub" style="margin-top:6px">Coffrets et cartes cadeaux, envoyés par e-mail avec un bon à imprimer. Valables ${GC_VALIDITY} mois à partir de leur réception.</p>
      ${season.length?`<div class="gc-picks">${season.map(o=>`<button data-act="gcOffer" data-id="${o.id}">${o.title}<small>${o.price?eur(o.price):'dès '+eur(o.amounts[0])}</small></button>`).join('')}</div>`:''}</div></div>
-   <section id="gc-res" aria-label="Cadeaux">
+   <section id="gc-res" aria-label="Coffrets et cartes cadeaux">
      <div class="gc-tools">
        <div class="gc-fbar" role="group" aria-label="Filtrer les cadeaux">${Object.keys(GC_FK).map(gcSelect).join('')}</div>
        <div class="gc-tsum"><span class="gc-count" aria-live="polite">${gcCountTxt()}</span>${act.length?'<button class="lnk" data-act="gcClear">Effacer</button>':''}</div>
@@ -2826,17 +2918,17 @@ function gcFaq(o){
   const q=[['Comment utiliser ce bon ?','Présentez le code ou le QR du bon à l’accueil de l’établissement, ou saisissez le code lors d’une réservation en ligne.'],
     ['Comment le bon est-il remis ?','Par e-mail, à la personne de votre choix ou à vous-même, avec un bon au format PDF à imprimer ou à présenter sur téléphone. Aucun envoi postal.']];
   if(o.type==='carte')q.push(['Peut-on l’utiliser en plusieurs fois ?','Oui. Le montant utilisé est déduit et le solde reste disponible jusqu’à la date de fin de validité.']);
-  if(o.type==='coffret')q.push(['Faut-il tout utiliser le même jour ?','Non. Chaque prestation se réserve et s’utilise séparément, dans son établissement, pendant la durée de validité.']);
+  if(o.type==='coffret'&&o.lines.length>1)q.push(['Faut-il tout utiliser le même jour ?','Oui. Le coffret s’utilise en une seule fois : toutes les prestations sont servies lors de la même venue (le même jour, ou pendant le séjour s’il comprend une nuit). Une prestation non utilisée ce jour-là est perdue.']);   /* lot B2c */
   q.push(['Puis-je offrir plusieurs bons dans la même commande ?','Oui. Ajoutez autant de bons que nécessaire, chacun avec son bénéficiaire, et réglez-les en une seule fois. Aucun compte n’est obligatoire.']);
   return `<div class="gc-faq">${q.map(([a,b],i)=>`<details${i?'':' open'}><summary>${a}</summary><p>${b}</p></details>`).join('')}</div>`;
 }
 function gcCond(o){
-  return `Valable ${GC_VALIDITY} mois à compter de l’achat.`+(o.type==='carte'?' Utilisable en plusieurs fois, dans la limite du solde.':'')
-    +(o.type==='coffret'?' Chaque prestation se consomme dans son établissement.':'')+' Sur réservation, selon les disponibilités de l’établissement.';
+  return `${GC_VALID_TXT}.`+(o.type==='carte'?' Utilisable en plusieurs fois, dans la limite du solde.':'')
+    +(o.type==='coffret'?(o.lines.length>1?' '+gcOnceCond(o):' Utilisable en une seule fois.'):'')+' Sur réservation, selon les disponibilités de l’établissement.';   /* lot B2c */
 }
 R.cadeau=()=>{
   const o=gcOffer(GCS.offer);if(!o){go('cadeaux');return}
-  const g=GC_GAL[o.id]||[o.img], i=Math.min(GCS.img,g.length-1), cur=g[i];
+  const g=gcVisuals(o), i=Math.min(GCS.img,g.length-1), cur=g[i];   /* lot B2b : une seule photo pour la carte cadeau */
   const ph=t=>`<span>${GC_GIFT}${t?'Visuel à venir · '+t:''}</span>`;
   const amount=o.type==='carte'?null:o.price;
   const incl=o.type==='carte'
@@ -2844,11 +2936,11 @@ R.cadeau=()=>{
     :`<ul class="gc-list">${o.lines.map(l=>`<li><b>${l.q>1?l.q+' × ':''}${l.p}</b><span>${GC_PIN}${l.pdv} · ${gcEtabName(l.etab)}</span></li>`).join('')}</ul>`;
   const where=o.type==='carte'
     ?(GCSW.A==='tous'
-      ?`<p class="gc-txt">Dans les 12 golfs de la Collection, leurs hôtels, restaurants et spas.</p><ul class="gc-places">${GC_SITES.map(s=>`<li>${s.n}</li>`).join('')}${['MANOIR','BEGUDE','SPA','VICTOIRE'].map(k=>`<li>${GC_ETABS[k].short}</li>`).join('')}</ul>`
+      ?`<p class="gc-txt">Dans les ${GC_SITES.length} golfs de la Collection, leurs hôtels, restaurants et spas.</p><ul class="gc-places">${GC_SITES.map(s=>`<li>${s.n}</li>`).join('')}${['MANOIR','BEGUDE','SPA','VICTOIRE'].map(k=>`<li>${GC_ETABS[k].short}</li>`).join('')}</ul>`
       :`<p class="gc-txt">Dans un seul établissement, choisi au moment de l’achat${GCS.cardEtab?` : <b>${gcEtabName(GCS.cardEtab)}</b>`:'. Choisissez-le avant d’offrir la carte.'}</p>`)
     :`<ul class="gc-places">${[...new Set(o.lines.map(l=>l.etab))].map(k=>`<li>${gcEtabName(k)}</li>`).join('')}</ul>`;
   $('#v-cadeau').innerHTML=`
-   <nav class="gc-crumb" aria-label="Fil d'Ariane"><button data-go="cadeaux">Cadeaux</button><span aria-hidden="true">›</span><span>${GC_TYPES[o.type].s}</span><span aria-hidden="true">›</span><span aria-current="page">${o.title}</span></nav>
+   <nav class="gc-crumb" aria-label="Fil d'Ariane"><button data-go="cadeaux">Coffrets &amp; cartes cadeaux</button><span aria-hidden="true">›</span><span>${GC_TYPES[o.type].s}</span><span aria-hidden="true">›</span><span aria-current="page">${o.title}</span></nav>
    <div class="gc-fiche" data-fiche="${o.id}">
     <div class="gc-gal">
       <div class="gc-gal-main" role="img" aria-label="${gcEsc(o.title)}, visuel ${i+1} sur ${g.length}"${gcIsUrl(cur)?` style="${bg(cur)}"`:''}>${gcIsUrl(cur)?'':ph(cur)}</div>
@@ -2858,15 +2950,16 @@ R.cadeau=()=>{
       <div class="row wrap" style="gap:6px"><span class="tag">${GC_TYPES[o.type].l}</span><span class="tag">Valable ${GC_VALIDITY} mois</span>${gcFeatured(o)?`<span class="tag ol">À la une</span>`:''}</div>
       <h1 class="h1 gc-ft">${o.title}</h1>
       <p class="sub">${o.sub}</p>
+      ${gcValidHtml(o)/* lot B2b : où utiliser la carte */}
       ${o.type==='carte'?gcAmountHtml(o)+(GCSW.A==='un'?gcEtabPick():''):`<div class="price gc-fp">${eur(amount)}<small>le bon</small></div>`}
       <div class="gc-cta"><button class="btn full" data-act="gcBuy" data-v="offrir">Offrir</button><button class="btn full sec" data-act="gcBuy" data-v="moi">Pour moi</button></div>
-      <ul class="gc-reass"><li>Envoyé par e-mail, avec un bon PDF à imprimer</li><li>Valable ${GC_VALIDITY} mois à compter de l’achat</li><li>Sans création de compte</li></ul>
+      <ul class="gc-reass">${o.type==='coffret'?`<li data-role="once">${GC_ONCE}</li>`:''}<li>Envoyé par e-mail, avec un bon PDF à imprimer</li><li data-role="valid-from">${GC_VALID_TXT}</li><li>Sans création de compte</li></ul>
     </aside>
     <div class="gc-info">
       <h2 class="gc-h">Ce qui est inclus</h2>${incl}
-      ${o.type==='coffret'?'<p class="mut" style="margin-top:10px">Chaque prestation s’utilise dans son lieu, le même jour ou à des dates différentes.</p>':''}
+      ${o.type==='coffret'&&o.lines.length>1?`<p class="mut" style="margin-top:10px" data-role="once">${GC_ONCE} : toutes les prestations ${gcStay(o)?'pendant le même séjour':'le même jour'}. Une prestation non utilisée est perdue.</p>`:''}
       <h2 class="gc-h">Où l’utiliser</h2><div data-role="where">${where}</div>
-      <h2 class="gc-h">Validité</h2><p class="gc-txt">${GC_VALIDITY} mois à compter de la date d’achat. La date de fin figure sur le bon.</p>
+      <h2 class="gc-h">Validité</h2><p class="gc-txt" data-role="validite">${GC_VALIDITY} mois à partir de la réception du bon : dès le paiement, ou à la date d’envoi que vous choisissez. La date de fin figure sur le bon.</p>
       <h2 class="gc-h">Conditions</h2><p class="gc-txt">${gcCond(o)}</p>
       <h2 class="gc-h">Questions fréquentes</h2>${gcFaq(o)}
       <p class="note">Conditions et première question reprises du back-office (lot A1) ; les autres questions sont rédigées pour la démonstration.</p>
@@ -2898,7 +2991,7 @@ ACT.gcBuy=a=>{
 const gcSheetOpen=()=>$('#sheetBg').classList.contains('on')&&$('#sheet').classList.contains('gc-fsheet');
 function gcSheetHtml(){
   const n=gcIdeas(GCS.f).length;
-  const grp=k=>`<div class="gc-sg"><span class="gc-sgl">${GC_FK[k][0]}</span><div class="chips">${GC_FK[k][2]().map(([v,l])=>`<button class="chip ${GCS.f[k]===v?'on':''}" data-act="gcF" data-k="${k}" data-v="${v}" aria-pressed="${GCS.f[k]===v}">${l}</button>`).join('')}</div></div>`;
+  const grp=k=>`<div class="gc-sg gc-sg-${k}"><span class="gc-sgl">${GC_FK[k][0]}</span><div class="chips">${GC_FK[k][2]().map(([v,l])=>`<button class="chip ${GCS.f[k]===v?'on':''}" data-act="gcF" data-k="${k}" data-v="${v}" aria-pressed="${GCS.f[k]===v}">${l}</button>`).join('')}</div></div>`;
   return shead('Filtrer les cadeaux')+Object.keys(GC_FK).map(grp).join('')
     +`<div class="gc-sfoot"><button class="btn sec" data-act="gcClear">Effacer</button><button class="btn" data-act="gcSheetDone">${gcActive().length?'Voir '+gcN(n):'Voir tous les cadeaux'}</button></div>`;
 }
@@ -4510,7 +4603,7 @@ const canLink=()=>S.cart.some(l=>(l.kind==='gf'&&l.players.length>1)||(l.kind===
 function payRest(T,u){
   const co=S.co;let left=T.due;
   const w=co.pay==='all'&&co.wallet&&u&&u.wallet?Math.min(u.wallet,left):0;left-=w;
-  const gc=co.pay==='all'&&co.gift?Math.min(co.gift.amt,left):0;left-=gc;
+  const gc=co.pay==='all'&&co.gift?Math.max(0,Math.min(co.gift.amt,left,gcCardCap(T))):0;left-=gc;   /* bons cadeaux · lot B2b : règle I */
   return {w,gc,rest:Math.round(left*100)/100};
 }
 function payHtml(T,u){
@@ -4518,30 +4611,27 @@ function payHtml(T,u){
   if(!L&&co.pay==='link')co.pay='all';
   const x=payRest(T,u);
   return `${L?`<div class="radios" style="margin-bottom:14px">
-      <button class="radio ${co.pay==='all'?'on':''}" data-act="coPayMode" data-v="all"><span class="dot"></span><div><b>Je règle tout maintenant</b><small>Carte bancaire, e-wallet ou chèque cadeau, seuls ou combinés.</small></div></button>
+      <button class="radio ${co.pay==='all'?'on':''}" data-act="coPayMode" data-v="all"><span class="dot"></span><div><b>Je règle tout maintenant</b><small>Carte bancaire, e-wallet ou carte cadeau, seuls ou combinés.</small></div></button>
       <button class="radio ${co.pay==='link'?'on':''}" data-act="coPayMode" data-v="link"><span class="dot"></span><div><b>Chacun paie sa part · lien de paiement</b><small>Un lien unique à partager avec vos joueurs.</small></div></button></div>`:''}
     ${co.pay==='link'?`<div class="steps">
         <div class="ck ok"><span class="ic">1</span><div><b>Vous enregistrez votre empreinte bancaire</b><small>Rien n'est débité aujourd'hui. Elle garantit les places de tout le groupe : une part encore impayée 48 h avant le départ serait débitée sur votre carte.</small></div></div>
         <div class="ck ok"><span class="ic">2</span><div><b>Vous partagez un lien unique</b><small>Il s'affiche juste après : copiez-le en un clic, ou envoyez-le à vos joueurs par e-mail ou SMS directement depuis le site.</small></div></div>
-        <div class="ck ok"><span class="ic">3</span><div><b>Chacun ouvre le même lien et coche ses prestations</b><small>Sa place, sa voiturette, sa location de clubs… puis règle sa part par carte, e-wallet ou chèque cadeau. Votre propre part se règle de la même façon.</small></div></div>
+        <div class="ck ok"><span class="ic">3</span><div><b>Chacun ouvre le même lien et coche ses prestations</b><small>Sa place, sa voiturette, sa location de clubs… puis règle sa part par carte, e-wallet ou carte cadeau. Votre propre part se règle de la même façon.</small></div></div>
         <div class="ck ok"><span class="ic">4</span><div><b>Les joueurs non identifiés créent leur compte en payant</b><small>Un invité ajouté sans licence ni compte crée son compte au moment de son paiement : sa place est alors rattachée à son nom.</small></div></div></div>
       <div class="sect" style="margin:16px 0 4px">Votre empreinte bancaire</div>${cardFields()}
       <p class="note">Délai de 48 h avant débit des parts impayées : hypothèse de la maquette, à arbitrer. Le lien reste valable jusqu'à cette échéance.</p>`
     :`${u&&u.wallet?`<button class="sw ${co.wallet?'on':''}" data-act="coWallet"><span><b class="h3">Payer avec mon e-wallet</b><br><span class="mut">Solde disponible : ${eur(u.wallet)}${co.wallet?' · '+eur(x.w)+' utilisés':''}</span></span><i></i></button>`
         :u?'':`<p class="mut" style="margin-bottom:8px">E-wallet : connectez-vous pour utiliser votre solde.</p>`}
-      <div class="h3" style="margin:12px 0 8px">Chèque cadeau</div>
-      ${co.gift?`<div class="between"><span><span class="tag ol">${co.gift.code}</span> <span class="mut">${eur(x.gc)} utilisés sur ${eur(co.gift.amt)}${co.gift.amt>x.gc?' · le solde reste sur le chèque':''}</span></span><button class="lnk" style="font-size:12px" data-act="coGiftX">Retirer</button></div>`
-        :`<div class="codebox"><input id="giftIn" placeholder="Code du chèque cadeau" style="text-transform:none"><button class="btn sm sec" data-act="coGift">Appliquer</button></div>
-          ${co.giftErr?`<p class="mut" style="margin-top:6px">${co.giftErr}</p>`:''}`}
+      ${gcCardField(x,T)/* bons cadeaux · lot B2b : champ carte cadeau, distinct du code promo */}
       ${gcPayTop(x)}${x.rest>0?`<div class="sect" style="margin:16px 0 4px">Carte bancaire · ${eur(x.rest)}</div>${cardFields()}${gcCardFoot()}
         <p class="mut" style="margin-top:4px">Paiement sécurisé 3-D Secure. ${S.cart.some(l=>l.kind==='comp'&&l.split==='each')?'La part de votre partenaire ne vous est pas débitée.':''}</p>`
         :`<p class="sub" style="margin-top:12px"><b style="color:var(--ink)">Tout est couvert</b> : aucun paiement par carte.</p>`}
-      <p class="note">Démo : chèques cadeaux CADEAU-100 et CADEAU-50. E-wallet de 60 € sur le compte de Claire Dumas.</p>`}`;
+      <p class="note">Démo : ${gcCardDemo()/* bons cadeaux · lot B2b */} E-wallet de 60 € sur le compte de Claire Dumas.</p>`}`;
 }
 function payRecap(T,u){
   const co=S.co, x=payRest(T,u);
   if(co.pay==='link')return `<div class="sumline"><span>Débité aujourd'hui</span><b>0 €</b></div><p class="mut" style="font-size:12px">${eur(T.due)} à régler par les joueurs via le lien de paiement.${u&&u.avoir&&S.useAvoir?' Votre avoir reste disponible pour régler votre propre part.':''}</p>`;
-  return `${x.w?`<div class="sumline"><span>E-wallet</span><b>−${eur(x.w)}</b></div>`:''}${x.gc?`<div class="sumline"><span>Chèque cadeau ${co.gift.code}</span><b>−${eur(x.gc)}</b></div>`:''}
+  return `${x.w?`<div class="sumline"><span>E-wallet</span><b>−${eur(x.w)}</b></div>`:''}${x.gc?`<div class="sumline"><span>Carte cadeau ${co.gift.code}</span><b>−${eur(x.gc)}</b></div>`:''}
     ${x.w||x.gc?`<div class="sumline"><span><b style="color:var(--ink);font-weight:500">Reste à payer par carte</b></span><b>${eur(x.rest)}</b></div>`:''}`;
 }
 /* Partage du lien depuis un ordinateur (retour du 28/09) : copier en un clic,
@@ -4731,7 +4821,7 @@ R.confirm=()=>{
      ${d.sav}
      <div class="sumtot" style="margin-bottom:8px"><span class="h3">Total</span><b>${eur(d.T.due)}</b></div>
      ${d.link?`<div class="sumline"><span>À régler via le lien</span><b>${eur(d.T.due)}</b></div><div class="sumline"><span>Empreinte bancaire</span><b>enregistrée</b></div>`
-       :`${d.X.w?`<div class="sumline"><span>E-wallet</span><b>${eur(d.X.w)}</b></div>`:''}${d.X.gc?`<div class="sumline"><span>Chèque cadeau ${d.gift.code}</span><b>${eur(d.X.gc)}</b></div>`:''}
+       :`${d.X.w?`<div class="sumline"><span>E-wallet</span><b>${eur(d.X.w)}</b></div>`:''}${d.X.gc?`<div class="sumline"><span>Carte cadeau ${d.gift.code}</span><b>${eur(d.X.gc)}</b></div>`:''}
          <div class="sumline"><span>${d.X.w||d.X.gc?'Carte bancaire':'Total réglé'}</span><b>${eur(d.X.rest)}</b></div>`}
      ${d.garantie?'<div class="sumline"><span>Garantie carte</span><b>enregistrée</b></div>':''}
      ${d.guest?`<p class="sub" style="margin:10px 0">Vous avez réservé sans compte. Créez-en un pour retrouver ce départ et profiter de votre tarif la prochaine fois.</p>
@@ -4748,7 +4838,15 @@ R.confirm=()=>{
    achat sans compte, facture société, consentement marketing, Apple Pay / Google Pay (B),
    refus de carte de démonstration. Confirmation, e-mails, bon PDF et boucle code → green fee : lot B3. */
 const GC_MSG_MAX=250;
-const GC_SEND_MAX=90;   /* hypothèse : envoi programmé jusqu'à 90 jours après l'achat */
+const GC_SEND_MONTHS=12;   /* lot B2d (30/10) : envoi programmé jusqu'au même jour, 12 mois après l'achat */
+/* lot B2d : ajout de mois au même quantième (même calcul que addMonths du back-office ; un 29 février passe au 1er mars) */
+const gcAddMonths=(k,n)=>{const d=dobj(k);d.setMonth(d.getMonth()+n);return dkey(d)};
+const gcSendMax=()=>gcAddMonths(TODAY,GC_SEND_MONTHS);
+/* lot B2d : la validité court à partir de l'envoi (réception par le bénéficiaire), pas de l'achat */
+const gcValidFrom=l=>l&&l.mode!=='moi'&&GCSW.D==='date'&&l.send==='date'&&l.date?l.date:TODAY;
+const gcValidEnd=l=>gcAddMonths(gcValidFrom(l),GC_VALIDITY);
+const gcFdmy=k=>fdm(k)+' '+k.slice(0,4);
+const GC_VALID_TXT=`Valable ${GC_VALIDITY} mois à partir de sa réception`;
 const GC_MODELS=[
   {id:'encre',n:'Encre et or',d:'Sobre, pour toutes les occasions'},
   {id:'links',n:'Links',d:'La photo du parcours en fond'},
@@ -4779,12 +4877,12 @@ function gcLineView(l,v){
   const o=gcOffer(l.offer), moi=l.mode==='moi';
   v.tag='Bon cadeau';
   v.title=o.type==='carte'?`${o.title} · ${eur(l.amount)}`:o.title;
-  v.sub=[moi?'Pour vous · '+gcEsc(l.to):'Pour '+gcEsc(l.to), moi?'envoyé à votre adresse':gcEsc(l.mail), gcSendTxt(l), 'modèle '+gcModelName(l.model)].join(' · ');
-  v.gcSub=cap([l.etab?'valable à '+gcEtabName(l.etab):'',gcSendTxt(l),'modèle '+gcModelName(l.model)].filter(Boolean).join(' · '));   /* panier : le bénéficiaire est déjà en tête du groupe */
+  v.sub=[moi?'Pour vous · '+gcEsc(l.to):'Pour '+gcEsc(l.to), moi?gcMyMailTxt():gcEsc(l.mail), gcSendTxt(l), 'modèle '+gcModelName(l.model)].join(' · ');
+  v.gcSub=cap([l.etab?'valable à '+gcEtabName(l.etab):'',gcSendTxt(l),'modèle '+gcModelName(l.model),o.type==='coffret'?GC_ONCE.toLowerCase():''].filter(Boolean).join(' · '));   /* lot B2c : coffret en une seule fois */   /* panier : le bénéficiaire est déjà en tête du groupe */
   v.items=[{n:GC_TYPES[o.type].l+(l.etab?' · valable à '+gcEtabName(l.etab):''),p:l.amount,pub:l.amount,st:null}];
   const m=l.msg?(l.msg.length>90?l.msg.slice(0,90).trim()+'…':l.msg):'';
   v.extra=moi?'':`${m?'Message : « '+gcEsc(m)+' » · ':'Sans message · '}de la part de ${gcEsc(l.from)}`;
-  v.cancel=`Bon valable ${GC_VALIDITY} mois à compter de l’achat. Remis par e-mail avec un bon à imprimer, aucun envoi postal.`;
+  v.cancel=`${GC_VALID_TXT}, jusqu’au ${gcFdmy(gcValidEnd(l))}${o.type==='coffret'?', à utiliser en une seule fois':''}. Remis par e-mail avec un bon à imprimer, aucun envoi postal.`;   /* lot B2d */
 }
 
 /* ─── personnalisation ─── */
@@ -4804,14 +4902,15 @@ function gcBonHtml(d){
     <div class="gc-bon-t">${o.title}</div>
     ${o.type==='carte'?`<div class="gc-bon-v">${eur(d.amount)}</div>`:''}
     ${d.etab?`<div class="gc-bon-e">Valable à ${gcEtabName(d.etab)}</div>`:''}
+    ${o.type==='coffret'?`<div class="gc-bon-e" data-role="once">${GC_ONCE}</div>`:''}
     <div class="gc-bon-for">Pour ${ph(d.to,moi?'le nom sur le bon':'Prénom Nom')}</div>
     ${moi||!msg?'':`<p class="gc-bon-msg">${gcEsc(msg.slice(0,GC_MSG_MAX))}${msg.length>GC_MSG_MAX?'…':''}</p>`}
     ${moi?'':`<div class="gc-bon-from">De la part de ${ph(d.from,'votre prénom')}</div>`}
-    <div class="gc-bon-foot"><span class="gc-bon-qr" aria-hidden="true"></span><span>Code <b>RGC-····-····</b><small>Attribué au paiement · valable ${GC_VALIDITY} mois</small></span></div>
+    <div class="gc-bon-foot"><span class="gc-bon-qr" aria-hidden="true"></span><span>Code <b>RGC-····-····</b><small data-role="bon-valid">Attribué au paiement · ${d.mode!=='moi'&&GCSW.D==='date'&&d.send==='date'&&!d.date?`valable ${GC_VALIDITY} mois à partir de l’envoi`:'valable jusqu’au '+gcFdmy(gcValidEnd(d))}</small></span></div>
   </div>`;
 }
 function gcPrevCap(d){
-  if(d.mode==='moi')return 'Envoyé à votre adresse e-mail, indiquée au paiement, dès le paiement confirmé.';
+  if(d.mode==='moi'){const m=gcMyMail();return `Envoyé à votre adresse e-mail${m?', <b>'+gcEsc(m)+'</b>,':', celle que vous indiquerez au paiement,'} dès le paiement confirmé. Aucun envoi postal.`}   /* lot B2b */
   const m=d.mail.trim(), when=GCSW.D==='date'&&d.send==='date'&&d.date?'le <b>'+fday(d.date)+'</b>':'dès le paiement confirmé';
   return `Envoyé par e-mail à <b>${m?gcEsc(m):'l’adresse du bénéficiaire'}</b> ${when}. Vous recevez une copie et la facture.`;
 }
@@ -4841,10 +4940,10 @@ function gcPersoCheck(d){
     e.msg=`Votre message compte ${d.msg.length} caractères, soit ${x} de trop. Raccourcissez-le à ${GC_MSG_MAX} caractères au maximum.`}
   if(!d.from.trim())e.from='Indiquez de la part de qui vient ce cadeau : votre prénom, ou plusieurs, par exemple « Claire et Paul ».';
   if(GCSW.D==='date'&&d.send==='date'){
-    const mn=dshift(TODAY,1), mx=dshift(TODAY,GC_SEND_MAX);
+    const mn=dshift(TODAY,1), mx=gcSendMax();   /* lot B2d */
     if(!d.date)e.date='Choisissez la date d’envoi, ou revenez à un envoi dès le paiement.';
     else if(d.date<mn)e.date=`Cette date est déjà passée ou tombe aujourd’hui. Choisissez une date à partir du ${fdm(mn)}, ou un envoi dès le paiement.`;
-    else if(d.date>mx)e.date=`L’envoi peut être programmé jusqu’au ${fdm(mx)} ${mx.slice(0,4)}. Choisissez une date plus proche.`;
+    else if(d.date>mx)e.date=`L’envoi peut être programmé jusqu’à ${GC_SEND_MONTHS} mois après l’achat, soit le ${fdm(mx)} ${mx.slice(0,4)} au plus tard. Choisissez une date plus proche.`;   /* lot B2d */
   }
   return e;
 }
@@ -4854,14 +4953,14 @@ R.gcperso=()=>{
   if(!M.some(m=>m.id===d.model))d.model=M[0].id;      /* commutateur C repassé à 2 modèles */
   const dated=GCSW.D==='date'&&!moi;
   if(!dated&&d.send==='date')d.send='now';             /* commutateur D repassé à « immédiat seul » */
-  const mn=dshift(TODAY,1), mx=dshift(TODAY,GC_SEND_MAX), len=(d.msg||'').length;
+  const mn=dshift(TODAY,1), mx=gcSendMax(), len=(d.msg||'').length;   /* lot B2d */
   const cta=cls=>`<div class="gc-pcta ${cls}">
       ${nE?`<p class="gc-err gc-errsum" role="alert">Le bon n’est pas encore ${d.uid?'modifié':'ajouté'} : ${nE>1?nE+' champs à corriger, signalés':'un champ à corriger, signalé'} ci-dessus.</p>`:''}
       <button class="btn full" data-act="gcPersoAdd">${d.uid?'Enregistrer les modifications':'Ajouter au panier · '+eur(d.amount)}</button>
       <button class="btn ghost full" data-act="${d.uid?'gcPersoCancel':'gcPersoBack'}">${d.uid?'Revenir au panier sans modifier':'Revenir à la fiche'}</button></div>`;
   const who=moi
     ?`<div class="gc-h">Le bon</div>
-      ${gcFld('to',`Nom sur le bon ${REQ}`,`<input ${gcInAttr('to',1)} value="${gcEsc(d.to)}" autocomplete="name" placeholder="Par exemple Claire Dumas">`,'Le bon est envoyé à l’adresse e-mail que vous indiquerez au paiement.')}`
+      ${gcFld('to',`Nom sur le bon ${REQ}`,`<input ${gcInAttr('to',1)} value="${gcEsc(d.to)}" autocomplete="name" placeholder="Par exemple Claire Dumas">`,gcMoiHelp())}`
     :`<div class="gc-h">Le bénéficiaire</div>
       ${gcFld('to',`Prénom et nom ${REQ}`,`<input ${gcInAttr('to')} value="${gcEsc(d.to)}" autocomplete="off" placeholder="Par exemple Marc Dumas">`)}
       ${gcFld('mail',`E-mail ${REQ}`,`<input ${gcInAttr('mail',1)} type="email" inputmode="email" autocomplete="off" value="${gcEsc(d.mail)}" placeholder="marc.dumas@exemple.fr">`,'Le bon est envoyé à cette adresse. Vous recevez une copie et la facture.')}
@@ -4869,22 +4968,22 @@ R.gcperso=()=>{
       ${gcFld('msg',`Message ${GC_OPT}`,`<textarea ${gcInAttr('msg',1)} rows="4" placeholder="Quelques mots qui figureront sur le bon">${gcEsc(d.msg)}</textarea>`,
         `<span class="gc-cnt ${len>GC_MSG_MAX?'over':''}" id="gcpCnt">${len} / ${GC_MSG_MAX}</span>${GC_MSG_MAX} caractères au maximum.`)}
       ${gcFld('from',`De la part de ${REQ}`,`<input ${gcInAttr('from')} value="${gcEsc(d.from)}" autocomplete="given-name" placeholder="Par exemple Claire et Paul">`)}`;
-  const send=moi?`<p class="gc-txt">Le bon est envoyé à votre adresse dès le paiement confirmé.</p>`
+  const send=moi?`<p class="gc-txt" data-role="moi-send">${gcMoiSend()}</p>`
     :!dated?`<p class="gc-txt">Le bon est envoyé au bénéficiaire dès le paiement confirmé.</p>`
     :`<div class="radios" role="radiogroup" aria-label="Date d’envoi">
         <button class="radio ${d.send!=='date'?'on':''}" role="radio" aria-checked="${d.send!=='date'}" data-act="gcSend" data-v="now"><span class="dot"></span><div><b>Dès le paiement</b><small>Le bénéficiaire le reçoit dans les minutes qui suivent.</small></div></button>
         <button class="radio ${d.send==='date'?'on':''}" role="radio" aria-checked="${d.send==='date'}" data-act="gcSend" data-v="date"><span class="dot"></span><div><b>À une date choisie</b><small>Pour une surprise le jour J, jusqu’au ${fdm(mx)} ${mx.slice(0,4)}.</small></div></button></div>
-      ${d.send==='date'?`<div class="gc-date">${gcFld('date',`Date d’envoi ${REQ}`,`<input ${gcInAttr('date',1)} type="date" min="${mn}" max="${mx}" value="${gcEsc(d.date)}">`,`Envoi le matin de la date choisie. La validité de ${GC_VALIDITY} mois court à partir de l’achat.`)}</div>`:''}`;
+      ${d.send==='date'?`<div class="gc-date">${gcFld('date',`Date d’envoi ${REQ}`,`<input ${gcInAttr('date',1)} type="date" min="${mn}" max="${mx}" value="${gcEsc(d.date)}">`,`Envoi le matin de la date choisie. Le bon est valable ${GC_VALIDITY} mois à partir de cette date.`   /* lot B2d */)}</div>`:''}`;
   $('#v-gcperso').innerHTML=`
    <button class="back" data-act="${d.uid?'gcPersoCancel':'gcPersoBack'}">← ${d.uid?'Panier':o.title}</button>
    <div class="scr-head"><div><span class="eyebrow">${moi?'Pour moi':'Offrir'} · ${GC_TYPES[o.type].l}</span>
      <h1 class="h1">${moi?'Votre <b>bon</b>':'Personnalisez <b>le bon</b>'}</h1>
-     <p class="sub" style="margin-top:4px">${o.title} · ${eur(d.amount)}${d.etab?' · valable à '+gcEtabName(d.etab):''}</p></div><span class="node">Personnalisation</span></div>
+     <p class="sub" style="margin-top:4px">${o.title} · ${eur(d.amount)}${d.etab?' · valable à '+gcEtabName(d.etab):''}${o.type==='coffret'?' · <span data-role="once">'+GC_ONCE.toLowerCase()+'</span>':''}</p></div><span class="node">Personnalisation</span></div>
    <div class="gc-perso" data-mode="${d.mode}">
     <div class="gc-pform">
       <div class="gc-mode radios" role="radiogroup" aria-label="Destinataire du bon">
         <button class="radio ${moi?'':'on'}" role="radio" aria-checked="${!moi}" data-act="gcPersoMode" data-v="offrir"><span class="dot"></span><div><b>Pour offrir</b><small>Envoyé à la personne de votre choix</small></div></button>
-        <button class="radio ${moi?'on':''}" role="radio" aria-checked="${moi}" data-act="gcPersoMode" data-v="moi"><span class="dot"></span><div><b>Pour moi</b><small>Envoyé à votre adresse</small></div></button></div>
+        <button class="radio ${moi?'on':''}" role="radio" aria-checked="${moi}" data-act="gcPersoMode" data-v="moi"><span class="dot"></span><div><b>Pour moi</b><small>Envoyé à votre adresse e-mail</small></div></button></div>
       <p class="mut" style="font-size:12px;margin:0 0 4px">${REQ} Champs obligatoires</p>
       ${who}
       <div class="gc-h">Le modèle</div>
@@ -4949,7 +5048,7 @@ function gcPanierLines(fn){
   if(resa.length)h+=`<div class="gc-grp">Bons cadeaux · ${plural(G.length,'bénéficiaire')}</div>`;
   G.forEach(g=>{const moi=g.k==='moi', sum=g.ls.reduce((t,l)=>t+l.amount,0);
     h+=`<div class="gc-who" data-who="${gcEsc(g.k)}"><span class="gc-who-av" aria-hidden="true">${moi?'Moi':gcEsc(gcIni(g.l0.to))}</span>
-      <div><b>${moi?'Pour vous':'Pour '+gcEsc(g.l0.to)}</b><small>${moi?'Bons envoyés à votre adresse':gcEsc(g.l0.mail)} · ${plural(g.ls.length,'bon')} · ${eur(sum)}</small></div></div>`
+      <div><b>${moi?'Pour vous':'Pour '+gcEsc(g.l0.to)}</b><small>${moi?'Bons envoyés à votre adresse e-mail':gcEsc(g.l0.mail)} · ${plural(g.ls.length,'bon')} · ${eur(sum)}</small></div></div>`
       +g.ls.map(fn).join('')});
   return h;
 }
@@ -5093,6 +5192,7 @@ function gcPayGuard(){
 /* appelé à la fin du paiement existant, panier vidé : on garde ce que le lot B3 affichera */
 function gcAfterPay(){
   const c=gcCo(), d=S.done;
+  gcCardDebit(d);   /* lot B2b : le solde de la carte cadeau utilisée baisse */
   if(d&&d.lines.some(x=>gcIsGift(x.l)))d.gc={paidBy:c.gcPaidBy||'card',invoice:c.gcInv.on?Object.assign({},c.gcInv):null,mkt:!!c.gcMkt,
     buyer:me()?me().n:c.gName,bons:d.lines.filter(x=>gcIsGift(x.l)).map(x=>x.l)};
   Object.assign(c,{gcInv:{on:false,name:'',addr:'',zip:'',city:'',vat:''},gcInvErr:{},gcMkt:false,gcMethod:'card',gcPaidBy:'',gcSimDecline:false,gcDeclined:false});
@@ -5109,7 +5209,7 @@ function gcCtlB2(){
   return `<hr><h4>Hypothèses · personnalisation et paiement</h4>
     <ul><li>Message facultatif, ${GC_MSG_MAX} caractères au maximum ; « De la part de » obligatoire pour un bon offert.</li>
     <li>Modèles (C) : ${GC_MODELS.slice(0,2).map(m=>m.n).join(', ')} avec 2 modèles ; ${GC_MODELS.slice(2).map(m=>m.n).join(', ')} en plus avec 4. Noms et visuels de démonstration.</li>
-    <li>Envoi programmé (D) : du lendemain jusqu’à ${GC_SEND_MAX} jours après l’achat. La validité de ${GC_VALIDITY} mois court à partir de l’achat, pas de l’envoi : à confirmer.</li>
+    <li data-role="ctl-b2d">Envoi programmé (D) : tranché le 29/10, le choix « Dès le paiement / À une date choisie » est affiché par défaut (commutateur gardé pour comparer). Du lendemain jusqu’au même jour ${GC_SEND_MONTHS} mois après l’achat (le ${gcFdmy(gcSendMax())} pour un achat du ${gcFdmy(TODAY)}), le matin de la date choisie. Décision du 30/10 : la validité de ${GC_VALIDITY} mois court à partir de l’envoi, c’est-à-dire de la réception par le bénéficiaire ; pour un envoi dès le paiement, à partir de l’achat.</li>
     <li>« Pour moi » : bon au nom choisi, envoyé à l’adresse de l’acheteur, sans message ni date d’envoi.</li>
     <li>Panier : une ligne par bon, regroupées par bénéficiaire (même adresse e-mail). Pas de chrono de maintien des places pour un panier de bons.</li>
     <li>Commande séparée (H) : l’autre partie du panier est gardée de côté et revient après le paiement ; une réservation mise de côté perd le blocage de ses places.</li>
@@ -5121,6 +5221,122 @@ function gcCtlB2(){
 }
 Object.assign(window.__gc,{gcPersoOpen,gcBonHtml,gcCartN});
 Object.defineProperties(window.__gc,{draft:{get:()=>GCS.draft},cart:{get:()=>S.cart},co:{get:()=>S.co},done:{get:()=>S.done},parked:{get:()=>GCS.parked}});
+
+/* ═════════ Bons cadeaux · lot B2b ═════════
+   Retours du point du 29/10 (Charlotte, RGC) : rubrique « Coffrets & cartes cadeaux », Expérience fusionnée
+   dans Coffret, cartes paysage façon green fee, une seule photo pour la carte cadeau et mention du nombre de
+   golfs, champ « Carte cadeau » au paiement (distinct du code promo), « Pour moi » envoyé à l'adresse e-mail. */
+
+/* visuels : la carte cadeau n'en garde qu'un (retour du 29/10) ; les coffrets gardent leur galerie */
+function gcVisuals(o){const g=GC_GAL[o.id]||[o.img];return o.type==='carte'?g.slice(0,1):g}
+/* fiche carte cadeau : où l'utiliser, dit clairement sous l'accroche.
+   Hypothèse : N = nombre de golfs du Booking Engine (transcript du 29/10 peu clair, 11 dans le doc client). */
+function gcValidHtml(o){
+  if(o.type!=='carte')return '';
+  const t=GCSW.A==='tous'
+    ?`Valable dans les <b>${GC_SITES.length} golfs de la Collection</b><small>ainsi que dans leurs hôtels, restaurants et spas</small>`
+    :`Valable dans <b>un seul établissement</b><small>${GCS.cardEtab?gcEtabName(GCS.cardEtab):'à choisir plus bas, avant d’offrir la carte'}</small>`;
+  return `<p class="gc-valid" data-role="valid">${GC_PIN}<span>${t}</span></p>`;
+}
+
+/* « Pour moi » : envoyé à l'adresse e-mail de l'acheteur, jamais par la poste */
+function gcMyMail(){const u=me();if(u)return u.email||'';const c=S.co;return c&&c.guest&&c.gMail?c.gMail:''}
+function gcMyMailTxt(){const m=gcMyMail();return 'envoyé à votre adresse e-mail'+(m?' '+gcEsc(m):'')}
+function gcMoiHelp(){const m=gcMyMail();
+  return `Le bon est envoyé à votre adresse e-mail${m?', <b>'+gcEsc(m)+'</b>':', celle que vous indiquerez au paiement'}. Aucun envoi postal.`}
+function gcMoiSend(){const m=gcMyMail();
+  return `Envoyé à votre adresse e-mail${m?', <b>'+gcEsc(m)+'</b>,':''} dès le paiement confirmé, avec le bon en PDF à imprimer ou à présenter sur téléphone. Aucun envoi postal.`}
+
+/* règle à trancher (retour du 29/10) : une carte cadeau peut-elle payer un bon cadeau */
+const GCSW_I={q:'Une carte cadeau peut-elle payer un bon cadeau',o:[['oui','Oui'],['non','Non, les réservations seulement']]};
+GCSW_INIT.I='oui';GCSW.I='oui';
+GCS.cardUsed={};   /* montants déjà débités pendant la démo, par code */
+
+/* ─── paiement : champ « Carte cadeau » ─── */
+const gcGiftSum=()=>S.cart.filter(gcIsGift).reduce((t,l)=>t+l.amount,0);
+function gcCardCap(T){   /* plafond de la carte cadeau selon la règle I */
+  if(GCSW.I!=='non')return Infinity;
+  return Math.max(0,Math.round((T.due-gcGiftSum())*100)/100);
+}
+const gcCardLeft=b=>Math.max(0,Math.round(((b.solde!=null?b.solde:0)-(GCS.cardUsed[b.code]||0))*100)/100);
+function gcCardLookup(raw){
+  const c=String(raw||'').toUpperCase().replace(/[\s.]/g,'');
+  if(!c)return {err:'Saisissez le code de la carte cadeau, au format RGC-XXXX-XXXX : il figure sur le bon reçu par e-mail.'};
+  const giftOnly=()=>GCSW.I==='non'&&gcGiftOnly()
+    ?{err:'Une carte cadeau ne peut pas servir à payer un bon cadeau, et votre panier ne contient que des bons. Réglez-les par carte bancaire : la carte cadeau reste utilisable pour une réservation.'}:null;
+  if(GIFTS[c]!=null){   /* chèques cadeaux de la v3, gardés pour la démo */
+    const left=Math.max(0,GIFTS[c]-(GCS.cardUsed[c]||0));
+    if(!left)return {err:`La carte cadeau ${c} a déjà été utilisée en totalité : son solde est de 0 €.`};
+    return giftOnly()||{ok:{code:c,amt:left,legacy:true}};
+  }
+  const m=/^RGC-?([A-Z0-9]{4})-?([A-Z0-9]{4})$/.exec(c);
+  if(!m)return {err:`« ${gcEsc(String(raw).trim())} » n’est pas un code de carte cadeau. Il se présente sous la forme RGC suivi de deux groupes de 4 lettres ou chiffres, par exemple RGC-XXXX-XXXX. Un code promo se saisit dans le panier.`};
+  const code=`RGC-${m[1]}-${m[2]}`, b=GC_TEST_BONS.find(x=>x.code===code);
+  if(!b)return {err:`Le code ${code} ne correspond à aucune carte cadeau. Vérifiez-le sur le bon reçu par e-mail, en particulier les 0 et les O, les 1 et les I.`};
+  const o=gcOffer(b.offer);
+  if(b.st==='Expiré')return {err:`Le bon ${code} (${o.title}) a expiré : il ne peut plus être utilisé. Contactez l’établissement pour demander une prolongation.`};
+  if(b.st==='Consommé')return {err:`Le bon ${code} (${o.title}) a déjà été utilisé en totalité.`};
+  if(o.type!=='carte')return {err:`Le code ${code} est celui d’un coffret (${o.title}) : il ne se déduit pas comme un montant. Il s’utilise en une seule fois, pour ${o.lines.length>1?'les prestations du coffret':'la prestation elle-même'}, en le présentant à l’établissement.`};   /* lot B2c */
+  const left=gcCardLeft(b);
+  if(!left)return {err:`La carte cadeau ${code} a déjà été utilisée en totalité : son solde est de 0 €.`};
+  return giftOnly()||{ok:{code,amt:left,init:b.init,rgc:true}};
+}
+function gcCardField(x,T){
+  const co=S.co, g=co.gift, gs=gcGiftSum();
+  const head=`<div class="h3" style="margin:12px 0 4px">Carte cadeau</div>`;
+  if(g)return `<div class="gc-gcard" data-role="giftcard">${head}
+    <div class="between"><span><span class="tag ol">${g.code}</span> <span class="mut">${eur(x.gc)} déduits · solde restant sur la carte : ${eur(Math.max(0,Math.round((g.amt-x.gc)*100)/100))}</span></span><button class="lnk" style="font-size:12px" data-act="coGiftX">Retirer</button></div>
+    ${GCSW.I==='non'&&gs>0?`<p class="mut gc-gc-lim" data-role="gc-rule">Les bons cadeaux de votre panier (${eur(gs)}) ne se règlent pas avec une carte cadeau : elle n’est déduite que de vos réservations.</p>`:''}
+    <div class="sumline gc-gc-due" data-role="gc-due"><span>Reste à payer</span><b>${eur(x.rest)}</b></div></div>`;
+  return `<div class="gc-gcard" data-role="giftcard">${head}
+    <p class="mut gc-gc-help" id="giftHelp">Saisissez le code de votre carte cadeau, au format RGC-XXXX-XXXX : son solde est déduit du total et le reste se règle par carte bancaire. Les codes promo se saisissent dans le panier.</p>
+    <div class="codebox"><input id="giftIn" placeholder="RGC-XXXX-XXXX" autocomplete="off" spellcheck="false" style="text-transform:none" value="${gcEsc(co.giftIn||'')}" aria-label="Code de la carte cadeau" aria-describedby="giftHelp${co.giftErr?' giftErr':''}"${co.giftErr?' aria-invalid="true"':''}><button class="btn sm sec" data-act="coGift">Appliquer</button></div>
+    ${co.giftErr?`<p class="gc-err" id="giftErr" role="alert">${co.giftErr}</p>`:''}</div>`;
+}
+function gcCardDemo(){
+  const cc=GC_TEST_BONS.filter(b=>gcOffer(b.offer).type==='carte'), cf=GC_TEST_BONS.find(b=>gcOffer(b.offer).type==='coffret'&&b.st==='Émis');
+  return `cartes cadeaux ${cc.map(b=>`${b.code} (solde ${eur(gcCardLeft(b))})`).join(', ')}, CADEAU-100 et CADEAU-50 (chèques cadeaux de la v3)${cf?` ; ${cf.code} est un coffret, refusé dans ce champ`:''}.`;
+}
+ACT.coGift=()=>{
+  const i=$('#giftIn'), raw=i?i.value:'', r=gcCardLookup(raw);
+  if(r.ok)Object.assign(S.co,{gift:r.ok,giftErr:'',giftIn:''});else Object.assign(S.co,{giftErr:r.err,giftIn:raw});
+  render();if(!r.ok){const n=$('#giftIn');if(n)n.focus()}
+};
+/* après paiement : le solde utilisé est débité (démo, pour pouvoir rejouer le code) */
+function gcCardDebit(d){
+  if(d&&d.gift&&d.X&&d.X.gc>0){const k=d.gift.code;GCS.cardUsed[k]=Math.round(((GCS.cardUsed[k]||0)+d.X.gc)*100)/100}
+  S.co.giftIn='';
+}
+/* code promo : un code de carte cadeau saisi au mauvais endroit est renvoyé vers le bon champ */
+const gcPromoGoBE=ACT.promoGo;
+ACT.promoGo=()=>{
+  const i=$('#promoIn'), c=(i&&i.value||'').trim().toUpperCase().replace(/\s/g,'');
+  if(/^RGC-?[A-Z0-9]{4}-?[A-Z0-9]{4}$/.test(c)||GIFTS[c]!=null){
+    S.promoErr=`« ${gcEsc(c)} » est le code d’une carte cadeau, pas un code promo. Saisissez-le à l’étape du paiement, dans le champ « Carte cadeau » : son solde sera déduit du total.`;render();return}
+  gcPromoGoBE();
+};
+
+/* ─── barre de contrôle, réinitialisation ─── */
+function gcCtlB2b(){
+  const nC=GC_OFFERS.filter(o=>o.type==='coffret').length;
+  return `<hr><h4>Retours du 29/10 · coffrets et cartes cadeaux</h4>
+    <div class="gc-sw" data-rule="I"><span><b>I</b> · ${GCSW_I.q}</span><div class="gc-seg">${GCSW_I.o.map(([v,l])=>`<button class="${GCSW.I===v?'on':''}" data-act="gcSw" data-k="I" data-v="${v}" aria-pressed="${GCSW.I===v}">${l}</button>`).join('')}</div></div>
+    <ul><li>Deux types : Carte cadeau (un montant, plusieurs utilisations) et Coffret (une ou plusieurs prestations, à utiliser en une seule fois). Les 6 anciennes expériences sont devenues des coffrets d’une prestation : ${nC} coffrets, identifiants, prix et codes de bons inchangés.</li>
+    <li>Rubrique « Coffrets &amp; cartes cadeaux » (onglet, titres, fil d’Ariane). « Bon cadeau » reste le mot du panier et du paiement : une ligne peut être un coffret ou une carte, et c’est un bon que reçoit le bénéficiaire.</li>
+    <li>Cartes d’offre en paysage, trois par ligne en desktop, une en mobile : classes des parcours du green fee (V2 côte à côte). Filtres en listes compactes ; établissements en puces resserrées dans la feuille mobile.</li>
+    <li>Carte cadeau : une seule photo. « Valable dans les ${GC_SITES.length} golfs de la Collection » : hypothèse à confirmer (transcript peu clair ; 11 golfs dans le doc client, ${GC_SITES.length} dans le Booking Engine).</li>
+    <li>Paiement : champ « Carte cadeau » distinct du code promo. Code RGC-XXXX-XXXX, tirets et casse tolérés ; solde déduit, reste à payer par carte. Coffret, bon expiré, bon utilisé, code inconnu : refus expliqué. Un code de carte saisi dans le code promo renvoie vers ce champ.</li>
+    <li>Règle I non tranchée, « Oui » par défaut. Avec « Non », la carte n’est déduite que des réservations ; refusée pour un panier de bons seuls.</li>
+    <li>« Pour moi » : « Envoyé à votre adresse e-mail », avec l’adresse quand elle est connue (compte, ou coordonnées déjà saisies au paiement). Aucun envoi postal.</li></ul>
+    <h4>Décision du 30/10 · coffret en une seule fois</h4>
+    <ul data-role="ctl-b2c"><li>Un coffret s’utilise en une seule fois, même avec plusieurs prestations : à la première utilisation, tout le bon est consommé et les prestations non utilisées sont perdues. Écart assumé avec le brief (§3).</li>
+    <li>Affiché sur la fiche (réassurance, inclus, conditions, question « Faut-il tout utiliser le même jour ? » : Oui), la personnalisation, l’aperçu du bon et le panier.</li>
+    <li>Seule la carte cadeau s’utilise en plusieurs fois. Le champ « Carte cadeau » du paiement refuse toujours un code de coffret.</li></ul>`;
+}
+const gcResetB2=ACT.gcReset;
+ACT.gcReset=()=>{GCS.cardUsed={};Object.assign(S.co,{gift:null,giftErr:'',giftIn:''});gcResetB2()};
+Object.assign(window.__gc,{gcCardLookup,gcVisuals,gcCardCap});
+Object.defineProperty(window.__gc,'cardUsed',{get:()=>GCS.cardUsed});
 
 /* ═════════ Espace personnel ═════════ */
 const RULES={gf:{h:24,n:'jusqu\'à 24 h avant le départ'},ind:{h:24,n:'jusqu\'à 24 h avant le cours'},coll:{h:24,n:'jusqu\'à 24 h avant le cours'},
