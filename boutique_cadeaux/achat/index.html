@@ -2232,6 +2232,70 @@ body:has(.stage[data-shop="1"]),.stage[data-shop="1"]{overflow-anchor:none}   /*
   .gb-prof{display:flex}
 }
 @media (prefers-reduced-motion:reduce){.gb-lrow,.gb-utile,.gb-dcard{transition:none}.crsrow.h.gc-crsrow.gc-rail,.gb-drail{scroll-behavior:auto}}
+/* ═════════ Bons cadeaux · lot B7 ═════════ */
+@media (min-width:901px){
+  .shop-hdr .sh-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+  .shop-hdr .sh-logo{grid-column:2;grid-row:1;flex-direction:column;gap:6px;justify-self:center}
+  .shop-hdr .sh-logo img{height:46px}
+  .shop-hdr .sh-logo span{border-left:0;padding-left:0}
+  .shop-hdr .sh-acts{grid-column:3;grid-row:1;justify-self:end;margin-left:0}
+  .shop-hdr.compact .sh-logo img{height:30px}
+  .shop-hdr.compact .sh-logo span{display:none}
+}
+.sh-u.sh-u-hl{background:var(--gold-light);color:var(--ink);font-weight:500}
+/* « Trouver un cadeau » : petit bouton plein, distinct des rubriques et du bouton Noël (noir) */
+.sh-nav button.sh-guide{gap:7px;padding:7px 15px 7px 12px;margin-left:6px;border-radius:999px;background:var(--gold);color:var(--paper);font-size:13.5px;font-weight:500;white-space:nowrap;box-shadow:0 1px 2px rgba(30,25,19,.12);transition:background .15s,transform .15s}
+.sh-nav button.sh-guide::after{display:none}
+.sh-nav button.sh-guide:hover{background:var(--gold-dark);color:var(--paper);transform:translateY(-1px)}
+.sh-nav button.sh-guide.on{background:var(--gold-dark);color:var(--paper);font-weight:500;box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--gold)}
+.sh-nav button.sh-guide svg{flex:0 0 auto}
+.shop-hdr.compact .sh-nav button.sh-guide{padding-top:5px;padding-bottom:5px}
+@media (prefers-reduced-motion:reduce){.sh-nav button.sh-guide{transition:none}.sh-nav button.sh-guide:hover{transform:none}}
+.gb-mi.gb-mhl{background:var(--gold-light);border-radius:10px}
+.gb-mi.gb-mguide{color:var(--gold-dark);font-weight:500}
+/* newsletter */
+.gb7-nlf{display:grid;gap:12px}
+.gb7-telin{display:flex;gap:8px}
+.gb7-telin select{flex:0 0 auto;max-width:160px}
+.gb7-telin input{flex:1;min-width:0}
+/* footer réduit au paiement */
+.gb7-sfmin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.gb7-sfmin nav{display:flex;flex-wrap:wrap;gap:4px 18px}
+.gb7-sfmin .sf-pay{display:flex;align-items:center;gap:6px;margin:0}
+.gb7-ul{margin:0 0 12px 18px;line-height:1.55}
+/* carte cadeau en encart, en tête d'une liste (pas dans les rails) */
+.crsrow.h.gc-crsrow:not(.gc-rail) > .gc-oc-carte:first-child:not(:only-child){grid-column:1/-1;display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);grid-auto-rows:min-content;column-gap:26px;row-gap:4px;align-content:center;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--cream)}
+.crsrow.h.gc-crsrow:not(.gc-rail) > .gc-oc-carte:first-child:not(:only-child) > .gc-oc-img{grid-column:1;grid-row:1 / span 5}
+.crsrow.h.gc-crsrow:not(.gc-rail) > .gc-oc-carte:first-child:not(:only-child) > :not(.gc-oc-img){grid-column:2}
+.crsrow.h.gc-crsrow:not(.gc-rail) > .gc-oc-carte:first-child:not(:only-child) > .gc-oc-venue::before{content:"Pour laisser le choix · ";color:var(--gold-dark)}
+@media (max-width:640px){.crsrow.h.gc-crsrow:not(.gc-rail) > .gc-oc-carte:first-child:not(:only-child){grid-template-columns:1fr;padding:14px}
+  .crsrow.h.gc-crsrow:not(.gc-rail) > .gc-oc-carte:first-child:not(:only-child) > *{grid-column:1!important;grid-row:auto!important}}
+/* panier */
+.gb7-todo{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:var(--gold-light);border-radius:12px;padding:14px 16px;margin:0 0 16px}
+.gb7-todo div{display:flex;flex-direction:column;gap:3px}
+.gb7-todo span{font-size:13px;color:var(--ink-soft)}
+.gb-cline.todo{box-shadow:inset 4px 0 0 var(--gold)}
+.gb7-lact{gap:16px;margin-top:8px;align-items:center}
+.gb7-qty{display:flex;width:max-content;margin:0 0 8px auto;align-items:center;border:1px solid var(--line);border-radius:999px}
+.gb7-qty button{width:34px;height:32px;padding:0;display:grid;place-items:center;text-align:center;font-size:17px;line-height:1;color:var(--ink);border-radius:999px}
+.gb7-qty output{min-width:22px;text-align:center;font-weight:500}
+.gb7-reas{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.gb7-logos{display:flex;flex-wrap:wrap;gap:6px}
+.gb7-logo{font-size:11px;font-weight:600;letter-spacing:.3px;border:1px solid var(--line);border-radius:6px;padding:4px 8px;color:var(--ink-soft)}
+.gb7-reas ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.gb7-reas li{display:flex;align-items:center;gap:9px;font-size:13px}
+.gb7-reas li svg{width:18px;height:18px;flex:0 0 auto;color:var(--gold-dark)}
+.gb7-q{font-size:13px;margin:0}
+/* page bénéficiaire */
+.gb7-st{border-radius:10px;padding:10px 12px;font-size:13.5px;margin:10px 0 0}
+.gb7-st.ok{background:var(--cream)}
+.gb7-st.part{background:var(--gold-light)}
+/* mobile : barre fixe de la fiche, pastille de démo au-dessus de la barre */
+#cartBar.gb7-fbar [data-role="fbar-price"]{white-space:nowrap}
+#cartBar.gb7-fbar small{display:inline;text-transform:none;letter-spacing:0;font-size:13px}
+body.cbar .gc-ctl-btn,body.cbar .vptog{bottom:86px}
+/* rubriques resserrées sur les écrans moyens : une seule ligne, le bouton ne touche plus les bords */
+@media (min-width:901px) and (max-width:1180px){.sh-nav button{padding-left:9px;padding-right:9px;font-size:13.5px}.sh-nav button::after{left:9px;right:9px}.sh-nav button.sh-guide{margin-left:4px;padding:6px 12px 6px 10px}}
 </style>
 </head>
 <body>
@@ -2277,7 +2341,7 @@ body:has(.stage[data-shop="1"]),.stage[data-shop="1"]{overflow-anchor:none}   /*
   <section class="screen" id="sc-gcgolf" data-title="Boutique cadeaux — page golf"><div class="pad" id="v-gcgolf"></div></section>
   <section class="screen" id="sc-gcnoel" data-title="Boutique cadeaux — Boutique de Noël"><div class="pad" id="v-gcnoel"></div></section>
   <section class="screen" id="sc-gcoffrir" data-title="Boutique cadeaux — aide au choix"><div class="pad" id="v-gcoffrir"></div></section>
-  <section class="screen" id="sc-gcbon" data-title="Boutique cadeaux — J’ai un bon cadeau"><div class="pad" id="v-gcbon"></div></section>
+  <section class="screen" id="sc-gcbon" data-title="Boutique cadeaux — J’ai une carte cadeau ou un coffret"><div class="pad" id="v-gcbon"></div></section>
   <section class="screen" id="sc-gcaide" data-title="Boutique cadeaux — aide et questions fréquentes"><div class="pad" id="v-gcaide"></div></section>
   <section class="screen" id="sc-gccgv" data-title="Boutique cadeaux — conditions générales de vente"><div class="pad" id="v-gccgv"></div></section>
   <section class="screen" id="sc-cadeaux" data-title="Boutique cadeaux — toutes les offres"><div class="pad" id="v-cadeaux"></div></section>
@@ -6746,7 +6810,7 @@ function gcShopHdrHtml(){
      1. Noël · 2. bon cadeau, aide, compte, langue · 3. logo, panier, Offrir un cadeau · 4. rubriques */
   return `${noel?`<button class="sh-top" data-role="topbar" data-act="gcNav" data-v="noel"><span>${gcT('Noël : offrez une expérience à vivre.','Christmas: give an experience to remember.')}</span> <span class="sh-top-l"><u>${gcT('Découvrez la Boutique de Noël','Visit the Christmas shop')}</u> ${GC_ARROW}</span></button>`:''}
    <div class="sh-row sh-util" data-role="util">
-     <button class="sh-u" data-act="gcBon">${gcT('J’ai un bon cadeau','I have a gift voucher')}</button>
+     <button class="sh-u" data-act="gcBon">${gcT('J’ai une carte cadeau ou un coffret','I have a gift card or box')}</button>
      <button class="sh-u" data-act="gcAide">${gcT('Aide','Help')}</button>
      <button class="sh-u" data-act="account">${me()?me().n:gcT('Mon compte','My account')}</button>
      ${gcLangSel()}
@@ -6790,7 +6854,7 @@ function gcShopFootHtml(){
     <div class="sf-brand"><img data-logo src="" alt="Resonance Golf Collection"><p>${gcT('La boutique cadeaux officielle de Resonance Golf Collection. Envoi numérique, aucun envoi postal.','The official Resonance Golf Collection gift shop. Sent digitally, nothing by post.')}</p>${gcLangSw()}</div>
     ${col(gcT('Offrir','Give'),gcNavUnivers().map(u=>`<button data-act="gcNav" data-v="u:${u[0]}">${gcUName(u[0])}</button>`).join('')+`<button data-act="gcNav" data-v="carte">${gcT('Carte cadeau','Gift card')}</button><button data-act="gcNav" data-v="offres">${gcT('Toutes les offres','All gifts')}</button>`)}
     ${col(gcT('Destinations','Destinations'),GC_SITES.map(s=>`<button data-act="gcNav" data-v="g:${s.code}">${s.short}</button>`).join(''))}
-    ${col(gcT('Aide','Help'),`<button data-act="gcBon">${gcT('J’ai un bon cadeau','I have a gift voucher')}</button><button data-act="gcAide">${gcT('Questions fréquentes','FAQ')}</button><button data-act="gcCgv">${gcT('Conditions générales de vente','Terms of sale')}</button><span>${gcT('Mentions légales','Legal notice')}</span><span>${gcT('Contact','Contact')}</span>`)}
+    ${col(gcT('Aide','Help'),`<button data-act="gcBon">${gcT('J’ai une carte cadeau ou un coffret','I have a gift card or box')}</button><button data-act="gcAide">${gcT('Questions fréquentes','FAQ')}</button><button data-act="gcCgv">${gcT('Conditions générales de vente','Terms of sale')}</button><span>${gcT('Mentions légales','Legal notice')}</span><span>${gcT('Contact','Contact')}</span>`)}
     ${col(gcT('Paiement','Payment'),`<p class="sf-pay">${pay.join(' · ')}</p><p class="sf-pay">${gcT('Paiement sécurisé, sans création de compte.','Secure payment, no account needed.')}</p>`)}
   </div>`;
 }
@@ -6828,7 +6892,7 @@ ACT.gcMenu=()=>{
       <button class="lnk" data-act="gcNav" data-v="dest">${gcT('Toutes les destinations','All destinations')}</button></details>
     ${it('offres',gcT('Toutes les offres','All gifts'))}${gcNavUnivers().map(u=>it('u:'+u[0],gcUName(u[0]))).join('')}${it('carte',gcT('Carte cadeau','Gift card'))}</nav>
     <div class="gb-mutil"><button class="btn full" data-act="gcNav" data-v="offrir">${gcT('Offrir un cadeau','Give a gift')}</button>
-      <button class="gb-mi" data-act="gcBon">${gcT('J’ai un bon cadeau','I have a gift voucher')}${GC_ICO.next}</button>
+      <button class="gb-mi" data-act="gcBon">${gcT('J’ai une carte cadeau ou un coffret','I have a gift card or box')}${GC_ICO.next}</button>
       <button class="gb-mi" data-act="gcAide">${gcT('Aide','Help')}${GC_ICO.next}</button>
       <button class="gb-mi" data-act="gcMenuAcc">${gcT('Mon compte','My account')}${GC_ICO.next}</button>
       <div class="gb-mlang"><span>${gcT('Langue','Language')}</span>${gcLangSw()}</div></div>`,'gb-menu');
@@ -6844,7 +6908,7 @@ function gcVchHtml(r){
     ${r&&r.err?`<p class="gc-err" id="gbBonErr" role="alert">${r.err}</p>`:''}
     <button class="btn full" data-act="gcBonGo">${gcT('Vérifier mon bon','Check my voucher')}</button>
     ${r&&r.b?gcVchCard(r.b):''}
-    <p class="note">${gcT('Démo : RGC-7KQ2-M9XA, RGC-3HTP-W4CZ, RGC-9VNE-2RLD. Page « J’ai un bon cadeau » et réservation avec le code : lot B3.','Demo codes as in French. Full page and booking with the code: lot B3.')}</p>`;
+    <p class="note">${gcT('Démo : RGC-7KQ2-M9XA, RGC-3HTP-W4CZ, RGC-9VNE-2RLD. Page « J’ai une carte cadeau ou un coffret » et réservation avec le code : lot B3.','Demo codes as in French. Full page and booking with the code: lot B3.')}</p>`;
 }
 function gcVchCard(b){
   const o=gcOffer(b.offer), carte=o.type==='carte', end=['Expiré','Consommé'].includes(b.st);
@@ -6884,7 +6948,7 @@ ACT.gcRail=a=>{const r=document.getElementById(a.dataset.r);if(r&&r.scrollBy)r.s
 function gcDestCard(c){
   const s=gcSite(c), im=GC_SIMG[c];
   return `<button class="gb-dcard" data-act="gcNav" data-v="g:${c}" data-gdest="${c}"${im?` style="${bg(im)}"`:''}>${im?'':`<span class="gb-dph">${GC_PIN}</span>`}
-    <span class="gb-dtx"><small>${gcRegName(GC_SREG[c])}</small><b>${s.short}</b><i>${gcOffersN(gcSiteOffers(c).length+1)}</i></span></button>`;
+    <span class="gb-dtx"><small>${gcRegName(GC_SREG[c])}</small><b>${s.short}</b><i>${gcExpN(c)}</i></span></button>`;
 }
 const gcDestRail=(id,codes)=>`<div class="gb-railw"><button class="gb-rbtn prev" data-act="gcRail" data-r="${id}" data-v="-1" aria-label="${gcT('Précédent','Previous')}">${GC_ICO.prev}</button>
   <div class="gb-drail" id="${id}">${codes.map(gcDestCard).join('')}</div>
@@ -7029,10 +7093,10 @@ R.gcdest=()=>{
        <div class="gb-loclist">${GC_REG.map((r,i)=>{const cs=codes.filter(c=>GC_SREG[c]===i);return cs.length?`<div class="sect">${gcRegName(i)}</div>
          ${cs.map(c=>{const s=gcSite(c), g=golf(GC_SMAP[c]), n=gcSiteOffers(c).length+1;return `<div class="gb-lrow ${sel===c?'on':''}" data-gdest="${c}">
            <span class="gb-lpin">${GC_PIN}</span><span class="gb-lt"><b>${s.n}</b><small>${g?g.v:''}</small></span>
-           <span class="gb-ln">${gcOffersN(n)}</span><button class="btn sm sec" data-act="gcNav" data-v="g:${c}">${gcT('Voir les offres','See gifts')}</button></div>`}).join('')}`:''}).join('')}</div>
+           <span class="gb-ln">${gcExpN(c)}</span><button class="btn sm sec" data-act="gcNav" data-v="g:${c}">${gcT('Voir les offres','See gifts')}</button></div>`}).join('')}`:''}).join('')}</div>
        <div class="gb-map"><div class="gmap"><div class="gmap-in"><img src="${MAPIMG}" alt="${gcT('Carte des golfs de la Collection','Map of the Collection golf resorts')}" draggable="false">
          ${codes.map(c=>{const g=golf(GC_SMAP[c]);return g&&g.x?`<button class="hs ${sel===c?'on':''}" style="left:${g.x/MAPW*100}%;top:${g.y/MAPH*100}%" data-act="gcDestSel" data-v="${c}" data-gdest="${c}" aria-label="${gcSite(c).n}"><i></i><span class="hs-tip">${gcSite(c).short}</span></button>`:''}).join('')}</div></div>
-         ${sel?`<div class="card gb-mapcard" data-role="dest-sel"><b>${gcSite(sel).n}</b><small>${golf(GC_SMAP[sel]).v} · ${gcOffersN(gcSiteOffers(sel).length+1)}</small><button class="btn sm" data-act="gcNav" data-v="g:${sel}">${gcT('Voir ses offres','See its gifts')}</button></div>`
+         ${sel?`<div class="card gb-mapcard" data-role="dest-sel"><b>${gcSite(sel).n}</b><small>${golf(GC_SMAP[sel]).v} · ${gcExpN(sel)}</small><button class="btn sm" data-act="gcNav" data-v="g:${sel}">${gcT('Voir ses offres','See its gifts')}</button></div>`
            :`<p class="mut gb-maphint">${gcT('Cliquez sur un golf pour voir ses offres.','Click a golf resort to see its gifts.')}</p>`}</div>
      </div></section>
    ${gcCartePush()}
@@ -7140,8 +7204,8 @@ function gcCtlB4(){
     <li>Vocabulaire client : « Expérience » et « Carte cadeau » ; « coffret » reste le mot du BO.</li>
     <li>Adresses : <code>#/boutique</code>, <code>#/boutique/golf</code> · <code>gastronomie</code> · <code>spa</code> · <code>sejours</code>, <code>#/boutique/destinations</code>, <code>#/boutique/destinations/&lt;golf&gt;</code>, <code>#/boutique/noel</code>, <code>#/boutique/offrir</code> ; catalogue et fiches inchangés (<code>#/cadeaux</code>, <code>#/cadeaux/&lt;id&gt;</code>).</li>
     <li>Hypothèses réglées au BO (lot A5) : meilleures ventes (${GC_BEST.length}), sélection de Noël (${GC_NOEL.length}), ordre des rubriques, visuels. Nombre de personnes : 2 pour les offres « pour deux » et la chambre double, sinon 1.</li>
-    <li>FR / EN : header, footer, accueil, menu, J’ai un bon cadeau et FAQ. Les offres restent en français (lot B5).</li>
-    <li>Pages complètes « J’ai un bon cadeau », Aide et CGV : lot B3 (fenêtres provisoires).</li></ul>`;
+    <li>FR / EN : header, footer, accueil, menu, J’ai une carte cadeau ou un coffret et FAQ. Les offres restent en français (lot B5).</li>
+    <li>Pages complètes « J’ai une carte cadeau ou un coffret », Aide et CGV : lot B3 (fenêtres provisoires).</li></ul>`;
 }
 Object.assign(window.__gc,{GB4,gcB4Route,gcB4Hash,gcUniv,gcGolf,gcPers,gcShopSync,GC_BEST,GC_NOEL,GC_SSLUG,GC_SREG});
 
@@ -7655,7 +7719,7 @@ R.confirm=()=>{
           ${GB3.acctErr?`<p class="gc-err" id="gbPwdErr" role="alert">${GB3.acctErr}</p>`:''}<button class="btn full" data-act="gcAcct">Créer mon compte</button></div>`):''}
     </aside></div>
    <section class="gb-fsec"><div class="gb-h2"><h2 class="h2">Encore une idée ?</h2><button class="lnk" data-act="gcNav" data-v="offres">Toutes les offres</button></div>${gcRail('gbRailConf',GC_BEST.map(gcOffer))}</section>
-   <p class="note">Lot B3 : codes et QR attribués au paiement (démonstration). Le statut d’envoi suit la date choisie ; l’échec d’envoi se simule dans la barre de contrôle. Les bons de cette commande sont retrouvables dans « J’ai un bon cadeau ».</p>`;
+   <p class="note">Lot B3 : codes et QR attribués au paiement (démonstration). Le statut d’envoi suit la date choisie ; l’échec d’envoi se simule dans la barre de contrôle. Les bons de cette commande sont retrouvables dans « J’ai une carte cadeau ou un coffret ».</p>`;
 };
 ACT.gcAcct=()=>{const v=($('#gbPwd').value||'');
   if(v.length<8){GB3.acctErr='Choisissez un mot de passe d’au moins 8 caractères.';render();const f=$('#gbPwd');if(f)f.focus();return}
@@ -7717,8 +7781,8 @@ const GC_FAQ_BUY=[['Quand le bon est-il envoyé ?',`Dès le paiement, ou le mati
 const gcFaqList=(Q,name)=>`<div class="gb-faq">${Q.map(([q,r],i)=>`<details name="${name}"${i?'':' open'}><summary>${q}</summary><p>${r}</p></details>`).join('')}</div>`;
 R.gcbon=()=>{
   const code=GB3.code, b=code?gcBonRec(code):null;
-  $('#v-gcbon').innerHTML=`${gcCrumb([['J’ai un bon cadeau','']])}
-   <div class="gb-ptitle"><span class="eyebrow">Bénéficiaire</span><h1 class="h1">J’ai un bon cadeau</h1><p class="sub">Retrouvez ce qu’il comprend, sa validité et son solde, puis réservez.</p></div>
+  $('#v-gcbon').innerHTML=`${gcCrumb([['J’ai une carte cadeau ou un coffret','']])}
+   <div class="gb-ptitle"><span class="eyebrow">Bénéficiaire</span><h1 class="h1">J’ai une carte cadeau ou un coffret</h1><p class="sub">Retrouvez ce qu’il comprend, sa validité et son solde, puis réservez.</p></div>
    <div class="gb-bonp">
      <div class="card gb-bonf"><label class="field${GB3.err?' bad':''}"><span>Code du bon</span><input id="gbBonP" autocomplete="off" placeholder="RGC-XXXX-XXXX" value="${gcEsc(code)}"${GB3.err?' aria-invalid="true" aria-describedby="gbBonPErr"':''}></label>
        ${GB3.err?`<p class="gc-err" id="gbBonPErr" role="alert">${GB3.err}</p>`:''}<button class="btn full" data-act="gcBonP">Vérifier mon bon</button>
@@ -7813,6 +7877,326 @@ function gcCtlB3(){
 const _gcReset3=ACT.gcReset;
 ACT.gcReset=a=>{Object.assign(GB3,{code:'',err:'',faq:'acheteur',failNext:false,acct:false,acctErr:'',st:{},res:{}});for(let i=GC_TEST_BONS.length-1;i>=0;i--)if(GC_TEST_BONS[i].fresh)GC_TEST_BONS.splice(i,1);_gcReset3(a)};
 Object.assign(window.__gc,{GB3,gcNewCode,gcBonRec,gcQr,gcB4Route,gcB4Hash});
+
+/* ═════════ Bons cadeaux · lot B7 ═════════
+   Retours front de Camille (Kanban du 04/11) et call du 05/11/2026 : logo centré, guide cadeau dans la
+   navigation, newsletter « promotions et idées cadeaux » (téléphone facultatif), mentions légales et contact
+   cliquables, compteurs de destination limités aux expériences, carte cadeau épinglée à part, budgets sans
+   chevauchement, destination sans expérience, date de départ de la validité affichée, « le remettre
+   moi-même » cohérent (règle J), envoi à 8 h heure de Paris, modèle Noël proposé aussi pour les coffrets,
+   panier (quantités, plusieurs codes promo, réassurance, conditions sans quitter le panier, bon à
+   personnaliser signalé), paiement épuré, « J'ai une carte cadeau ou un coffret », réponses distinctes
+   selon l'état du bon, FR / EN, mobile (barre fixe de la fiche, pastille de démo, ordre des univers). */
+var GB7={J:'date',codes:[]};
+const GC_SEND_HOUR='8 h, heure de Paris';
+const GC_HOWTO=gcT('Carte cadeau : réservez en ligne et saisissez le code au paiement. Coffret : saisissez le code dans « J’ai une carte cadeau ou un coffret », puis réservez en ligne ; vous pouvez aussi réserver auprès de l’établissement en donnant le code.');
+const gcNavU7=()=>GC_NAV_ORDER.filter(u=>gcNavUnivers().some(x=>x[0]===u));
+const GC_GIFT_S='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12M12 8c-1.5-3-5-3.6-5-1.5S10 8 12 8Zm0 0c1.5-3 5-3.6 5-1.5S14 8 12 8Z"/></svg>';   /* ti-gift (Tabler), en petit */
+function gcExpN(c){const n=gcSiteOffers(c).length;return n?gcIdeasN(n):gcT('Carte cadeau disponible','Gift card available')}
+
+/* ---------- header : logo centré, guide cadeau dans la navigation ---------- */
+const _gcShopHdrHtml7=gcShopHdrHtml;
+gcShopHdrHtml=function(){
+  let h=_gcShopHdrHtml7();if(S.screen==='checkout')return h;
+  h=h.replace(/<button class="btn sh-cta"[^>]*>[\s\S]*?<\/button>/,'');
+  h=h.replace('<button class="sh-u" data-act="gcBon">','<button class="sh-u sh-u-hl" data-act="gcBon">');
+  const on=S.screen==='gcoffrir';
+  return h.replace('</nav>',`<button class="sh-guide${on?' on':''}" data-act="gcNav" data-v="offrir"${on?' aria-current="page"':''}>${GC_GIFT_S}${gcT('Trouver un cadeau','Find a gift')}</button></nav>`);
+};
+ACT.gcMenu=()=>{
+  const it=(v,l,cls)=>`<button class="gb-mi ${cls||''}" data-act="gcNav" data-v="${v}">${l}${GC_ICO.next}</button>`;
+  sheet(shead(gcT('Boutique cadeaux','Gift shop'))+`<nav aria-label="${gcT('Rubriques de la boutique','Shop sections')}">
+    ${gcNoelOn()?it('noel',gcT('Noël','Christmas'),'gb-mnoel'):''}
+    <details class="gb-mdest"><summary class="gb-mi">${gcT('Destinations','Destinations')}${GC_ICO.down}</summary>
+      ${GC_REG.map((r,i)=>`<div class="gb-mreg"><span>${gcRegName(i)}</span>${GC_SITES.filter(s=>GC_SREG[s.code]===i).map(s=>`<button data-act="gcNav" data-v="g:${s.code}">${s.short}</button>`).join('')}</div>`).join('')}
+      <button class="lnk" data-act="gcNav" data-v="dest">${gcT('Toutes les destinations','All destinations')}</button></details>
+    ${it('offres',gcT('Toutes les offres','All gifts'))}${gcNavU7().map(u=>it('u:'+u,gcUName(u))).join('')}${it('carte',gcT('Carte cadeau','Gift card'))}
+    ${it('offrir',gcT('Trouver un cadeau','Find a gift'),'gb-mguide')}</nav>
+    <div class="gb-mutil">
+      <button class="gb-mi gb-mhl" data-act="gcBon">${gcT('J’ai une carte cadeau ou un coffret','I have a gift card or box')}${GC_ICO.next}</button>
+      <button class="gb-mi" data-act="gcAide">${gcT('Aide','Help')}${GC_ICO.next}</button>
+      <button class="gb-mi" data-act="gcMenuAcc">${gcT('Mon compte','My account')}${GC_ICO.next}</button>
+      <div class="gb-mlang"><span>${gcT('Langue','Language')}</span>${gcLangSw()}</div></div>`,'gb-menu');
+};
+function gcMegaHtml(){
+  return `<div class="sh-mega" id="shMega"><div class="sh-mega-in">${GC_REG.map((r,i)=>`<div><h3>${gcRegName(i)}</h3>
+    ${GC_SITES.filter(s=>GC_SREG[s.code]===i).map(s=>`<button data-act="gcNav" data-v="g:${s.code}">${s.short}<small>${gcExpN(s.code)}</small></button>`).join('')}</div>`).join('')}
+    <button class="lnk sh-all" data-act="gcNav" data-v="dest">${gcT('Toutes les destinations, sur la carte','All destinations, on the map')}</button></div></div>`;
+}
+
+/* ---------- newsletter : promotions et idées cadeaux, téléphone facultatif ---------- */
+const GC_DIAL=[['+33','France'],['+32','Belgique'],['+41','Suisse'],['+352','Luxembourg'],['+44','Royaume-Uni']];
+GB4.nl.tel='';GB4.nl.dial='+33';
+gcNlHtml=function(){
+  const nl=GB4.nl;
+  return `<section class="gb-nl sf-nl" data-role="newsletter"><div><h2 class="sf-nlt">${gcT('Recevez nos promotions et idées cadeaux','Get our offers and gift ideas')}</h2><p>${gcT('Avant chaque occasion : Noël, Saint-Valentin, fêtes des mères et des pères.','Ahead of each occasion: Christmas, Valentine’s Day, Mother’s and Father’s Day.')}</p></div>
+     ${nl.ok?`<p class="gb-nlok" role="status">${nl.ok}</p>`:`<div class="gb-nlf gb7-nlf">
+       <label class="field${nl.errK==='mail'?' bad':''}"><span>${gcT('Adresse e-mail','E-mail address')}</span><input id="gbNlMail" type="email" autocomplete="email" value="${gcEsc(nl.mail)}"${nl.errK==='mail'?' aria-invalid="true" aria-describedby="gbNlErr"':''}></label>
+       <div class="field gb7-tel${nl.errK==='tel'?' bad':''}"><span>${gcT('Téléphone, facultatif','Phone, optional')}</span><div class="gb7-telin">
+         <select id="gbNlDial" aria-label="${gcT('Indicatif','Country code')}">${GC_DIAL.map(([c,p])=>`<option value="${c}"${nl.dial===c?' selected':''}>${c} ${p}</option>`).join('')}</select>
+         <input id="gbNlTel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="6 12 34 56 78" value="${gcEsc(nl.tel)}" aria-label="${gcT('Numéro de téléphone','Phone number')}"${nl.errK==='tel'?' aria-invalid="true" aria-describedby="gbNlErr"':''}></div></div>
+       <label class="gb-chk"><input type="checkbox" id="gbNlOk"${nl.consent?' checked':''}${nl.errK==='consent'?' aria-invalid="true" aria-describedby="gbNlErr"':''}><span>${gcT('J’accepte de recevoir les offres et idées cadeaux de Resonance par e-mail, et par SMS si j’indique mon téléphone. Désinscription en un clic.','I agree to receive Resonance offers and gift ideas by e-mail, and by text if I give my phone number. Unsubscribe in one click.')}</span></label>
+       ${nl.err?`<p class="gc-err" id="gbNlErr" role="alert">${nl.err}</p>`:''}
+       <button class="btn" data-act="gcNl">${gcT('Valider','Submit')}</button></div>`}</section>`;
+};
+ACT.gcNl=()=>{
+  const nl=GB4.nl, m=($('#gbNlMail').value||'').trim(), t=($('#gbNlTel').value||'').replace(/[\s.\-()]/g,'');
+  nl.mail=m;nl.tel=($('#gbNlTel').value||'').trim();nl.dial=$('#gbNlDial').value;nl.consent=$('#gbNlOk').checked;nl.err='';nl.errK='';
+  if(!m){nl.errK='mail';nl.err=gcT('Saisissez votre adresse e-mail.','Enter your e-mail address.')}
+  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)){nl.errK='mail';nl.err=gcT(`« ${gcEsc(m)} » n’est pas une adresse e-mail complète. Exemple : prenom.nom@exemple.fr`,`“${gcEsc(m)}” is not a complete e-mail address. Example: name@example.com`)}
+  else if(t&&!/^0?\d{8,10}$/.test(t)){nl.errK='tel';nl.err=gcT(`« ${gcEsc(nl.tel)} » n’est pas un numéro de téléphone. Saisissez 9 ou 10 chiffres, ou laissez le champ vide.`,`“${gcEsc(nl.tel)}” is not a phone number. Enter 9 or 10 digits, or leave it empty.`)}
+  else if(!nl.consent){nl.errK='consent';nl.err=gcT('Cochez la case pour accepter de recevoir nos offres : sans votre accord, nous ne pouvons pas vous inscrire.','Tick the box to agree to receive our offers: we cannot sign you up without it.')}
+  else nl.ok=gcT(`C’est noté : vous recevrez nos promotions et idées cadeaux à ${gcEsc(m)}${t?' et au '+gcEsc(nl.dial+' '+nl.tel):''}.`,`Done: offers and gift ideas will be sent to ${gcEsc(m)}${t?' and '+gcEsc(nl.dial+' '+nl.tel):''}.`);
+  render();const f=nl.errK==='mail'?$('#gbNlMail'):nl.errK==='tel'?$('#gbNlTel'):nl.errK==='consent'?$('#gbNlOk'):null;if(f)f.focus();
+};
+
+/* ---------- footer : liens cliquables ; paiement : footer réduit ---------- */
+const _gcShopFootHtml7=gcShopFootHtml;
+gcShopFootHtml=function(){
+  if(S.screen==='checkout'){
+    const pay=['CB','Visa','Mastercard','American Express'].concat(GCSW.B==='wallets'?['Apple Pay','Google Pay']:[]);
+    return `<div class="sf-in gb7-sfmin" data-role="foot-min"><nav aria-label="${gcT('Liens utiles','Useful links')}"><button data-go="panier">${gcT('Retour au panier','Back to basket')}</button><button data-act="gcAide">${gcT('Aide','Help')}</button><button data-act="gcCgv">${gcT('Conditions générales de vente','Terms of sale')}</button><button data-act="gcPrivacy">${gcT('Confidentialité','Privacy')}</button></nav>
+      <p class="sf-pay">${GC_ICO.lock} ${gcT('Paiement sécurisé','Secure payment')} · ${pay.join(' · ')}</p></div>`;
+  }
+  return _gcShopFootHtml7()
+    .replace(`<span>${gcT('Mentions légales','Legal notice')}</span>`,`<button data-act="gcLegal">${gcT('Mentions légales','Legal notice')}</button>`)
+    .replace(`<span>${gcT('Contact','Contact')}</span>`,`<button data-act="gcContact">${gcT('Contact','Contact')}</button>`);
+};
+const gcDocSheet=(t,body)=>sheet(shead(t)+body,'gb7-doc');
+ACT.gcLegal=()=>gcDocSheet(gcT('Mentions légales','Legal notice'),`<p>${gcT('Éditeur du site, hébergeur, directeur de la publication, numéro d’immatriculation : textes à fournir par Resonance Golf Collection.','Publisher, host, publication director, registration number: texts to be supplied by Resonance Golf Collection.')}</p><p class="note">${gcT('Démo : page à part entière en production (URL dédiée).','Demo: a full page in production (own URL).')}</p>`);
+ACT.gcPrivacy=()=>gcDocSheet(gcT('Confidentialité','Privacy'),`<p>${gcT('Données collectées pour la commande et l’envoi des bons ; inscription aux offres seulement avec votre accord. Politique complète à fournir par Resonance Golf Collection.','Data collected for the order and voucher delivery; offers only with your consent. Full policy to be supplied by Resonance Golf Collection.')}</p>`);
+ACT.gcContact=()=>gcDocSheet(gcT('Contacter le service client','Contact customer service'),`<p>${gcT('Une question sur une commande, un bon ou une réservation : le service client de la boutique vous répond.','A question about an order, a voucher or a booking: the shop’s customer service will answer.')}</p>
+  <p class="mut">${gcT('Adresse e-mail, téléphone et horaires : à fournir par Resonance Golf Collection.','E-mail, phone and opening hours: to be supplied by Resonance Golf Collection.')}</p><button class="btn full" data-act="gcContactAide">${gcT('Voir les questions fréquentes','See the FAQ')}</button>`);
+ACT.gcContactAide=()=>{closeSheet();ACT.gcAide()};
+
+/* ---------- catalogue : budgets, destination sans expérience (carte cadeau en encart : CSS du lot) ---------- */
+GC_BUDGETS.splice(0,GC_BUDGETS.length,['m100','Moins de 100 €',0,99.99],['100-200','De 100 à 199 €',100,199.99],['200-300','De 200 à 299 €',200,299.99],['p300','300 € et plus',300,Infinity]);
+gcListBlock=function(base,skip,label){
+  GB4.skip=skip;
+  const keys=Object.keys(GC_FK).filter(k=>!skip.includes(k)), f=GCS.f, act=keys.filter(k=>f[k]);
+  const list=base.filter(o=>o.type!=='carte'&&gcMatch(o,f)), carte=gcOffer('carte-cadeau'), cOk=gcMatch(carte,f), none=!base.some(o=>o.type!=='carte');
+  const cnt=list.length?cap(gcN(list.length))+(cOk?' et la carte cadeau':''):none?gcT('Carte cadeau disponible','Gift card available'):'Aucune expérience'+(cOk?', la carte cadeau convient':'');
+  const empty=none?''
+    :`<div class="card gc-empty" data-role="empty"><span class="gc-ei">${GC_GIFT}</span><div class="h2">Aucune expérience pour ces critères</div>
+      <p class="mut" style="margin-top:4px">${act.length?'Retirez un critère pour élargir la recherche':'Aucune expérience ne correspond pour le moment'}${cOk?', ou laissez le choix avec la carte cadeau':''}.</p>${act.length?'<button class="lnk" data-act="gcB4Clear">Effacer les filtres</button>':''}</div>`;
+  return `<section class="gb-res" aria-label="${label}">
+    ${keys.includes('univ')&&!none?gcUnivPills():''}
+    ${none?'':`<div class="gc-tools">
+      <div class="gc-fbar" role="group" aria-label="Filtrer">${keys.filter(k=>k!=='univ').map(gcSelect).join('')}${gcSortSel()}</div>
+      <div class="gc-tsum"><span class="gc-count" aria-live="polite">${cnt}</span>${act.length?'<button class="lnk" data-act="gcB4Clear">Effacer</button>':''}</div>
+      <div class="gc-fbar-m"><span class="mut">${cnt}</span><button class="btn sm sec" data-act="gcB4Filters" aria-haspopup="dialog">Filtrer${act.length?' · '+act.length:''}</button></div>
+    </div>`}
+    ${act.length?`<div class="gc-active">${act.map(k=>`<button class="chip on" data-act="gcF" data-k="${k}" data-v="${f[k]}" aria-label="Retirer le filtre ${gcFLabel(k,f[k])}">${gcFLabel(k,f[k])}${GC_X}</button>`).join('')}<button class="lnk" data-act="gcB4Clear">Effacer les filtres</button></div>`:''}
+    ${list.length?gcGrid(cOk?[carte,...list]:list):empty}
+    ${!list.length&&cOk?gcGrid([carte]):''}</section>`;
+};
+
+/* ---------- validité : la date de départ est écrite ; envoi à 8 h ---------- */
+const _gcRecap7=gcRecap;
+gcRecap=function(d){
+  const from=gcValidFrom(d), dated=d.mode!=='moi'&&GCSW.D==='date'&&d.send==='date';
+  return _gcRecap7(d)
+    .replace(/(<dt>Envoi<\/dt><dd>le [^<]+)(<\/dd>)/,`$1 à ${GC_SEND_HOUR}$2`)
+    .replace(/(<dt>Valable jusqu’au<\/dt><dd>)([^<]+)(<\/dd>)/,(m,a,b,c)=>dated&&!d.date?m:`${a}${b}<small data-role="valid-from"> · ${GC_VALIDITY} mois après l’envoi${from===TODAY?', aujourd’hui ('+gcFdmy(TODAY)+')':' du '+gcFdmy(from)}</small>${c}`);
+};
+const _gcPrevCap7=gcPrevCap;
+gcPrevCap=function(d){
+  if(d.mode==='remettre'&&GB7.J==='pdf'){const m=gcMyMail();return `Envoyé à votre adresse e-mail${m?', <b>'+gcEsc(m)+'</b>,':''} dès le paiement confirmé, avec le bon en PDF : vous le remettez quand vous le souhaitez. Aucun envoi postal.`}
+  const pend=d.mode!=='moi'&&GCSW.D==='date'&&d.send==='date'&&!d.date;
+  return _gcPrevCap7(d).replace(/(le <b>[^<]+<\/b>)/,`$1 à ${GC_SEND_HOUR}`).replace('dès le paiement confirmé',pend?'à la date que vous choisirez':'dès le paiement confirmé');
+};
+/* règle J : « Le remettre moi-même » et l'envoi programmé */
+const _gcperso7=R.gcperso;
+R.gcperso=()=>{
+  const d=GCS.draft;if(d&&d.mode==='remettre'&&GB7.J==='pdf'&&d.send==='date'){d.send='now';d.date=''}
+  _gcperso7();
+  const v=$('#v-gcperso');if(!v||!d)return;
+  gcTextSwap(v,{'Envoi le matin de la date choisie.':`Envoi à ${GC_SEND_HOUR}, le jour choisi.`},true);
+  gcNoelModel(v,d);
+  if(d.mode==='remettre'&&GB7.J==='pdf'){
+    const h=[...v.querySelectorAll('.gc-h')].find(x=>/L’envoi/.test(x.textContent));
+    if(h){let n=h.nextElementSibling;while(n&&(n.matches('.radios[aria-label="Date d’envoi"],.gc-date,p.gc-txt'))){const x=n;n=n.nextElementSibling;x.remove()}
+      h.insertAdjacentHTML('afterend','<p class="gc-txt" data-role="remettre-send">Vous recevez le bon dès le paiement confirmé, avec le PDF à imprimer. Vous le remettez quand vous le souhaitez : pas de date d’envoi à choisir.</p>')}
+  }
+  if(!v.querySelector('[data-role="demo-date"]'))v.querySelector('.gc-pform').insertAdjacentHTML('beforeend',`<p class="note" data-role="demo-date">Démo : la boutique est figée au ${gcFdmy(TODAY)}. Les dates de validité partent de ce jour, ou de la date d’envoi choisie.</p>`);
+};
+function gcTextSwap(root,map,partial){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const hit=[];
+  while((n=w.nextNode()))hit.push(n);
+  hit.forEach(n=>{const t=n.nodeValue.trim();
+    if(map[t]!=null){n.nodeValue=n.nodeValue.replace(t,map[t]);return}
+    if(partial)Object.keys(map).forEach(k=>{if(n.nodeValue.includes(k))n.nodeValue=n.nodeValue.replace(k,map[k])})});
+}
+GC_FAQ_BUY[0][1]=`Dès le paiement, ou à ${GC_SEND_HOUR} le jour choisi, jusqu’à ${GC_SEND_MONTHS} mois après l’achat. Vous recevez une copie.`;
+GC_FAQ_BUY[1][1]='Oui : choisissez « Le remettre moi-même ». Le bon vous est envoyé dès le paiement, avec un PDF à imprimer, et vous le remettez quand vous le souhaitez.';
+/* modèle Noël : proposé en tête pour toutes les offres pendant le temps fort */
+function gcNoelModel(v,d){
+  const box=v.querySelector('.gc-models');if(!gcNoelOn()||!box||box.querySelector('[data-v="fetes"]'))return;
+  const m=GC_MODELS.find(x=>x.id==='fetes'),on=d.model==='fetes';
+  box.insertAdjacentHTML('beforeend',`<button class="gc-mod ${on?'on':''}" role="radio" aria-checked="${on}" data-act="gcModel" data-v="fetes" data-role="model-noel"><i class="gc-m-fetes"></i><b>${m.n}</b><small>Le modèle de Noël, crème et or</small></button>`);
+}
+
+/* ---------- panier : quantités, plusieurs codes, réassurance ---------- */
+const GC_PROMO_MAX=3;   /* hypothèse : trois codes au plus par commande */
+const gcCodes=()=>[S.promo,...GB7.codes].filter(c=>c&&GC_PROMO[c]);
+const _lineView7=lineView;
+lineView=function(l){
+  const v=_lineView7(l);
+  if(l.kind==='gift'&&v.gcSub)v.gcSub=v.gcSub.replace(/(Envoi le [^·]+?)( ·|$)/,`$1 à ${GC_SEND_HOUR}$2`);
+  if(l.kind==='gift'&&GB7.codes.length){GB7.codes.forEach(c=>{const r=gcPromoEval(c);if(r.ok)v.promo=(v.promo||0)+(r.alloc[l.uid]||0)});v.promo=Math.min(v.promo,gcLineBase(l))}
+  return v;
+};
+const _promoGo7=ACT.promoGo;
+ACT.promoGo=()=>{
+  const i=$('#promoIn'), c=(i&&i.value||'').trim().toUpperCase().replace(/\s/g,'');
+  if(!(GB4.ctx&&S.promo&&GC_PROMO[S.promo]&&GC_PROMO[c]&&S.cart.some(l=>l.kind==='gift')))return _promoGo7();
+  if(gcCodes().includes(c)){S.promoErr=`Le code ${c} est déjà appliqué.`;render();return}
+  if(gcCodes().length>=GC_PROMO_MAX){S.promoErr=`${GC_PROMO_MAX} codes promo au plus par commande : retirez-en un pour utiliser ${c}.`;render();return}
+  const r=gcPromoEval(c);
+  if(!r.ok){S.promoErr=r.err;render();const f=$('#promoIn');if(f){f.value=c;f.focus()}return}
+  GB7.codes.push(c);S.promoErr='';render();toast(`Code ${c} ajouté : −${eur(r.disc)}.`);
+};
+const _promoX7=ACT.promoX;
+ACT.promoX=()=>{if(GB4.ctx&&GB7.codes.length){S.promo=GB7.codes.shift();S.promoErr='';render();return}_promoX7()};
+ACT.gcPromoX7=a=>{const c=a.dataset.v;if(c===S.promo){S.promo=GB7.codes.shift()||null}else GB7.codes=GB7.codes.filter(x=>x!==c);S.promoErr='';render()};
+const _gcPayGuard7=gcPayGuard;
+gcPayGuard=function(){
+  const bad=GB7.codes.filter(c=>!gcPromoEval(c).ok);
+  if(bad.length){GB7.codes=GB7.codes.filter(c=>!bad.includes(c));render();toast(`${bad.join(', ')} ne s’applique plus et a été retiré. Vérifiez le nouveau total avant de payer.`);return true}
+  return _gcPayGuard7();
+};
+const gcSig=l=>JSON.stringify([l.offer,l.amount,l.etab,l.mode,l.to,l.mail,l.msg,l.from,l.model,l.send,l.date,l.opts,!!l.todo]);
+ACT.gcQty7=a=>{
+  const l0=S.cart.find(l=>l.uid===a.dataset.u);if(!l0)return;const sig=gcSig(l0), same=S.cart.filter(l=>l.kind==='gift'&&gcSig(l)===sig);
+  if(+a.dataset.v>0){if(same.length>=10){toast('10 bons identiques au plus par ligne.');return}const c=Object.assign(JSON.parse(JSON.stringify(l0)),{uid:uid()});S.cart.splice(S.cart.indexOf(same[same.length-1])+1,0,c)}
+  else{const x=same[same.length-1];S.cart=S.cart.filter(l=>l!==x);if(same.length===1)toast(`<b>${gcOffer(l0.offer).title}</b> retiré du panier.`)}
+  render();const b=$(`#v-panier [data-qty-of="${gcEsc(sig)}"]`);if(b)b.focus();
+};
+function gcReasHtml(){
+  const pay=['CB','Visa','Mastercard','American Express'].concat(GCSW.B==='wallets'?['Apple Pay','Google Pay']:[]);
+  return `<div class="gb7-reas" data-role="reassurance">
+    <div class="gb7-logos" aria-label="Moyens de paiement acceptés">${pay.map(p=>`<span class="gb7-logo">${p}</span>`).join('')}</div>
+    <ul><li>${GC_ICO.lock}<span>Paiement sécurisé</span></li><li>${GC_ICO.mail}<span>Bon cadeau par e-mail ou en PDF</span></li><li>${GC_ICO.cal}<span>Envoi immédiat ou à la date choisie</span></li></ul>
+    <button class="lnk" data-act="gcCondSheet">Conditions d’annulation et de remboursement</button>
+    <p class="gb7-q">Une question avant de commander ? <button class="lnk" data-act="gcContact">Contacter le service client</button></p></div>`;
+}
+ACT.gcCondSheet=()=>gcDocSheet('Annulation et remboursement',`<ul class="gb7-ul"><li>Vous disposez de 14 jours après l’achat pour vous rétracter, tant que le bon n’a pas été utilisé.</li><li>Le remboursement est fait sur le moyen de paiement utilisé.</li><li>Un bon expiré peut faire l’objet d’une prolongation : écrivez au service client avant la date de fin.</li></ul>
+  <p class="mut">Votre panier est conservé.</p><button class="btn sec full" data-act="gcCondCgv">Lire les conditions générales de vente</button>`);
+ACT.gcCondCgv=()=>{closeSheet();ACT.gcCgv()};
+const _panier7=R.panier;
+R.panier=()=>{
+  if(!GB4.ctx||S.cart.some(l=>l.kind!=='gift')||(GCS.parked||[]).length){_panier7();return}
+  const gifts=S.cart.filter(l=>l.kind==='gift');
+  if(!gifts.length){_panier7();return}
+  const T=cartTotals(), todo=gcTodo(), sub=gifts.reduce((t,l)=>t+(l.amount||0),0), opt=gifts.reduce((t,l)=>t+gcLineBase(l)-(l.amount||0),0);
+  const codes=gcCodes(), evs=codes.map(c=>[c,gcPromoEval(c)]);
+  const lines=g=>{const seen={};return g.ls.filter(l=>{const k=gcSig(l);if(seen[k])return false;seen[k]=1;return true}).map(l=>{
+    const o=gcOffer(l.offer), v=lineView(l), sig=gcSig(l), same=g.ls.filter(x=>gcSig(x)===sig), q=same.length, pr=same.reduce((t,x)=>t+(lineView(x).promo||0),0);
+    return `<article class="card gb-cline${l.todo?' todo':''}" data-uid="${l.uid}"><div class="gb-clm">
+      <div class="row wrap" style="gap:6px"><span class="tag">${gcTypeL(o.type)}</span>${l.todo?'<span class="tag gb-tagtodo">À personnaliser</span>':''}</div>
+      <b class="h3">${v.title}</b>
+      <p class="gb-crecv">${gcRecvTxt(l)}</p>
+      ${l.todo?'':`<p class="mut">${v.gcSub}</p>`}
+      ${(l.opts||[]).map(k=>`<p class="gb-copt">+ ${GC_OPTS[k].n} · ${eur(GC_OPTS[k].p)}</p>`).join('')}
+      ${!l.todo&&v.extra?`<p class="mut">${v.extra}</p>`:''}
+      <p class="mut">${l.todo?`${GC_VALID_TXT}.`:v.cancel}</p>
+      <div class="row wrap gb7-lact">${l.todo?`<button class="btn sm" data-act="gcLineEdit" data-u="${l.uid}">Personnaliser le bon</button>`:`<button class="lnk" data-act="gcLineEdit" data-u="${l.uid}">Modifier</button>`}<button class="lnk" data-act="lineDel" data-u="${l.uid}">Retirer</button></div></div>
+      <div class="gb-clp"><div class="gb7-qty" role="group" aria-label="Quantité de ${gcEsc(o.title)}"><button data-act="gcQty7" data-u="${l.uid}" data-v="-1" aria-label="${q>1?'Un bon de moins':'Retirer du panier'}">−</button><output data-role="qty" aria-live="polite">${q}</output><button data-act="gcQty7" data-u="${l.uid}" data-v="1" data-qty-of="${gcEsc(sig)}" aria-label="Un bon de plus">+</button></div>
+        <b>${eur(gcLineBase(l)*q)}</b>${q>1?`<small>${q} × ${eur(gcLineBase(l))}</small>`:''}${pr?`<small>−${eur(pr)} avec ${codes.join(', ')}</small>`:''}</div></article>`}).join('')};
+  $('#v-panier').innerHTML=`
+   <div class="gb-ptitle"><span class="eyebrow">Boutique cadeaux</span><h1 class="h1">Votre panier</h1><p class="sub" data-role="cart-count">${plural(gifts.length,'bon cadeau','bons cadeaux')} · un seul paiement</p></div>
+   ${todo.length?`<div class="gb7-todo" role="status" data-role="todo-banner"><div><b>${todo.length>1?todo.length+' bons sont à personnaliser':'Un bon est à personnaliser'} avant le paiement</b><span>Indiquez le bénéficiaire, le message et l’envoi : le paiement se débloque ensuite.</span></div><button class="btn sm" data-act="gcLineEdit" data-u="${todo[0].uid}">Personnaliser maintenant</button></div>`:''}
+   <div class="gb-cart">
+    <div class="gb-clines" data-role="cart-lines">${gcShopGroups(gifts).map(g=>gcShopWho(g)+lines(g)).join('')}
+      <button class="btn sec" data-act="gcNav" data-v="offres">Ajouter un autre cadeau</button></div>
+    <aside class="card gb-csum" aria-label="Récapitulatif">
+      <div class="h3">Codes promo</div>
+      ${codes.map(c=>`<div class="between gb-pcode" data-role="promo-on" data-code="${c}"><span><span class="tag ol">${c}</span> ${PROMOS[c].n}</span><button class="lnk" data-act="${c===S.promo?'promoX':'gcPromoX7'}" data-v="${c}">Retirer</button></div>`).join('')}
+      ${gcPromoWarn()}
+      ${codes.length<GC_PROMO_MAX?`<div class="codebox"><input id="promoIn" placeholder="${codes.length?'Autre code':'Par exemple NOEL10'}" autocomplete="off" aria-label="Code promo"${S.promoErr?' aria-invalid="true" aria-describedby="promoErr"':''}><button class="btn sm sec" data-act="promoGo">Appliquer</button></div>`:`<p class="mut">${GC_PROMO_MAX} codes au plus par commande.</p>`}
+      ${S.promoErr?`<p class="gc-err" id="promoErr" role="alert">${S.promoErr}</p>`:''}
+      <dl class="gb-tot" data-role="totals">
+        <div><dt>Cadeaux</dt><dd>${eur(sub)}</dd></div>
+        ${opt?`<div><dt>Options</dt><dd>${eur(opt)}</dd></div>`:''}
+        ${evs.filter(([c,r])=>r.ok).map(([c,r])=>`<div class="gb-disc"><dt>Code ${c}</dt><dd>−${eur(r.disc)}</dd></div>`).join('')}
+        <div><dt>Frais</dt><dd>Aucun</dd></div>
+        <div class="gb-due"><dt>Total à payer</dt><dd>${eur(T.due)}</dd></div></dl>
+      <button class="btn full" data-go="checkout"${todo.length?' disabled aria-describedby="gb7TodoMsg"':''}>Passer au paiement</button>
+      ${todo.length?`<p class="gc-err" id="gb7TodoMsg" data-role="todo-msg">Personnalisez ${todo.length>1?'les bons signalés':'le bon signalé'} pour payer.</p>`:''}
+      ${gcReasHtml()}
+    </aside></div>
+   <p class="note">Lot B7 : plusieurs codes cumulables (${GC_PROMO_MAX} au plus, hypothèse à valider), quantités par ligne. Codes de démo NOEL10, BIENVENUE15, SPA20, ETE2026 (expiré), LANCEMENT (limite atteinte).</p>`;
+};
+
+/* ---------- paiement : textes ---------- */
+const _checkout7=R.checkout;
+R.checkout=()=>{
+  _checkout7();const v=$('#v-checkout');if(!v||!GB4.ctx)return;
+  gcTextSwap(v,{'Identifiez-vous pour continuer.':'Renseignez vos coordonnées pour continuer.',
+    'E-wallet : connectez-vous pour utiliser votre solde.':'Solde de votre compte Resonance (e-wallet) : connectez-vous pour l’utiliser.',
+    'Payer avec mon e-wallet':'Payer avec le solde de mon compte (e-wallet)','E-wallet':'Solde du compte (e-wallet)'});
+};
+
+/* ---------- J'ai une carte cadeau ou un coffret ---------- */
+GC_FAQ_BEN[0]=['Comment réserver avec mon cadeau ?',GC_HOWTO];
+const _gcFaq7=gcFaq;
+gcFaq=function(o){return _gcFaq7(o).replace('Présentez le code ou le QR du bon à l’accueil de l’établissement, ou saisissez le code lors d’une réservation en ligne.',GC_HOWTO)};
+const _gcbon7=R.gcbon;
+R.gcbon=()=>{
+  _gcbon7();const h=$('#v-gcbon .gb-how1');
+  if(h)h.innerHTML=`<section class="gb-how" aria-label="Comment utiliser votre cadeau"><div class="gb-h2"><h2 class="h2">Comment utiliser votre cadeau ?</h2></div>
+    <ol class="gb-steps" data-role="steps-ben">${[['Saisissez votre code','Il figure dans l’e-mail reçu et sur le bon, au format RGC-XXXX-XXXX.'],['Consultez votre bon','Ce qu’il comprend, sa date de fin et, pour une carte cadeau, le solde restant.'],['Réservez votre expérience','En ligne avec le code, ou auprès de l’établissement en le donnant.']].map((s,i)=>`<li><span class="gb-n">${i+1}</span><b>${s[0]}</b><p>${s[1]}</p></li>`).join('')}</ol></section>`;
+};
+const _gcBonPage7=gcBonPage;
+gcBonPage=function(b){
+  let h=_gcBonPage7(b);const o=gcOffer(b.offer), bs=gcBonSt(b), end=b.end?gcFdmy(b.end):'';
+  let msg='';
+  if(o.type==='carte'&&!['Expiré','Consommé','Remboursé','Annulé','Programmé'].includes(bs)){const left=gcCardLeft(b);
+    msg=b.init&&left<b.init?`<p class="gb7-st part" data-role="bon-msg">Il vous reste ${eur(left)} sur ${eur(b.init)}, à utiliser en une ou plusieurs fois${end?' jusqu’au '+end:''}.</p>`
+      :`<p class="gb7-st ok" data-role="bon-msg">Votre carte est valable${end?' jusqu’au '+end:''} : ${eur(left)} à utiliser en une ou plusieurs fois.</p>`}
+  else if(o.type!=='carte'&&['Émis','Valable','Prolongé'].includes(bs))msg=`<p class="gb7-st ok" data-role="bon-msg">Votre coffret est valable${end?' jusqu’au '+end:''}. ${GC_ONCE} : toutes les prestations lors de la même venue.</p>`;
+  return msg?h.replace('<div class="gb-bonact">',msg+'<div class="gb-bonact">'):h;
+};
+
+/* ---------- FR / EN ---------- */
+const _gcWhere7=gcWhere;
+gcWhere=function(o){if(o.type==='carte'&&GB4.lang==='en')return GCSW.A==='tous'?`Valid at the ${GC_SITES.length} golf resorts of the Collection, their hotels, restaurants and spas`:'Valid at the venue chosen at purchase';return _gcWhere7(o)};
+const _gcValidHtml7=gcValidHtml;
+gcValidHtml=function(o){
+  if(o.type!=='carte'||GB4.lang!=='en')return _gcValidHtml7(o);
+  const t=GCSW.A==='tous'?`Valid at the <b>${GC_SITES.length} golf resorts of the Collection</b><small>and at their hotels, restaurants and spas</small>`:`Valid at <b>one venue</b><small>${GCS.cardEtab?gcEtabName(GCS.cardEtab):'to choose below, before giving the card'}</small>`;
+  return `<p class="gc-valid" data-role="valid">${GC_PIN}<span>${t}</span></p>`;
+};
+/* changement de langue : la page et la saisie en cours sont conservées */
+document.addEventListener('change',e=>{if(e.target.matches&&e.target.matches('[data-gclang]')&&S.screen==='gcperso'&&GCS.draft&&typeof gcSyncFields==='function')gcSyncFields()},true);
+const _gcLang7=ACT.gcLang;
+ACT.gcLang=a=>{if(S.screen==='gcperso'&&GCS.draft&&typeof gcSyncFields==='function')gcSyncFields();_gcLang7(a)};
+
+/* ---------- mobile : barre fixe de la fiche ---------- */
+const _paintCartBar7=paintCartBar;
+paintCartBar=function(){
+  const el=$('#cartBar'), o=GCS.offer&&gcOffer(GCS.offer);
+  if(!(GB4.ctx&&S.screen==='cadeau'&&o&&!gcUnavail(o))){el.classList.remove('gb7-fbar');return _paintCartBar7()}
+  const p=o.type==='carte'?(GCS.amt==='libre'?(+GCS.free||0):GCS.amt):gcCardPrice(o).p, pers=gcPers(o), n=S.cart.length;
+  el.classList.add('on','gb7-fbar');document.body.classList.add('cbar');
+  el.innerHTML=`<div data-role="fbar-price"><b>${p?eur(p):'—'}</b> <small>${o.type==='carte'?gcT('carte cadeau','gift card'):`/ ${pers} ${gcT(pers>1?'personnes':'personne',pers>1?'people':'person')}`}</small></div>
+    <button class="btn sm" data-act="gcBuy" data-v="offrir">${gcT('Personnaliser et offrir','Personalise and give')}</button>`;
+};
+
+/* ---------- barre de contrôle et réinitialisation ---------- */
+ACT.gcJ=a=>{GB7.J=a.dataset.v;render();gcCtl(true)};
+const _gcCtlB3_7=gcCtlB3;
+gcCtlB3=function(){
+  return _gcCtlB3_7()+`<hr><h4>Lot B7 · retours du 04/11 et du 05/11</h4>
+    <div class="gc-sw" data-rule="J"><span><b>J</b> · « Le remettre moi-même » et l’envoi programmé</span><div class="gc-seg">${[['pdf','PDF tout de suite'],['date','Envoi programmable']].map(([v,l])=>`<button class="${GB7.J===v?'on':''}" data-act="gcJ" data-v="${v}" aria-pressed="${GB7.J===v}">${l}</button>`).join('')}</div></div>
+    <ul data-role="ctl-b7"><li>Date de la démo : ${gcFdmy(TODAY)}. La validité part de ce jour ou de la date d’envoi choisie, et c’est écrit dans le récapitulatif.</li>
+    <li>Codes promo cumulables, ${GC_PROMO_MAX} au plus par commande : hypothèse à valider.</li>
+    <li>Envoi programmé à ${GC_SEND_HOUR}.</li>
+    <li>Hors maquette : URL des filtres partageable, URL et métadonnées par langue, SEO (CMS), messages et PDF traduits en anglais, recette des émojis et caractères spéciaux.</li></ul>`;
+};
+const _gcReset7=ACT.gcReset;
+ACT.gcReset=a=>{GB7.J='date';GB7.codes=[];GB4.nl.tel='';GB4.nl.dial='+33';_gcReset7(a)};
+Object.assign(window.__gc,{GB7,gcExpN,gcCodes,gcSig});
 
 S=fresh();
 go('site');
