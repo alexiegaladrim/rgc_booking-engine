@@ -2296,6 +2296,46 @@ body:has(.stage[data-shop="1"]),.stage[data-shop="1"]{overflow-anchor:none}   /*
 body.cbar .gc-ctl-btn,body.cbar .vptog{bottom:86px}
 /* rubriques resserrées sur les écrans moyens : une seule ligne, le bouton ne touche plus les bords */
 @media (min-width:901px) and (max-width:1180px){.sh-nav button{padding-left:9px;padding-right:9px;font-size:13.5px}.sh-nav button::after{left:9px;right:9px}.sh-nav button.sh-guide{margin-left:4px;padding:6px 12px 6px 10px}}
+/* ═════════ Bons cadeaux · lot B8 ═════════ */
+/* Guide cadeaux : fusion de la maquette « Guide cadeaux Resonance » (V2) et de l'aide au choix B4 */
+.gb8-hero{margin-top:14px;padding:28px 32px 24px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r)}
+.gb8-hero .eyebrow{margin-bottom:8px}
+.gb8-hero .h1{margin:0}
+.gb8-hero .sub{margin:6px 0 16px;max-width:640px}
+.gb8-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--g100);margin:0;min-width:0}
+.gb8-l{font-size:16px;padding-top:7px;color:var(--ink)}
+.gb8-l small{display:block;font-size:12px;color:var(--g500);margin-top:2px}
+.gb8-chips{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
+.gb8-chips .chip{padding:8px 14px;font-size:13.5px;display:inline-flex;align-items:center;gap:7px}
+.gb8-n{font-size:11.5px;color:var(--g500);font-variant-numeric:tabular-nums}
+.chip.on .gb8-n{color:var(--gold-light)}
+.chip.gb8-zero:not(.on){color:var(--g400);border-style:dashed}
+.gb8-add{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--gold-dark);text-decoration:underline;text-underline-offset:3px;padding:12px 0 0;background:none;border:0;cursor:pointer}
+.gb8-cta{display:flex;align-items:center;gap:18px;margin-top:18px;padding-top:18px;border-top:1px solid var(--g100);flex-wrap:wrap}
+.gb8-cta .lnk{font-size:13.5px}
+.gb8-hero + .gb-reas{margin-top:18px}
+.gb8-res{scroll-margin-top:150px}
+.gb8-res .gb-h2{margin-top:36px}
+.gb8-sum{margin:-6px 0 16px;color:var(--g600);font-size:14px}
+.gb8-tools{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.gb8-tools .gc-upills{margin:0;flex:1 1 auto;min-width:0}
+.gb8-tools select{flex:none;width:auto}
+.gb8-gap{font-size:12.5px;color:var(--terra);margin:-4px 0 10px}
+.gb8-empty{padding:16px 20px;background:var(--gold-soft);border-radius:12px;margin:0 0 18px}
+.gb8-empty b{display:block;font-weight:500;margin-bottom:2px}
+.gb8-empty p{margin:0;color:var(--g600);font-size:14px}
+@container (max-width:640px){
+  .gb8-hero{padding:20px 16px 18px;margin-left:-4px;margin-right:-4px}
+  .gb8-row{grid-template-columns:minmax(0,1fr);gap:8px;padding:12px 0}
+  .gb8-l{padding-top:0;font-size:15px}
+  .gb8-l small{display:inline;margin-left:6px}
+  .gb8-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 2px}
+  .gb8-chips::-webkit-scrollbar{display:none}
+  .gb8-chips .chip{flex:none}
+  .gb8-cta .btn{width:100%}
+  .gb8-cta{justify-content:center}
+  .gb8-tools select{width:100%}
+}
 </style>
 </head>
 <body>
@@ -8197,6 +8237,149 @@ gcCtlB3=function(){
 const _gcReset7=ACT.gcReset;
 ACT.gcReset=a=>{GB7.J='date';GB7.codes=[];GB4.nl.tel='';GB4.nl.dial='+33';_gcReset7(a)};
 Object.assign(window.__gc,{GB7,gcExpN,gcCodes,gcSig});
+
+/* ═════════ Bons cadeaux · lot B8 ═════════
+   Guide cadeaux (#/boutique/offrir) : fusion de la maquette ClickUp « Guide cadeaux Resonance »
+   (V2 Inspirations, 06/11) avec l'aide au choix du lot B4.
+   Repris de la V2 : « pour qui » et budget visibles d'emblée, compteur en direct sur le bouton,
+   carte cadeau en 4e position avec le montant calé sur le budget, adresse partageable par combinaison,
+   réassurance sous le choix. Repris de la V1 : nombre d'idées derrière chaque choix, occasion facultative,
+   écarts nommés quand rien ne correspond. Écarté ou corrigé : voir gcCtlB8. */
+const GC_POUR=[['golfeur','Un golfeur, une golfeuse'],['debutant','Quelqu’un qui débute'],['non-golfeur','Quelqu’un qui ne joue pas'],['couple','Un couple'],['client','Un client, un collaborateur']];
+const GC_PSLUG={golfeur:'golfeur',debutant:'debutant','non-golfeur':'non-golfeur',couple:'couple',client:'client'};
+/* « Pour qui » : hypothèse de démo, champ à ajouter à l'offre au BO. « Un couple » se déduit du nombre de personnes (GC_PERS). */
+const GC_POUR_OF={golfeur:['green-fee-la-mer','green-fee-duo-hardelot','golf-dejeuner','sejour-golf','golf-pour-deux-moliets','escapade-opio'],
+  debutant:['initiation-golf'],
+  'non-golfeur':['soin-signature','menu-victoire','nuit-manoir','spa-table','initiation-golf'],
+  client:['green-fee-la-mer','golf-dejeuner','menu-victoire','soin-signature','escapade-opio']};
+const gb8Pour=(o,p)=>p==='couple'?gcPers(o)>=2:(GC_POUR_OF[p]||[]).includes(o.id);
+const GC_BSLUG={m100:'moins-de-100-euros','100-200':'100-a-199-euros','200-300':'200-a-299-euros',p300:'300-euros-et-plus'};
+const GC_BAMT={m100:50,'100-200':100,'200-300':200,p300:300};   /* montant de la carte cadeau proposé pour chaque budget */
+const gb8Init=()=>({pour:'',budget:'',occ:'',univ:'',etab:'',sort:'',occOpen:false});
+const GB8=gb8Init();
+function gb8Match(o,st,skip){
+  if(o.type==='carte')return false;
+  if(st.pour&&skip!=='pour'&&!gb8Pour(o,st.pour))return false;
+  return gcMatch(o,{occ:st.occ,univ:st.univ,budget:st.budget,etab:st.etab},skip);
+}
+const gb8List=(st,skip)=>GC_OFFERS.filter(o=>gb8Match(o,st||GB8,skip));
+const gb8Count=(k,v)=>gb8List(Object.assign({},GB8,{[k]:v})).length;
+function gb8Sort(l){
+  const r=id=>{const i=GC_BEST.indexOf(id);return i<0?99:i};
+  if(GB8.sort==='asc')return l.slice().sort((a,b)=>a.price-b.price);
+  if(GB8.sort==='desc')return l.slice().sort((a,b)=>b.price-a.price);
+  return l.slice().sort((a,b)=>r(a.id)-r(b.id));   /* pertinence : meilleures ventes d'abord */
+}
+const gb8Lab=(list,v)=>(list.find(x=>x[0]===v)||['',''])[1];
+function gb8Sum(){
+  const p=[];
+  if(GB8.pour)p.push('pour '+gb8Lab(GC_POUR,GB8.pour).replace(/^Un /,'un ').replace(/^Quelqu’un/,'quelqu’un'));
+  if(GB8.budget)p.push(gb8Lab(GC_BUDGETS,GB8.budget).toLowerCase());
+  if(GB8.occ)p.push(gb8Lab(GC_OCCASIONS,GB8.occ));
+  if(GB8.univ)p.push(gb8Lab(GC_UNIVERS,GB8.univ));
+  if(GB8.etab)p.push(gb8Lab(GC_PLACES,GB8.etab));
+  return p;
+}
+/* rien ne correspond : on lâche le budget et on nomme l'écart, sinon on lâche « pour qui » */
+function gb8Near(){
+  const b=GB8.budget&&GC_BUDGETS.find(x=>x[0]===GB8.budget);
+  if(b){
+    const l=gb8List(GB8,'budget').map(o=>{const d=o.price<b[2]?o.price-b[2]:Math.round(o.price-Math.floor(b[3]));return {o,d}}).sort((x,y)=>Math.abs(x.d)-Math.abs(y.d)).slice(0,3);
+    if(l.length)return l;
+  }
+  return gb8Sort(gb8List(Object.assign({},GB8,{pour:''}))).slice(0,3).map(o=>({o,d:0}));
+}
+const gb8Gap=d=>d>0?`${eur(d)} au-dessus de votre budget`:d<0?`${eur(-d)} en dessous de votre budget`:'';
+function gb8Carte(){
+  const o=gcOffer('carte-cadeau'), a=GB8.budget?GC_BAMT[GB8.budget]:0;
+  const vis=a?gcGiftVis(o).replace(/<b class="gc-gv-amt">[\s\S]*?<\/b>/,`<b class="gc-gv-amt">${eur(a)}</b>`):gcGiftVis(o);
+  return `<article class="gc-offer gc-oc gc-oc-carte" data-offer="carte-cadeau" data-role="guide-carte">
+    <button class="gc-oc-img" data-act="gb8Carte" aria-label="Offrir la carte cadeau${a?' de '+eur(a):''}">${vis}</button>
+    <span class="gc-oc-venue">Valable dans nos ${GC_SITES.length} golfs</span>
+    <h3 class="gc-oc-t"><button class="gc-tt" data-act="gb8Carte">Vous hésitez ? La carte cadeau</button></h3>
+    <p class="gc-oc-sub">Il ou elle choisira, en une ou plusieurs fois.</p>
+    <div class="gc-oc-foot"><div class="gc-cprice" data-role="carte-amt">${a?`<b>${eur(a)}</b>`:`dès <b>${eur(Math.min(...o.amounts))}</b>`}</div>
+      <button class="btn sm gc-go" data-act="gb8Carte">${a?'Offrir '+eur(a):'Choisir'}</button></div></article>`;
+}
+function gb8Grid(list){
+  const cards=list.map(gcCard), at=Math.min(3,cards.length);
+  cards.splice(at,0,gb8Carte());
+  return `<div class="crsrow h gc-crsrow" data-role="guide-grid">${cards.join('')}</div>`;
+}
+function gb8Row(k,label,opts,all,opt){
+  return `<div class="gb8-row" data-q="${k}" role="group" aria-labelledby="gb8-l-${k}"><span class="gb8-l" id="gb8-l-${k}">${label}${opt?'<small>facultatif</small>':''}</span>
+    <div class="gb8-chips">${[['',all],...opts].map(([v,l])=>{const n=gb8Count(k,v);
+      return `<button class="chip${GB8[k]===v?' on':''}${n?'':' gb8-zero'}" data-act="gb8Set" data-k="${k}" data-v="${v}" aria-pressed="${GB8[k]===v}">${l}<span class="gb8-n" aria-label="${n} idée${n>1?'s':''}">${n}</span></button>`}).join('')}</div></div>`;
+}
+R.gcoffrir=()=>{
+  const list=gb8Sort(gb8List()), n=list.length, any=GB8.pour||GB8.budget||GB8.occ||GB8.univ||GB8.etab, sum=gb8Sum();
+  const near=n?[]:gb8Near();
+  const univ=`<div class="gc-upills" role="group" aria-label="Envies">${[['','Toutes les envies'],...GC_UNIVERS].map(([v,l])=>`<button class="chip${GB8.univ===v?' on':''}" data-act="gb8Set" data-k="univ" data-v="${v}" aria-pressed="${GB8.univ===v}">${l} <span class="gb8-n">${gb8Count('univ',v)}</span></button>`).join('')}</div>`;
+  const etab=`<select class="inp gc-sel" data-gb8="etab" aria-label="Destination"><option value="">Tous les golfs</option>${GC_PLACES.map(([v,l])=>`<option value="${v}"${GB8.etab===v?' selected':''}>${l} (${gb8Count('etab',v)})</option>`).join('')}</select>`;
+  const sort=`<select class="inp gc-sel" data-gb8="sort" aria-label="Trier"><option value="">Trier : pertinence</option><option value="asc"${GB8.sort==='asc'?' selected':''}>Prix croissant</option><option value="desc"${GB8.sort==='desc'?' selected':''}>Prix décroissant</option></select>`;
+  $('#v-gcoffrir').innerHTML=`${gcCrumb([['Trouver un cadeau','']])}
+   <section class="gb8-hero" data-role="guide" aria-label="Guide cadeaux">
+     <span class="eyebrow">Guide cadeaux</span>
+     <h1 class="h1">Trouver le bon cadeau</h1>
+     <p class="sub">Pour qui, et quel budget : les idées se trient en direct. Le chiffre indique combien d’idées se cachent derrière chaque choix.</p>
+     ${gb8Row('pour','Pour qui ?',GC_POUR,'Tout le monde')}
+     ${gb8Row('budget','Quel budget ?',GC_BUDGETS.map(b=>[b[0],b[1]]),'Tous les budgets')}
+     ${GB8.occOpen||GB8.occ?gb8Row('occ','Une occasion ?',GC_OCCASIONS,'Aucune en particulier',true):`<button class="gb8-add" data-act="gb8Occ">+ Préciser une occasion (anniversaire, fête des pères…)</button>`}
+     <div class="gb8-cta"><button class="btn" data-act="gb8Go" data-role="guide-count">${n?`Voir ${n>1?'les '+n+' idées':'l’idée'}`:'Voir les idées proches'}</button>
+       ${any?'<button class="lnk" data-act="gb8Clear">Tout effacer</button>':''}</div>
+   </section>
+   ${gcReas()}
+   <section class="gb8-res" id="gb8Res" aria-live="polite" aria-label="Idées de cadeaux">
+     <div class="gb-h2"><h2 class="h2" data-role="guide-title">${n?cap(gcN(n)):'Aucune idée exacte'}</h2></div>
+     ${sum.length?`<p class="gb8-sum" data-role="guide-sum">${cap(sum.join(' · '))}</p>`:''}
+     <div class="gb8-tools">${univ}<span style="display:flex;gap:10px;flex-wrap:wrap">${etab}${sort}</span></div>
+     ${n?gb8Grid(list):`<div class="gb8-empty" data-role="guide-empty"><b>Rien ne correspond exactement à ces choix.</b><p>Voici les idées les plus proches, avec l’écart. La carte cadeau reste possible pour tous les budgets.</p></div>
+       <div class="crsrow h gc-crsrow" data-role="guide-near">${near.map(({o,d})=>gcCard(o).replace('<div class="gc-oc-foot">',`${d?`<p class="gb8-gap" data-role="gap">${gb8Gap(d)}</p>`:''}<div class="gc-oc-foot">`)).join('')}${gb8Carte()}</div>`}
+   </section>
+   ${gcHow()}`;
+};
+function gb8Url(){try{history.replaceState(null,'',gcB4Hash('gcoffrir'))}catch(e){}}
+ACT.gb8Set=a=>{GB8[a.dataset.k]=a.dataset.v;render();gb8Url()};
+ACT.gb8Occ=()=>{GB8.occOpen=true;render()};
+ACT.gb8Clear=()=>{Object.assign(GB8,gb8Init());render();gb8Url()};
+ACT.gb8Go=()=>{const el=$('#gb8Res');if(el&&el.scrollIntoView)el.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})};
+ACT.gb8Carte=()=>{
+  const a=GB8.budget?GC_BAMT[GB8.budget]:0, o=gcOffer('carte-cadeau');gcOpen('carte-cadeau');
+  if(a){if(o.amounts.includes(a))GCS.amt=a;else{GCS.amt='libre';GCS.free=String(a)}render()}
+};
+document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.gb8;if(!k)return;GB8[k]=e.target.value;render();if(k!=='sort')gb8Url()});
+/* adresse partageable : #/boutique/offrir/<pour>/<budget> (« tout-le-monde », « tous-budgets » si vide) */
+const _gcB4Hash8=gcB4Hash;
+gcB4Hash=function(id){
+  if(id==='gcoffrir'){
+    if(!GB8.pour&&!GB8.budget)return '#/boutique/offrir';
+    return '#/boutique/offrir/'+(GB8.pour?GC_PSLUG[GB8.pour]:'tout-le-monde')+(GB8.budget?'/'+GC_BSLUG[GB8.budget]:'');
+  }
+  return _gcB4Hash8(id);
+};
+const _gcB4Route8=gcB4Route;
+gcB4Route=function(h){
+  const m=/^#\/boutique\/offrir\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?\/?$/.exec(h||'');
+  if(!m)return _gcB4Route8(h);
+  if(S.screen==='gcoffrir'&&gcB4Hash('gcoffrir')===h)return true;
+  const p=Object.keys(GC_PSLUG).find(k=>GC_PSLUG[k]===m[1]), b=m[2]?Object.keys(GC_BSLUG).find(k=>GC_BSLUG[k]===m[2]):'';
+  if((!p&&m[1]!=='tout-le-monde')||b===undefined){go('gcoffrir');toast('Ce lien de sélection n’est plus valable : choisissez à nouveau pour qui et votre budget.');return true}
+  Object.assign(GB8,{pour:p||'',budget:b||''});go('gcoffrir');return true;
+};
+const _gcReset8=ACT.gcReset;
+ACT.gcReset=a=>{Object.assign(GB8,gb8Init());_gcReset8(a)};
+const _gcCtlB3_8=gcCtlB3;
+gcCtlB3=function(){
+  return _gcCtlB3_8()+`<hr><h4>Lot B8 · guide cadeaux (maquette ClickUp V2, 06/11)</h4>
+    <ul data-role="ctl-b8"><li>« Pour qui » : 5 profils qui changent vraiment les idées. Golfeur et golfeuse réunis (les offres ne sont pas genrées) ; papa, maman et Secret Santa renvoient aux occasions et au budget.</li>
+    <li>Champ « Pour qui » réglé au BO, section Classement de l’offre (lot A7, profils de démo identiques) ; « Un couple » se déduit du nombre de personnes.</li>
+    <li>Débutant : seule l’initiation, un green fee sur La Mer demande un niveau. À confirmer par les golfs.</li>
+    <li>Budgets : les 4 tranches sans chevauchement du lot B7, pas les montants « autour de » de la V2.</li>
+    <li>Carrousel « Inspirations » non repris : les envies sont les 4 univers, la saison est la Boutique de Noël. Une troisième classification serait à tenir au CMS avec 11 offres seulement.</li>
+    <li>Pas de visuel plein écran sous les choix : lisibilité et premier écran mobile. Favoris et comparaison de la V1 : hors maquette.</li>
+    <li>Adresse : <code>#/boutique/offrir/&lt;pour&gt;/&lt;budget&gt;</code>. Pages indexables et textes SEO : au CMS.</li></ul>`;
+};
+Object.assign(window.__gc,{GB8,GC_POUR,GC_POUR_OF,gb8List,gb8Near,gb8Pour});
 
 S=fresh();
 go('site');
